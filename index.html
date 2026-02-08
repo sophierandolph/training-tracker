@@ -1,0 +1,3864 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="theme-color" content="#1a1a2e">
+  <title>Training Tracker</title>
+
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+  <script>
+    // Firebase configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyAyK68HpCXZEojCG3rM6T51mynd6DfnaVY",
+      authDomain: "training-tracker-74124.firebaseapp.com",
+      databaseURL: "https://training-tracker-74124-default-rtdb.firebaseio.com",
+      projectId: "training-tracker-74124",
+      storageBucket: "training-tracker-74124.firebasestorage.app",
+      messagingSenderId: "1018516149801",
+      appId: "1:1018516149801:web:8afcdc10aaa272e4bf6e38"
+    };
+
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+
+    // Enable offline persistence
+    db.enablePersistence().catch((err) => {
+      console.log('Offline persistence error:', err.code);
+    });
+  </script>
+  <style>
+    :root {
+      --bg-primary: #1a1a2e;
+      --bg-secondary: #16213e;
+      --bg-card: #0f3460;
+      --accent: #e94560;
+      --accent-light: #ff6b6b;
+      --text-primary: #eaeaea;
+      --text-secondary: #a0a0a0;
+      --success: #4ecdc4;
+      --warning: #ffa726;
+      --border: #2a2a4a;
+      --radius: 12px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      min-height: 100vh;
+      padding-bottom: 100px;
+    }
+
+    /* Header */
+    header {
+      background: var(--bg-secondary);
+      padding: 16px 20px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .header-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    .date-display {
+      font-size: 14px;
+      color: var(--text-secondary);
+    }
+
+    .day-name {
+      font-size: 24px;
+      font-weight: 700;
+    }
+
+    /* Readiness Badge */
+    .readiness-badge {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--bg-card);
+      padding: 8px 12px;
+      border-radius: 20px;
+      cursor: pointer;
+    }
+
+    .readiness-score {
+      font-size: 18px;
+      font-weight: 700;
+    }
+
+    .readiness-label {
+      font-size: 11px;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+    }
+
+    .readiness-high { color: var(--success); }
+    .readiness-mid { color: var(--warning); }
+    .readiness-low { color: var(--accent); }
+
+    /* Workout Header */
+    .workout-header {
+      padding: 20px;
+      background: linear-gradient(135deg, var(--bg-card) 0%, var(--bg-secondary) 100%);
+      margin: 16px;
+      border-radius: var(--radius);
+    }
+
+    .workout-type {
+      font-size: 11px;
+      text-transform: uppercase;
+      color: var(--accent);
+      letter-spacing: 1px;
+      margin-bottom: 4px;
+    }
+
+    .workout-title {
+      font-size: 22px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .workout-meta {
+      display: flex;
+      gap: 16px;
+      font-size: 13px;
+      color: var(--text-secondary);
+    }
+
+    .workout-meta span {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    /* Progress Bar */
+    .progress-container {
+      padding: 0 20px;
+      margin-bottom: 16px;
+    }
+
+    .progress-label {
+      display: flex;
+      justify-content: space-between;
+      font-size: 12px;
+      color: var(--text-secondary);
+      margin-bottom: 6px;
+    }
+
+    .progress-bar {
+      height: 6px;
+      background: var(--bg-secondary);
+      border-radius: 3px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--success), var(--accent-light));
+      transition: width 0.3s ease;
+    }
+
+    /* Circuit Section */
+    .circuit-section {
+      margin: 16px;
+      background: var(--bg-secondary);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+
+    .circuit-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px;
+      background: var(--bg-card);
+      cursor: pointer;
+    }
+
+    .circuit-header h3 {
+      font-size: 16px;
+      font-weight: 600;
+    }
+
+    .circuit-instructions {
+      font-size: 12px;
+      color: var(--text-secondary);
+      margin-top: 4px;
+    }
+
+    .circuit-status {
+      font-size: 12px;
+      color: var(--text-secondary);
+    }
+
+    .circuit-status.complete {
+      color: var(--success);
+    }
+
+    /* Exercise Card */
+    .exercise-card {
+      padding: 16px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .exercise-card:last-child {
+      border-bottom: none;
+    }
+
+    .exercise-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 12px;
+    }
+
+    .exercise-name {
+      font-size: 15px;
+      font-weight: 600;
+      flex: 1;
+    }
+
+    .exercise-target {
+      font-size: 13px;
+      color: var(--accent);
+      margin-top: 2px;
+    }
+
+    .exercise-notes {
+      font-size: 12px;
+      color: var(--text-secondary);
+      margin-top: 4px;
+    }
+
+    .skip-btn {
+      background: none;
+      border: none;
+      color: var(--text-secondary);
+      font-size: 12px;
+      padding: 4px 8px;
+      cursor: pointer;
+    }
+
+    .skip-btn:hover {
+      color: var(--accent);
+    }
+
+    /* Set Tracker */
+    .sets-container {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .set-pill {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background: var(--bg-card);
+      border: 2px solid var(--border);
+      border-radius: 8px;
+      padding: 8px 12px;
+      min-width: 70px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .set-pill.active {
+      border-color: var(--accent);
+    }
+
+    .set-pill.complete {
+      border-color: var(--success);
+      background: rgba(78, 205, 196, 0.15);
+    }
+
+    .set-pill.skipped {
+      border-color: var(--text-secondary);
+      opacity: 0.5;
+    }
+
+    .set-number {
+      font-size: 11px;
+      color: var(--text-secondary);
+      margin-bottom: 4px;
+    }
+
+    .set-value {
+      font-size: 16px;
+      font-weight: 600;
+    }
+
+    /* Input Modal */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0,0,0,0.8);
+      z-index: 200;
+      align-items: flex-end;
+      justify-content: center;
+    }
+
+    .modal-overlay.active {
+      display: flex;
+    }
+
+    .modal-content {
+      background: var(--bg-secondary);
+      width: 100%;
+      max-width: 500px;
+      border-radius: var(--radius) var(--radius) 0 0;
+      padding: 24px;
+      padding-bottom: 40px;
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .modal-title {
+      font-size: 18px;
+      font-weight: 600;
+    }
+
+    .modal-close {
+      background: none;
+      border: none;
+      color: var(--text-secondary);
+      font-size: 24px;
+      cursor: pointer;
+      padding: 4px;
+    }
+
+    .input-group {
+      margin-bottom: 20px;
+    }
+
+    .input-label {
+      font-size: 12px;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      margin-bottom: 8px;
+      display: block;
+    }
+
+    .input-row {
+      display: flex;
+      gap: 12px;
+    }
+
+    .input-field {
+      flex: 1;
+    }
+
+    .input-field input {
+      width: 100%;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px;
+      font-size: 20px;
+      font-weight: 600;
+      color: var(--text-primary);
+      text-align: center;
+    }
+
+    .input-field input:focus {
+      outline: none;
+      border-color: var(--accent);
+    }
+
+    .input-field label {
+      display: block;
+      font-size: 11px;
+      color: var(--text-secondary);
+      text-align: center;
+      margin-top: 4px;
+    }
+
+    /* Feel Slider */
+    .feel-slider {
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .feel-btn {
+      flex: 1;
+      background: var(--bg-card);
+      border: 2px solid var(--border);
+      border-radius: 8px;
+      padding: 12px 4px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .feel-btn.selected {
+      border-color: var(--accent);
+      background: rgba(233, 69, 96, 0.2);
+    }
+
+    .feel-btn .number {
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .feel-btn .label {
+      font-size: 9px;
+      color: var(--text-secondary);
+      display: block;
+      margin-top: 2px;
+    }
+
+    /* Effort Type Selector */
+    .effort-type-selector {
+      display: flex;
+      gap: 8px;
+    }
+
+    .effort-type-btn {
+      flex: 1;
+      background: var(--bg-card);
+      border: 2px solid var(--border);
+      border-radius: 8px;
+      padding: 12px 8px;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-align: center;
+    }
+
+    .effort-type-btn.selected {
+      border-color: var(--accent);
+      background: rgba(233, 69, 96, 0.15);
+    }
+
+    .effort-type-btn .type-icon {
+      font-size: 20px;
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .effort-type-btn .type-label {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-primary);
+      display: block;
+    }
+
+    .effort-type-btn .type-desc {
+      font-size: 10px;
+      color: var(--text-secondary);
+      display: block;
+      margin-top: 2px;
+    }
+
+    /* Modal Buttons */
+    .modal-actions {
+      display: flex;
+      gap: 12px;
+      margin-top: 24px;
+    }
+
+    .btn {
+      flex: 1;
+      padding: 16px;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: white;
+    }
+
+    .btn-secondary {
+      background: var(--bg-card);
+      color: var(--text-primary);
+    }
+
+    .btn-success {
+      background: var(--success);
+      color: var(--bg-primary);
+    }
+
+    /* Timer */
+    .rest-timer {
+      display: none;
+      position: fixed;
+      bottom: 80px;
+      left: 16px;
+      right: 16px;
+      background: var(--bg-card);
+      border: 2px solid var(--accent);
+      border-radius: var(--radius);
+      padding: 16px;
+      z-index: 150;
+    }
+
+    .rest-timer.active {
+      display: block;
+    }
+
+    .timer-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .timer-label {
+      font-size: 12px;
+      color: var(--text-secondary);
+    }
+
+    .timer-display {
+      font-size: 32px;
+      font-weight: 700;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .timer-btn {
+      background: var(--accent);
+      border: none;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    /* Workout Complete Modal */
+    .complete-modal {
+      text-align: center;
+    }
+
+    .complete-modal h2 {
+      font-size: 28px;
+      margin-bottom: 8px;
+    }
+
+    .complete-modal p {
+      color: var(--text-secondary);
+      margin-bottom: 24px;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+
+    .stat-box {
+      background: var(--bg-card);
+      padding: 16px;
+      border-radius: 8px;
+    }
+
+    .stat-value {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--accent);
+    }
+
+    .stat-label {
+      font-size: 11px;
+      color: var(--text-secondary);
+      margin-top: 4px;
+    }
+
+    /* Overall Feel */
+    .overall-feel {
+      margin-bottom: 20px;
+    }
+
+    .overall-slider {
+      display: flex;
+      gap: 6px;
+    }
+
+    .overall-btn {
+      flex: 1;
+      background: var(--bg-card);
+      border: 2px solid var(--border);
+      border-radius: 8px;
+      padding: 10px 2px;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
+    .overall-btn.selected {
+      border-color: var(--accent);
+      background: rgba(233, 69, 96, 0.2);
+    }
+
+    /* Notes */
+    .notes-input {
+      width: 100%;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 12px;
+      font-size: 14px;
+      color: var(--text-primary);
+      resize: none;
+      min-height: 80px;
+      font-family: inherit;
+    }
+
+    .notes-input:focus {
+      outline: none;
+      border-color: var(--accent);
+    }
+
+    /* Readiness Modal */
+    .readiness-modal .input-field input {
+      font-size: 32px;
+    }
+
+    /* Bottom Nav */
+    nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: var(--bg-secondary);
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-around;
+      padding: 12px 0;
+      padding-bottom: max(12px, env(safe-area-inset-bottom));
+    }
+
+    .nav-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      color: var(--text-secondary);
+      text-decoration: none;
+      font-size: 10px;
+      cursor: pointer;
+    }
+
+    .nav-item.active {
+      color: var(--accent);
+    }
+
+    .nav-icon {
+      font-size: 20px;
+    }
+
+    /* Views */
+    .view {
+      display: none;
+    }
+
+    .view.active {
+      display: block;
+    }
+
+    /* History View */
+    .history-section {
+      padding: 16px;
+    }
+
+    .history-day {
+      background: var(--bg-secondary);
+      border-radius: var(--radius);
+      padding: 16px;
+      margin-bottom: 12px;
+    }
+
+    .history-date {
+      font-size: 12px;
+      color: var(--text-secondary);
+      margin-bottom: 4px;
+    }
+
+    .history-workout {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .history-stats {
+      display: flex;
+      gap: 16px;
+      font-size: 13px;
+      color: var(--text-secondary);
+    }
+
+    /* Plan View */
+    .plan-section {
+      padding: 16px;
+    }
+
+    .plan-section h2 {
+      margin-bottom: 16px;
+      font-size: 18px;
+    }
+
+    .week-progress-summary {
+      background: var(--bg-secondary);
+      border-radius: var(--radius);
+      padding: 16px;
+      margin-bottom: 20px;
+    }
+
+    .week-progress-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    .week-progress-title {
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .week-progress-count {
+      font-size: 14px;
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    .week-progress-bar {
+      height: 8px;
+      background: var(--bg-card);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+
+    .week-progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--success), var(--accent-light));
+      transition: width 0.3s ease;
+    }
+
+    /* Calendar Grid */
+    .calendar-container {
+      margin-bottom: 24px;
+    }
+
+    .calendar-week {
+      background: var(--bg-secondary);
+      border-radius: var(--radius);
+      padding: 12px;
+      margin-bottom: 8px;
+    }
+
+    .calendar-week.current-week {
+      border: 2px solid var(--accent);
+    }
+
+    .calendar-week-label {
+      font-size: 11px;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .calendar-week-label .week-dates {
+      font-size: 10px;
+      color: var(--text-secondary);
+    }
+
+    .calendar-days {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 4px;
+    }
+
+    .calendar-day {
+      background: var(--bg-card);
+      border-radius: 8px;
+      padding: 8px 4px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s;
+      min-height: 60px;
+    }
+
+    .calendar-day:hover {
+      background: var(--border);
+    }
+
+    .calendar-day.today {
+      border: 2px solid var(--accent);
+      background: rgba(233, 69, 96, 0.15);
+    }
+
+    .calendar-day.past {
+      opacity: 0.6;
+    }
+
+    .calendar-day-name {
+      font-size: 9px;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      margin-bottom: 2px;
+    }
+
+    .calendar-day-number {
+      font-size: 12px;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .calendar-day-workout {
+      font-size: 8px;
+      color: var(--accent-light);
+      line-height: 1.2;
+      word-wrap: break-word;
+    }
+
+    .calendar-day-workout.rest {
+      color: var(--text-secondary);
+    }
+
+    .calendar-day-workout.external {
+      color: var(--warning);
+    }
+
+    .calendar-day-workout.travel {
+      color: #9575cd;
+    }
+
+    /* Handball training travel - highlighted green */
+    .calendar-day-workout.handball-training {
+      color: #81c784;
+    }
+
+    .calendar-day.handball-training-day {
+      background: rgba(76, 175, 80, 0.15);
+    }
+
+    .calendar-day.handball-training-day:hover {
+      background: rgba(76, 175, 80, 0.25);
+    }
+
+    /* Minimal facilities travel - muted gray */
+    .calendar-day.travel-day.minimal {
+      background: rgba(158, 158, 158, 0.15);
+      opacity: 0.7;
+    }
+
+    .calendar-day.travel-day.minimal:hover {
+      background: rgba(158, 158, 158, 0.25);
+    }
+
+    /* Gym access travel - purple */
+    .calendar-day.travel-day.gym {
+      background: rgba(149, 117, 205, 0.15);
+    }
+
+    .calendar-day.travel-day.gym:hover {
+      background: rgba(149, 117, 205, 0.25);
+    }
+
+    /* Default travel-day fallback */
+    .calendar-day.travel-day {
+      background: rgba(149, 117, 205, 0.15);
+      opacity: 0.7;
+    }
+
+    .calendar-day.travel-day:hover {
+      background: rgba(149, 117, 205, 0.25);
+    }
+
+    .travel-badge {
+      display: inline-block;
+      font-size: 9px;
+      background: rgba(149, 117, 205, 0.3);
+      color: #b39ddb;
+      padding: 2px 6px;
+      border-radius: 4px;
+      margin-top: 4px;
+    }
+
+    .game-time-note {
+      font-size: 10px;
+      color: var(--warning);
+      margin-top: 4px;
+    }
+
+    .late-game-warning {
+      background: rgba(233, 69, 96, 0.15);
+      border: 1px solid var(--accent);
+      border-radius: 6px;
+      padding: 8px;
+      margin-top: 8px;
+      font-size: 11px;
+      color: var(--accent-light);
+    }
+
+    .conflict-note {
+      font-size: 10px;
+      color: #9575cd;
+      font-style: italic;
+      margin-top: 4px;
+    }
+
+    /* Upcoming Workouts */
+    .upcoming-section {
+      margin-bottom: 20px;
+    }
+
+    .upcoming-workout {
+      background: var(--bg-secondary);
+      border-radius: var(--radius);
+      padding: 16px;
+      margin-bottom: 10px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .upcoming-workout:hover {
+      background: var(--bg-card);
+    }
+
+    .upcoming-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 8px;
+    }
+
+    .upcoming-day {
+      font-size: 12px;
+      color: var(--text-secondary);
+    }
+
+    .upcoming-name {
+      font-size: 16px;
+      font-weight: 600;
+      margin-top: 2px;
+    }
+
+    .upcoming-badge {
+      font-size: 10px;
+      background: var(--bg-card);
+      padding: 4px 8px;
+      border-radius: 12px;
+      color: var(--accent);
+    }
+
+    .upcoming-meta {
+      display: flex;
+      gap: 12px;
+      font-size: 12px;
+      color: var(--text-secondary);
+      margin-bottom: 8px;
+    }
+
+    .upcoming-preview {
+      font-size: 12px;
+      color: var(--text-secondary);
+      line-height: 1.4;
+    }
+
+    /* Workout Preview Modal */
+    .preview-modal .workout-preview-content {
+      max-height: 60vh;
+      overflow-y: auto;
+    }
+
+    .preview-circuit {
+      background: var(--bg-card);
+      border-radius: 8px;
+      padding: 12px;
+      margin-bottom: 8px;
+    }
+
+    .preview-circuit-name {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--accent);
+      margin-bottom: 4px;
+    }
+
+    .preview-exercises {
+      font-size: 12px;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+
+    /* Utility */
+    .hidden {
+      display: none !important;
+    }
+
+    /* Travel Activity Modal */
+    .travel-activity-types {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+
+    .activity-type-btn {
+      background: var(--bg-card);
+      border: 2px solid var(--border);
+      border-radius: 20px;
+      padding: 8px 16px;
+      font-size: 13px;
+      color: var(--text-primary);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .activity-type-btn.selected {
+      border-color: #9575cd;
+      background: rgba(149, 117, 205, 0.2);
+    }
+
+    .travel-feel-slider {
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .travel-feel-btn {
+      flex: 1;
+      background: var(--bg-card);
+      border: 2px solid var(--border);
+      border-radius: 8px;
+      padding: 12px 4px;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--text-primary);
+      transition: all 0.2s;
+    }
+
+    .travel-feel-btn.selected {
+      border-color: #9575cd;
+      background: rgba(149, 117, 205, 0.2);
+    }
+
+    /* Adaptation Banner */
+    .adaptation-banner {
+      background: linear-gradient(135deg, rgba(255, 167, 38, 0.15) 0%, rgba(233, 69, 96, 0.1) 100%);
+      border: 1px solid var(--warning);
+      border-radius: var(--radius);
+      padding: 16px;
+      margin: 16px;
+    }
+
+    .adaptation-banner-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 8px;
+      font-size: 13px;
+      color: var(--warning);
+      font-weight: 600;
+    }
+
+    .adaptation-banner-message {
+      font-size: 14px;
+      color: var(--text-primary);
+      margin-bottom: 12px;
+    }
+
+    .adaptation-banner-action {
+      background: none;
+      border: 1px solid var(--text-secondary);
+      border-radius: 6px;
+      padding: 8px 12px;
+      font-size: 12px;
+      color: var(--text-secondary);
+      cursor: pointer;
+    }
+
+    .adaptation-banner-action:hover {
+      border-color: var(--text-primary);
+      color: var(--text-primary);
+    }
+
+    /* Adjustment Button in Set Modal */
+    .adjustment-toggle {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 12px;
+      background: var(--bg-card);
+      border: 1px dashed var(--border);
+      border-radius: 8px;
+      font-size: 13px;
+      color: var(--text-secondary);
+      cursor: pointer;
+      margin-bottom: 16px;
+      transition: all 0.2s;
+    }
+
+    .adjustment-toggle:hover {
+      border-color: var(--warning);
+      color: var(--warning);
+    }
+
+    .adjustment-toggle.active {
+      border-style: solid;
+      border-color: var(--warning);
+      background: rgba(255, 167, 38, 0.1);
+      color: var(--warning);
+    }
+
+    .adjustment-details {
+      display: none;
+      margin-bottom: 16px;
+    }
+
+    .adjustment-details.visible {
+      display: block;
+    }
+
+    .adjustment-reason-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    .reason-chip {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 6px 12px;
+      font-size: 12px;
+      color: var(--text-secondary);
+      cursor: pointer;
+    }
+
+    .reason-chip.selected {
+      border-color: var(--warning);
+      background: rgba(255, 167, 38, 0.15);
+      color: var(--warning);
+    }
+
+    /* History badges */
+    .history-badges {
+      display: flex;
+      gap: 8px;
+      margin-top: 8px;
+      flex-wrap: wrap;
+    }
+
+    .history-badge {
+      font-size: 10px;
+      padding: 3px 8px;
+      border-radius: 10px;
+      background: var(--bg-card);
+      color: var(--text-secondary);
+    }
+
+    .history-badge.travel {
+      background: rgba(149, 117, 205, 0.2);
+      color: #b39ddb;
+    }
+
+    .history-badge.adjusted {
+      background: rgba(255, 167, 38, 0.2);
+      color: var(--warning);
+    }
+
+    .history-badge.adapted {
+      background: rgba(233, 69, 96, 0.2);
+      color: var(--accent-light);
+    }
+
+    /* Insights Section */
+    .insights-section {
+      background: var(--bg-secondary);
+      border-radius: var(--radius);
+      padding: 16px;
+      margin-bottom: 20px;
+    }
+
+    .insights-header {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 16px;
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .insight-card {
+      background: var(--bg-card);
+      border-radius: 8px;
+      padding: 12px;
+      margin-bottom: 8px;
+    }
+
+    .insight-card:last-child {
+      margin-bottom: 0;
+    }
+
+    .insight-title {
+      font-size: 12px;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .insight-item {
+      display: flex;
+      justify-content: space-between;
+      font-size: 13px;
+      color: var(--text-primary);
+      padding: 4px 0;
+    }
+
+    .insight-value {
+      color: var(--accent);
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body>
+  <!-- Main App -->
+  <div id="app">
+    <!-- Header -->
+    <header>
+      <div class="header-top">
+        <div>
+          <div class="date-display" id="dateDisplay">Saturday, Feb 8</div>
+          <div class="day-name" id="dayName">Today's Training</div>
+        </div>
+        <div class="readiness-badge" onclick="showReadinessModal()">
+          <div>
+            <div class="readiness-score readiness-high" id="readinessScore">--</div>
+            <div class="readiness-label">Readiness</div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Today View -->
+    <div id="todayView" class="view active">
+      <div id="workoutContent">
+        <!-- Workout content loaded dynamically -->
+      </div>
+    </div>
+
+    <!-- History View -->
+    <div id="historyView" class="view">
+      <div class="history-section">
+        <h2 style="margin-bottom: 16px;">Recent Workouts</h2>
+        <div id="historyList">
+          <!-- History loaded dynamically -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Progress View -->
+    <div id="progressView" class="view">
+      <div style="padding: 20px; text-align: center; color: var(--text-secondary);">
+        <p>Progress charts coming soon!</p>
+        <p style="margin-top: 8px; font-size: 13px;">Complete a few workouts first to see trends.</p>
+      </div>
+    </div>
+
+    <!-- Plan View -->
+    <div id="planView" class="view">
+      <div class="plan-section">
+        <!-- Week Progress Summary -->
+        <div class="week-progress-summary">
+          <div class="week-progress-header">
+            <span class="week-progress-title">This Week's Progress</span>
+            <span class="week-progress-count" id="weekProgressCount">0 / 6 workouts</span>
+          </div>
+          <div class="week-progress-bar">
+            <div class="week-progress-fill" id="weekProgressFill" style="width: 0%"></div>
+          </div>
+        </div>
+
+        <!-- 4-Week Calendar -->
+        <h2>4-Week Schedule</h2>
+        <div class="calendar-container" id="calendarContainer">
+          <!-- Calendar weeks rendered dynamically -->
+        </div>
+
+        <!-- Upcoming Workouts -->
+        <h2>Upcoming Workouts</h2>
+        <div class="upcoming-section" id="upcomingWorkouts">
+          <!-- Upcoming workouts rendered dynamically -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Rest Timer -->
+  <div class="rest-timer" id="restTimer">
+    <div class="timer-content">
+      <div>
+        <div class="timer-label">Rest Time</div>
+        <div class="timer-display" id="timerDisplay">1:30</div>
+      </div>
+      <button class="timer-btn" onclick="skipTimer()">Skip</button>
+    </div>
+  </div>
+
+  <!-- Set Input Modal -->
+  <div class="modal-overlay" id="setModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="modal-title" id="modalExerciseName">Exercise Name</div>
+        <button class="modal-close" onclick="closeSetModal()">&times;</button>
+      </div>
+
+      <div class="input-group">
+        <label class="input-label">Set <span id="modalSetNumber">1</span> of <span id="modalTotalSets">3</span></label>
+        <div class="input-row">
+          <div class="input-field" id="weightField">
+            <input type="number" id="weightInput" inputmode="decimal" placeholder="0">
+            <label>Weight (lbs)</label>
+          </div>
+          <div class="input-field">
+            <input type="number" id="repsInput" inputmode="numeric" placeholder="0">
+            <label>Reps</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="input-group">
+        <label class="input-label">How hard was it?</label>
+        <div class="feel-slider" id="feelSlider">
+          <button class="feel-btn" data-value="1"><span class="number">1</span><span class="label">Easy</span></button>
+          <button class="feel-btn" data-value="2"><span class="number">2</span></button>
+          <button class="feel-btn" data-value="3"><span class="number">3</span></button>
+          <button class="feel-btn" data-value="4"><span class="number">4</span></button>
+          <button class="feel-btn" data-value="5"><span class="number">5</span><span class="label">Hard</span></button>
+        </div>
+      </div>
+
+      <div class="input-group" id="effortTypeGroup">
+        <label class="input-label">What made it hard?</label>
+        <div class="effort-type-selector" id="effortTypeSelector">
+          <button class="effort-type-btn" data-value="physical">
+            <span class="type-icon">💪</span>
+            <span class="type-label">Physical</span>
+            <span class="type-desc">Strength, cardio, fatigue</span>
+          </button>
+          <button class="effort-type-btn" data-value="technical">
+            <span class="type-icon">🎯</span>
+            <span class="type-label">Technical</span>
+            <span class="type-desc">Form, coordination, new skill</span>
+          </button>
+          <button class="effort-type-btn" data-value="both">
+            <span class="type-icon">⚡</span>
+            <span class="type-label">Both</span>
+            <span class="type-desc">Physically & technically demanding</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="adjustment-toggle" id="adjustmentToggle" onclick="showAdjustmentModal()">
+        <span>Adjusted from plan?</span>
+        <span style="font-size: 11px;">(reduced weight, modified, etc.)</span>
+      </div>
+
+      <div class="modal-actions">
+        <button class="btn btn-secondary" onclick="skipSet()">Skip Set</button>
+        <button class="btn btn-success" onclick="logSet()">Log Set</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Readiness Modal -->
+  <div class="modal-overlay" id="readinessModal">
+    <div class="modal-content readiness-modal">
+      <div class="modal-header">
+        <div class="modal-title">Today's Readiness</div>
+        <button class="modal-close" onclick="closeReadinessModal()">&times;</button>
+      </div>
+
+      <div class="input-group">
+        <label class="input-label">Oura Readiness Score</label>
+        <div class="input-field">
+          <input type="number" id="readinessInput" inputmode="numeric" placeholder="85" min="0" max="100">
+        </div>
+      </div>
+
+      <div class="input-group">
+        <label class="input-label">Sleep Score (optional)</label>
+        <div class="input-field">
+          <input type="number" id="sleepInput" inputmode="numeric" placeholder="80" min="0" max="100">
+        </div>
+      </div>
+
+      <div class="input-group">
+        <label class="input-label">HRV (optional)</label>
+        <div class="input-field">
+          <input type="number" id="hrvInput" inputmode="numeric" placeholder="45">
+        </div>
+      </div>
+
+      <div class="modal-actions">
+        <button class="btn btn-primary" onclick="saveReadiness()">Save</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Workout Complete Modal -->
+  <div class="modal-overlay" id="completeModal">
+    <div class="modal-content complete-modal">
+      <h2>Workout Complete!</h2>
+      <p id="workoutDuration">45 minutes</p>
+
+      <div class="stats-grid">
+        <div class="stat-box">
+          <div class="stat-value" id="setsCompleted">0</div>
+          <div class="stat-label">Sets Completed</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-value" id="totalVolume">0</div>
+          <div class="stat-label">Total Volume (lbs)</div>
+        </div>
+      </div>
+
+      <div class="input-group overall-feel">
+        <label class="input-label">Overall difficulty (1 = easy, 10 = max effort)</label>
+        <div class="overall-slider" id="overallSlider">
+          <button class="overall-btn" data-value="1">1</button>
+          <button class="overall-btn" data-value="2">2</button>
+          <button class="overall-btn" data-value="3">3</button>
+          <button class="overall-btn" data-value="4">4</button>
+          <button class="overall-btn" data-value="5">5</button>
+          <button class="overall-btn" data-value="6">6</button>
+          <button class="overall-btn" data-value="7">7</button>
+          <button class="overall-btn" data-value="8">8</button>
+          <button class="overall-btn" data-value="9">9</button>
+          <button class="overall-btn" data-value="10">10</button>
+        </div>
+      </div>
+
+      <div class="input-group">
+        <label class="input-label">Main challenge today?</label>
+        <div class="effort-type-selector" id="overallEffortType">
+          <button class="effort-type-btn" data-value="physical">
+            <span class="type-icon">💪</span>
+            <span class="type-label">Physical</span>
+          </button>
+          <button class="effort-type-btn" data-value="technical">
+            <span class="type-icon">🎯</span>
+            <span class="type-label">Technical</span>
+          </button>
+          <button class="effort-type-btn" data-value="mental">
+            <span class="type-icon">🧠</span>
+            <span class="type-label">Mental</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="input-group">
+        <label class="input-label">Notes (optional)</label>
+        <textarea class="notes-input" id="workoutNotes" placeholder="Anything to remember for next time?"></textarea>
+      </div>
+
+      <div class="modal-actions">
+        <button class="btn btn-success" onclick="saveWorkout()">Save Workout</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Workout Preview Modal -->
+  <div class="modal-overlay" id="previewModal">
+    <div class="modal-content preview-modal">
+      <div class="modal-header">
+        <div class="modal-title" id="previewTitle">Workout Preview</div>
+        <button class="modal-close" onclick="closePreviewModal()">&times;</button>
+      </div>
+      <div id="previewDate" style="font-size: 12px; color: var(--text-secondary); margin-bottom: 12px;"></div>
+      <div id="previewMeta" style="display: flex; gap: 12px; font-size: 13px; color: var(--text-secondary); margin-bottom: 16px;"></div>
+      <div class="workout-preview-content" id="previewContent">
+        <!-- Preview content rendered dynamically -->
+      </div>
+      <div class="modal-actions">
+        <button class="btn btn-secondary" onclick="closePreviewModal()">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Travel Activity Modal -->
+  <div class="modal-overlay" id="travelActivityModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="modal-title">Log Travel Activity</div>
+        <button class="modal-close" onclick="closeTravelActivityModal()">&times;</button>
+      </div>
+
+      <div class="input-group">
+        <label class="input-label">Activity Type</label>
+        <div class="travel-activity-types" id="travelActivityTypes">
+          <button class="activity-type-btn" data-value="hiking">Hiking</button>
+          <button class="activity-type-btn" data-value="bodyweight">Bodyweight</button>
+          <button class="activity-type-btn" data-value="yoga">Yoga</button>
+          <button class="activity-type-btn" data-value="walking">Walking</button>
+          <button class="activity-type-btn" data-value="gym">Gym</button>
+          <button class="activity-type-btn" data-value="handball">Handball</button>
+          <button class="activity-type-btn" data-value="other">Other</button>
+        </div>
+      </div>
+
+      <div class="input-group">
+        <label class="input-label">Description (optional)</label>
+        <input type="text" id="travelActivityDescription" class="notes-input" style="min-height: auto; padding: 12px;" placeholder="e.g., Morning hike in Davis Mountains">
+      </div>
+
+      <div class="input-group">
+        <label class="input-label">Duration (minutes)</label>
+        <div class="input-field">
+          <input type="number" id="travelActivityDuration" inputmode="numeric" placeholder="45">
+        </div>
+      </div>
+
+      <div class="input-group">
+        <label class="input-label">How did it feel? (1-5)</label>
+        <div class="travel-feel-slider" id="travelFeelSlider">
+          <button class="travel-feel-btn" data-value="1">1</button>
+          <button class="travel-feel-btn" data-value="2">2</button>
+          <button class="travel-feel-btn" data-value="3">3</button>
+          <button class="travel-feel-btn" data-value="4">4</button>
+          <button class="travel-feel-btn" data-value="5">5</button>
+        </div>
+      </div>
+
+      <div class="input-group">
+        <label class="input-label">Notes (optional)</label>
+        <textarea class="notes-input" id="travelActivityNotes" placeholder="Anything to remember?"></textarea>
+      </div>
+
+      <div class="modal-actions">
+        <button class="btn btn-secondary" onclick="closeTravelActivityModal()">Cancel</button>
+        <button class="btn btn-primary" style="background: #9575cd;" onclick="saveTravelActivity()">Save Activity</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Adjustment Modal -->
+  <div class="modal-overlay" id="adjustmentModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="modal-title">Log Adjustment</div>
+        <button class="modal-close" onclick="closeAdjustmentModal()">&times;</button>
+      </div>
+
+      <div class="input-group">
+        <label class="input-label">What did you adjust?</label>
+        <div class="adjustment-reason-chips" id="adjustmentTypeChips">
+          <button class="reason-chip" data-value="reduced_weight">Reduced weight</button>
+          <button class="reason-chip" data-value="fewer_reps">Fewer reps</button>
+          <button class="reason-chip" data-value="skipped_exercise">Skipped exercise</button>
+          <button class="reason-chip" data-value="modified_movement">Modified movement</button>
+        </div>
+      </div>
+
+      <div class="input-group">
+        <label class="input-label">Why? (optional)</label>
+        <div class="adjustment-reason-chips" id="adjustmentReasonChips">
+          <button class="reason-chip" data-value="fatigue">Fatigue</button>
+          <button class="reason-chip" data-value="discomfort">Discomfort</button>
+          <button class="reason-chip" data-value="time">Time</button>
+          <button class="reason-chip" data-value="form">Form issues</button>
+        </div>
+      </div>
+
+      <div class="input-group">
+        <label class="input-label">Notes (optional)</label>
+        <textarea class="notes-input" id="adjustmentNotes" placeholder="e.g., Left shoulder felt tight from handball yesterday"></textarea>
+      </div>
+
+      <div class="modal-actions">
+        <button class="btn btn-secondary" onclick="closeAdjustmentModal()">Cancel</button>
+        <button class="btn btn-primary" style="background: var(--warning);" onclick="saveAdjustment()">Save Adjustment</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bottom Navigation -->
+  <nav>
+    <div class="nav-item active" onclick="showView('today')">
+      <span class="nav-icon">📅</span>
+      <span>Today</span>
+    </div>
+    <div class="nav-item" onclick="showView('plan')">
+      <span class="nav-icon">📆</span>
+      <span>Plan</span>
+    </div>
+    <div class="nav-item" onclick="showView('history')">
+      <span class="nav-icon">📊</span>
+      <span>History</span>
+    </div>
+    <div class="nav-item" onclick="showView('progress')">
+      <span class="nav-icon">📈</span>
+      <span>Progress</span>
+    </div>
+  </nav>
+
+  <script>
+    // ==================== FIREBASE SYNC HELPERS ====================
+    // Cache for workout history to avoid repeated reads
+    let workoutHistoryCache = null;
+    let historyLoaded = false;
+
+    // Get workout history (from cache, localStorage, or Firestore)
+    function getWorkoutHistory() {
+      if (workoutHistoryCache !== null) {
+        return workoutHistoryCache;
+      }
+      // Fallback to localStorage while Firestore loads
+      return JSON.parse(localStorage.getItem('workoutHistory') || '[]');
+    }
+
+    // Save workout to history (Firestore + localStorage)
+    function saveWorkoutToHistory(workoutData) {
+      // Add to local cache
+      if (workoutHistoryCache === null) {
+        workoutHistoryCache = JSON.parse(localStorage.getItem('workoutHistory') || '[]');
+      }
+      workoutHistoryCache.unshift(workoutData);
+      workoutHistoryCache = workoutHistoryCache.slice(0, 100);
+
+      // Save to localStorage as backup
+      localStorage.setItem('workoutHistory', JSON.stringify(workoutHistoryCache));
+
+      // Save to Firestore
+      db.collection('workouts').add(workoutData)
+        .then(() => console.log('Workout saved to cloud'))
+        .catch((error) => console.log('Error saving workout:', error));
+    }
+
+    // Load workout history from Firestore (call once on init)
+    function loadWorkoutHistoryFromCloud() {
+      db.collection('workouts')
+        .orderBy('timestamp', 'desc')
+        .limit(100)
+        .get()
+        .then((querySnapshot) => {
+          const cloudHistory = [];
+          querySnapshot.forEach((doc) => {
+            cloudHistory.push(doc.data());
+          });
+
+          if (cloudHistory.length > 0) {
+            workoutHistoryCache = cloudHistory;
+            localStorage.setItem('workoutHistory', JSON.stringify(cloudHistory));
+            // Refresh displays
+            loadHistory();
+            loadPlanView();
+          } else {
+            // No cloud data, use localStorage
+            workoutHistoryCache = JSON.parse(localStorage.getItem('workoutHistory') || '[]');
+          }
+          historyLoaded = true;
+        })
+        .catch((error) => {
+          console.log('Error loading history from cloud:', error);
+          workoutHistoryCache = JSON.parse(localStorage.getItem('workoutHistory') || '[]');
+          historyLoaded = true;
+        });
+    }
+
+    // ==================== DATA ====================
+    const WORKOUTS = {
+      tuesday: {
+        upperBody: {
+          name: "Upper Body Focus",
+          type: "Strength",
+          duration: "45-50 min",
+          location: "Gym",
+          condition: "Readiness 75+ and Monday game ended early",
+          circuits: [
+            {
+              name: "Circuit A",
+              instructions: "Do A1-A2-A3, rest 90 sec, repeat 3x",
+              restTime: 90,
+              exercises: [
+                { id: "a1", name: "Single Arm DB Row", sets: 3, reps: 10, weight: 15, notes: "Each arm. Keep core tight, pull elbow back", perSide: true },
+                { id: "a2", name: "Chest Press Machine", sets: 3, reps: 10, weight: 70, notes: "Full range of motion" },
+                { id: "a3", name: "Russian Twists w/ Weight", sets: 3, reps: 20, weight: 20, notes: "Tap weight to floor each side" }
+              ]
+            },
+            {
+              name: "Circuit B",
+              instructions: "Do B1-B2-B3, rest 90 sec, repeat 3x",
+              restTime: 90,
+              exercises: [
+                { id: "b1", name: "Lateral Shoulder Raise", sets: 3, reps: 10, weight: 5, notes: "Raise to shoulder height, controlled" },
+                { id: "b2", name: "Lat Pulldown Machine", sets: 3, reps: 10, weight: 55, notes: "Pull to upper chest, squeeze" },
+                { id: "b3", name: "Weighted Sit-ups", sets: 3, reps: 12, weight: 5, notes: "Hold weight at chest" }
+              ]
+            },
+            {
+              name: "Circuit C",
+              instructions: "Do C1-C2, rest 90 sec, repeat 3x",
+              restTime: 90,
+              exercises: [
+                { id: "c1", name: "Bicep Curls", sets: 3, reps: 10, weight: 7.5, notes: "No swinging, control down" },
+                { id: "c2", name: "Cable Tricep Extension", sets: 3, reps: 10, weight: 25, notes: "Elbows stay pinned to sides" }
+              ]
+            }
+          ]
+        },
+        recovery: {
+          name: "Post-Late-Game Recovery",
+          type: "Recovery",
+          duration: "20-25 min",
+          location: "Home",
+          condition: "Late Monday game (after 9pm) OR readiness 70-75",
+          circuits: [
+            {
+              name: "A. Gentle Warm-Up",
+              instructions: "3-4 minutes",
+              exercises: [
+                { id: "r1", name: "Arm Circles", sets: 1, reps: 20, notes: "10 forward, 10 backward", noWeight: true },
+                { id: "r2", name: "Shoulder Shrugs", sets: 1, reps: 15, noWeight: true },
+                { id: "r3", name: "Neck Rolls", sets: 1, reps: 10, notes: "5 each direction", noWeight: true },
+                { id: "r4", name: "Cross-body Arm Swings", sets: 1, reps: 20, noWeight: true }
+              ]
+            },
+            {
+              name: "B. Shoulder Mobility Flow",
+              instructions: "5-6 minutes",
+              exercises: [
+                { id: "r5", name: "Wall Angels", sets: 2, reps: 10, noWeight: true },
+                { id: "r6", name: "Thread the Needle", sets: 2, reps: 8, notes: "Each side", perSide: true, noWeight: true },
+                { id: "r7", name: "Child's Pose Shoulder Stretch", sets: 1, reps: 1, notes: "Hold 60 seconds", isHold: true, holdTime: 60, noWeight: true }
+              ]
+            },
+            {
+              name: "C. Light Shoulder Stability",
+              instructions: "8-10 minutes with band",
+              exercises: [
+                { id: "r8", name: "Band External Rotation", sets: 2, reps: 12, notes: "Each arm, standing", perSide: true, noWeight: true },
+                { id: "r9", name: "Band Pull-Aparts", sets: 2, reps: 15, noWeight: true },
+                { id: "r10", name: "Scapular Wall Slides", sets: 2, reps: 10, noWeight: true },
+                { id: "r11", name: "Band Y-T-W Series", sets: 1, reps: 8, notes: "8 reps each position", noWeight: true }
+              ]
+            }
+          ]
+        }
+      },
+      thursday: {
+        bike: {
+          name: "Bike Training Week 1",
+          type: "Cardio",
+          duration: "45 min",
+          location: "Outdoor Track",
+          circuits: [
+            {
+              name: "Warm-Up",
+              instructions: "15 minutes total",
+              exercises: [
+                { id: "bw1", name: "Easy Spinning", sets: 1, reps: 1, notes: "5 min easy", isCardio: true, duration: 300 },
+                { id: "bw2", name: "Moderate Pace", sets: 1, reps: 1, notes: "5 min moderate", isCardio: true, duration: 300 },
+                { id: "bw3", name: "High Cadence Intervals", sets: 2, reps: 1, notes: "1 min at 100+ RPM, 2 min recovery", isCardio: true },
+                { id: "bw4", name: "Easy Recovery", sets: 1, reps: 1, notes: "3 min easy", isCardio: true, duration: 180 }
+              ]
+            },
+            {
+              name: "Main Set",
+              instructions: "20 minutes - Focus on 85-95 RPM",
+              exercises: [
+                { id: "bm1", name: "Tempo Intervals", sets: 4, reps: 1, notes: "3 min at tempo (comfortably hard), 2 min recovery between. Mental cue: Quick feet, light pressure", isCardio: true, hasRPM: true }
+              ]
+            },
+            {
+              name: "Cool-Down",
+              instructions: "10 minutes",
+              exercises: [
+                { id: "bc1", name: "Easy Spinning", sets: 1, reps: 1, notes: "Gradually decrease effort", isCardio: true, duration: 600 }
+              ]
+            },
+            {
+              name: "Clipping Practice",
+              instructions: "During warm-up and cool-down",
+              exercises: [
+                { id: "bp1", name: "Clip-in Practice", sets: 1, reps: 20, notes: "Practice smooth clip-ins/outs while rolling", noWeight: true }
+              ]
+            }
+          ]
+        }
+      },
+      friday: {
+        lowerBody: {
+          name: "Lower Body Focus",
+          type: "Strength",
+          duration: "45 min",
+          location: "Gym",
+          condition: "Readiness 80+ and legs feel good",
+          circuits: [
+            {
+              name: "Warm-Up",
+              instructions: "5-7 minutes",
+              exercises: [
+                { id: "fw1", name: "Dynamic Stretches", sets: 1, reps: 1, notes: "BW squats, glute bridges, 30s plank", noWeight: true }
+              ]
+            },
+            {
+              name: "Circuit A",
+              instructions: "Do A1-A2-A3, rest 90 sec, repeat 3x",
+              restTime: 90,
+              exercises: [
+                { id: "fa1", name: "DB Goblet Squat", sets: 3, reps: 12, weight: 25, notes: "Full depth, chest up" },
+                { id: "fa2", name: "Jump Squats", sets: 3, reps: 10, notes: "Explosive, land softly", noWeight: true },
+                { id: "fa3", name: "Front Low Plank Hold", sets: 3, reps: 1, notes: "Hold 30 sec, straight line", isHold: true, holdTime: 30, noWeight: true }
+              ]
+            },
+            {
+              name: "Circuit B",
+              instructions: "Do B1-B2-B3, rest 90 sec, repeat 3x",
+              restTime: 90,
+              exercises: [
+                { id: "fb1", name: "DB Reverse Lunges", sets: 3, reps: 8, weight: 15, notes: "Each leg, knee nearly to floor", perSide: true },
+                { id: "fb2", name: "DB RDLs", sets: 3, reps: 10, weight: 15, notes: "Hinge at hips, feel hamstrings" },
+                { id: "fb3", name: "Side Plank Hold L+R", sets: 3, reps: 1, notes: "25 sec each side", isHold: true, holdTime: 25, perSide: true, noWeight: true }
+              ]
+            },
+            {
+              name: "Circuit C",
+              instructions: "Do C1-C2, rest 90 sec, repeat 3x",
+              restTime: 90,
+              exercises: [
+                { id: "fc1", name: "Leg Press Machine", sets: 3, reps: 10, weight: 100, notes: "Full range, control weight" },
+                { id: "fc2", name: "Hamstring Curl Machine", sets: 3, reps: 10, weight: 50, notes: "Squeeze at top, slow release" }
+              ]
+            }
+          ]
+        }
+      },
+      saturday: {
+        handball: {
+          name: "Handball Skill Session",
+          type: "Sport-Specific",
+          duration: "45-60 min",
+          location: "Squash Court / Wall",
+          circuits: [
+            {
+              name: "Dynamic Warm-Up",
+              instructions: "8 minutes",
+              exercises: [
+                { id: "hw1", name: "Light Jog + High Knees + Butt Kicks", sets: 1, reps: 1, notes: "3 min general movement", noWeight: true, isCardio: true },
+                { id: "hw2", name: "Arm Circles with Ball", sets: 1, reps: 20, notes: "10 forward, 10 backward", noWeight: true },
+                { id: "hw3", name: "Wall Passes Both Hands", sets: 1, reps: 20, notes: "10 each hand at shoulder height", noWeight: true }
+              ]
+            },
+            {
+              name: "Jump Shot Technique",
+              instructions: "15 minutes - Remember: L-R-LEFT rhythm for right hand",
+              exercises: [
+                { id: "hj1", name: "Chair Drill", sets: 1, reps: 10, notes: "5 right hand, 5 LEFT hand", noWeight: true },
+                { id: "hj2", name: "Wall Target Throws", sets: 3, reps: 12, notes: "6 throws each hand. Alternate 2R, 2L. Rest 60 sec between sets", noWeight: true },
+                { id: "hj3", name: "Approach from Angle", sets: 3, reps: 8, notes: "4 throws each side. Rest 60 sec between", noWeight: true }
+              ]
+            },
+            {
+              name: "Left Hand Development",
+              instructions: "12 minutes - FOCUS BLOCK",
+              exercises: [
+                { id: "hl1", name: "Distance Progression (Left)", sets: 1, reps: 40, notes: "15 at 2m, 15 at 4m, 10 at 6m", noWeight: true },
+                { id: "hl2", name: "Target Practice (Left)", sets: 1, reps: 20, notes: "Hit 4 different targets 5 times each", noWeight: true },
+                { id: "hl3", name: "Standing Shot Technique (Left)", sets: 1, reps: 20, notes: "Focus on high elbow, wrist snap", noWeight: true }
+              ]
+            },
+            {
+              name: "Conditioning Circuit",
+              instructions: "10 minutes - 3 rounds",
+              exercises: [
+                { id: "hc1", name: "Sprint + Catch + Shoot", sets: 3, reps: 10, notes: "90 sec each round, alternate hands", noWeight: true, isCardio: true },
+                { id: "hc2", name: "Defensive Hold + Shot", sets: 3, reps: 6, notes: "60 sec: hold stance, explode to shot every 10 sec", noWeight: true }
+              ]
+            },
+            {
+              name: "30 in 3 Finisher",
+              instructions: "Track your score!",
+              exercises: [
+                { id: "hf1", name: "30 in 3", sets: 1, reps: 30, notes: "30 successful throws in 3 minutes - mix of shots", noWeight: true, isCardio: true, trackScore: true }
+              ]
+            }
+          ]
+        }
+      }
+    };
+
+    // ==================== STATE ====================
+    let state = {
+      currentDate: new Date(),
+      readiness: null,
+      sleepScore: null,
+      hrv: null,
+      activeWorkout: null,
+      workoutStartTime: null,
+      currentExercise: null,
+      currentSet: null,
+      workoutLog: {},
+      timerInterval: null,
+      timerSeconds: 0,
+      overallFeel: null,
+      overallEffortType: null,
+      // New state for travel and adjustments
+      currentTravelDay: null,
+      workoutAdjustments: []
+    };
+
+    // ==================== INITIALIZATION ====================
+    function init() {
+      loadState();
+      updateDateDisplay();
+      loadTodaysWorkout();
+      loadHistory();
+      loadPlanView();
+      setupEventListeners();
+
+      // Load workout history from cloud (will refresh displays when done)
+      loadWorkoutHistoryFromCloud();
+    }
+
+    function loadState() {
+      // Load from Firestore
+      db.collection('userData').doc('dailyState').get()
+        .then((doc) => {
+          if (doc.exists) {
+            const data = doc.data();
+            // Check if saved data is from before today's 1am Central reset
+            if (data.savedAt && !isAfterTodaysReset(data.savedAt)) {
+              // Data is stale, clear it
+              state.readiness = null;
+              state.sleepScore = null;
+              state.hrv = null;
+            } else {
+              state.readiness = data.readiness || null;
+              state.sleepScore = data.sleepScore || null;
+              state.hrv = data.hrv || null;
+            }
+          }
+          updateReadinessDisplay();
+        })
+        .catch((error) => {
+          console.log('Error loading state:', error);
+          // Fallback to localStorage
+          const saved = localStorage.getItem('trainingTrackerState');
+          if (saved) {
+            const parsed = JSON.parse(saved);
+            if (parsed.savedAt && !isAfterTodaysReset(parsed.savedAt)) {
+              state.readiness = null;
+              state.sleepScore = null;
+              state.hrv = null;
+            } else {
+              state.readiness = parsed.readiness;
+              state.sleepScore = parsed.sleepScore;
+              state.hrv = parsed.hrv;
+            }
+          }
+          updateReadinessDisplay();
+        });
+    }
+
+    function isAfterTodaysReset(savedTimestamp) {
+      // Reset time is 1am Central
+      // Central Time is UTC-6 (CST) or UTC-5 (CDT)
+      const now = new Date();
+      const savedDate = new Date(savedTimestamp);
+
+      // Get today's 1am Central in local time
+      // Create a date for today at 1am Central
+      const centralOffset = getCentralOffset();
+      const todayReset = new Date();
+      todayReset.setHours(1, 0, 0, 0);
+      // Adjust for Central time (this assumes user is in Central, which Sophie is)
+
+      // If current time is before 1am, the reset point is yesterday at 1am
+      if (now.getHours() < 1) {
+        todayReset.setDate(todayReset.getDate() - 1);
+      }
+
+      return savedDate >= todayReset;
+    }
+
+    function getCentralOffset() {
+      // Determine if we're in CDT or CST
+      // CDT (daylight) is March-November, CST is November-March
+      const now = new Date();
+      const jan = new Date(now.getFullYear(), 0, 1);
+      const jul = new Date(now.getFullYear(), 6, 1);
+      const stdOffset = Math.max(jan.getTimezoneOffset(), jul.getTimezoneOffset());
+      const isDST = now.getTimezoneOffset() < stdOffset;
+      return isDST ? -5 : -6; // CDT is -5, CST is -6
+    }
+
+    function saveState() {
+      const stateData = {
+        readiness: state.readiness,
+        sleepScore: state.sleepScore,
+        hrv: state.hrv,
+        savedAt: new Date().toISOString()
+      };
+
+      // Save to Firestore
+      db.collection('userData').doc('dailyState').set(stateData)
+        .catch((error) => console.log('Error saving state:', error));
+
+      // Also save to localStorage as backup
+      localStorage.setItem('trainingTrackerState', JSON.stringify(stateData));
+    }
+
+    function updateDateDisplay() {
+      const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+      const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+      const d = state.currentDate;
+
+      document.getElementById('dateDisplay').textContent =
+        `${days[d.getDay()]}, ${months[d.getMonth()]} ${d.getDate()}`;
+    }
+
+    function setupEventListeners() {
+      // Feel slider buttons
+      document.querySelectorAll('#feelSlider .feel-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          document.querySelectorAll('#feelSlider .feel-btn').forEach(b => b.classList.remove('selected'));
+          btn.classList.add('selected');
+        });
+      });
+
+      // Overall feel slider
+      document.querySelectorAll('#overallSlider .overall-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          document.querySelectorAll('#overallSlider .overall-btn').forEach(b => b.classList.remove('selected'));
+          btn.classList.add('selected');
+          state.overallFeel = parseInt(btn.dataset.value);
+        });
+      });
+
+      // Effort type selector (per set)
+      document.querySelectorAll('#effortTypeSelector .effort-type-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          document.querySelectorAll('#effortTypeSelector .effort-type-btn').forEach(b => b.classList.remove('selected'));
+          btn.classList.add('selected');
+        });
+      });
+
+      // Overall effort type selector (end of workout)
+      document.querySelectorAll('#overallEffortType .effort-type-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          document.querySelectorAll('#overallEffortType .effort-type-btn').forEach(b => b.classList.remove('selected'));
+          btn.classList.add('selected');
+          state.overallEffortType = btn.dataset.value;
+        });
+      });
+    }
+
+    // ==================== WORKOUT LOADING ====================
+    function loadTodaysWorkout() {
+      const dayIndex = state.currentDate.getDay();
+      const dayNames = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
+      const dayName = dayNames[dayIndex];
+      const dateKey = formatDateKey(state.currentDate);
+      const specialDate = SPECIAL_DATES[dateKey];
+
+      // Check if today is a travel day
+      if (specialDate && specialDate.type === 'travel') {
+        showTravelDay(specialDate);
+        return;
+      }
+
+      let workout = null;
+
+      // Determine which workout based on day
+      switch(dayName) {
+        case 'tuesday':
+          // Check Monday's game time to determine workout
+          const workoutType = getTuesdayWorkoutType(state.currentDate);
+          workout = workoutType === 'recovery' ? WORKOUTS.tuesday.recovery : WORKOUTS.tuesday.upperBody;
+          break;
+        case 'thursday':
+          workout = WORKOUTS.thursday.bike;
+          break;
+        case 'friday':
+          workout = WORKOUTS.friday.lowerBody;
+          break;
+        case 'saturday':
+          workout = WORKOUTS.saturday.handball;
+          break;
+        default:
+          // Show rest day or no workout scheduled
+          showNoWorkout(dayName, specialDate);
+          return;
+      }
+
+      state.activeWorkout = workout;
+      state.workoutStartTime = null;
+      state.workoutLog = {};
+      renderWorkout(workout);
+    }
+
+    function showTravelDay(specialDate) {
+      const content = document.getElementById('workoutContent');
+      document.getElementById('dayName').textContent = 'Travel Day';
+
+      // Store current travel info for logging
+      state.currentTravelDay = specialDate;
+
+      // Check if already logged activity today
+      const dateKey = formatDateKey(state.currentDate);
+      const history = getWorkoutHistory();
+      const todayLog = history.find(w => w.date === dateKey);
+      const hasLogged = todayLog && todayLog.type === 'Travel Activity';
+
+      let optionsList = '';
+      if (specialDate.facilities === 'minimal') {
+        optionsList = `
+          <li>Walking or hiking</li>
+          <li>Bodyweight exercises (squats, lunges, push-ups)</li>
+          <li>Stretching and mobility work</li>
+          <li>Light yoga or movement flow</li>
+          <li>Active recovery - enjoy the trip!</li>
+        `;
+      } else if (specialDate.isTraining) {
+        optionsList = `
+          <li>Handball clinic drills</li>
+          <li>Shooting practice</li>
+          <li>Team training</li>
+          <li>Tournament games</li>
+        `;
+      } else {
+        optionsList = `
+          <li>Gym workout (day pass available)</li>
+          <li>Handball skills - find a wall</li>
+          <li>Cardio on machines</li>
+          <li>Upper or lower body session</li>
+          <li>Stretching and mobility</li>
+        `;
+      }
+
+      const facilityMessage = specialDate.facilities === 'minimal'
+        ? 'Facilities are minimal. Focus on rest and enjoying the trip!'
+        : specialDate.isTraining
+          ? 'Handball training counts as your workout!'
+          : `${specialDate.note}`;
+
+      content.innerHTML = `
+        <div class="workout-header" style="background: linear-gradient(135deg, rgba(149,117,205,0.3) 0%, var(--bg-secondary) 100%);">
+          <div class="workout-type" style="color: #b39ddb;">TRAVEL</div>
+          <div class="workout-title">${specialDate.location}</div>
+          <div class="workout-meta">
+            <span style="color: #b39ddb;">${specialDate.note}</span>
+          </div>
+        </div>
+        <div style="padding: 20px;">
+          <div style="background: var(--bg-secondary); border-radius: var(--radius); padding: 16px; margin-bottom: 16px;">
+            <h3 style="font-size: 14px; margin-bottom: 12px; color: var(--text-primary);">Travel-Friendly Options</h3>
+            <ul style="color: var(--text-secondary); font-size: 13px; margin-left: 20px; line-height: 1.8;">
+              ${optionsList}
+            </ul>
+          </div>
+          <div style="background: rgba(149,117,205,0.15); border: 1px solid #9575cd; border-radius: var(--radius); padding: 16px; margin-bottom: 16px;">
+            <p style="color: var(--text-secondary); font-size: 13px; text-align: center;">
+              ${facilityMessage}
+            </p>
+          </div>
+          ${hasLogged ? `
+            <div style="background: rgba(78, 205, 196, 0.15); border: 1px solid var(--success); border-radius: var(--radius); padding: 16px; text-align: center;">
+              <p style="color: var(--success); font-size: 14px; font-weight: 600;">Activity Logged!</p>
+              <p style="color: var(--text-secondary); font-size: 12px; margin-top: 4px;">${todayLog.workout}</p>
+            </div>
+          ` : `
+            <button class="btn btn-primary" style="width: 100%; background: #9575cd;" onclick="showTravelActivityModal()">
+              Log What You Did
+            </button>
+          `}
+        </div>
+      `;
+    }
+
+    function showNoWorkout(dayName, specialDate) {
+      const content = document.getElementById('workoutContent');
+      let message = '';
+      let extraInfo = '';
+
+      if (dayName === 'sunday') {
+        message = 'Rest Day - recover and recharge!';
+      } else if (dayName === 'monday') {
+        // Check for specific soccer game time
+        if (specialDate && specialDate.type === 'soccer') {
+          message = `Personal Training (4pm) + Soccer (${specialDate.start})`;
+          const gameEndClass = specialDate.isLate ? 'color: var(--accent-light);' : 'color: var(--success);';
+          extraInfo = `
+            <div style="margin-top: 12px; padding: 12px; background: var(--bg-card); border-radius: 8px;">
+              <p style="font-size: 13px; color: var(--text-secondary);">
+                Game ends: <span style="${gameEndClass} font-weight: 600;">${specialDate.end}</span>
+                ${specialDate.isLate ? ' (Late game)' : ' (Early game)'}
+              </p>
+              <p style="font-size: 12px; color: var(--text-secondary); margin-top: 8px;">
+                ${specialDate.isLate
+                  ? 'Tomorrow: Recovery workout recommended'
+                  : 'Tomorrow: Upper Body OK if readiness 75+'}
+              </p>
+            </div>
+          `;
+        } else {
+          message = 'Personal Training (4pm) + Soccer tonight';
+        }
+      } else if (dayName === 'wednesday') {
+        message = 'Handball Practice (7-9pm)';
+      } else {
+        message = 'No scheduled workout';
+      }
+
+      content.innerHTML = `
+        <div class="workout-header">
+          <div class="workout-type">${dayName.toUpperCase()}</div>
+          <div class="workout-title">${message}</div>
+          ${extraInfo}
+        </div>
+      `;
+    }
+
+    function renderWorkout(workout) {
+      const content = document.getElementById('workoutContent');
+      document.getElementById('dayName').textContent = workout.name;
+
+      let html = `
+        <div class="workout-header">
+          <div class="workout-type">${workout.type}</div>
+          <div class="workout-title">${workout.name}</div>
+          <div class="workout-meta">
+            <span>⏱ ${workout.duration}</span>
+            <span>📍 ${workout.location}</span>
+          </div>
+        </div>
+
+        <div class="progress-container">
+          <div class="progress-label">
+            <span>Progress</span>
+            <span id="progressText">0%</span>
+          </div>
+          <div class="progress-bar">
+            <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+          </div>
+        </div>
+      `;
+
+      workout.circuits.forEach((circuit, circuitIndex) => {
+        html += `
+          <div class="circuit-section" id="circuit-${circuitIndex}">
+            <div class="circuit-header">
+              <div>
+                <h3>${circuit.name}</h3>
+                <div class="circuit-instructions">${circuit.instructions}</div>
+              </div>
+              <div class="circuit-status" id="circuit-status-${circuitIndex}">0/${getTotalSets(circuit)}</div>
+            </div>
+        `;
+
+        circuit.exercises.forEach((exercise, exerciseIndex) => {
+          html += renderExercise(exercise, circuitIndex, exerciseIndex, circuit.restTime);
+        });
+
+        html += `</div>`;
+      });
+
+      html += `
+        <div style="padding: 20px;">
+          <button class="btn btn-success" style="width: 100%;" onclick="finishWorkout()">
+            Finish Workout
+          </button>
+        </div>
+      `;
+
+      content.innerHTML = html;
+    }
+
+    function renderExercise(exercise, circuitIndex, exerciseIndex, restTime) {
+      const exerciseId = `${circuitIndex}-${exerciseIndex}`;
+      const repsText = exercise.isHold ? `${exercise.holdTime}s hold` :
+                       exercise.isCardio ? (exercise.duration ? `${Math.floor(exercise.duration/60)}min` : 'Complete') :
+                       `${exercise.reps} reps`;
+
+      let html = `
+        <div class="exercise-card" id="exercise-${exerciseId}">
+          <div class="exercise-top">
+            <div>
+              <div class="exercise-name">${exercise.name}</div>
+              <div class="exercise-target">${exercise.sets} x ${repsText}${exercise.weight ? ` @ ${exercise.weight}+ lbs` : ''}</div>
+              ${exercise.notes ? `<div class="exercise-notes">${exercise.notes}</div>` : ''}
+            </div>
+          </div>
+          <div class="sets-container">
+      `;
+
+      for (let i = 0; i < exercise.sets; i++) {
+        const setId = `${exerciseId}-${i}`;
+        html += `
+          <div class="set-pill" id="set-${setId}" onclick="openSetModal('${exerciseId}', ${i}, ${JSON.stringify(exercise).replace(/"/g, '&quot;')}, ${restTime || 90})">
+            <div class="set-number">Set ${i + 1}</div>
+            <div class="set-value" id="set-value-${setId}">--</div>
+          </div>
+        `;
+      }
+
+      html += `
+          </div>
+        </div>
+      `;
+
+      return html;
+    }
+
+    function getTotalSets(circuit) {
+      return circuit.exercises.reduce((sum, ex) => sum + ex.sets, 0);
+    }
+
+    // ==================== SET LOGGING ====================
+    function openSetModal(exerciseId, setIndex, exercise, restTime) {
+      if (!state.workoutStartTime) {
+        state.workoutStartTime = new Date();
+      }
+
+      state.currentExercise = { id: exerciseId, data: exercise };
+      state.currentSet = setIndex;
+      state.currentRestTime = restTime;
+
+      document.getElementById('modalExerciseName').textContent = exercise.name;
+      document.getElementById('modalSetNumber').textContent = setIndex + 1;
+      document.getElementById('modalTotalSets').textContent = exercise.sets;
+
+      // Show/hide weight field
+      const weightField = document.getElementById('weightField');
+      if (exercise.noWeight) {
+        weightField.style.display = 'none';
+      } else {
+        weightField.style.display = 'block';
+        document.getElementById('weightInput').value = exercise.weight || '';
+      }
+
+      // Pre-fill reps
+      document.getElementById('repsInput').value = exercise.reps || '';
+      document.getElementById('repsInput').placeholder = exercise.isHold ? exercise.holdTime : exercise.reps;
+
+      // Reset feel selection
+      document.querySelectorAll('#feelSlider .feel-btn').forEach(b => b.classList.remove('selected'));
+
+      // Reset effort type selection
+      document.querySelectorAll('#effortTypeSelector .effort-type-btn').forEach(b => b.classList.remove('selected'));
+
+      document.getElementById('setModal').classList.add('active');
+    }
+
+    function closeSetModal() {
+      document.getElementById('setModal').classList.remove('active');
+    }
+
+    function logSet() {
+      const weight = parseFloat(document.getElementById('weightInput').value) || 0;
+      const reps = parseInt(document.getElementById('repsInput').value) || state.currentExercise.data.reps;
+      const feelBtn = document.querySelector('#feelSlider .feel-btn.selected');
+      const feel = feelBtn ? parseInt(feelBtn.dataset.value) : 3;
+      const effortTypeBtn = document.querySelector('#effortTypeSelector .effort-type-btn.selected');
+      const effortType = effortTypeBtn ? effortTypeBtn.dataset.value : null;
+
+      const setId = `${state.currentExercise.id}-${state.currentSet}`;
+
+      // Save to log
+      if (!state.workoutLog[state.currentExercise.id]) {
+        state.workoutLog[state.currentExercise.id] = [];
+      }
+      state.workoutLog[state.currentExercise.id][state.currentSet] = { weight, reps, feel, effortType };
+
+      // Update UI
+      const pill = document.getElementById(`set-${setId}`);
+      pill.classList.add('complete');
+
+      const valueDisplay = state.currentExercise.data.noWeight ?
+        `${reps}` : `${weight}×${reps}`;
+      document.getElementById(`set-value-${setId}`).textContent = valueDisplay;
+
+      // Update progress
+      updateProgress();
+
+      closeSetModal();
+
+      // Start rest timer if not last set
+      if (state.currentSet < state.currentExercise.data.sets - 1) {
+        startRestTimer(state.currentRestTime);
+      }
+    }
+
+    function skipSet() {
+      const setId = `${state.currentExercise.id}-${state.currentSet}`;
+
+      if (!state.workoutLog[state.currentExercise.id]) {
+        state.workoutLog[state.currentExercise.id] = [];
+      }
+      state.workoutLog[state.currentExercise.id][state.currentSet] = { skipped: true };
+
+      const pill = document.getElementById(`set-${setId}`);
+      pill.classList.add('skipped');
+      document.getElementById(`set-value-${setId}`).textContent = 'Skip';
+
+      updateProgress();
+      closeSetModal();
+    }
+
+    function updateProgress() {
+      let totalSets = 0;
+      let completedSets = 0;
+
+      state.activeWorkout.circuits.forEach((circuit, circuitIndex) => {
+        let circuitComplete = 0;
+        circuit.exercises.forEach((exercise, exerciseIndex) => {
+          totalSets += exercise.sets;
+          const exerciseId = `${circuitIndex}-${exerciseIndex}`;
+          if (state.workoutLog[exerciseId]) {
+            const logged = state.workoutLog[exerciseId].filter(s => s && !s.skipped).length;
+            completedSets += logged;
+            circuitComplete += logged;
+          }
+        });
+        document.getElementById(`circuit-status-${circuitIndex}`).textContent =
+          `${circuitComplete}/${getTotalSets(circuit)}`;
+      });
+
+      const percent = Math.round((completedSets / totalSets) * 100);
+      document.getElementById('progressFill').style.width = `${percent}%`;
+      document.getElementById('progressText').textContent = `${percent}%`;
+    }
+
+    // ==================== REST TIMER ====================
+    function startRestTimer(seconds) {
+      state.timerSeconds = seconds;
+      updateTimerDisplay();
+      document.getElementById('restTimer').classList.add('active');
+
+      state.timerInterval = setInterval(() => {
+        state.timerSeconds--;
+        updateTimerDisplay();
+        if (state.timerSeconds <= 0) {
+          skipTimer();
+          // Could add vibration/sound here
+        }
+      }, 1000);
+    }
+
+    function updateTimerDisplay() {
+      const mins = Math.floor(state.timerSeconds / 60);
+      const secs = state.timerSeconds % 60;
+      document.getElementById('timerDisplay').textContent =
+        `${mins}:${secs.toString().padStart(2, '0')}`;
+    }
+
+    function skipTimer() {
+      clearInterval(state.timerInterval);
+      document.getElementById('restTimer').classList.remove('active');
+    }
+
+    // ==================== WORKOUT COMPLETION ====================
+    function finishWorkout() {
+      const duration = state.workoutStartTime ?
+        Math.round((new Date() - state.workoutStartTime) / 60000) : 0;
+
+      let setsCompleted = 0;
+      let totalVolume = 0;
+
+      Object.values(state.workoutLog).forEach(sets => {
+        sets.forEach(set => {
+          if (set && !set.skipped) {
+            setsCompleted++;
+            totalVolume += (set.weight || 0) * (set.reps || 0);
+          }
+        });
+      });
+
+      document.getElementById('workoutDuration').textContent = `${duration} minutes`;
+      document.getElementById('setsCompleted').textContent = setsCompleted;
+      document.getElementById('totalVolume').textContent = totalVolume.toLocaleString();
+
+      // Reset selections
+      document.querySelectorAll('#overallSlider .overall-btn').forEach(b => b.classList.remove('selected'));
+      document.querySelectorAll('#overallEffortType .effort-type-btn').forEach(b => b.classList.remove('selected'));
+      document.getElementById('workoutNotes').value = '';
+      state.overallFeel = null;
+      state.overallEffortType = null;
+
+      document.getElementById('completeModal').classList.add('active');
+    }
+
+    function saveWorkout() {
+      const workoutData = {
+        date: state.currentDate.toISOString().split('T')[0],
+        workout: state.activeWorkout.name,
+        type: state.activeWorkout.type,
+        duration: state.workoutStartTime ?
+          Math.round((new Date() - state.workoutStartTime) / 60000) : 0,
+        readiness: state.readiness,
+        log: state.workoutLog,
+        overallFeel: state.overallFeel,
+        overallEffortType: state.overallEffortType,
+        notes: document.getElementById('workoutNotes').value,
+        timestamp: new Date().toISOString(),
+        // New fields for adaptation and adjustments
+        adjustments: state.workoutAdjustments || [],
+        wasAdapted: adaptationApplied !== null,
+        adaptationReason: adaptationApplied ? adaptationApplied.message : null
+      };
+
+      // Save to Firestore and localStorage
+      saveWorkoutToHistory(workoutData);
+
+      document.getElementById('completeModal').classList.remove('active');
+
+      // Reset state
+      state.workoutLog = {};
+      state.workoutStartTime = null;
+      state.overallFeel = null;
+      state.overallEffortType = null;
+      state.workoutAdjustments = [];
+      adaptationApplied = null;
+      originalScheduledWorkout = null;
+
+      // Reload workout (shows fresh state)
+      loadTodaysWorkout();
+      loadHistory();
+    }
+
+    // ==================== READINESS ====================
+    function showReadinessModal() {
+      document.getElementById('readinessInput').value = state.readiness || '';
+      document.getElementById('sleepInput').value = state.sleepScore || '';
+      document.getElementById('hrvInput').value = state.hrv || '';
+      document.getElementById('readinessModal').classList.add('active');
+    }
+
+    function closeReadinessModal() {
+      document.getElementById('readinessModal').classList.remove('active');
+    }
+
+    function saveReadiness() {
+      state.readiness = parseInt(document.getElementById('readinessInput').value) || null;
+      state.sleepScore = parseInt(document.getElementById('sleepInput').value) || null;
+      state.hrv = parseInt(document.getElementById('hrvInput').value) || null;
+
+      updateReadinessDisplay();
+      saveState();
+      closeReadinessModal();
+
+      // Apply adaptation rules after saving readiness
+      applyAdaptationsAndReload();
+    }
+
+    function applyAdaptationsAndReload() {
+      const metrics = {
+        readiness: state.readiness,
+        sleepScore: state.sleepScore,
+        hrv: state.hrv
+      };
+
+      const triggeredRules = applyAdaptationRules(metrics);
+
+      if (triggeredRules.length > 0) {
+        const mainRule = triggeredRules[0];
+
+        // Check if we're on a workout day
+        const dayIndex = state.currentDate.getDay();
+        const dayNames = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
+        const dayName = dayNames[dayIndex];
+        const dateKey = formatDateKey(state.currentDate);
+        const specialDate = SPECIAL_DATES[dateKey];
+
+        // Only adapt if we have a regular workout scheduled (not travel, not rest)
+        if (specialDate && specialDate.type === 'travel') return;
+        if (!['tuesday', 'thursday', 'friday', 'saturday'].includes(dayName)) return;
+
+        // Store original workout
+        originalScheduledWorkout = state.activeWorkout;
+
+        if (mainRule.action === 'switch_to_rest') {
+          // Show rest day with adaptation banner
+          adaptationApplied = mainRule;
+          showAdaptedRestDay(mainRule);
+        } else if (mainRule.action === 'switch_to_recovery') {
+          // Switch to recovery workout
+          adaptationApplied = mainRule;
+          state.activeWorkout = WORKOUTS.tuesday.recovery;
+          renderWorkoutWithAdaptation(WORKOUTS.tuesday.recovery, mainRule);
+        } else {
+          // Just warnings - reload normally but show banner
+          loadTodaysWorkout();
+          // Insert warning banner after workout header
+          setTimeout(() => {
+            const header = document.querySelector('.workout-header');
+            if (header && triggeredRules.length > 0) {
+              const warningBanner = document.createElement('div');
+              warningBanner.className = 'adaptation-banner';
+              warningBanner.style.margin = '16px';
+              warningBanner.innerHTML = `
+                <div class="adaptation-banner-header">
+                  <span>Note for today</span>
+                </div>
+                <div class="adaptation-banner-message">
+                  ${triggeredRules.map(r => r.message).join('<br>')}
+                </div>
+              `;
+              header.after(warningBanner);
+            }
+          }, 0);
+        }
+      }
+    }
+
+    function showAdaptedRestDay(rule) {
+      const content = document.getElementById('workoutContent');
+      document.getElementById('dayName').textContent = 'Rest Day (Adapted)';
+
+      content.innerHTML = `
+        ${renderAdaptationBanner([rule], originalScheduledWorkout)}
+        <div class="workout-header">
+          <div class="workout-type" style="color: var(--warning);">ADAPTED</div>
+          <div class="workout-title">Rest Day</div>
+          <div class="workout-meta">
+            <span>Originally: ${originalScheduledWorkout ? originalScheduledWorkout.name : 'Workout'}</span>
+          </div>
+        </div>
+        <div style="padding: 20px;">
+          <div style="background: var(--bg-secondary); border-radius: var(--radius); padding: 20px; text-align: center;">
+            <div style="font-size: 32px; margin-bottom: 12px;">Take it easy today</div>
+            <p style="color: var(--text-secondary); font-size: 14px;">
+              Your body needs recovery. Focus on sleep, hydration, and light movement.
+            </p>
+          </div>
+        </div>
+      `;
+    }
+
+    function renderWorkoutWithAdaptation(workout, rule) {
+      const content = document.getElementById('workoutContent');
+      document.getElementById('dayName').textContent = workout.name;
+
+      let html = renderAdaptationBanner([rule], originalScheduledWorkout);
+
+      html += `
+        <div class="workout-header">
+          <div class="workout-type">${workout.type}</div>
+          <div class="workout-title">${workout.name}</div>
+          <div class="workout-meta">
+            <span>⏱ ${workout.duration}</span>
+            <span>📍 ${workout.location}</span>
+          </div>
+        </div>
+
+        <div class="progress-container">
+          <div class="progress-label">
+            <span>Progress</span>
+            <span id="progressText">0%</span>
+          </div>
+          <div class="progress-bar">
+            <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+          </div>
+        </div>
+      `;
+
+      workout.circuits.forEach((circuit, circuitIndex) => {
+        html += `
+          <div class="circuit-section" id="circuit-${circuitIndex}">
+            <div class="circuit-header">
+              <div>
+                <h3>${circuit.name}</h3>
+                <div class="circuit-instructions">${circuit.instructions}</div>
+              </div>
+              <div class="circuit-status" id="circuit-status-${circuitIndex}">0/${getTotalSets(circuit)}</div>
+            </div>
+        `;
+
+        circuit.exercises.forEach((exercise, exerciseIndex) => {
+          html += renderExercise(exercise, circuitIndex, exerciseIndex, circuit.restTime);
+        });
+
+        html += `</div>`;
+      });
+
+      html += `
+        <div style="padding: 20px;">
+          <button class="btn btn-success" style="width: 100%;" onclick="finishWorkout()">
+            Finish Workout
+          </button>
+        </div>
+      `;
+
+      content.innerHTML = html;
+      state.activeWorkout = workout;
+    }
+
+    function updateReadinessDisplay() {
+      const scoreEl = document.getElementById('readinessScore');
+      if (state.readiness) {
+        scoreEl.textContent = state.readiness;
+        scoreEl.className = 'readiness-score ' +
+          (state.readiness >= 80 ? 'readiness-high' :
+           state.readiness >= 70 ? 'readiness-mid' : 'readiness-low');
+      } else {
+        scoreEl.textContent = '--';
+        scoreEl.className = 'readiness-score';
+      }
+    }
+
+    // ==================== NAVIGATION ====================
+    function showView(viewName) {
+      document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+      document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+
+      document.getElementById(`${viewName}View`).classList.add('active');
+      document.querySelector(`.nav-item[onclick="showView('${viewName}')"]`).classList.add('active');
+
+      // Refresh plan view data when shown
+      if (viewName === 'plan') {
+        loadPlanView();
+      }
+    }
+
+    // ==================== HISTORY ====================
+    function loadHistory() {
+      const history = getWorkoutHistory();
+      const container = document.getElementById('historyList');
+
+      if (history.length === 0) {
+        container.innerHTML = '<p style="color: var(--text-secondary);">No workouts logged yet. Complete your first workout to see it here!</p>';
+        return;
+      }
+
+      container.innerHTML = history.slice(0, 10).map(workout => {
+        const date = new Date(workout.date);
+        const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+        const effortIcons = { physical: '💪', technical: '🎯', mental: '🧠' };
+
+        // Build badges
+        let badges = '';
+        if (workout.type === 'Travel Activity') {
+          badges += `<span class="history-badge travel">${workout.activityType || 'Travel'}</span>`;
+        }
+        if (workout.wasAdapted) {
+          badges += `<span class="history-badge adapted">Adapted</span>`;
+        }
+        if (workout.adjustments && workout.adjustments.length > 0) {
+          badges += `<span class="history-badge adjusted">${workout.adjustments.length} adjustment${workout.adjustments.length > 1 ? 's' : ''}</span>`;
+        }
+
+        // Different display for travel activities
+        if (workout.type === 'Travel Activity') {
+          return `
+            <div class="history-day" style="border-left: 3px solid #9575cd;">
+              <div class="history-date">${days[date.getDay()]}, ${date.toLocaleDateString()}</div>
+              <div class="history-workout">${workout.workout}</div>
+              <div class="history-stats">
+                ${workout.duration ? `<span>⏱ ${workout.duration} min</span>` : ''}
+                ${workout.location ? `<span>📍 ${workout.location}</span>` : ''}
+                ${workout.overallFeel ? `<span>Feel: ${workout.overallFeel}/5</span>` : ''}
+              </div>
+              ${badges ? `<div class="history-badges">${badges}</div>` : ''}
+              ${workout.notes ? `<div style="font-size: 12px; color: var(--text-secondary); margin-top: 8px; font-style: italic;">"${workout.notes}"</div>` : ''}
+            </div>
+          `;
+        }
+
+        return `
+          <div class="history-day">
+            <div class="history-date">${days[date.getDay()]}, ${date.toLocaleDateString()}</div>
+            <div class="history-workout">${workout.workout}</div>
+            <div class="history-stats">
+              <span>⏱ ${workout.duration} min</span>
+              ${workout.readiness ? `<span>💚 ${workout.readiness}</span>` : ''}
+              ${workout.overallFeel ? `<span>Effort: ${workout.overallFeel}/10</span>` : ''}
+              ${workout.overallEffortType ? `<span>${effortIcons[workout.overallEffortType]} ${workout.overallEffortType}</span>` : ''}
+            </div>
+            ${badges ? `<div class="history-badges">${badges}</div>` : ''}
+          </div>
+        `;
+      }).join('');
+    }
+
+    // ==================== PLAN VIEW ====================
+    const SCHEDULE = {
+      // Day of week (0=Sun, 1=Mon, etc) -> workout info
+      0: { type: 'rest', name: 'Rest Day', external: false },
+      1: { type: 'external', name: 'Personal Training (4pm) + Soccer', external: true, duration: 'Varies', location: 'Gym + Field' },
+      2: { type: 'gym', name: 'Upper Body OR Recovery', workout: 'tuesday', duration: '45-50 min', location: 'Gym/Home', preview: 'Rows, Chest Press, Shoulder Work, Core' },
+      3: { type: 'external', name: 'Handball Practice (7-9pm)', external: true, duration: '90 min', location: 'Court' },
+      4: { type: 'cardio', name: 'Bike + Shoulder Protocol', workout: 'thursday', duration: '45 min', location: 'Outdoor Track', preview: 'Tempo Intervals, Cadence Work, Clip Practice' },
+      5: { type: 'gym', name: 'Lower Body + Yoga (6:30pm)', workout: 'friday', duration: '45 min', location: 'Gym', preview: 'Squats, Lunges, RDLs, Core Stability' },
+      6: { type: 'sport', name: 'Soccer (2-3pm) + Handball Skills', workout: 'saturday', duration: '45-60 min', location: 'Field + Court', preview: 'Jump Shots, Left Hand Work, Conditioning' }
+    };
+
+    // Special dates with specific schedule info
+    const SPECIAL_DATES = {
+      // Monday soccer game times (format: 'YYYY-MM-DD': { start, end, isLate })
+      // isLate = ends after 9pm, affects next day's workout choice
+      '2026-02-09': { type: 'soccer', start: '7:40pm', end: '9:15pm', isLate: false, note: 'Early game - Tuesday can do Upper Body if readiness OK' },
+      '2026-02-23': { type: 'soccer', start: '8:45pm', end: '10:20pm', isLate: true, note: 'Late game - Tuesday should do Recovery' },
+      '2026-03-02': { type: 'soccer', start: '9:15pm', end: '10:50pm', isLate: true, note: 'Late game (outside 3-week plan)' },
+
+      // Fort Davis Trip (Feb 12-15) - minimal facilities
+      '2026-02-12': { type: 'travel', location: 'Fort Davis, TX', note: 'Travel day', facilities: 'minimal' },
+      '2026-02-13': { type: 'travel', location: 'Fort Davis, TX', note: 'Minimal facilities', facilities: 'minimal' },
+      '2026-02-14': { type: 'travel', location: 'Fort Davis, TX', note: 'Active recovery', facilities: 'minimal' },
+      '2026-02-15': { type: 'travel', location: 'Fort Davis, TX', note: 'Travel back to Houston', facilities: 'minimal' },
+
+      // NC Handball Trip (Feb 20-22)
+      '2026-02-20': { type: 'travel', location: 'NC', note: 'Hotel gym available - stay light before big weekend', facilities: 'gym' },
+      '2026-02-21': { type: 'travel', location: 'NC', note: 'Handball Clinic/Tournament', facilities: 'handball', isTraining: true },
+      '2026-02-22': { type: 'travel', location: 'NC', note: 'Carolina Blue Cup - Competition!', facilities: 'handball', isTraining: true },
+
+      // Kyle, TX Trip (Feb 27 - Mar 1) - gym day pass available
+      '2026-02-27': { type: 'travel', location: 'Kyle, TX', note: 'Gym day pass available', facilities: 'gym' },
+      '2026-02-28': { type: 'travel', location: 'Kyle, TX', note: 'Find wall for handball', facilities: 'gym+wall' },
+      '2026-03-01': { type: 'travel', location: 'Kyle, TX', note: 'Rest or active recovery', facilities: 'gym' }
+    };
+
+    // Helper to check if a date is a travel day
+    function isTravelDay(date) {
+      const dateStr = formatDateKey(date);
+      const special = SPECIAL_DATES[dateStr];
+      return special && special.type === 'travel';
+    }
+
+    // Helper to format date as YYYY-MM-DD
+    function formatDateKey(date) {
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, '0');
+      const day = String(date.getDate()).padStart(2, '0');
+      return `${year}-${month}-${day}`;
+    }
+
+    // Helper to get previous Monday's game info for a Tuesday
+    function getPreviousMondayGameInfo(tuesdayDate) {
+      const monday = new Date(tuesdayDate);
+      monday.setDate(monday.getDate() - 1);
+      const mondayKey = formatDateKey(monday);
+      return SPECIAL_DATES[mondayKey];
+    }
+
+    // Determine Tuesday workout based on Monday's game
+    function getTuesdayWorkoutType(date) {
+      const mondayGame = getPreviousMondayGameInfo(date);
+      if (mondayGame && mondayGame.type === 'soccer' && mondayGame.isLate) {
+        return 'recovery';
+      }
+      return 'upperBody';
+    }
+
+    // 3-week plan: Monday-Sunday, starting Feb 9, 2026
+    const WEEK_DATES = [
+      { weekNum: 1, start: new Date(2026, 1, 9), end: new Date(2026, 1, 15) },   // Feb 9-15
+      { weekNum: 2, start: new Date(2026, 1, 16), end: new Date(2026, 1, 22) },  // Feb 16-22
+      { weekNum: 3, start: new Date(2026, 1, 23), end: new Date(2026, 2, 1) }    // Feb 23 - Mar 1
+    ];
+
+    function loadPlanView() {
+      renderCalendar();
+      renderUpcomingWorkouts();
+      updateWeekProgress();
+      renderInsights();
+    }
+
+    function renderInsights() {
+      const container = document.querySelector('.plan-section');
+      const existingInsights = document.querySelector('.insights-section');
+      if (existingInsights) {
+        existingInsights.remove();
+      }
+
+      const insightsHtml = renderInsightsSection();
+      if (insightsHtml) {
+        // Insert after week progress summary
+        const weekProgress = document.querySelector('.week-progress-summary');
+        if (weekProgress) {
+          weekProgress.insertAdjacentHTML('afterend', insightsHtml);
+        }
+      }
+    }
+
+    function renderCalendar() {
+      const container = document.getElementById('calendarContainer');
+      const today = state.currentDate;
+      const dayNames = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
+      const months = ['Jan', 'Feb', 'Mar'];
+
+      let html = '';
+
+      WEEK_DATES.forEach((week, weekIndex) => {
+        const isCurrentWeek = today >= week.start && today <= week.end;
+        const startMonth = months[week.start.getMonth()];
+        const endMonth = months[week.end.getMonth()];
+        const dateRange = startMonth === endMonth
+          ? `${startMonth} ${week.start.getDate()}-${week.end.getDate()}`
+          : `${startMonth} ${week.start.getDate()} - ${endMonth} ${week.end.getDate()}`;
+
+        html += `
+          <div class="calendar-week ${isCurrentWeek ? 'current-week' : ''}">
+            <div class="calendar-week-label">
+              <span>Week ${week.weekNum}${isCurrentWeek ? ' (Current)' : ''}</span>
+              <span class="week-dates">${dateRange}</span>
+            </div>
+            <div class="calendar-days">
+        `;
+
+        // Generate 7 days for this week
+        for (let i = 0; i < 7; i++) {
+          const dayDate = new Date(week.start);
+          dayDate.setDate(week.start.getDate() + i);
+          const dayOfWeek = dayDate.getDay();
+          const dateKey = formatDateKey(dayDate);
+          const specialDate = SPECIAL_DATES[dateKey];
+          const isTravel = specialDate && specialDate.type === 'travel';
+          const schedule = SCHEDULE[dayOfWeek];
+
+          const isToday = dayDate.toDateString() === today.toDateString();
+          const isPast = dayDate < today && !isToday;
+
+          let workoutClass = '';
+          let workoutDisplay = '';
+          let extraClasses = '';
+
+          if (isTravel) {
+            const facilities = specialDate.facilities;
+            const isHandballTraining = specialDate.isTraining;
+            if (isHandballTraining) {
+              workoutClass = 'handball-training';
+              extraClasses = 'handball-training-day';
+              workoutDisplay = 'Handball';
+            } else if (facilities === 'minimal') {
+              workoutClass = 'travel';
+              extraClasses = 'travel-day minimal';
+              workoutDisplay = 'Flex';
+            } else {
+              workoutClass = 'travel';
+              extraClasses = 'travel-day gym';
+              workoutDisplay = 'GYM';
+            }
+          } else if (schedule.type === 'rest') {
+            workoutClass = 'rest';
+            workoutDisplay = 'Rest';
+          } else if (schedule.external) {
+            workoutClass = 'external';
+            workoutDisplay = getShortWorkoutName(schedule, dayDate);
+          } else {
+            workoutDisplay = getShortWorkoutName(schedule, dayDate);
+          }
+
+          html += `
+            <div class="calendar-day ${isToday ? 'today' : ''} ${isPast ? 'past' : ''} ${extraClasses}"
+                 onclick="showDayPreview(${dayDate.getTime()}, ${dayOfWeek})">
+              <div class="calendar-day-name">${dayNames[dayOfWeek]}</div>
+              <div class="calendar-day-number">${dayDate.getDate()}</div>
+              <div class="calendar-day-workout ${workoutClass}">${workoutDisplay}</div>
+            </div>
+          `;
+        }
+
+        html += `
+            </div>
+          </div>
+        `;
+      });
+
+      container.innerHTML = html;
+    }
+
+    function getShortWorkoutName(schedule, date) {
+      switch(schedule.type) {
+        case 'rest': return 'Rest';
+        case 'external':
+          if (schedule.name.includes('Personal')) return 'PT+Soccer';
+          if (schedule.name.includes('Handball Practice')) return 'Handball';
+          return schedule.name;
+        case 'gym':
+          if (schedule.name.includes('Upper')) {
+            // For Tuesday, check Monday's game time
+            if (date) {
+              const workoutType = getTuesdayWorkoutType(date);
+              return workoutType === 'recovery' ? 'Recovery' : 'Upper';
+            }
+            return 'Upper';
+          }
+          if (schedule.name.includes('Lower')) return 'Lower';
+          return schedule.name;
+        case 'cardio': return 'Bike';
+        case 'sport': return 'Soccer+HB';
+        default: return schedule.name;
+      }
+    }
+
+    function renderUpcomingWorkouts() {
+      const container = document.getElementById('upcomingWorkouts');
+      const today = state.currentDate;
+      const upcoming = [];
+      const dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+      const months = ['Jan', 'Feb', 'Mar'];
+
+      // Find next 5 workout days (skip today, include external)
+      let checkDate = new Date(today);
+      checkDate.setDate(checkDate.getDate() + 1); // Start from tomorrow
+
+      while (upcoming.length < 5) {
+        const dayOfWeek = checkDate.getDay();
+        const schedule = SCHEDULE[dayOfWeek];
+        const dateKey = formatDateKey(checkDate);
+        const specialDate = SPECIAL_DATES[dateKey];
+
+        if (schedule.type !== 'rest') {
+          upcoming.push({
+            date: new Date(checkDate),
+            dayOfWeek,
+            schedule,
+            specialDate,
+            isTravel: specialDate && specialDate.type === 'travel'
+          });
+        }
+
+        checkDate.setDate(checkDate.getDate() + 1);
+
+        // Safety: don't go past our plan window
+        if (checkDate > WEEK_DATES[WEEK_DATES.length - 1].end) break;
+      }
+
+      let html = '';
+      upcoming.forEach(item => {
+        const dateStr = `${dayNames[item.date.getDay()]}, ${months[item.date.getMonth()]} ${item.date.getDate()}`;
+        const schedule = item.schedule;
+        const dateKey = formatDateKey(item.date);
+
+        // Determine display name and extra info
+        let displayName = schedule.name;
+        let extraInfo = '';
+        let badgeText = schedule.type === 'external' ? 'External' : schedule.type;
+        let previewText = schedule.preview || '';
+
+        // Handle travel days - different types based on facilities
+        if (item.isTravel) {
+          const facilities = item.specialDate.facilities;
+          const isHandballTraining = item.specialDate.isTraining;
+
+          if (isHandballTraining) {
+            // NC Handball Trip - this IS the training!
+            badgeText = 'HANDBALL';
+            displayName = item.specialDate.note;
+            previewText = `${item.specialDate.location} - Handball training counts as workout!`;
+            extraInfo = item.specialDate.note.includes('Competition')
+              ? `<div class="game-time-note">Playing with new team - Carolina Blue Cup!</div>`
+              : '';
+          } else if (facilities === 'minimal') {
+            // Fort Davis - minimal facilities, flex day
+            badgeText = 'FLEX';
+            displayName = 'Flex Day';
+            previewText = `${item.specialDate.location} - ${item.specialDate.note}`;
+            extraInfo = '';
+          } else if (facilities === 'gym' || facilities === 'gym+wall') {
+            // Kyle - gym access available
+            badgeText = 'TRAVEL';
+            displayName = facilities === 'gym+wall' ? 'Handball Skills (Find Wall)' : 'Gym Workout Available';
+            previewText = `${item.specialDate.location} - ${item.specialDate.note}`;
+            extraInfo = `<div class="game-time-note">Gym day pass available</div>`;
+          } else {
+            badgeText = 'TRAVEL';
+            previewText = `${item.specialDate.location} - ${item.specialDate.note}`;
+          }
+        }
+
+        // Handle Monday with soccer game times
+        if (item.dayOfWeek === 1 && item.specialDate && item.specialDate.type === 'soccer') {
+          const game = item.specialDate;
+          displayName = `Personal Training (4pm) + Soccer (${game.start})`;
+          if (game.isLate) {
+            extraInfo += `<div class="late-game-warning">Late game (ends ${game.end}) - Tomorrow should be Recovery day</div>`;
+          } else {
+            extraInfo += `<div class="game-time-note">Early game ends ${game.end} - Tomorrow Upper Body OK if rested</div>`;
+          }
+        }
+
+        // Handle Tuesday - show appropriate workout based on Monday
+        if (item.dayOfWeek === 2) {
+          const workoutType = getTuesdayWorkoutType(item.date);
+          const mondayGame = getPreviousMondayGameInfo(item.date);
+
+          if (workoutType === 'recovery') {
+            displayName = 'Post-Late-Game Recovery';
+            previewText = 'Gentle warm-up, Shoulder mobility, Light stability work';
+            badgeText = 'Recovery';
+            if (mondayGame) {
+              extraInfo = `<div class="late-game-warning">Monday game ended at ${mondayGame.end} - Recovery recommended</div>`;
+            }
+          } else {
+            displayName = 'Upper Body Focus';
+            previewText = 'Rows, Chest Press, Shoulder Work, Core';
+            if (mondayGame && !mondayGame.isLate) {
+              extraInfo = `<div class="game-time-note">Monday game ended ${mondayGame.end} - Upper Body OK if readiness 75+</div>`;
+            }
+          }
+        }
+
+        // Determine badge styling based on travel type
+        let badgeStyle = '';
+        let travelClass = '';
+        if (item.isTravel) {
+          const isHandballTraining = item.specialDate.isTraining;
+          const facilities = item.specialDate.facilities;
+          if (isHandballTraining) {
+            badgeStyle = 'style="background: rgba(76, 175, 80, 0.3); color: #81c784;"'; // Green for training
+            travelClass = 'handball-training';
+          } else if (facilities === 'minimal') {
+            badgeStyle = 'style="background: rgba(158, 158, 158, 0.3); color: #bdbdbd;"'; // Gray for rest
+            travelClass = 'travel-day minimal';
+          } else {
+            badgeStyle = 'style="background: rgba(149, 117, 205, 0.3); color: #b39ddb;"'; // Purple for gym travel
+            travelClass = 'travel-day gym-access';
+          }
+        }
+
+        html += `
+          <div class="upcoming-workout ${item.isTravel ? travelClass : ''}" onclick="showDayPreview(${item.date.getTime()}, ${item.dayOfWeek})">
+            <div class="upcoming-header">
+              <div>
+                <div class="upcoming-day">${dateStr}</div>
+                <div class="upcoming-name">${displayName}</div>
+              </div>
+              <span class="upcoming-badge" ${badgeStyle}>${badgeText}</span>
+            </div>
+            <div class="upcoming-meta">
+              ${schedule.duration && !item.isTravel ? `<span>⏱ ${schedule.duration}</span>` : ''}
+              ${schedule.location && !item.isTravel ? `<span>📍 ${schedule.location}</span>` : ''}
+              ${item.isTravel ? `<span>📍 ${item.specialDate.location}</span>` : ''}
+            </div>
+            ${previewText ? `<div class="upcoming-preview">${previewText}</div>` : ''}
+            ${extraInfo}
+          </div>
+        `;
+      });
+
+      container.innerHTML = html;
+    }
+
+    function updateWeekProgress() {
+      const today = state.currentDate;
+      const history = getWorkoutHistory();
+
+      // Find current week
+      const currentWeek = WEEK_DATES.find(w => today >= w.start && today <= w.end);
+      if (!currentWeek) return;
+
+      // Count planned workouts for this week (non-rest days, accounting for travel)
+      let plannedCount = 0;
+      for (let i = 0; i < 7; i++) {
+        const dayDate = new Date(currentWeek.start);
+        dayDate.setDate(currentWeek.start.getDate() + i);
+        const schedule = SCHEDULE[dayDate.getDay()];
+        const dateKey = formatDateKey(dayDate);
+        const specialDate = SPECIAL_DATES[dateKey];
+        const isTravel = specialDate && specialDate.type === 'travel';
+
+        if (schedule.type === 'rest') continue;
+
+        if (isTravel) {
+          // Minimal facilities = don't count as planned workout
+          // Handball training = count as planned workout
+          // Gym access = count as optional (still counts)
+          if (specialDate.facilities === 'minimal') continue;
+        }
+
+        plannedCount++;
+      }
+
+      // Count completed workouts this week
+      let completedCount = 0;
+      history.forEach(workout => {
+        const workoutDate = new Date(workout.date);
+        if (workoutDate >= currentWeek.start && workoutDate <= currentWeek.end) {
+          completedCount++;
+        }
+      });
+
+      const percent = plannedCount > 0 ? Math.round((completedCount / plannedCount) * 100) : 0;
+
+      document.getElementById('weekProgressCount').textContent = `${completedCount} / ${plannedCount} workouts`;
+      document.getElementById('weekProgressFill').style.width = `${percent}%`;
+    }
+
+    function showDayPreview(timestamp, dayOfWeek) {
+      const date = new Date(timestamp);
+      const dateKey = formatDateKey(date);
+      const specialDate = SPECIAL_DATES[dateKey];
+      const isTravel = specialDate && specialDate.type === 'travel';
+      const schedule = SCHEDULE[dayOfWeek];
+      const dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+      const months = ['January', 'February', 'March'];
+
+      let previewTitle = schedule.name;
+      let metaHtml = '';
+      let contentHtml = '';
+
+      // Handle travel days - with different types
+      if (isTravel) {
+        const facilities = specialDate.facilities;
+        const isHandballTraining = specialDate.isTraining;
+
+        document.getElementById('previewDate').textContent = `${dayNames[date.getDay()]}, ${months[date.getMonth()]} ${date.getDate()}, 2026`;
+        metaHtml = `<span>📍 ${specialDate.location}</span>`;
+        document.getElementById('previewMeta').innerHTML = metaHtml;
+
+        if (isHandballTraining) {
+          // NC Handball Trip - this IS training!
+          previewTitle = specialDate.note;
+          document.getElementById('previewTitle').textContent = previewTitle;
+          contentHtml = `
+            <div style="padding: 16px; background: rgba(76, 175, 80, 0.15); border-radius: 8px; border: 1px solid #4caf50;">
+              <div style="color: #81c784; font-size: 12px; text-transform: uppercase; margin-bottom: 8px;">Handball Training Trip</div>
+              <p style="color: var(--text-primary); font-size: 14px; margin-bottom: 12px;">${specialDate.note}</p>
+              <p style="color: var(--text-secondary); font-size: 12px;">This counts as your workout for the day!</p>
+            </div>
+            ${specialDate.note.includes('Competition') ? `
+            <div style="margin-top: 12px; padding: 12px; background: rgba(255, 193, 7, 0.15); border-radius: 8px; border: 1px solid #ffc107;">
+              <div style="color: #ffd54f; font-size: 11px; text-transform: uppercase; margin-bottom: 6px;">Competition Day</div>
+              <p style="color: var(--text-secondary); font-size: 12px;">Playing with your new team - Carolina Blue Cup!</p>
+            </div>` : ''}
+          `;
+        } else if (facilities === 'minimal') {
+          // Fort Davis - flex day
+          previewTitle = 'Flex Day';
+          document.getElementById('previewTitle').textContent = previewTitle;
+          contentHtml = `
+            <div style="padding: 16px; background: rgba(158, 158, 158, 0.15); border-radius: 8px; border: 1px solid #9e9e9e;">
+              <div style="color: #bdbdbd; font-size: 12px; text-transform: uppercase; margin-bottom: 8px;">Flex Day</div>
+              <p style="color: var(--text-secondary); font-size: 13px; margin-bottom: 12px;">${specialDate.note}</p>
+              <p style="color: var(--text-secondary); font-size: 12px;">Facilities: Minimal - see what's available</p>
+            </div>
+            <div style="margin-top: 12px; padding: 12px; background: var(--bg-card); border-radius: 8px;">
+              <div style="color: var(--accent); font-size: 11px; text-transform: uppercase; margin-bottom: 6px;">Options to Explore</div>
+              <ul style="color: var(--text-secondary); font-size: 12px; margin-left: 16px;">
+                <li>Walking/hiking</li>
+                <li>Bodyweight exercises</li>
+                <li>Stretching & mobility</li>
+                <li>Rest if needed</li>
+              </ul>
+            </div>
+          `;
+        } else {
+          // Kyle - gym available
+          previewTitle = 'Travel Day (Gym Access)';
+          document.getElementById('previewTitle').textContent = previewTitle;
+          contentHtml = `
+            <div style="padding: 16px; background: rgba(149, 117, 205, 0.15); border-radius: 8px; border: 1px solid #9575cd;">
+              <div style="color: #b39ddb; font-size: 12px; text-transform: uppercase; margin-bottom: 8px;">Travel with Gym Access</div>
+              <p style="color: var(--text-secondary); font-size: 13px; margin-bottom: 12px;">${specialDate.note}</p>
+              <p style="color: var(--text-secondary); font-size: 12px;">Facilities: ${facilities}</p>
+            </div>
+            <div style="margin-top: 12px; padding: 12px; background: var(--bg-card); border-radius: 8px;">
+              <div style="color: var(--success); font-size: 11px; text-transform: uppercase; margin-bottom: 6px;">Suggested Workouts</div>
+              <ul style="color: var(--text-secondary); font-size: 12px; margin-left: 16px;">
+                <li>Full gym workout (day pass)</li>
+                ${facilities.includes('wall') ? '<li>Handball skills - find a wall!</li>' : ''}
+                <li>Cardio on machines</li>
+                <li>Upper or lower body session</li>
+              </ul>
+            </div>
+          `;
+        }
+
+        document.getElementById('previewContent').innerHTML = contentHtml;
+        document.getElementById('previewModal').classList.add('active');
+        return;
+      }
+
+      // Handle Monday with soccer game info
+      if (dayOfWeek === 1 && specialDate && specialDate.type === 'soccer') {
+        previewTitle = `Personal Training (4pm) + Soccer`;
+        document.getElementById('previewTitle').textContent = previewTitle;
+        document.getElementById('previewDate').textContent = `${dayNames[date.getDay()]}, ${months[date.getMonth()]} ${date.getDate()}, 2026`;
+
+        metaHtml = `<span>⏱ PT: 1hr + Soccer: 90min</span><span>📍 Gym + Field</span>`;
+        document.getElementById('previewMeta').innerHTML = metaHtml;
+
+        const game = specialDate;
+        const gameTimeClass = game.isLate ? 'style="color: var(--accent);"' : 'style="color: var(--success);"';
+
+        contentHtml = `
+          <div style="padding: 16px; background: var(--bg-card); border-radius: 8px; margin-bottom: 12px;">
+            <div style="color: var(--warning); font-size: 12px; text-transform: uppercase; margin-bottom: 8px;">Today's Schedule</div>
+            <div style="color: var(--text-primary); font-size: 14px; margin-bottom: 8px;">
+              <strong>4:00pm</strong> - Personal Training (Gym)<br>
+              <strong ${gameTimeClass}>${game.start}</strong> - Soccer Game
+            </div>
+            <div style="color: var(--text-secondary); font-size: 12px;">
+              Game ends: <span ${gameTimeClass}>${game.end}</span>
+              ${game.isLate ? ' (Late game)' : ' (Early game)'}
+            </div>
+          </div>
+          <div style="padding: 12px; background: ${game.isLate ? 'rgba(233,69,96,0.15)' : 'rgba(78,205,196,0.15)'}; border-radius: 8px; border: 1px solid ${game.isLate ? 'var(--accent)' : 'var(--success)'};">
+            <div style="color: ${game.isLate ? 'var(--accent-light)' : 'var(--success)'}; font-size: 11px; text-transform: uppercase; margin-bottom: 6px;">Tomorrow's Recommendation</div>
+            <p style="color: var(--text-secondary); font-size: 13px;">
+              ${game.isLate
+                ? 'Late game - Tomorrow should be <strong>Recovery workout</strong> (shoulder mobility, light stability)'
+                : 'Early game - Tomorrow can be <strong>Upper Body</strong> workout if readiness 75+'}
+            </p>
+          </div>
+        `;
+
+        document.getElementById('previewContent').innerHTML = contentHtml;
+        document.getElementById('previewModal').classList.add('active');
+        return;
+      }
+
+      // Handle Tuesday - check Monday's game
+      if (dayOfWeek === 2) {
+        const workoutType = getTuesdayWorkoutType(date);
+        const mondayGame = getPreviousMondayGameInfo(date);
+
+        if (workoutType === 'recovery') {
+          previewTitle = 'Post-Late-Game Recovery';
+          document.getElementById('previewTitle').textContent = previewTitle;
+          document.getElementById('previewDate').textContent = `${dayNames[date.getDay()]}, ${months[date.getMonth()]} ${date.getDate()}, 2026`;
+
+          metaHtml = `<span>⏱ 20-25 min</span><span>📍 Home</span>`;
+          document.getElementById('previewMeta').innerHTML = metaHtml;
+
+          contentHtml = '';
+          if (mondayGame) {
+            contentHtml += `
+              <div style="padding: 12px; background: rgba(233,69,96,0.15); border-radius: 8px; border: 1px solid var(--accent); margin-bottom: 12px;">
+                <div style="color: var(--accent-light); font-size: 11px; text-transform: uppercase; margin-bottom: 4px;">Why Recovery?</div>
+                <p style="color: var(--text-secondary); font-size: 12px;">Monday's game ended at ${mondayGame.end} - late games require recovery focus</p>
+              </div>
+            `;
+          }
+
+          // Show recovery workout details
+          const workoutData = WORKOUTS.tuesday.recovery;
+          workoutData.circuits.forEach(circuit => {
+            contentHtml += `
+              <div class="preview-circuit">
+                <div class="preview-circuit-name">${circuit.name}</div>
+                <div class="preview-exercises">
+            `;
+            circuit.exercises.forEach(ex => {
+              const repsText = ex.isHold ? `${ex.holdTime}s hold` :
+                              ex.isCardio ? 'Complete' :
+                              `${ex.reps} reps`;
+              contentHtml += `${ex.name} (${ex.sets}x${repsText})<br>`;
+            });
+            contentHtml += `
+                </div>
+              </div>
+            `;
+          });
+
+          document.getElementById('previewContent').innerHTML = contentHtml;
+          document.getElementById('previewModal').classList.add('active');
+          return;
+        } else {
+          // Upper body - show note about Monday if applicable
+          previewTitle = 'Upper Body Focus';
+          if (mondayGame && !mondayGame.isLate) {
+            contentHtml = `
+              <div style="padding: 12px; background: rgba(78,205,196,0.15); border-radius: 8px; border: 1px solid var(--success); margin-bottom: 12px;">
+                <div style="color: var(--success); font-size: 11px; text-transform: uppercase; margin-bottom: 4px;">Good to Go</div>
+                <p style="color: var(--text-secondary); font-size: 12px;">Monday's early game (ended ${mondayGame.end}) allows for Upper Body - check readiness 75+</p>
+              </div>
+            `;
+          }
+        }
+      }
+
+      document.getElementById('previewTitle').textContent = previewTitle;
+      document.getElementById('previewDate').textContent = `${dayNames[date.getDay()]}, ${months[date.getMonth()]} ${date.getDate()}, 2026`;
+
+      if (!metaHtml) {
+        if (schedule.duration) metaHtml += `<span>⏱ ${schedule.duration}</span>`;
+        if (schedule.location) metaHtml += `<span>📍 ${schedule.location}</span>`;
+      }
+      document.getElementById('previewMeta').innerHTML = metaHtml;
+
+      if (schedule.type === 'rest') {
+        contentHtml = `
+          <div style="text-align: center; padding: 20px; color: var(--text-secondary);">
+            <div style="font-size: 32px; margin-bottom: 12px;">😴</div>
+            <p>Recovery day - rest and recharge for the week ahead!</p>
+          </div>
+        `;
+      } else if (schedule.external) {
+        contentHtml += `
+          <div style="padding: 16px; background: var(--bg-card); border-radius: 8px;">
+            <div style="color: var(--warning); font-size: 12px; text-transform: uppercase; margin-bottom: 8px;">External Activity</div>
+            <p style="color: var(--text-secondary); font-size: 13px;">This workout is scheduled externally (team practice, personal training, etc.). Just show up and give it your best!</p>
+          </div>
+        `;
+      } else if (schedule.workout) {
+        // Get detailed workout info
+        const workoutData = getWorkoutForDay(schedule.workout, date);
+        if (workoutData) {
+          workoutData.circuits.forEach(circuit => {
+            contentHtml += `
+              <div class="preview-circuit">
+                <div class="preview-circuit-name">${circuit.name}</div>
+                <div class="preview-exercises">
+            `;
+            circuit.exercises.forEach(ex => {
+              const repsText = ex.isHold ? `${ex.holdTime}s hold` :
+                              ex.isCardio ? 'Complete' :
+                              `${ex.reps} reps`;
+              contentHtml += `${ex.name} (${ex.sets}x${repsText})<br>`;
+            });
+            contentHtml += `
+                </div>
+              </div>
+            `;
+          });
+        }
+      }
+
+      document.getElementById('previewContent').innerHTML = contentHtml;
+      document.getElementById('previewModal').classList.add('active');
+    }
+
+    function getWorkoutForDay(dayKey, date) {
+      switch(dayKey) {
+        case 'tuesday':
+          if (date) {
+            const workoutType = getTuesdayWorkoutType(date);
+            return workoutType === 'recovery' ? WORKOUTS.tuesday.recovery : WORKOUTS.tuesday.upperBody;
+          }
+          return WORKOUTS.tuesday.upperBody;
+        case 'thursday': return WORKOUTS.thursday.bike;
+        case 'friday': return WORKOUTS.friday.lowerBody;
+        case 'saturday': return WORKOUTS.saturday.handball;
+        default: return null;
+      }
+    }
+
+    function closePreviewModal() {
+      document.getElementById('previewModal').classList.remove('active');
+    }
+
+    // ==================== TRAVEL ACTIVITY LOGGING ====================
+    function showTravelActivityModal() {
+      // Reset selections
+      document.querySelectorAll('#travelActivityTypes .activity-type-btn').forEach(b => b.classList.remove('selected'));
+      document.querySelectorAll('#travelFeelSlider .travel-feel-btn').forEach(b => b.classList.remove('selected'));
+      document.getElementById('travelActivityDescription').value = '';
+      document.getElementById('travelActivityDuration').value = '';
+      document.getElementById('travelActivityNotes').value = '';
+
+      // Set up click handlers
+      document.querySelectorAll('#travelActivityTypes .activity-type-btn').forEach(btn => {
+        btn.onclick = () => {
+          document.querySelectorAll('#travelActivityTypes .activity-type-btn').forEach(b => b.classList.remove('selected'));
+          btn.classList.add('selected');
+        };
+      });
+
+      document.querySelectorAll('#travelFeelSlider .travel-feel-btn').forEach(btn => {
+        btn.onclick = () => {
+          document.querySelectorAll('#travelFeelSlider .travel-feel-btn').forEach(b => b.classList.remove('selected'));
+          btn.classList.add('selected');
+        };
+      });
+
+      document.getElementById('travelActivityModal').classList.add('active');
+    }
+
+    function closeTravelActivityModal() {
+      document.getElementById('travelActivityModal').classList.remove('active');
+    }
+
+    function saveTravelActivity() {
+      const activityTypeBtn = document.querySelector('#travelActivityTypes .activity-type-btn.selected');
+      const activityType = activityTypeBtn ? activityTypeBtn.dataset.value : 'other';
+      const description = document.getElementById('travelActivityDescription').value;
+      const duration = parseInt(document.getElementById('travelActivityDuration').value) || 0;
+      const feelBtn = document.querySelector('#travelFeelSlider .travel-feel-btn.selected');
+      const overallFeel = feelBtn ? parseInt(feelBtn.dataset.value) : 3;
+      const notes = document.getElementById('travelActivityNotes').value;
+
+      const activityNames = {
+        hiking: 'Hiking',
+        bodyweight: 'Bodyweight Workout',
+        yoga: 'Yoga',
+        walking: 'Walking',
+        gym: 'Gym Workout',
+        handball: 'Handball Training',
+        other: 'Activity'
+      };
+
+      const workoutName = description || `${activityNames[activityType]} - ${state.currentTravelDay.location}`;
+
+      const workoutData = {
+        date: formatDateKey(state.currentDate),
+        workout: workoutName,
+        type: 'Travel Activity',
+        activityType: activityType,
+        duration: duration,
+        location: state.currentTravelDay.location,
+        overallFeel: overallFeel,
+        notes: notes,
+        travelContext: {
+          facilities: state.currentTravelDay.facilities,
+          isTraining: state.currentTravelDay.isTraining || false
+        },
+        timestamp: new Date().toISOString()
+      };
+
+      // Save to Firestore and localStorage
+      saveWorkoutToHistory(workoutData);
+
+      closeTravelActivityModal();
+      loadTodaysWorkout(); // Refresh to show logged state
+      loadHistory();
+    }
+
+    // ==================== ADAPTATION RULES ENGINE ====================
+    const ADAPTATION_RULES = [
+      {
+        id: 'very_low_readiness_rest',
+        condition: (metrics) => metrics.readiness && metrics.readiness < 50,
+        action: 'switch_to_rest',
+        message: 'Readiness is very low ({readiness}) - rest day recommended'
+      },
+      {
+        id: 'low_readiness_recovery',
+        condition: (metrics) => metrics.readiness && metrics.readiness < 70,
+        action: 'switch_to_recovery',
+        message: 'Readiness is {readiness} - switching to Recovery'
+      },
+      {
+        id: 'low_sleep_warning',
+        condition: (metrics) => metrics.sleepScore && metrics.sleepScore < 70,
+        action: 'warn_only',
+        message: 'Sleep score is low ({sleepScore}) - monitor your energy'
+      },
+      {
+        id: 'high_effort_yesterday',
+        condition: (metrics) => {
+          const history = getWorkoutHistory();
+          if (history.length === 0) return false;
+          const yesterday = new Date();
+          yesterday.setDate(yesterday.getDate() - 1);
+          const yesterdayKey = formatDateKey(yesterday);
+          const yesterdayWorkout = history.find(w => w.date === yesterdayKey);
+          return yesterdayWorkout && yesterdayWorkout.overallFeel >= 8;
+        },
+        action: 'suggest_lighter',
+        message: 'Yesterday was intense - consider lighter intensity today'
+      }
+    ];
+
+    function applyAdaptationRules(metrics) {
+      const triggeredRules = [];
+
+      for (const rule of ADAPTATION_RULES) {
+        if (rule.condition(metrics)) {
+          let message = rule.message;
+          if (metrics.readiness) message = message.replace('{readiness}', metrics.readiness);
+          if (metrics.sleepScore) message = message.replace('{sleepScore}', metrics.sleepScore);
+          triggeredRules.push({
+            ...rule,
+            message
+          });
+          // Stop at first major action (rest or recovery)
+          if (rule.action === 'switch_to_rest' || rule.action === 'switch_to_recovery') {
+            break;
+          }
+        }
+      }
+
+      return triggeredRules;
+    }
+
+    function renderAdaptationBanner(rules, originalWorkout) {
+      if (!rules || rules.length === 0) return '';
+
+      const mainRule = rules[0];
+      const actionMessages = {
+        'switch_to_rest': 'Workout switched to Rest Day',
+        'switch_to_recovery': 'Workout switched to Recovery',
+        'suggest_lighter': 'Consider lighter intensity',
+        'warn_only': 'Note for today'
+      };
+
+      return `
+        <div class="adaptation-banner" id="adaptationBanner">
+          <div class="adaptation-banner-header">
+            <span>Adapted based on your metrics</span>
+          </div>
+          <div class="adaptation-banner-message">
+            ${mainRule.message}
+          </div>
+          ${originalWorkout ? `
+            <button class="adaptation-banner-action" onclick="showOriginalWorkout()">
+              Show Original Workout Instead
+            </button>
+          ` : ''}
+        </div>
+      `;
+    }
+
+    // Store original workout when adapting
+    let originalScheduledWorkout = null;
+    let adaptationApplied = null;
+
+    function showOriginalWorkout() {
+      if (originalScheduledWorkout) {
+        adaptationApplied = null;
+        state.activeWorkout = originalScheduledWorkout;
+        renderWorkout(originalScheduledWorkout);
+        originalScheduledWorkout = null;
+      }
+    }
+
+    // ==================== ADJUSTMENT CAPTURE ====================
+    let currentAdjustment = null;
+
+    function showAdjustmentModal() {
+      // Reset
+      document.querySelectorAll('#adjustmentTypeChips .reason-chip').forEach(b => b.classList.remove('selected'));
+      document.querySelectorAll('#adjustmentReasonChips .reason-chip').forEach(b => b.classList.remove('selected'));
+      document.getElementById('adjustmentNotes').value = '';
+
+      // Set up click handlers for multi-select
+      document.querySelectorAll('#adjustmentTypeChips .reason-chip').forEach(btn => {
+        btn.onclick = () => btn.classList.toggle('selected');
+      });
+      document.querySelectorAll('#adjustmentReasonChips .reason-chip').forEach(btn => {
+        btn.onclick = () => btn.classList.toggle('selected');
+      });
+
+      document.getElementById('adjustmentModal').classList.add('active');
+    }
+
+    function closeAdjustmentModal() {
+      document.getElementById('adjustmentModal').classList.remove('active');
+    }
+
+    function saveAdjustment() {
+      const types = Array.from(document.querySelectorAll('#adjustmentTypeChips .reason-chip.selected'))
+        .map(b => b.dataset.value);
+      const reasons = Array.from(document.querySelectorAll('#adjustmentReasonChips .reason-chip.selected'))
+        .map(b => b.dataset.value);
+      const notes = document.getElementById('adjustmentNotes').value;
+
+      if (types.length === 0) {
+        closeAdjustmentModal();
+        return;
+      }
+
+      currentAdjustment = {
+        exercise: state.currentExercise.data.name,
+        exerciseId: state.currentExercise.id,
+        setNumber: state.currentSet + 1,
+        types: types,
+        reasons: reasons,
+        note: notes,
+        timestamp: new Date().toISOString()
+      };
+
+      // Add to workout log adjustments
+      if (!state.workoutAdjustments) {
+        state.workoutAdjustments = [];
+      }
+      state.workoutAdjustments.push(currentAdjustment);
+
+      closeAdjustmentModal();
+    }
+
+    // ==================== INSIGHTS & PATTERNS ====================
+    function calculatePatterns() {
+      const history = getWorkoutHistory();
+      const threeWeeksAgo = new Date();
+      threeWeeksAgo.setDate(threeWeeksAgo.getDate() - 21);
+
+      const recentWorkouts = history.filter(w => new Date(w.date) >= threeWeeksAgo);
+
+      const patterns = {
+        totalWorkouts: recentWorkouts.length,
+        avgReadiness: 0,
+        lowReadinessDays: 0,
+        adjustmentReasons: {},
+        adjustedExercises: {},
+        adaptedWorkouts: 0,
+        travelActivities: 0
+      };
+
+      let readinessSum = 0;
+      let readinessCount = 0;
+
+      recentWorkouts.forEach(workout => {
+        // Count readiness
+        if (workout.readiness) {
+          readinessSum += workout.readiness;
+          readinessCount++;
+          if (workout.readiness < 70) patterns.lowReadinessDays++;
+        }
+
+        // Count travel activities
+        if (workout.type === 'Travel Activity') {
+          patterns.travelActivities++;
+        }
+
+        // Count adaptations
+        if (workout.wasAdapted) {
+          patterns.adaptedWorkouts++;
+        }
+
+        // Count adjustments
+        if (workout.adjustments) {
+          workout.adjustments.forEach(adj => {
+            // Count by reason
+            if (adj.reasons) {
+              adj.reasons.forEach(reason => {
+                patterns.adjustmentReasons[reason] = (patterns.adjustmentReasons[reason] || 0) + 1;
+              });
+            }
+            // Count by exercise
+            if (adj.exercise) {
+              patterns.adjustedExercises[adj.exercise] = (patterns.adjustedExercises[adj.exercise] || 0) + 1;
+            }
+          });
+        }
+      });
+
+      patterns.avgReadiness = readinessCount > 0 ? Math.round(readinessSum / readinessCount) : null;
+
+      return patterns;
+    }
+
+    function renderInsightsSection() {
+      const patterns = calculatePatterns();
+
+      if (patterns.totalWorkouts < 3) {
+        return ''; // Not enough data yet
+      }
+
+      let insightsHtml = `
+        <div class="insights-section">
+          <div class="insights-header">
+            <span>Patterns (Last 3 Weeks)</span>
+          </div>
+      `;
+
+      // Readiness patterns
+      if (patterns.avgReadiness) {
+        insightsHtml += `
+          <div class="insight-card">
+            <div class="insight-title">Readiness Patterns</div>
+            <div class="insight-item">
+              <span>Average readiness</span>
+              <span class="insight-value">${patterns.avgReadiness}</span>
+            </div>
+            <div class="insight-item">
+              <span>Days below 70</span>
+              <span class="insight-value">${patterns.lowReadinessDays}</span>
+            </div>
+            ${patterns.adaptedWorkouts > 0 ? `
+            <div class="insight-item">
+              <span>Workouts adapted</span>
+              <span class="insight-value">${patterns.adaptedWorkouts}</span>
+            </div>
+            ` : ''}
+          </div>
+        `;
+      }
+
+      // Adjustment patterns
+      const reasonEntries = Object.entries(patterns.adjustmentReasons).sort((a, b) => b[1] - a[1]);
+      const exerciseEntries = Object.entries(patterns.adjustedExercises).sort((a, b) => b[1] - a[1]);
+
+      if (reasonEntries.length > 0) {
+        const reasonLabels = {
+          fatigue: 'Fatigue',
+          discomfort: 'Discomfort',
+          time: 'Time constraints',
+          form: 'Form issues'
+        };
+
+        insightsHtml += `
+          <div class="insight-card">
+            <div class="insight-title">Adjustments by Reason</div>
+            ${reasonEntries.slice(0, 4).map(([reason, count]) => `
+              <div class="insight-item">
+                <span>${reasonLabels[reason] || reason}</span>
+                <span class="insight-value">${count}x</span>
+              </div>
+            `).join('')}
+          </div>
+        `;
+      }
+
+      if (exerciseEntries.length > 0) {
+        insightsHtml += `
+          <div class="insight-card">
+            <div class="insight-title">Most Adjusted Exercises</div>
+            ${exerciseEntries.slice(0, 3).map(([exercise, count]) => `
+              <div class="insight-item">
+                <span>${exercise}</span>
+                <span class="insight-value">${count} adjustments</span>
+              </div>
+            `).join('')}
+          </div>
+        `;
+      }
+
+      // Travel activities
+      if (patterns.travelActivities > 0) {
+        insightsHtml += `
+          <div class="insight-card">
+            <div class="insight-title">Travel Days</div>
+            <div class="insight-item">
+              <span>Activities logged</span>
+              <span class="insight-value">${patterns.travelActivities}</span>
+            </div>
+          </div>
+        `;
+      }
+
+      insightsHtml += `</div>`;
+      return insightsHtml;
+    }
+
+    // ==================== START ====================
+    init();
+  </script>
+</body>
+</html>
