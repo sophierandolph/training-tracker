@@ -1205,6 +1205,83 @@
       color: var(--accent-light);
     }
 
+    /* External Activity Tiles */
+    .activity-tiles {
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .activity-tile {
+      background: var(--bg-secondary);
+      border-radius: var(--radius);
+      padding: 16px;
+      cursor: pointer;
+      transition: all 0.2s;
+      border: 2px solid transparent;
+    }
+
+    .activity-tile:hover {
+      background: var(--bg-card);
+    }
+
+    .activity-tile.logged {
+      border-color: var(--success);
+      background: rgba(78, 205, 196, 0.1);
+    }
+
+    .activity-tile-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 8px;
+    }
+
+    .activity-tile-type {
+      font-size: 11px;
+      text-transform: uppercase;
+      color: var(--warning);
+      letter-spacing: 0.5px;
+    }
+
+    .activity-tile-name {
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .activity-tile-time {
+      font-size: 13px;
+      color: var(--text-secondary);
+    }
+
+    .activity-tile-status {
+      font-size: 11px;
+      padding: 4px 10px;
+      border-radius: 12px;
+      background: var(--bg-card);
+      color: var(--text-secondary);
+    }
+
+    .activity-tile-status.logged {
+      background: rgba(78, 205, 196, 0.2);
+      color: var(--success);
+    }
+
+    .activity-tile-logged-info {
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px solid var(--border);
+      font-size: 13px;
+      color: var(--text-secondary);
+    }
+
+    .activity-tile-logged-info .rating {
+      color: var(--accent);
+      font-weight: 600;
+    }
+
     /* Insights Section */
     .insights-section {
       background: var(--bg-secondary);
@@ -1575,6 +1652,72 @@
     </div>
   </div>
 
+  <!-- External Activity Modal -->
+  <div class="modal-overlay" id="externalActivityModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="modal-title" id="externalActivityTitle">Log Activity</div>
+        <button class="modal-close" onclick="closeExternalActivityModal()">&times;</button>
+      </div>
+
+      <div class="input-group">
+        <label class="input-label">Duration (minutes)</label>
+        <div class="input-field">
+          <input type="number" id="externalActivityDuration" inputmode="numeric" placeholder="60">
+        </div>
+      </div>
+
+      <div class="input-group">
+        <label class="input-label">Intensity (1-10)</label>
+        <div class="overall-slider" id="externalIntensitySlider">
+          <button class="overall-btn" data-value="1">1</button>
+          <button class="overall-btn" data-value="2">2</button>
+          <button class="overall-btn" data-value="3">3</button>
+          <button class="overall-btn" data-value="4">4</button>
+          <button class="overall-btn" data-value="5">5</button>
+          <button class="overall-btn" data-value="6">6</button>
+          <button class="overall-btn" data-value="7">7</button>
+          <button class="overall-btn" data-value="8">8</button>
+          <button class="overall-btn" data-value="9">9</button>
+          <button class="overall-btn" data-value="10">10</button>
+        </div>
+      </div>
+
+      <div class="input-group">
+        <label class="input-label">Main focus/challenge?</label>
+        <div class="effort-type-selector" id="externalEffortType">
+          <button class="effort-type-btn" data-value="physical">
+            <span class="type-icon">💪</span>
+            <span class="type-label">Physical</span>
+          </button>
+          <button class="effort-type-btn" data-value="technical">
+            <span class="type-icon">🎯</span>
+            <span class="type-label">Technical</span>
+          </button>
+          <button class="effort-type-btn" data-value="tactical">
+            <span class="type-icon">🧠</span>
+            <span class="type-label">Tactical</span>
+          </button>
+        </div>
+      </div>
+
+      <div class="input-group">
+        <label class="input-label">What did you work on? (optional)</label>
+        <textarea class="notes-input" id="externalActivityFocus" placeholder="e.g., Focused on defensive positioning, worked on left hand..."></textarea>
+      </div>
+
+      <div class="input-group">
+        <label class="input-label">Notes for future planning (optional)</label>
+        <textarea class="notes-input" id="externalActivityNotes" placeholder="e.g., Need more work on X, felt strong at Y..."></textarea>
+      </div>
+
+      <div class="modal-actions">
+        <button class="btn btn-secondary" onclick="closeExternalActivityModal()">Cancel</button>
+        <button class="btn btn-success" onclick="saveExternalActivity()">Save</button>
+      </div>
+    </div>
+  </div>
+
   <!-- Adjustment Modal -->
   <div class="modal-overlay" id="adjustmentModal">
     <div class="modal-content">
@@ -1938,7 +2081,8 @@
       overallEffortType: null,
       // New state for travel and adjustments
       currentTravelDay: null,
-      workoutAdjustments: []
+      workoutAdjustments: [],
+      pendingWorkout: null
     };
 
     // ==================== INITIALIZATION ====================
@@ -2117,8 +2261,9 @@
           workout = WORKOUTS.friday.lowerBody;
           break;
         case 'saturday':
-          workout = WORKOUTS.saturday.handball;
-          break;
+          // Saturday has external activity (soccer) + in-app workout (handball)
+          showMixedDay('saturday', WORKOUTS.saturday.handball);
+          return;
         default:
           // Show rest day or no workout scheduled
           showNoWorkout(dayName, specialDate);
@@ -2212,45 +2357,194 @@
 
     function showNoWorkout(dayName, specialDate) {
       const content = document.getElementById('workoutContent');
-      let message = '';
-      let extraInfo = '';
+
+      // Check if this day has external activities
+      const activities = EXTERNAL_ACTIVITIES[dayName];
 
       if (dayName === 'sunday') {
-        message = 'Rest Day - recover and recharge!';
-      } else if (dayName === 'monday') {
-        // Check for specific soccer game time
-        if (specialDate && specialDate.type === 'soccer') {
-          message = `Personal Training (4pm) + Soccer (${specialDate.start})`;
-          const gameEndClass = specialDate.isLate ? 'color: var(--accent-light);' : 'color: var(--success);';
+        document.getElementById('dayName').textContent = 'Rest Day';
+        content.innerHTML = `
+          <div class="workout-header">
+            <div class="workout-type">SUNDAY</div>
+            <div class="workout-title">Rest Day</div>
+            <div class="workout-meta">
+              <span>Recover and recharge!</span>
+            </div>
+          </div>
+        `;
+        return;
+      }
+
+      if (!activities || activities.length === 0) {
+        document.getElementById('dayName').textContent = 'No Workout';
+        content.innerHTML = `
+          <div class="workout-header">
+            <div class="workout-type">${dayName.toUpperCase()}</div>
+            <div class="workout-title">No scheduled workout</div>
+          </div>
+        `;
+        return;
+      }
+
+      // Show external activities as tiles
+      document.getElementById('dayName').textContent = "Today's Activities";
+
+      const dateKey = formatDateKey(state.currentDate);
+      const history = getWorkoutHistory();
+
+      // Build activities with any special date info
+      let activitiesHtml = '';
+      activities.forEach(activity => {
+        let activityTime = activity.time;
+        let extraInfo = '';
+
+        // For soccer on Monday, get time from SPECIAL_DATES
+        if (dayName === 'monday' && activity.id === 'soccer' && specialDate && specialDate.type === 'soccer') {
+          activityTime = specialDate.start;
+          const gameEndClass = specialDate.isLate ? 'var(--accent-light)' : 'var(--success)';
           extraInfo = `
-            <div style="margin-top: 12px; padding: 12px; background: var(--bg-card); border-radius: 8px;">
-              <p style="font-size: 13px; color: var(--text-secondary);">
-                Game ends: <span style="${gameEndClass} font-weight: 600;">${specialDate.end}</span>
-                ${specialDate.isLate ? ' (Late game)' : ' (Early game)'}
-              </p>
-              <p style="font-size: 12px; color: var(--text-secondary); margin-top: 8px;">
-                ${specialDate.isLate
-                  ? 'Tomorrow: Recovery workout recommended'
-                  : 'Tomorrow: Upper Body OK if readiness 75+'}
-              </p>
+            <div style="font-size: 12px; color: var(--text-secondary); margin-top: 4px;">
+              Ends: <span style="color: ${gameEndClass}; font-weight: 600;">${specialDate.end}</span>
+              ${specialDate.isLate ? ' (Late)' : ''}
             </div>
           `;
-        } else {
-          message = 'Personal Training (4pm) + Soccer tonight';
         }
-      } else if (dayName === 'wednesday') {
-        message = 'Handball Practice (7-9pm)';
-      } else {
-        message = 'No scheduled workout';
+
+        // Check if already logged
+        const logged = history.find(w =>
+          w.date === dateKey &&
+          w.type === 'External Activity' &&
+          w.activityId === activity.id
+        );
+
+        const loggedInfo = logged ? `
+          <div class="activity-tile-logged-info">
+            <span class="rating">${logged.intensity}/10</span> intensity
+            ${logged.duration ? ` · ${logged.duration} min` : ''}
+            ${logged.effortType ? ` · ${logged.effortType}` : ''}
+          </div>
+        ` : '';
+
+        activitiesHtml += `
+          <div class="activity-tile ${logged ? 'logged' : ''}" onclick="openExternalActivityModal('${activity.id}', '${dayName}')">
+            <div class="activity-tile-header">
+              <div>
+                <div class="activity-tile-type">${activity.type}</div>
+                <div class="activity-tile-name">${activity.name}</div>
+                <div class="activity-tile-time">${activityTime || 'TBD'} · ${activity.location}</div>
+                ${extraInfo}
+              </div>
+              <span class="activity-tile-status ${logged ? 'logged' : ''}">${logged ? 'Logged' : 'Tap to log'}</span>
+            </div>
+            ${loggedInfo}
+          </div>
+        `;
+      });
+
+      // Add note about tomorrow if Monday late game
+      let tomorrowNote = '';
+      if (dayName === 'monday' && specialDate && specialDate.type === 'soccer') {
+        const noteColor = specialDate.isLate ? 'var(--accent)' : 'var(--success)';
+        const noteText = specialDate.isLate
+          ? 'Late game tonight → Tomorrow should be Recovery'
+          : 'Early game tonight → Tomorrow Upper Body OK if readiness 75+';
+        tomorrowNote = `
+          <div style="margin: 16px; padding: 12px; background: var(--bg-secondary); border-left: 3px solid ${noteColor}; border-radius: 0 8px 8px 0;">
+            <p style="font-size: 13px; color: var(--text-secondary);">${noteText}</p>
+          </div>
+        `;
       }
 
       content.innerHTML = `
-        <div class="workout-header">
-          <div class="workout-type">${dayName.toUpperCase()}</div>
-          <div class="workout-title">${message}</div>
-          ${extraInfo}
+        <div class="activity-tiles">
+          ${activitiesHtml}
+        </div>
+        ${tomorrowNote}
+      `;
+    }
+
+    function showMixedDay(dayName, workout) {
+      // Days with both external activities AND an in-app workout
+      const content = document.getElementById('workoutContent');
+      document.getElementById('dayName').textContent = "Today's Activities";
+
+      const activities = EXTERNAL_ACTIVITIES[dayName] || [];
+      const dateKey = formatDateKey(state.currentDate);
+      const history = getWorkoutHistory();
+
+      // Build external activity tiles
+      let activitiesHtml = '';
+      activities.forEach(activity => {
+        const logged = history.find(w =>
+          w.date === dateKey &&
+          w.type === 'External Activity' &&
+          w.activityId === activity.id
+        );
+
+        const loggedInfo = logged ? `
+          <div class="activity-tile-logged-info">
+            <span class="rating">${logged.intensity}/10</span> intensity
+            ${logged.duration ? ` · ${logged.duration} min` : ''}
+          </div>
+        ` : '';
+
+        activitiesHtml += `
+          <div class="activity-tile ${logged ? 'logged' : ''}" onclick="openExternalActivityModal('${activity.id}', '${dayName}')">
+            <div class="activity-tile-header">
+              <div>
+                <div class="activity-tile-type">${activity.type}</div>
+                <div class="activity-tile-name">${activity.name}</div>
+                <div class="activity-tile-time">${activity.time || 'TBD'} · ${activity.location}</div>
+              </div>
+              <span class="activity-tile-status ${logged ? 'logged' : ''}">${logged ? 'Logged' : 'Tap to log'}</span>
+            </div>
+            ${loggedInfo}
+          </div>
+        `;
+      });
+
+      // Check if in-app workout is logged
+      const workoutLogged = history.find(w =>
+        w.date === dateKey &&
+        w.workout === workout.name &&
+        w.type !== 'External Activity'
+      );
+
+      // Build in-app workout tile
+      const workoutLoggedInfo = workoutLogged ? `
+        <div class="activity-tile-logged-info">
+          <span class="rating">${workoutLogged.overallFeel}/10</span> effort
+          ${workoutLogged.duration ? ` · ${workoutLogged.duration} min` : ''}
+        </div>
+      ` : '';
+
+      activitiesHtml += `
+        <div class="activity-tile ${workoutLogged ? 'logged' : ''}" onclick="startInAppWorkout()" style="border-color: ${workoutLogged ? 'var(--success)' : 'var(--accent)'};">
+          <div class="activity-tile-header">
+            <div>
+              <div class="activity-tile-type" style="color: var(--accent);">${workout.type}</div>
+              <div class="activity-tile-name">${workout.name}</div>
+              <div class="activity-tile-time">${workout.duration} · ${workout.location}</div>
+            </div>
+            <span class="activity-tile-status ${workoutLogged ? 'logged' : ''}" style="${!workoutLogged ? 'background: var(--accent); color: white;' : ''}">${workoutLogged ? 'Logged' : 'Start'}</span>
+          </div>
+          ${workoutLoggedInfo}
         </div>
       `;
+
+      content.innerHTML = `<div class="activity-tiles">${activitiesHtml}</div>`;
+
+      // Store workout for when they click to start it
+      state.pendingWorkout = workout;
+    }
+
+    function startInAppWorkout() {
+      if (state.pendingWorkout) {
+        state.activeWorkout = state.pendingWorkout;
+        state.workoutStartTime = null;
+        state.workoutLog = {};
+        renderWorkout(state.pendingWorkout);
+      }
     }
 
     function renderWorkout(workout) {
@@ -2767,12 +3061,15 @@
       container.innerHTML = history.slice(0, 10).map(workout => {
         const date = new Date(workout.date);
         const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
-        const effortIcons = { physical: '💪', technical: '🎯', mental: '🧠' };
+        const effortIcons = { physical: '💪', technical: '🎯', mental: '🧠', tactical: '🧠' };
 
         // Build badges
         let badges = '';
         if (workout.type === 'Travel Activity') {
           badges += `<span class="history-badge travel">${workout.activityType || 'Travel'}</span>`;
+        }
+        if (workout.type === 'External Activity') {
+          badges += `<span class="history-badge" style="background: rgba(255, 167, 38, 0.2); color: var(--warning);">${workout.activityType || 'External'}</span>`;
         }
         if (workout.wasAdapted) {
           badges += `<span class="history-badge adapted">Adapted</span>`;
@@ -2798,6 +3095,26 @@
           `;
         }
 
+        // Different display for external activities
+        if (workout.type === 'External Activity') {
+          const effortIcon = effortIcons[workout.effortType] || '';
+          return `
+            <div class="history-day" style="border-left: 3px solid var(--warning);">
+              <div class="history-date">${days[date.getDay()]}, ${date.toLocaleDateString()}</div>
+              <div class="history-workout">${workout.workout}</div>
+              <div class="history-stats">
+                ${workout.duration ? `<span>⏱ ${workout.duration} min</span>` : ''}
+                ${workout.location ? `<span>📍 ${workout.location}</span>` : ''}
+                ${workout.intensity ? `<span>Intensity: ${workout.intensity}/10</span>` : ''}
+                ${workout.effortType ? `<span>${effortIcon} ${workout.effortType}</span>` : ''}
+              </div>
+              ${badges ? `<div class="history-badges">${badges}</div>` : ''}
+              ${workout.focus ? `<div style="font-size: 12px; color: var(--text-secondary); margin-top: 8px;"><strong>Focus:</strong> ${workout.focus}</div>` : ''}
+              ${workout.notes ? `<div style="font-size: 12px; color: var(--text-secondary); margin-top: 4px; font-style: italic;">"${workout.notes}"</div>` : ''}
+            </div>
+          `;
+        }
+
         return `
           <div class="history-day">
             <div class="history-date">${days[date.getDay()]}, ${date.toLocaleDateString()}</div>
@@ -2815,6 +3132,53 @@
     }
 
     // ==================== PLAN VIEW ====================
+
+    // External activities by day (activities not fully tracked in-app but worth logging)
+    const EXTERNAL_ACTIVITIES = {
+      monday: [
+        {
+          id: 'personal_training',
+          name: 'Personal Training',
+          time: '4:00pm',
+          duration: 60,
+          location: 'Gym',
+          type: 'Strength',
+          description: 'Trainer-led session'
+        },
+        {
+          id: 'soccer',
+          name: 'Soccer',
+          time: null, // Set from SPECIAL_DATES
+          duration: 90,
+          location: 'Field',
+          type: 'Sport',
+          description: 'League game'
+        }
+      ],
+      wednesday: [
+        {
+          id: 'handball_practice',
+          name: 'Handball Practice',
+          time: '7:00pm',
+          duration: 120,
+          location: 'Court',
+          type: 'Sport',
+          description: 'Team practice'
+        }
+      ],
+      saturday: [
+        {
+          id: 'soccer_pickup',
+          name: 'Soccer',
+          time: '2:00pm',
+          duration: 60,
+          location: 'Field',
+          type: 'Sport',
+          description: 'Pickup game'
+        }
+      ]
+    };
+
     const SCHEDULE = {
       // Day of week (0=Sun, 1=Mon, etc) -> workout info
       0: { type: 'rest', name: 'Rest Day', external: false },
@@ -3545,6 +3909,86 @@
       saveWorkoutToHistory(workoutData);
 
       closeTravelActivityModal();
+      loadTodaysWorkout(); // Refresh to show logged state
+      loadHistory();
+    }
+
+    // ==================== EXTERNAL ACTIVITY LOGGING ====================
+    let currentExternalActivity = null;
+
+    function openExternalActivityModal(activityId, dayName) {
+      const activities = EXTERNAL_ACTIVITIES[dayName];
+      const activity = activities.find(a => a.id === activityId);
+
+      if (!activity) return;
+
+      currentExternalActivity = { ...activity, dayName };
+
+      // Set title
+      document.getElementById('externalActivityTitle').textContent = `Log ${activity.name}`;
+
+      // Reset fields
+      document.getElementById('externalActivityDuration').value = activity.duration || '';
+      document.getElementById('externalActivityFocus').value = '';
+      document.getElementById('externalActivityNotes').value = '';
+
+      // Reset selections
+      document.querySelectorAll('#externalIntensitySlider .overall-btn').forEach(b => b.classList.remove('selected'));
+      document.querySelectorAll('#externalEffortType .effort-type-btn').forEach(b => b.classList.remove('selected'));
+
+      // Set up click handlers
+      document.querySelectorAll('#externalIntensitySlider .overall-btn').forEach(btn => {
+        btn.onclick = () => {
+          document.querySelectorAll('#externalIntensitySlider .overall-btn').forEach(b => b.classList.remove('selected'));
+          btn.classList.add('selected');
+        };
+      });
+
+      document.querySelectorAll('#externalEffortType .effort-type-btn').forEach(btn => {
+        btn.onclick = () => {
+          document.querySelectorAll('#externalEffortType .effort-type-btn').forEach(b => b.classList.remove('selected'));
+          btn.classList.add('selected');
+        };
+      });
+
+      document.getElementById('externalActivityModal').classList.add('active');
+    }
+
+    function closeExternalActivityModal() {
+      document.getElementById('externalActivityModal').classList.remove('active');
+      currentExternalActivity = null;
+    }
+
+    function saveExternalActivity() {
+      if (!currentExternalActivity) return;
+
+      const duration = parseInt(document.getElementById('externalActivityDuration').value) || currentExternalActivity.duration;
+      const intensityBtn = document.querySelector('#externalIntensitySlider .overall-btn.selected');
+      const intensity = intensityBtn ? parseInt(intensityBtn.dataset.value) : 5;
+      const effortTypeBtn = document.querySelector('#externalEffortType .effort-type-btn.selected');
+      const effortType = effortTypeBtn ? effortTypeBtn.dataset.value : null;
+      const focus = document.getElementById('externalActivityFocus').value;
+      const notes = document.getElementById('externalActivityNotes').value;
+
+      const workoutData = {
+        date: formatDateKey(state.currentDate),
+        workout: currentExternalActivity.name,
+        type: 'External Activity',
+        activityId: currentExternalActivity.id,
+        activityType: currentExternalActivity.type,
+        duration: duration,
+        location: currentExternalActivity.location,
+        intensity: intensity,
+        effortType: effortType,
+        focus: focus,
+        notes: notes,
+        timestamp: new Date().toISOString()
+      };
+
+      // Save to Firestore and localStorage
+      saveWorkoutToHistory(workoutData);
+
+      closeExternalActivityModal();
       loadTodaysWorkout(); // Refresh to show logged state
       loadHistory();
     }
