@@ -1806,8 +1806,8 @@
           </div>
         </div>
 
-        <!-- 4-Week Calendar -->
-        <h2>4-Week Schedule</h2>
+        <!-- Workout Plan Calendar -->
+        <h2>Workout Plan</h2>
         <div class="calendar-container" id="calendarContainer">
           <!-- Calendar weeks rendered dynamically -->
         </div>
@@ -4003,6 +4003,17 @@
     function showDayPreview(timestamp, dayOfWeek) {
       const date = new Date(timestamp);
       const dateKey = formatDateKey(date);
+
+      // If clicking on today, navigate to Today tab instead of showing preview
+      const today = state.currentDate;
+      const isToday = date.getDate() === today.getDate() &&
+                      date.getMonth() === today.getMonth() &&
+                      date.getFullYear() === today.getFullYear();
+      if (isToday) {
+        showView('today');
+        return;
+      }
+
       const specialDate = SPECIAL_DATES[dateKey];
       const isTravel = specialDate && specialDate.type === 'travel';
       const schedule = SCHEDULE[dayOfWeek];
