@@ -2804,7 +2804,8 @@
       }
 
       // Show external activities as tiles
-      document.getElementById('dayName').textContent = "Today's Activities";
+      const displayDayName = dayName.charAt(0).toUpperCase() + dayName.slice(1);
+      document.getElementById('dayName').textContent = displayDayName;
 
       const dateKey = formatDateKey(state.currentDate);
       const history = getWorkoutHistory();
@@ -2883,7 +2884,8 @@
     function showMixedDay(dayName, workout) {
       // Days with both external activities AND an in-app workout
       const content = document.getElementById('workoutContent');
-      document.getElementById('dayName').textContent = "Today's Activities";
+      const displayDayName = dayName.charAt(0).toUpperCase() + dayName.slice(1);
+      document.getElementById('dayName').textContent = displayDayName;
 
       const activities = EXTERNAL_ACTIVITIES[dayName] || [];
       const dateKey = formatDateKey(state.currentDate);
@@ -3458,6 +3460,20 @@
 
       document.getElementById(`${viewName}View`).classList.add('active');
       document.querySelector(`.nav-item[onclick="showView('${viewName}')"]`).classList.add('active');
+
+      // Update header based on view
+      const headerTitles = {
+        today: null, // Will be set by loadTodaysWorkout
+        plan: 'Workout Plan',
+        history: 'History',
+        progress: 'Progress'
+      };
+
+      if (viewName === 'today') {
+        loadTodaysWorkout(); // This sets the appropriate title
+      } else {
+        document.getElementById('dayName').textContent = headerTitles[viewName];
+      }
 
       // Refresh plan view data when shown
       if (viewName === 'plan') {
