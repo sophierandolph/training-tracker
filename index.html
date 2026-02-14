@@ -2955,15 +2955,16 @@
     function showTravelDay(specialDate) {
       const content = document.getElementById('workoutContent');
       const isTransit = specialDate.isTransit;
-      const dayLabel = isTransit ? 'Travel Day' : 'Flex Day';
-      const typeLabel = isTransit ? 'TRAVEL' : 'FLEX';
+      const dateKey = formatDateKey(state.currentDate);
+      const hasDateActivities = DATE_ACTIVITIES[dateKey] && DATE_ACTIVITIES[dateKey].length > 0;
+      const dayLabel = hasDateActivities ? 'Game Day' : isTransit ? 'Travel Day' : 'Flex Day';
+      const typeLabel = hasDateActivities ? 'TOURNAMENT' : isTransit ? 'TRAVEL' : 'FLEX';
       document.getElementById('dayName').textContent = dayLabel;
 
       // Store current travel info for logging
       state.currentTravelDay = specialDate;
 
       // Check if already logged activity today
-      const dateKey = formatDateKey(state.currentDate);
       const history = getWorkoutHistory();
       const todayLog = history.find(w => w.date === dateKey);
       const hasLogged = todayLog && todayLog.type === 'Travel Activity';
@@ -3009,27 +3010,66 @@
           </div>
         </div>
         <div style="padding: 20px;">
+          ${!hasDateActivities ? `
           <div style="background: var(--bg-secondary); border-radius: var(--radius); padding: 16px; margin-bottom: 16px;">
             <h3 style="font-size: 14px; margin-bottom: 12px; color: var(--text-primary);">Flex Day Options</h3>
             <ul style="color: var(--text-secondary); font-size: 13px; margin-left: 20px; line-height: 1.8;">
               ${optionsList}
             </ul>
           </div>
+          ` : ''}
           <div style="background: rgba(149,117,205,0.15); border: 1px solid #9575cd; border-radius: var(--radius); padding: 16px; margin-bottom: 16px;">
             <p style="color: var(--text-secondary); font-size: 13px; text-align: center;">
               ${facilityMessage}
             </p>
           </div>
-          ${hasLogged ? `
-            <div style="background: rgba(78, 205, 196, 0.15); border: 1px solid var(--success); border-radius: var(--radius); padding: 16px; text-align: center;">
-              <p style="color: var(--success); font-size: 14px; font-weight: 600;">Activity Logged!</p>
-              <p style="color: var(--text-secondary); font-size: 12px; margin-top: 4px;">${todayLog.workout}</p>
-            </div>
-          ` : `
-            <button class="btn btn-primary" style="width: 100%; background: #9575cd;" onclick="showTravelActivityModal()">
-              Log What You Did
-            </button>
-          `}
+          ${(() => {
+            // Check for date-specific activities (tournament games, clinics)
+            const dateActivities = DATE_ACTIVITIES[dateKey];
+            if (dateActivities && dateActivities.length > 0) {
+              let tilesHtml = '<div class="activity-tiles" style="margin-top: 8px;">';
+              dateActivities.forEach(activity => {
+                const logged = history.find(w =>
+                  w.date === dateKey &&
+                  w.type === 'External Activity' &&
+                  w.activityId === activity.id
+                );
+                const loggedInfo = logged ? `
+                  <div class="activity-tile-logged-info">
+                    <span class="rating">${logged.intensity}/10</span> intensity
+                    ${logged.duration ? ` · ${logged.duration} min` : ''}
+                    ${logged.effortType ? ` · ${logged.effortType}` : ''}
+                  </div>
+                ` : '';
+                tilesHtml += `
+                  <div class="activity-tile ${logged ? 'logged' : ''}" onclick="openExternalActivityModal('${activity.id}', null, '${dateKey}')">
+                    <div class="activity-tile-header">
+                      <div>
+                        <div class="activity-tile-type">${activity.type}</div>
+                        <div class="activity-tile-name">${activity.name}</div>
+                        <div class="activity-tile-time">${activity.time || 'TBD'} · ${activity.location}</div>
+                      </div>
+                      <span class="activity-tile-status ${logged ? 'logged' : ''}">${logged ? 'Logged' : 'Tap to log'}</span>
+                    </div>
+                    ${loggedInfo}
+                  </div>
+                `;
+              });
+              tilesHtml += '</div>';
+              return tilesHtml;
+            }
+            // Fallback: generic log button for travel days without specific activities
+            return hasLogged ? `
+              <div style="background: rgba(78, 205, 196, 0.15); border: 1px solid var(--success); border-radius: var(--radius); padding: 16px; text-align: center;">
+                <p style="color: var(--success); font-size: 14px; font-weight: 600;">Activity Logged!</p>
+                <p style="color: var(--text-secondary); font-size: 12px; margin-top: 4px;">${todayLog.workout}</p>
+              </div>
+            ` : `
+              <button class="btn btn-primary" style="width: 100%; background: #9575cd;" onclick="showTravelActivityModal()">
+                Log What You Did
+              </button>
+            `;
+          })()}
         </div>
       `;
     }
@@ -3890,6 +3930,68 @@
       ]
     };
 
+    // Date-specific activities (tournaments, clinics, etc.)
+    const DATE_ACTIVITIES = {
+      '2026-02-21': [
+        {
+          id: 'cbc_game2',
+          name: 'Tar Heels vs DC',
+          time: '9:00am ET',
+          duration: 60,
+          location: 'Carolina Blue Cup',
+          type: 'Handball',
+          description: 'Game 2'
+        },
+        {
+          id: 'handball_futures_clinic',
+          name: 'Handball Futures Clinic',
+          time: '11:00am-1:00pm ET',
+          duration: 120,
+          location: 'Carolina Blue Cup',
+          type: 'Clinic',
+          description: 'Skills clinic'
+        },
+        {
+          id: 'cbc_game5',
+          name: 'Tar Heels vs WP Black',
+          time: '1:00pm ET',
+          duration: 60,
+          location: 'Carolina Blue Cup',
+          type: 'Handball',
+          description: 'Game 5'
+        },
+        {
+          id: 'cbc_playoff',
+          name: 'Playoff Game',
+          time: 'TBD (afternoon)',
+          duration: 60,
+          location: 'Carolina Blue Cup',
+          type: 'Handball',
+          description: 'Playoff game'
+        }
+      ],
+      '2026-02-22': [
+        {
+          id: 'cbc_placement',
+          name: 'Placement Game',
+          time: 'TBD (morning)',
+          duration: 60,
+          location: 'Carolina Blue Cup',
+          type: 'Handball',
+          description: 'Placement game'
+        },
+        {
+          id: 'cbc_medal_ceremony',
+          name: 'Medal Ceremony',
+          time: '1:00pm ET',
+          duration: 30,
+          location: 'Carolina Blue Cup',
+          type: 'Event',
+          description: 'Awards ceremony'
+        }
+      ]
+    };
+
     const SCHEDULE = {
       // Day of week (0=Sun, 1=Mon, etc) -> workout info
       0: { type: 'rest', name: 'Rest Day', external: false },
@@ -4151,13 +4253,19 @@
           const isHandballTraining = item.specialDate.isTraining;
 
           if (isHandballTraining) {
-            // NC Handball Trip - this IS the training!
+            // NC Handball Trip - check for specific tournament games
+            const dateKey = formatDateKey(item.date);
+            const dateActivities = DATE_ACTIVITIES[dateKey];
             badgeText = 'HANDBALL';
             displayName = item.specialDate.note;
-            previewText = `${item.specialDate.location} - Handball training counts as workout!`;
-            extraInfo = item.specialDate.note.includes('Competition')
-              ? `<div class="game-time-note">Playing with new team - Carolina Blue Cup!</div>`
-              : '';
+            if (dateActivities && dateActivities.length > 0) {
+              const gameNames = dateActivities.map(a => `${a.name} (${a.time})`).join(' · ');
+              previewText = gameNames;
+              extraInfo = `<div class="game-time-note">${dateActivities.length} activities - tap to see details</div>`;
+            } else {
+              previewText = `${item.specialDate.location} - Handball training counts as workout!`;
+              extraInfo = '';
+            }
           } else if (facilities === 'minimal') {
             // Fort Davis - minimal facilities, flex day
             badgeText = 'FLEX';
@@ -4277,8 +4385,14 @@
 
         if (isTravel) {
           if (specialDate.facilities === 'minimal') continue;
-          // Handball training or gym access counts as 1
-          plannedCount++;
+          // Check for date-specific activities (tournament games, etc.)
+          const dateActivities = DATE_ACTIVITIES[dateKey];
+          if (dateActivities && dateActivities.length > 0) {
+            plannedCount += dateActivities.length;
+          } else {
+            // Generic gym/training day counts as 1
+            plannedCount++;
+          }
           continue;
         }
 
@@ -4652,13 +4766,18 @@
     // ==================== EXTERNAL ACTIVITY LOGGING ====================
     let currentExternalActivity = null;
 
-    function openExternalActivityModal(activityId, dayName) {
-      const activities = EXTERNAL_ACTIVITIES[dayName];
-      const activity = activities.find(a => a.id === activityId);
+    function openExternalActivityModal(activityId, dayName, dateKey) {
+      let activities;
+      if (dateKey) {
+        activities = DATE_ACTIVITIES[dateKey];
+      } else {
+        activities = EXTERNAL_ACTIVITIES[dayName];
+      }
+      const activity = activities ? activities.find(a => a.id === activityId) : null;
 
       if (!activity) return;
 
-      currentExternalActivity = { ...activity, dayName };
+      currentExternalActivity = { ...activity, dayName, dateKey };
 
       // Set title
       document.getElementById('externalActivityTitle').textContent = `Log ${activity.name}`;
