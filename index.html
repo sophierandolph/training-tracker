@@ -2560,7 +2560,7 @@
           ]
         },
         recovery: {
-          name: "Post-Late-Game Recovery",
+          name: "Shoulder Mobility & Stability",
           type: "Recovery",
           duration: "20-25 min",
           location: "Home",
@@ -2916,7 +2916,7 @@
       const specialDate = SPECIAL_DATES[dateKey];
 
       // Check if today is a travel day
-      if (specialDate && specialDate.type === 'travel') {
+      if (specialDate && specialDate.type === 'travel' && dateKey !== '2026-02-14') {
         showTravelDay(specialDate);
         return;
       }
@@ -2937,6 +2937,10 @@
           workout = WORKOUTS.friday.lowerBody;
           break;
         case 'saturday':
+          if (dateKey === '2026-02-14') {
+            workout = WORKOUTS.tuesday.recovery;
+            break;
+          }
           // Saturday has external activity (soccer) + in-app workout (handball)
           showMixedDay('saturday', WORKOUTS.saturday.handball);
           return;
@@ -4301,7 +4305,7 @@
           const mondayGame = getPreviousMondayGameInfo(item.date);
 
           if (workoutType === 'recovery') {
-            displayName = 'Post-Late-Game Recovery';
+            displayName = 'Shoulder Mobility & Stability';
             previewText = 'Gentle warm-up, Shoulder mobility, Light stability work';
             badgeText = 'Recovery';
             if (mondayGame) {
@@ -4563,7 +4567,7 @@
         const mondayGame = getPreviousMondayGameInfo(date);
 
         if (workoutType === 'recovery') {
-          previewTitle = 'Post-Late-Game Recovery';
+          previewTitle = 'Shoulder Mobility & Stability';
           document.getElementById('previewTitle').textContent = previewTitle;
           document.getElementById('previewDate').textContent = `${dayNames[date.getDay()]}, ${months[date.getMonth()]} ${date.getDate()}, 2026`;
 
@@ -5171,7 +5175,7 @@ GOALS
 
 WEEKLY SCHEDULE (Mon-Sun)
 - Mon: Personal training (4pm) + Soccer (evening, 7v7). Game times vary; check SPECIAL_DATES.
-- Tue: Upper Body (if Mon game ended early + readiness 75+) OR Post-Late-Game Recovery (if late Mon game or readiness 70-75). Recovery = mobility + band shoulder work at home.
+- Tue: Upper Body (if Mon game ended early + readiness 75+) OR Shoulder Mobility & Stability (if late Mon game or readiness 70-75). Recovery = mobility + band shoulder work at home.
 - Wed: Handball practice (7-9pm, 90 min). External, not programmed.
 - Thu: Bike training (45-60 min, outdoor track) + Shoulder Stability Protocol (15-20 min post-ride).
 - Fri: Lower Body (if readiness 80+ and legs good) OR Yoga only (55 min Hatha, 6:30pm) if readiness 75-80 or legs heavy.
