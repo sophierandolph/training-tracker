@@ -2040,7 +2040,6 @@
         <button class="coach-chip" onclick="sendQuickAction('adapt')">Adapt today's workout</button>
         <button class="coach-chip" onclick="sendQuickAction('design')">Design a workout</button>
         <button class="coach-chip" onclick="sendQuickAction('rest')">Should I rest today?</button>
-        <button class="coach-chip" onclick="sendQuickAction('plan')">Plan next week</button>
       </div>
 
       <!-- Input bar -->
@@ -5376,8 +5375,7 @@ ${recentHistory}`;
       const actions = {
         adapt: `My readiness is ${state.readiness || 'not entered yet'}. What adaptations should I make to today's scheduled workout?`,
         design: `I have some free time. Can you design a workout for me? I'm at ${isTravelDay(state.currentDate) ? 'a travel location with ' + (SPECIAL_DATES[formatDateKey(state.currentDate)]?.facilities || 'minimal') + ' facilities' : 'home/campus with gym access'}.`,
-        rest: `Should I rest today? My readiness is ${state.readiness || 'not entered yet'}. How am I trending this week?`,
-        plan: `Help me plan my workouts for the upcoming week. What should I prioritize based on my recent training?`
+        rest: `Should I rest today? My readiness is ${state.readiness || 'not entered yet'}. How am I trending this week?`
       };
       sendCoachMessage(actions[type]);
     }
