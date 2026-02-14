@@ -2958,7 +2958,10 @@
 
     function showTravelDay(specialDate) {
       const content = document.getElementById('workoutContent');
-      document.getElementById('dayName').textContent = 'Travel Day';
+      const isTransit = specialDate.isTransit;
+      const dayLabel = isTransit ? 'Travel Day' : 'Flex Day';
+      const typeLabel = isTransit ? 'TRAVEL' : 'FLEX';
+      document.getElementById('dayName').textContent = dayLabel;
 
       // Store current travel info for logging
       state.currentTravelDay = specialDate;
@@ -2996,14 +2999,14 @@
       }
 
       const facilityMessage = specialDate.facilities === 'minimal'
-        ? 'Facilities are minimal. Focus on rest and enjoying the trip!'
+        ? isTransit ? 'Travel day - rest up and enjoy the trip!' : 'Facilities are minimal. Focus on rest and enjoying the trip!'
         : specialDate.isTraining
           ? 'Handball training counts as your workout!'
           : `${specialDate.note}`;
 
       content.innerHTML = `
         <div class="workout-header" style="background: linear-gradient(135deg, rgba(149,117,205,0.3) 0%, var(--bg-secondary) 100%);">
-          <div class="workout-type" style="color: #b39ddb;">TRAVEL</div>
+          <div class="workout-type" style="color: #b39ddb;">${typeLabel}</div>
           <div class="workout-title">${specialDate.location}</div>
           <div class="workout-meta">
             <span style="color: #b39ddb;">${specialDate.note}</span>
@@ -3011,7 +3014,7 @@
         </div>
         <div style="padding: 20px;">
           <div style="background: var(--bg-secondary); border-radius: var(--radius); padding: 16px; margin-bottom: 16px;">
-            <h3 style="font-size: 14px; margin-bottom: 12px; color: var(--text-primary);">Travel-Friendly Options</h3>
+            <h3 style="font-size: 14px; margin-bottom: 12px; color: var(--text-primary);">Flex Day Options</h3>
             <ul style="color: var(--text-secondary); font-size: 13px; margin-left: 20px; line-height: 1.8;">
               ${optionsList}
             </ul>
@@ -3895,10 +3898,10 @@
       '2026-03-02': { type: 'soccer', start: '9:15pm', end: '10:50pm', isLate: true, note: 'Late game (outside 3-week plan)' },
 
       // Fort Davis Trip (Feb 12-15) - minimal facilities
-      '2026-02-12': { type: 'travel', location: 'Fort Davis, TX', note: 'Travel day', facilities: 'minimal' },
+      '2026-02-12': { type: 'travel', location: 'Fort Davis, TX', note: 'Travel day', facilities: 'minimal', isTransit: true },
       '2026-02-13': { type: 'travel', location: 'Fort Davis, TX', note: 'Minimal facilities', facilities: 'minimal' },
       '2026-02-14': { type: 'travel', location: 'Fort Davis, TX', note: 'Active recovery', facilities: 'minimal' },
-      '2026-02-15': { type: 'travel', location: 'Fort Davis, TX', note: 'Travel back to Houston', facilities: 'minimal' },
+      '2026-02-15': { type: 'travel', location: 'Fort Davis, TX', note: 'Travel back to Houston', facilities: 'minimal', isTransit: true },
 
       // NC Handball Trip (Feb 20-22)
       '2026-02-20': { type: 'travel', location: 'NC', note: 'Hotel gym available - stay light before big weekend', facilities: 'gym' },
@@ -4151,12 +4154,12 @@
             extraInfo = '';
           } else if (facilities === 'gym' || facilities === 'gym+wall') {
             // Kyle - gym access available
-            badgeText = 'TRAVEL';
+            badgeText = 'FLEX';
             displayName = facilities === 'gym+wall' ? 'Handball Skills (Find Wall)' : 'Gym Workout Available';
             previewText = `${item.specialDate.location} - ${item.specialDate.note}`;
             extraInfo = `<div class="game-time-note">Gym day pass available</div>`;
           } else {
-            badgeText = 'TRAVEL';
+            badgeText = item.specialDate.isTransit ? 'TRAVEL' : 'FLEX';
             previewText = `${item.specialDate.location} - ${item.specialDate.note}`;
           }
         }
@@ -4364,11 +4367,11 @@
           `;
         } else {
           // Kyle - gym available
-          previewTitle = 'Travel Day (Gym Access)';
+          previewTitle = 'Flex Day (Gym Access)';
           document.getElementById('previewTitle').textContent = previewTitle;
           contentHtml = `
             <div style="padding: 16px; background: rgba(149, 117, 205, 0.15); border-radius: 8px; border: 1px solid #9575cd;">
-              <div style="color: #b39ddb; font-size: 12px; text-transform: uppercase; margin-bottom: 8px;">Travel with Gym Access</div>
+              <div style="color: #b39ddb; font-size: 12px; text-transform: uppercase; margin-bottom: 8px;">Flex Day - Gym Access</div>
               <p style="color: var(--text-secondary); font-size: 13px; margin-bottom: 12px;">${specialDate.note}</p>
               <p style="color: var(--text-secondary); font-size: 12px;">Facilities: ${facilities}</p>
             </div>
