@@ -1746,6 +1746,254 @@
       color: var(--accent-light);
       font-weight: 700;
     }
+
+    /* ==================== COACH VIEW ==================== */
+    #coachView {
+      display: none;
+      flex-direction: column;
+      height: calc(100vh - 140px); /* header + nav */
+      position: relative;
+    }
+    #coachView.active {
+      display: flex;
+    }
+
+    .coach-settings {
+      background: var(--bg-card);
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
+    }
+    .coach-settings-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 16px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-secondary);
+      cursor: pointer;
+    }
+    .coach-settings-toggle {
+      font-size: 10px;
+      transition: transform 0.2s;
+    }
+    .coach-settings-toggle.collapsed {
+      transform: rotate(-90deg);
+    }
+    .coach-settings-body {
+      padding: 0 16px 14px;
+    }
+    .coach-settings-body.hidden { display: none; }
+    .coach-label {
+      font-size: 11px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 6px;
+      display: block;
+    }
+    .coach-input {
+      flex: 1;
+      background: var(--bg-primary);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 10px 12px;
+      color: var(--text-primary);
+      font-size: 14px;
+    }
+    .coach-save-btn {
+      background: var(--accent);
+      color: white;
+      border: none;
+      border-radius: var(--radius-sm);
+      padding: 10px 16px;
+      font-weight: 600;
+      font-size: 13px;
+      cursor: pointer;
+    }
+    .coach-hint {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-top: 6px;
+    }
+
+    /* Chat messages area */
+    .coach-messages {
+      flex: 1;
+      overflow-y: auto;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .coach-welcome {
+      text-align: center;
+      padding: 40px 20px;
+      color: var(--text-secondary);
+    }
+    .coach-welcome-icon { font-size: 48px; margin-bottom: 12px; }
+    .coach-welcome-title { font-size: 18px; font-weight: 700; color: var(--text-primary); margin-bottom: 8px; }
+    .coach-welcome-text { font-size: 14px; line-height: 1.5; }
+
+    .coach-msg {
+      max-width: 85%;
+      padding: 12px 16px;
+      border-radius: var(--radius);
+      font-size: 14px;
+      line-height: 1.55;
+      word-wrap: break-word;
+    }
+    .coach-msg-user {
+      align-self: flex-end;
+      background: linear-gradient(135deg, var(--accent), #7c3aed);
+      color: white;
+      border-bottom-right-radius: 4px;
+    }
+    .coach-msg-assistant {
+      align-self: flex-start;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      color: var(--text-primary);
+      border-bottom-left-radius: 4px;
+    }
+    .coach-msg-assistant p { margin: 0 0 8px; }
+    .coach-msg-assistant p:last-child { margin-bottom: 0; }
+    .coach-msg-assistant strong { color: var(--accent-light); }
+    .coach-msg-assistant ul, .coach-msg-assistant ol { margin: 4px 0 8px 18px; }
+    .coach-msg-assistant li { margin-bottom: 4px; }
+    .coach-msg-assistant code {
+      background: var(--bg-primary);
+      padding: 2px 5px;
+      border-radius: 4px;
+      font-size: 13px;
+    }
+
+    .coach-msg-error {
+      align-self: center;
+      background: rgba(244, 63, 94, 0.15);
+      border: 1px solid var(--rose);
+      color: var(--rose);
+      font-size: 13px;
+      text-align: center;
+    }
+
+    /* Typing indicator */
+    .coach-typing {
+      align-self: flex-start;
+      display: flex;
+      gap: 5px;
+      padding: 14px 20px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      border-bottom-left-radius: 4px;
+    }
+    .coach-typing-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--text-muted);
+      animation: coachBounce 1.2s infinite;
+    }
+    .coach-typing-dot:nth-child(2) { animation-delay: 0.15s; }
+    .coach-typing-dot:nth-child(3) { animation-delay: 0.3s; }
+    @keyframes coachBounce {
+      0%, 60%, 100% { transform: translateY(0); opacity: 0.4; }
+      30% { transform: translateY(-6px); opacity: 1; }
+    }
+
+    /* Quick action chips */
+    .coach-chips {
+      display: flex;
+      gap: 8px;
+      padding: 8px 16px;
+      overflow-x: auto;
+      flex-shrink: 0;
+      -webkit-overflow-scrolling: touch;
+    }
+    .coach-chips::-webkit-scrollbar { display: none; }
+    .coach-chip {
+      flex-shrink: 0;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      color: var(--accent-light);
+      padding: 8px 14px;
+      border-radius: var(--radius-full);
+      font-size: 12px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: var(--transition);
+      white-space: nowrap;
+    }
+    .coach-chip:active {
+      background: var(--accent-glow);
+      border-color: var(--accent);
+    }
+    .coach-chip-finalize {
+      background: linear-gradient(135deg, var(--accent), #7c3aed);
+      color: white;
+      border-color: var(--accent);
+      font-weight: 600;
+    }
+
+    /* Input bar */
+    .coach-input-bar {
+      display: flex;
+      gap: 8px;
+      padding: 10px 16px;
+      background: var(--bg-secondary);
+      border-top: 1px solid var(--border);
+      flex-shrink: 0;
+    }
+    .coach-text-input {
+      flex: 1;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-full);
+      padding: 10px 16px;
+      color: var(--text-primary);
+      font-size: 15px;
+      outline: none;
+    }
+    .coach-text-input:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 2px var(--accent-glow);
+    }
+    .coach-text-input::placeholder { color: var(--text-muted); }
+    .coach-send-btn {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: var(--accent);
+      border: none;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      flex-shrink: 0;
+      transition: var(--transition);
+    }
+    .coach-send-btn:active { transform: scale(0.92); }
+    .coach-send-btn:disabled { opacity: 0.4; cursor: default; }
+
+    .coach-load-workout-btn {
+      display: block;
+      width: 100%;
+      margin-top: 12px;
+      padding: 10px;
+      background: linear-gradient(135deg, var(--accent), #7c3aed);
+      color: white;
+      border: none;
+      border-radius: var(--radius-sm);
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    .coach-load-workout-btn:active { transform: scale(0.97); opacity: 0.9; }
   </style>
 </head>
 <body>
@@ -1784,11 +2032,48 @@
       </div>
     </div>
 
-    <!-- Progress View -->
-    <div id="progressView" class="view">
-      <div style="padding: 20px; text-align: center; color: var(--text-secondary);">
-        <p>Progress charts coming soon!</p>
-        <p style="margin-top: 8px; font-size: 13px;">Complete a few workouts first to see trends.</p>
+    <!-- Coach View -->
+    <div id="coachView" class="view">
+      <!-- Settings (collapsible) -->
+      <div class="coach-settings" id="coachSettings">
+        <div class="coach-settings-header" onclick="toggleCoachSettings()">
+          <span>Coach Setup</span>
+          <span class="coach-settings-toggle" id="coachSettingsToggle">&#9660;</span>
+        </div>
+        <div class="coach-settings-body" id="coachSettingsBody">
+          <label class="coach-label">Cloudflare Worker URL</label>
+          <div style="display: flex; gap: 8px;">
+            <input type="text" id="coachProxyUrl" class="coach-input" placeholder="https://your-worker.workers.dev">
+            <button class="coach-save-btn" onclick="saveCoachSettings()">Save</button>
+          </div>
+          <p class="coach-hint">Deploy the worker.js proxy, then paste the URL here.</p>
+        </div>
+      </div>
+
+      <!-- Chat messages -->
+      <div class="coach-messages" id="coachMessages">
+        <div class="coach-welcome">
+          <div class="coach-welcome-icon">&#127947;</div>
+          <p class="coach-welcome-title">AI Workout Coach</p>
+          <p class="coach-welcome-text">Ask me about today's workout, get adaptations based on your readiness, or plan your next week.</p>
+        </div>
+      </div>
+
+      <!-- Quick action chips -->
+      <div class="coach-chips" id="coachChips">
+        <button class="coach-chip" onclick="sendQuickAction('adapt')">Adapt today's workout</button>
+        <button class="coach-chip" onclick="sendQuickAction('design')">Design a workout</button>
+        <button class="coach-chip" onclick="sendQuickAction('rest')">Should I rest today?</button>
+        <button class="coach-chip" onclick="sendQuickAction('plan')">Plan next week</button>
+        <button class="coach-chip coach-chip-finalize" id="coachFinalizeChip" onclick="sendQuickAction('finalize')" style="display:none;">Finalize workout</button>
+      </div>
+
+      <!-- Input bar -->
+      <div class="coach-input-bar">
+        <input type="text" id="coachInput" class="coach-text-input" placeholder="Ask your coach..." onkeydown="if(event.key==='Enter')sendCoachMessage()">
+        <button class="coach-send-btn" onclick="sendCoachMessage()" id="coachSendBtn">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 2L11 13"/><path d="M22 2L15 22L11 13L2 9L22 2Z"/></svg>
+        </button>
       </div>
     </div>
 
@@ -2189,9 +2474,9 @@
       <span class="nav-icon">📊</span>
       <span>History</span>
     </div>
-    <div class="nav-item" onclick="showView('progress')">
-      <span class="nav-icon">📈</span>
-      <span>Progress</span>
+    <div class="nav-item" onclick="showView('coach')">
+      <span class="nav-icon">🤖</span>
+      <span>Coach</span>
     </div>
   </nav>
 
@@ -2655,6 +2940,16 @@
       const dayName = dayNames[dayIndex];
       const dateKey = formatDateKey(state.currentDate);
       const specialDate = SPECIAL_DATES[dateKey];
+
+      // Check for coach-loaded workout override
+      if (state.coachWorkoutOverride) {
+        const workout = state.coachWorkoutOverride;
+        state.activeWorkout = workout;
+        state.workoutStartTime = null;
+        state.workoutLog = {};
+        renderWorkout(workout);
+        return;
+      }
 
       // Check if today is a travel day
       if (specialDate && specialDate.type === 'travel') {
@@ -3466,7 +3761,7 @@
         today: null, // Will be set by loadTodaysWorkout
         plan: 'Workout Plan',
         history: 'History',
-        progress: 'Progress'
+        coach: 'Coach'
       };
 
       if (viewName === 'today') {
@@ -4745,8 +5040,482 @@
       return insightsHtml;
     }
 
+    // ==================== AI COACH ====================
+
+    const COACH_CONTEXT = `ATHLETE PROFILE
+- 31F, 6'3", 170 lbs. Multi-sport: soccer (Mon), handball (Wed+Sat), cycling/Beer Bike (Thu), strength (Tue+Fri).
+- Uses Oura Ring for readiness. Works with personal trainer Monday 4pm.
+- Equipment at home: Tribe fabric resistance bands (5 levels, light to X-heavy), handball, foam roller.
+- Reference: @handballstrength on Instagram.
+
+GOALS
+1. US Women's Handball Team tryouts (fall 2026) - PRIMARY
+2. Beer Bike race (late April 2026) - 2-lap time trial, current 1:51, goal 1:40
+3. General strength and injury prevention
+
+WEEKLY SCHEDULE (Mon-Sun)
+- Mon: Personal training (4pm) + Soccer (evening, 7v7). Game times vary; check SPECIAL_DATES.
+- Tue: Upper Body (if Mon game ended early + readiness 75+) OR Post-Late-Game Recovery (if late Mon game or readiness 70-75). Recovery = mobility + band shoulder work at home.
+- Wed: Handball practice (7-9pm, 90 min). External, not programmed.
+- Thu: Bike training (45-60 min, outdoor track) + Shoulder Stability Protocol (15-20 min post-ride).
+- Fri: Lower Body (if readiness 80+ and legs good) OR Yoga only (55 min Hatha, 6:30pm) if readiness 75-80 or legs heavy.
+- Sat: Soccer (2-3pm, 45 min) + Handball skill session (45-60 min, squash court/wall).
+- Sun: REST. Non-negotiable.
+
+READINESS THRESHOLDS
+- 85+: Full speed, push intensity
+- 75-84: Proceed with plan, monitor
+- 70-74: Reduce volume/intensity by ~25%, consider recovery variant
+- <70: Rest day or very easy movement only
+- <70 for 3+ consecutive days: RED FLAG - back off significantly, check sleep/stress/nutrition
+
+HANDBALL PRIORITIES
+- Jump shot technique: L-R-LEFT rhythm (right hand), explosive 3rd step, land on same foot
+- Left-hand development: distance progression (2m/4m/6m), standing shots, one-step jump shots
+- Shoulder stability: rotator cuff protocol (90/90 rotations, empty/full can, prone T's, scapular push-ups)
+- Watching handball games counts as valid training (tactical study, positioning, play recognition)
+- Left-hand milestones: Wk2 hit target 4m, Wk4 jump shot with left, Wk6 natural in drills, Wk8 confident in practice
+
+BEER BIKE (11-week plan, ~Week ${Math.max(1, Math.ceil((new Date() - new Date(2026, 1, 6)) / (7 * 86400000)))} of 11)
+- Thu sessions: Wk1-3 base (tempo intervals, cadence 85-95 RPM), Wk4-6 race-specific (race pace, speed endurance), Wk7-9 simulation (full race efforts, overspeed), Wk10-11 taper
+- Clipping practice every session until automatic
+- Key mental cues: "Smooth is fast," "High cadence, light pressure"
+- Race strategy: Lap 1 ~52-53sec controlled, Lap 2 ~47-48sec all-out, commit halfway through Lap 1
+
+SHOULDER PROTOCOL (do after biking and after Saturday soccer)
+- A. Activation: scapular squeezes, arm circles palms up (3 min)
+- B. Rotator cuff: 90/90 ext/int rotation 3x12, empty/full can, prone T's, dynamic ext rotation (10-12 min)
+- C. Scapular stability: scapular push-ups, bear plank shoulder taps (3-4 min)
+- D. Overhead endurance: overhead hold + ball squeeze 2x30sec each arm (2-3 min)
+
+TUESDAY UPPER BODY EXERCISES
+Circuit A: Single Arm DB Row (3x10 @15lb ea arm), Chest Press Machine (3x10 @70lb), Russian Twists w/ Weight (3x20 @20lb)
+Circuit B: Lateral Shoulder Raise (3x10 @5lb), Lat Pulldown Machine (3x10 @55lb), Weighted Sit-ups (3x12 @5lb)
+Circuit C: Bicep Curls (3x10 @7.5lb), Cable Tricep Extension (3x10 @25lb)
+
+FRIDAY LOWER BODY EXERCISES
+Circuit A: DB Goblet Squat (3x12 @25lb), Jump Squats (3x10 BW), Front Low Plank (3x30sec)
+Circuit B: DB Reverse Lunges (3x8 @15lb ea leg), DB RDLs (3x10 @15lb), Side Plank (3x25sec ea side)
+Circuit C: Leg Press Machine (3x10 @100lb), Hamstring Curl Machine (3x10 @50lb)
+
+OVERTRAINING SIGNALS & GUARDRAILS
+- Sharp pain during movement = STOP immediately
+- Persistent pain >24h = extra rest, consider medical
+- Significant performance decrease = reduce load
+- Can't maintain form = drop weight or switch to recovery
+- Tendency to overtrain: athlete pushes through when she should rest. Coach should err on side of caution.
+- Better to do 80% of a workout well than 100% poorly
+- Sunday is always rest. No exceptions.`;
+
+    // Coach conversation state
+    let coachMessages = [];
+    const COACH_MAX_HISTORY = 10; // message pairs
+
+    function toggleCoachSettings() {
+      const body = document.getElementById('coachSettingsBody');
+      const toggle = document.getElementById('coachSettingsToggle');
+      body.classList.toggle('hidden');
+      toggle.classList.toggle('collapsed');
+    }
+
+    function saveCoachSettings() {
+      const url = document.getElementById('coachProxyUrl').value.trim();
+      if (url) {
+        localStorage.setItem('coachProxyUrl', url);
+        // Collapse settings after save
+        document.getElementById('coachSettingsBody').classList.add('hidden');
+        document.getElementById('coachSettingsToggle').classList.add('collapsed');
+      }
+    }
+
+    function initCoachView() {
+      const savedUrl = localStorage.getItem('coachProxyUrl');
+      if (savedUrl) {
+        document.getElementById('coachProxyUrl').value = savedUrl;
+        // Auto-collapse if already configured
+        document.getElementById('coachSettingsBody').classList.add('hidden');
+        document.getElementById('coachSettingsToggle').classList.add('collapsed');
+      }
+    }
+
+    function summarizeRecentHistory() {
+      const history = getWorkoutHistory();
+      const sevenDaysAgo = new Date();
+      sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+
+      const recent = history.filter(w => new Date(w.date) >= sevenDaysAgo);
+      if (recent.length === 0) return 'No workouts logged in the last 7 days.';
+
+      let summary = 'LAST 7 DAYS:\n';
+      recent.forEach(w => {
+        const d = new Date(w.date);
+        const dayNames = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+        summary += `\n${dayNames[d.getDay()]} ${w.date} - ${w.name || w.type || 'Workout'}`;
+        if (w.readiness) summary += ` | Readiness: ${w.readiness}`;
+        if (w.overallFeel) summary += ` | Feel: ${w.overallFeel}/10`;
+        if (w.overallEffortType) summary += ` | Effort: ${w.overallEffortType}`;
+        if (w.wasAdapted) summary += ` | AUTO-ADAPTED: ${w.adaptReason || 'readiness'}`;
+
+        // Exercise details
+        if (w.exerciseLog) {
+          Object.entries(w.exerciseLog).forEach(([id, log]) => {
+            if (log.sets && log.sets.length > 0) {
+              const setDetails = log.sets.map((s, i) => {
+                let detail = `S${i+1}`;
+                if (s.reps) detail += `:${s.reps}r`;
+                if (s.weight) detail += `@${s.weight}lb`;
+                if (s.feel) detail += `(feel:${s.feel}/5)`;
+                if (s.effortType) detail += `[${s.effortType}]`;
+                return detail;
+              }).join(' ');
+              summary += `\n  ${log.name || id}: ${setDetails}`;
+            }
+          });
+        }
+
+        // Adjustments
+        if (w.adjustments && w.adjustments.length > 0) {
+          w.adjustments.forEach(adj => {
+            summary += `\n  ADJUSTED ${adj.exercise}: ${adj.reasons ? adj.reasons.join(', ') : 'unspecified'} -> ${adj.change || 'modified'}`;
+          });
+        }
+
+        // Notes
+        if (w.notes) summary += `\n  Notes: "${w.notes}"`;
+      });
+
+      // Add patterns
+      const patterns = calculatePatterns();
+      if (patterns.totalWorkouts >= 2) {
+        summary += `\n\n3-WEEK PATTERNS: ${patterns.totalWorkouts} workouts`;
+        if (patterns.avgReadiness) summary += `, avg readiness ${patterns.avgReadiness}`;
+        if (patterns.lowReadinessDays > 0) summary += `, ${patterns.lowReadinessDays} days below 70`;
+        if (patterns.adaptedWorkouts > 0) summary += `, ${patterns.adaptedWorkouts} auto-adapted`;
+
+        const topAdj = Object.entries(patterns.adjustedExercises).sort((a,b) => b[1]-a[1]).slice(0,3);
+        if (topAdj.length > 0) {
+          summary += `\nMost adjusted: ${topAdj.map(([name, count]) => `${name} (${count}x)`).join(', ')}`;
+        }
+      }
+
+      return summary;
+    }
+
+    function buildCoachSystemPrompt() {
+      const today = state.currentDate;
+      const dateKey = formatDateKey(today);
+      const dayNames = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+      const dayOfWeek = today.getDay();
+      const specialDate = SPECIAL_DATES[dateKey];
+
+      // Get today's scheduled workout
+      const schedule = SCHEDULE[dayOfWeek];
+      let todaySchedule = `Today: ${dayNames[dayOfWeek]}, ${dateKey}. Scheduled: ${schedule.name}`;
+      if (schedule.duration) todaySchedule += ` (${schedule.duration})`;
+      if (specialDate) {
+        todaySchedule += `\nSpecial: ${specialDate.note || ''}`;
+        if (specialDate.location) todaySchedule += ` (${specialDate.location})`;
+        if (specialDate.facilities) todaySchedule += ` [facilities: ${specialDate.facilities}]`;
+      }
+
+      // Readiness state
+      let readinessInfo = 'Readiness: not entered yet';
+      if (state.readiness) {
+        readinessInfo = `Readiness: ${state.readiness}`;
+        if (state.readiness >= 85) readinessInfo += ' (excellent - full intensity)';
+        else if (state.readiness >= 75) readinessInfo += ' (good - proceed with plan)';
+        else if (state.readiness >= 70) readinessInfo += ' (moderate - consider reducing 25%)';
+        else readinessInfo += ' (low - rest or easy movement only)';
+      }
+      if (state.sleepScore) readinessInfo += ` | Sleep: ${state.sleepScore}`;
+      if (state.hrv) readinessInfo += ` | HRV: ${state.hrv}`;
+
+      const recentHistory = summarizeRecentHistory();
+
+      return `You are Sophie's AI workout coach. You are warm, direct, knowledgeable, and concise. You understand her training plan intimately and help her make smart decisions about workouts, recovery, and progression.
+
+KEY RULES:
+- Always consider readiness score before recommending intensity
+- Err on the side of caution - Sophie tends to push through when she should rest
+- Sunday is always rest. Never suggest training on Sunday.
+- If readiness < 70, strongly recommend rest or very light movement
+- Watching handball games/film counts as valid training
+- When suggesting workouts, use her actual exercises and weights from the plan
+- Keep responses concise and actionable. Use bullet points for workout plans.
+- Format workout suggestions clearly: exercise name, sets x reps, weight if applicable
+- Never suggest exercises that could aggravate shoulders without proper warm-up/protocol
+- During normal conversation, NEVER output JSON. Just describe workouts in plain text.
+- When the user says "finalize this workout", "load this", "lock it in", or similar, respond ONLY with a \`\`\`workout-json fenced block and nothing else. The JSON must match this schema:
+  {"name":"string","type":"string","duration":"string","location":"string","circuits":[{"name":"string","instructions":"string","restTime":number_or_null,"exercises":[{"id":"string","name":"string","sets":number,"reps":number,"weight":number_or_null,"notes":"string","noWeight":boolean,"perSide":boolean,"isHold":boolean,"holdTime":number_or_null}]}]}
+  Use short unique ids like "ca1","ca2". Set noWeight:true for bodyweight/band exercises. Base the JSON on the most recent workout you discussed.
+
+CURRENT STATE:
+${todaySchedule}
+${readinessInfo}
+
+${COACH_CONTEXT}
+
+RECENT TRAINING LOG:
+${recentHistory}`;
+    }
+
+    // Parse workout JSON from coach response
+    function extractWorkoutJson(text) {
+      // Match ```workout-json, ```json, or just ``` with JSON content containing "circuits"
+      const match = text.match(/```(?:workout-json|json)?\s*\n?([\s\S]*?)```/);
+      if (!match) return null;
+      const candidate = match[1].trim();
+      // Only parse if it looks like a workout object (has "circuits" key)
+      if (!candidate.includes('"circuits"')) return null;
+      try {
+        return JSON.parse(candidate);
+      } catch (e) {
+        console.log('Failed to parse workout JSON:', e);
+        return null;
+      }
+    }
+
+    // Strip the JSON block from display text
+    function stripWorkoutJson(text) {
+      return text.replace(/```(?:workout-json|json)?\s*\n?[\s\S]*?```/, '').trim();
+    }
+
+    // Load a coach-designed workout into the Today view
+    function loadCoachWorkout(workoutJson) {
+      state.coachWorkoutOverride = workoutJson;
+      state.activeWorkout = workoutJson;
+      state.workoutStartTime = null;
+      state.workoutLog = {};
+      state.pendingWorkout = null;
+      showView('today');
+    }
+
+    function renderCoachMessage(text, role) {
+      const container = document.getElementById('coachMessages');
+      // Remove welcome message on first real message
+      const welcome = container.querySelector('.coach-welcome');
+      if (welcome) welcome.remove();
+
+      const div = document.createElement('div');
+
+      if (role === 'error') {
+        div.className = 'coach-msg coach-msg-error';
+        div.textContent = text;
+      } else if (role === 'user') {
+        div.className = 'coach-msg coach-msg-user';
+        div.textContent = text;
+      } else {
+        // Check for workout JSON
+        const workoutData = extractWorkoutJson(text);
+        const displayText = workoutData ? stripWorkoutJson(text) : text;
+        div.className = 'coach-msg coach-msg-assistant';
+        div.innerHTML = simpleMarkdown(displayText);
+
+        if (workoutData) {
+          const btn = document.createElement('button');
+          btn.className = 'coach-load-workout-btn';
+          btn.textContent = 'Load This Workout';
+          btn.onclick = () => loadCoachWorkout(workoutData);
+          div.appendChild(btn);
+        }
+      }
+
+      container.appendChild(div);
+      container.scrollTop = container.scrollHeight;
+    }
+
+    function simpleMarkdown(text) {
+      // Convert markdown to HTML (basic support)
+      return text
+        .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+        .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+        .replace(/\*(.+?)\*/g, '<em>$1</em>')
+        .replace(/`(.+?)`/g, '<code>$1</code>')
+        .replace(/^### (.+)$/gm, '<strong style="font-size:15px;">$1</strong>')
+        .replace(/^## (.+)$/gm, '<strong style="font-size:16px;">$1</strong>')
+        .replace(/^[-*] (.+)$/gm, '<li>$1</li>')
+        .replace(/(<li>.*<\/li>)/gs, '<ul>$1</ul>')
+        .replace(/<\/ul>\s*<ul>/g, '')
+        .replace(/^\d+\. (.+)$/gm, '<li>$1</li>')
+        .replace(/\n{2,}/g, '</p><p>')
+        .replace(/\n/g, '<br>')
+        .replace(/^/, '<p>').replace(/$/, '</p>')
+        .replace(/<p><\/p>/g, '')
+        .replace(/<p>(<ul>)/g, '$1')
+        .replace(/(<\/ul>)<\/p>/g, '$1');
+    }
+
+    function showTypingIndicator() {
+      const container = document.getElementById('coachMessages');
+      const typing = document.createElement('div');
+      typing.className = 'coach-typing';
+      typing.id = 'coachTyping';
+      typing.innerHTML = '<div class="coach-typing-dot"></div><div class="coach-typing-dot"></div><div class="coach-typing-dot"></div>';
+      container.appendChild(typing);
+      container.scrollTop = container.scrollHeight;
+    }
+
+    function hideTypingIndicator() {
+      const typing = document.getElementById('coachTyping');
+      if (typing) typing.remove();
+    }
+
+    async function sendCoachMessage(overrideText) {
+      const input = document.getElementById('coachInput');
+      const userText = overrideText || input.value.trim();
+      if (!userText) return;
+
+      const proxyUrl = localStorage.getItem('coachProxyUrl');
+      if (!proxyUrl) {
+        renderCoachMessage('Set up your Cloudflare Worker URL in the settings above first.', 'error');
+        return;
+      }
+
+      // Clear input and show user message
+      if (!overrideText) input.value = '';
+      renderCoachMessage(userText, 'user');
+
+      // Add to conversation history
+      coachMessages.push({ role: 'user', content: userText });
+
+      // Trim history to last N pairs
+      while (coachMessages.length > COACH_MAX_HISTORY * 2) {
+        coachMessages.shift();
+      }
+
+      // Disable send
+      document.getElementById('coachSendBtn').disabled = true;
+      showTypingIndicator();
+
+      try {
+        const systemPrompt = buildCoachSystemPrompt();
+        const response = await fetch(proxyUrl, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            system: systemPrompt,
+            messages: coachMessages.map(m => ({ role: m.role, content: m.content }))
+          })
+        });
+
+        if (!response.ok) {
+          const errText = await response.text();
+          throw new Error(`API error ${response.status}: ${errText.slice(0, 200)}`);
+        }
+
+        const data = await response.json();
+        const assistantText = data.content?.[0]?.text || data.text || 'No response received.';
+
+        coachMessages.push({ role: 'assistant', content: assistantText });
+        hideTypingIndicator();
+        renderCoachMessage(assistantText, 'assistant');
+        maybeShowFinalizeChip();
+      } catch (err) {
+        hideTypingIndicator();
+        renderCoachMessage(`Error: ${err.message}`, 'error');
+        // Remove the failed user message from history so conversation stays clean
+        coachMessages.pop();
+      } finally {
+        document.getElementById('coachSendBtn').disabled = false;
+        document.getElementById('coachInput').focus();
+      }
+    }
+
+    function sendQuickAction(type) {
+      const actions = {
+        adapt: `My readiness is ${state.readiness || 'not entered yet'}. What adaptations should I make to today's scheduled workout?`,
+        design: `I have some free time. Can you design a workout for me? I'm at ${isTravelDay(state.currentDate) ? 'a travel location with ' + (SPECIAL_DATES[formatDateKey(state.currentDate)]?.facilities || 'minimal') + ' facilities' : 'home/campus with gym access'}.`,
+        rest: `Should I rest today? My readiness is ${state.readiness || 'not entered yet'}. How am I trending this week?`,
+        plan: `Help me plan my workouts for the upcoming week. What should I prioritize based on my recent training?`,
+        finalize: `Finalize this workout. Output only the workout-json block.`
+      };
+      sendCoachMessage(actions[type]);
+    }
+
+    // Show the finalize chip after coach suggests a workout
+    function maybeShowFinalizeChip() {
+      // Check if any assistant message mentions workout-like content
+      const hasWorkout = coachMessages.some(m =>
+        m.role === 'assistant' &&
+        (m.content.match(/circuit|warm.?up|sets?\s*[x×]\s*\d|(\d+\s*reps)/i))
+      );
+      const chip = document.getElementById('coachFinalizeChip');
+      if (chip) chip.style.display = hasWorkout ? '' : 'none';
+    }
+
     // ==================== START ====================
     init();
+    initCoachView();
+
+    // Coach-designed workout for today (Feb 13, Fort Davis)
+    loadCoachWorkout({
+      name: "Living Room Full Body",
+      type: "Strength",
+      duration: "40 min",
+      location: "Home (Fort Davis)",
+      circuits: [
+        {
+          name: "Warm-Up",
+          instructions: "8 minutes - get loose",
+          exercises: [
+            { id: "w1", name: "Arm Circles", sets: 1, reps: 20, notes: "10 forward, 10 backward", noWeight: true },
+            { id: "w2", name: "Hip Circles", sets: 1, reps: 20, notes: "10 each direction", noWeight: true },
+            { id: "w3", name: "Leg Swings", sets: 1, reps: 20, notes: "10 each leg, front-to-back and side-to-side", noWeight: true },
+            { id: "w4", name: "Light Band Rows + Chest Press", sets: 1, reps: 10, notes: "No resistance, just movement patterns", noWeight: true },
+            { id: "w5", name: "Bodyweight Squats", sets: 1, reps: 10, notes: "Slow and controlled", noWeight: true },
+            { id: "w6", name: "Inchworms", sets: 1, reps: 5, notes: "Walk hands out to plank, walk back", noWeight: true }
+          ]
+        },
+        {
+          name: "Circuit A - Lower Body + Core",
+          instructions: "2 rounds, 40sec work / 20sec rest per exercise. Rest 90sec between rounds.",
+          restTime: 90,
+          exercises: [
+            { id: "ca1", name: "Banded Squat", sets: 2, reps: 12, notes: "Heavy loop around thighs. Push knees OUT. Hold handball at chest for extra load.", noWeight: true },
+            { id: "ca2", name: "Single Leg RDL", sets: 2, reps: 10, notes: "Hold handball at chest or use chair for balance. All reps one side, then switch.", noWeight: true, perSide: true },
+            { id: "ca3", name: "Banded Lateral Walk", sets: 2, reps: 20, notes: "Light/moderate loop above knees. Quarter squat. 10 steps each direction. Don't let knees cave.", noWeight: true },
+            { id: "ca4", name: "Dead Bug", sets: 2, reps: 16, notes: "Squeeze handball between hands. Press low back into floor. Extend opposite arm/leg. 8 each side.", noWeight: true }
+          ]
+        },
+        {
+          name: "Circuit B - Upper Body + Shoulders",
+          instructions: "2 rounds, 40sec work / 20sec rest per exercise. Rest 90sec between rounds.",
+          restTime: 90,
+          exercises: [
+            { id: "cb1", name: "Chair Dips", sets: 2, reps: 10, notes: "Hands on edge of chair. Lower to 90 degrees. Shoulders down, elbows back.", noWeight: true },
+            { id: "cb2", name: "Superman Pulls", sets: 2, reps: 12, notes: "Face down. Lift chest/arms, pull elbows to ribs. Squeeze shoulder blades. Slow.", noWeight: true },
+            { id: "cb3", name: "Banded Pull-Aparts", sets: 2, reps: 15, notes: "Light/moderate loop. Pull apart like opening curtain. Squeeze shoulder blades.", noWeight: true },
+            { id: "cb4", name: "Plank w/ Shoulder Taps", sets: 2, reps: 16, notes: "8 each side. Minimize hip rotation. Feet wide for stability.", noWeight: true }
+          ]
+        },
+        {
+          name: "Circuit C - Core + Handball-Specific",
+          instructions: "2 rounds, 40sec work / 20sec rest per exercise. Rest 60sec between rounds.",
+          restTime: 60,
+          exercises: [
+            { id: "cc1", name: "Banded Glute Bridge", sets: 2, reps: 15, notes: "Heavy loop above knees. Push knees OUT. Squeeze glutes hard at top, hold 2sec.", noWeight: true },
+            { id: "cc2", name: "Russian Twists w/ Handball", sets: 2, reps: 20, notes: "Hold handball at chest. Lean back slightly. Rotate and tap ball to floor each side.", noWeight: true },
+            { id: "cc3", name: "Banded Monster Walk", sets: 2, reps: 20, notes: "Moderate loop at ankles. Quarter squat. Step forward at angles. 10 steps each leg.", noWeight: true }
+          ]
+        },
+        {
+          name: "Finisher",
+          instructions: "5 minutes - explosive + stability",
+          exercises: [
+            { id: "f1", name: "Jump Squats", sets: 3, reps: 8, notes: "Explosive up, land softly. Full recovery between sets.", noWeight: true },
+            { id: "f2", name: "Dead Bug", sets: 2, reps: 20, notes: "10 each side. Slow and controlled.", noWeight: true }
+          ]
+        },
+        {
+          name: "Cooldown",
+          instructions: "5 minutes",
+          exercises: [
+            { id: "cd1", name: "Light Stretching", sets: 1, reps: 1, notes: "Quads, hamstrings, hip flexors, shoulders", noWeight: true },
+            { id: "cd2", name: "Foam Roll", sets: 1, reps: 1, notes: "If available - quads, glutes, upper back", noWeight: true }
+          ]
+        }
+      ]
+    });
   </script>
 </body>
 </html>
