@@ -4242,29 +4242,42 @@
       const currentWeek = WEEK_DATES.find(w => today >= w.start && today <= w.end);
       if (!currentWeek) return;
 
-      // Count planned workouts for this week (non-rest days, accounting for travel)
+      // Count planned workouts for this week
+      // Each external activity counts separately (e.g. Monday PT + soccer = 2)
+      // In-app workouts count as 1 per day
       let plannedCount = 0;
+      const dayNames = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
+
       for (let i = 0; i < 7; i++) {
         const dayDate = new Date(currentWeek.start);
         dayDate.setDate(currentWeek.start.getDate() + i);
-        const schedule = SCHEDULE[dayDate.getDay()];
+        const dayOfWeek = dayDate.getDay();
+        const schedule = SCHEDULE[dayOfWeek];
         const dateKey = formatDateKey(dayDate);
         const specialDate = SPECIAL_DATES[dateKey];
         const isTravel = specialDate && specialDate.type === 'travel';
+        const dayName = dayNames[dayOfWeek];
 
         if (schedule.type === 'rest') continue;
 
         if (isTravel) {
-          // Minimal facilities = don't count as planned workout
-          // Handball training = count as planned workout
-          // Gym access = count as optional (still counts)
           if (specialDate.facilities === 'minimal') continue;
+          // Handball training or gym access counts as 1
+          plannedCount++;
+          continue;
         }
 
-        plannedCount++;
+        // Count external activities for this day
+        const externalActivities = EXTERNAL_ACTIVITIES[dayName] || [];
+        plannedCount += externalActivities.length;
+
+        // Count in-app workout if this day has one
+        if (schedule.workout) {
+          plannedCount++;
+        }
       }
 
-      // Count completed workouts this week
+      // Count completed workouts this week (every logged entry counts)
       let completedCount = 0;
       history.forEach(workout => {
         const workoutDate = new Date(workout.date);
@@ -4273,7 +4286,8 @@
         }
       });
 
-      const percent = plannedCount > 0 ? Math.round((completedCount / plannedCount) * 100) : 0;
+      // Cap progress bar at 100% (ad-hoc workouts can push above planned)
+      const percent = plannedCount > 0 ? Math.min(100, Math.round((completedCount / plannedCount) * 100)) : 0;
 
       document.getElementById('weekProgressCount').textContent = `${completedCount} / ${plannedCount} workouts`;
       document.getElementById('weekProgressFill').style.width = `${percent}%`;
