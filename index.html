@@ -3396,8 +3396,16 @@
 
       closeSetModal();
 
-      // Start rest timer if not last set
-      if (state.currentSet < state.currentExercise.data.sets - 1) {
+      // Start rest timer after completing the last exercise in a circuit round
+      // In a circuit (A1-A2-A3, repeat 3x), rest comes after A3 each round, not after each exercise
+      const parts = state.currentExercise.id.split('-');
+      const circuitIndex = parseInt(parts[0]);
+      const exerciseIndex = parseInt(parts[1]);
+      const circuit = state.activeWorkout.circuits[circuitIndex];
+      const isLastExerciseInCircuit = exerciseIndex === circuit.exercises.length - 1;
+      const isLastRound = state.currentSet >= state.currentExercise.data.sets - 1;
+
+      if (isLastExerciseInCircuit && !isLastRound && state.currentRestTime) {
         startRestTimer(state.currentRestTime);
       }
     }
@@ -3444,29 +3452,37 @@
 
     // ==================== REST TIMER ====================
     function startRestTimer(seconds) {
-      state.timerSeconds = seconds;
+      // Use wall-clock time so timer stays accurate across tab switches
+      state.timerEndTime = Date.now() + (seconds * 1000);
+      state.timerDuration = seconds;
       updateTimerDisplay();
       document.getElementById('restTimer').classList.add('active');
 
+      clearInterval(state.timerInterval);
       state.timerInterval = setInterval(() => {
-        state.timerSeconds--;
-        updateTimerDisplay();
-        if (state.timerSeconds <= 0) {
+        const remaining = Math.ceil((state.timerEndTime - Date.now()) / 1000);
+        if (remaining <= 0) {
           skipTimer();
-          // Could add vibration/sound here
+          // Vibrate if supported
+          if (navigator.vibrate) navigator.vibrate(200);
+        } else {
+          state.timerSeconds = remaining;
+          updateTimerDisplay();
         }
-      }, 1000);
+      }, 250); // Check 4x/sec for smoother updates after tab switch
     }
 
     function updateTimerDisplay() {
-      const mins = Math.floor(state.timerSeconds / 60);
-      const secs = state.timerSeconds % 60;
+      const remaining = Math.max(0, Math.ceil((state.timerEndTime - Date.now()) / 1000));
+      const mins = Math.floor(remaining / 60);
+      const secs = remaining % 60;
       document.getElementById('timerDisplay').textContent =
         `${mins}:${secs.toString().padStart(2, '0')}`;
     }
 
     function skipTimer() {
       clearInterval(state.timerInterval);
+      state.timerEndTime = null;
       document.getElementById('restTimer').classList.remove('active');
     }
 
