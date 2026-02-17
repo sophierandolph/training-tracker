@@ -2639,6 +2639,51 @@
           ]
         }
       },
+      activeRecovery: {
+        poolRecovery: {
+          name: "Active Recovery: Pool + Mobility",
+          type: "Recovery",
+          duration: "45-50 min",
+          location: "Rice Rec Center",
+          condition: "Post back-to-back intensity days. Focus on flushing legs and shoulder maintenance before NC trip.",
+          circuits: [
+            {
+              name: "A. Pool: Easy Swim + Mobility",
+              instructions: "20 minutes - Low effort, focus on movement quality",
+              exercises: [
+                { id: "ar1", name: "Easy Freestyle", sets: 1, reps: 1, notes: "5 min, long strokes, low effort", isCardio: true, duration: 300, noWeight: true },
+                { id: "ar2", name: "Backstroke / Breaststroke Laps", sets: 4, reps: 1, notes: "4 x 25m, alternate strokes, 30 sec rest between", isCardio: true, noWeight: true },
+                { id: "ar3", name: "Easy Kicking with Board", sets: 1, reps: 1, notes: "5 min, light flutter kick", isCardio: true, duration: 300, noWeight: true },
+                { id: "ar4", name: "Pool Walking", sets: 1, reps: 1, notes: "5 min, gentle movement, decompresses joints", isCardio: true, duration: 300, noWeight: true }
+              ]
+            },
+            {
+              name: "B. Foam Rolling + Stretching",
+              instructions: "15 minutes - Target soccer and handball soreness",
+              exercises: [
+                { id: "ar5", name: "Foam Roll Quads / Hip Flexors", sets: 1, reps: 1, notes: "90 sec each side", isHold: true, holdTime: 90, perSide: true, noWeight: true },
+                { id: "ar6", name: "Foam Roll Hamstrings / Glutes", sets: 1, reps: 1, notes: "90 sec each side", isHold: true, holdTime: 90, perSide: true, noWeight: true },
+                { id: "ar7", name: "Foam Roll Upper Back / T-Spine", sets: 1, reps: 1, notes: "90 sec", isHold: true, holdTime: 90, noWeight: true },
+                { id: "ar8", name: "Foam Roll Calves", sets: 1, reps: 1, notes: "60 sec each side", isHold: true, holdTime: 60, perSide: true, noWeight: true },
+                { id: "ar9", name: "Pigeon Pose", sets: 1, reps: 1, notes: "60 sec each side", isHold: true, holdTime: 60, perSide: true, noWeight: true },
+                { id: "ar10", name: "Hip 90/90 Switches", sets: 1, reps: 16, notes: "8 each direction", noWeight: true },
+                { id: "ar11", name: "Seated Spinal Twist", sets: 1, reps: 1, notes: "30 sec each side", isHold: true, holdTime: 30, perSide: true, noWeight: true }
+              ]
+            },
+            {
+              name: "C. Shoulder Maintenance",
+              instructions: "10 minutes - Keep rotator cuff protocol ticking",
+              exercises: [
+                { id: "ar12", name: "Scapular Squeezes", sets: 2, reps: 12, noWeight: true },
+                { id: "ar13", name: "Band Pull-Aparts (Light)", sets: 2, reps: 12, noWeight: true },
+                { id: "ar14", name: "90/90 External Rotation (Light Band)", sets: 2, reps: 10, notes: "Each arm", perSide: true, noWeight: true },
+                { id: "ar15", name: "Wall Angels", sets: 2, reps: 8, noWeight: true },
+                { id: "ar16", name: "Overhead Hold + Ball Squeeze", sets: 1, reps: 1, notes: "20 sec each arm", isHold: true, holdTime: 20, perSide: true, noWeight: true }
+              ]
+            }
+          ]
+        }
+      },
       friday: {
         lowerBody: {
           name: "Lower Body Focus",
@@ -2922,6 +2967,15 @@
       }
 
       let workout = null;
+
+      if (DATE_WORKOUTS[dateKey]) {
+        workout = DATE_WORKOUTS[dateKey];
+        state.activeWorkout = workout;
+        state.workoutStartTime = null;
+        state.workoutLog = {};
+        renderWorkout(workout);
+        return;
+      }
 
       // Determine which workout based on day
       switch(dayName) {
@@ -3936,6 +3990,17 @@
 
     // Date-specific activities (tournaments, clinics, etc.)
     const DATE_ACTIVITIES = {
+      '2026-02-17': [
+        {
+          id: 'handball_practice_makeup',
+          name: 'Handball Practice',
+          time: '7:00pm',
+          duration: 120,
+          location: 'Court',
+          type: 'Sport',
+          description: 'Moved from Wednesday this week only'
+        }
+      ],
       '2026-02-21': [
         {
           id: 'cbc_game2',
@@ -4007,11 +4072,17 @@
       6: { type: 'sport', name: 'Soccer (2-3pm) + Handball Skills', workout: 'saturday', duration: '45-60 min', location: 'Field + Court', preview: 'Jump Shots, Left Hand Work, Conditioning' }
     };
 
+    // Date-specific workout overrides (one-offs loaded via CLI)
+    const DATE_WORKOUTS = {
+      '2026-02-18': WORKOUTS.activeRecovery.poolRecovery
+    };
+
     // Special dates with specific schedule info
     const SPECIAL_DATES = {
       // Monday soccer game times (format: 'YYYY-MM-DD': { start, end, isLate })
       // isLate = ends after 9pm, affects next day's workout choice
       '2026-02-09': { type: 'soccer', start: '7:40pm', end: '9:15pm', isLate: false, note: 'Early game - Tuesday can do Upper Body if readiness OK' },
+      '2026-02-16': { type: 'soccer', start: '8:30pm', end: '10:00pm', isLate: true, note: 'Late game - Tuesday switched to handball practice' },
       '2026-02-23': { type: 'soccer', start: '8:45pm', end: '10:20pm', isLate: true, note: 'Late game - Tuesday should do Recovery' },
       '2026-03-02': { type: 'soccer', start: '9:15pm', end: '10:50pm', isLate: true, note: 'Late game (outside 3-week plan)' },
 
@@ -4137,7 +4208,10 @@
           let workoutDisplay = '';
           let extraClasses = '';
 
-          if (isTravel) {
+          if (DATE_WORKOUTS[dateKey]) {
+            workoutClass = 'recovery';
+            workoutDisplay = 'Recovery';
+          } else if (isTravel) {
             const facilities = specialDate.facilities;
             const isHandballTraining = specialDate.isTraining;
             if (isHandballTraining) {
