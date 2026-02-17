@@ -2977,6 +2977,13 @@
         return;
       }
 
+      // Check for date-specific activities that override the normal schedule
+      const dateActivities = DATE_ACTIVITIES[dateKey];
+      if (dateActivities && dateActivities.length > 0) {
+        showNoWorkout(dayName, specialDate);
+        return;
+      }
+
       // Determine which workout based on day
       switch(dayName) {
         case 'tuesday':
@@ -3135,8 +3142,11 @@
     function showNoWorkout(dayName, specialDate) {
       const content = document.getElementById('workoutContent');
 
-      // Check if this day has external activities
-      const activities = EXTERNAL_ACTIVITIES[dayName];
+      // Check if this day has external activities (recurring or date-specific)
+      const dateKey = formatDateKey(state.currentDate);
+      const recurring = EXTERNAL_ACTIVITIES[dayName] || [];
+      const dateSpecific = DATE_ACTIVITIES[dateKey] || [];
+      const activities = dateSpecific.length > 0 ? dateSpecific : (recurring.length > 0 ? recurring : null);
 
       if (dayName === 'sunday') {
         document.getElementById('dayName').textContent = 'Rest Day';
@@ -3171,6 +3181,7 @@
       const history = getWorkoutHistory();
 
       // Build activities with any special date info
+      const isDateSpecific = dateSpecific.length > 0;
       let activitiesHtml = '';
       activities.forEach(activity => {
         let activityTime = activity.time;
@@ -3204,7 +3215,7 @@
         ` : '';
 
         activitiesHtml += `
-          <div class="activity-tile ${logged ? 'logged' : ''}" onclick="openExternalActivityModal('${activity.id}', '${dayName}')">
+          <div class="activity-tile ${logged ? 'logged' : ''}" onclick="openExternalActivityModal('${activity.id}', ${isDateSpecific ? `null, '${dateKey}'` : `'${dayName}'`})">
             <div class="activity-tile-header">
               <div>
                 <div class="activity-tile-type">${activity.type}</div>
@@ -4208,7 +4219,10 @@
           let workoutDisplay = '';
           let extraClasses = '';
 
-          if (DATE_WORKOUTS[dateKey]) {
+          if (DATE_ACTIVITIES[dateKey] && DATE_ACTIVITIES[dateKey].length > 0) {
+            workoutClass = 'external';
+            workoutDisplay = DATE_ACTIVITIES[dateKey][0].name.includes('Handball') ? 'Handball' : DATE_ACTIVITIES[dateKey][0].type;
+          } else if (DATE_WORKOUTS[dateKey]) {
             workoutClass = 'recovery';
             workoutDisplay = 'Recovery';
           } else if (isTravel) {
