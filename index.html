@@ -3878,7 +3878,7 @@
       }
 
       container.innerHTML = history.slice(0, 10).map(workout => {
-        const date = new Date(workout.date);
+        const date = new Date(workout.date + 'T00:00:00');
         const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
         const effortIcons = { physical: '💪', technical: '🎯', mental: '🧠', tactical: '🧠' };
 
@@ -4525,9 +4525,10 @@
       }
 
       // Count completed workouts this week (every logged entry counts)
+      // Parse date strings as local time (YYYY-MM-DD parsed with T00:00:00 to avoid UTC shift)
       let completedCount = 0;
       history.forEach(workout => {
-        const workoutDate = new Date(workout.date);
+        const workoutDate = new Date(workout.date + 'T00:00:00');
         if (workoutDate >= currentWeek.start && workoutDate <= currentWeek.end) {
           completedCount++;
         }
@@ -5382,7 +5383,7 @@ OVERTRAINING SIGNALS & GUARDRAILS
 
       let summary = 'LAST 7 DAYS:\n';
       recent.forEach(w => {
-        const d = new Date(w.date);
+        const d = new Date(w.date + 'T00:00:00');
         const dayNames = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
         summary += `\n${dayNames[d.getDay()]} ${w.date} - ${w.name || w.type || 'Workout'}`;
         if (w.readiness) summary += ` | Readiness: ${w.readiness}`;
