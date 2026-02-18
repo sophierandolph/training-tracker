@@ -4375,6 +4375,22 @@
           }
         }
 
+        // Check for date-specific workout overrides (one-offs loaded via CLI)
+        const dateWorkout = DATE_WORKOUTS[dateKey];
+        if (dateWorkout) {
+          displayName = dateWorkout.name;
+          previewText = dateWorkout.circuits.map(c => c.name).join(', ');
+          badgeText = dateWorkout.type;
+        }
+
+        // Check for date-specific activities that override normal schedule
+        const dateActivities = DATE_ACTIVITIES[dateKey];
+        if (dateActivities && dateActivities.length > 0 && !item.isTravel) {
+          displayName = dateActivities.map(a => a.name).join(' + ');
+          previewText = dateActivities.map(a => `${a.time} · ${a.location}${a.description ? ' - ' + a.description : ''}`).join(' | ');
+          badgeText = dateActivities[0].type;
+        }
+
         // Handle Monday with soccer game times
         if (item.dayOfWeek === 1 && item.specialDate && item.specialDate.type === 'soccer') {
           const game = item.specialDate;
@@ -4386,8 +4402,8 @@
           }
         }
 
-        // Handle Tuesday - show appropriate workout based on Monday
-        if (item.dayOfWeek === 2) {
+        // Handle Tuesday - show appropriate workout based on Monday (skip if date override exists)
+        if (item.dayOfWeek === 2 && !dateWorkout && !dateActivities?.length) {
           const workoutType = getTuesdayWorkoutType(item.date);
           const mondayGame = getPreviousMondayGameInfo(item.date);
 
@@ -4487,13 +4503,24 @@
           continue;
         }
 
-        // Count external activities for this day
-        const externalActivities = EXTERNAL_ACTIVITIES[dayName] || [];
-        plannedCount += externalActivities.length;
+        // Check for date-specific overrides
+        const dateActivities = DATE_ACTIVITIES[dateKey];
+        const hasDateOverride = dateActivities && dateActivities.length > 0;
+        const hasDateWorkout = !!DATE_WORKOUTS[dateKey];
 
-        // Count in-app workout if this day has one
-        if (schedule.workout) {
-          plannedCount++;
+        if (hasDateOverride || hasDateWorkout) {
+          // Date-specific activities/workouts replace normal schedule
+          if (hasDateOverride) plannedCount += dateActivities.length;
+          if (hasDateWorkout) plannedCount++;
+        } else {
+          // Count external activities for this day
+          const externalActivities = EXTERNAL_ACTIVITIES[dayName] || [];
+          plannedCount += externalActivities.length;
+
+          // Count in-app workout if this day has one
+          if (schedule.workout) {
+            plannedCount++;
+          }
         }
       }
 
