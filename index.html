@@ -4104,7 +4104,65 @@
 
     // Date-specific workout overrides (one-offs loaded via CLI)
     const DATE_WORKOUTS = {
-      '2026-02-18': WORKOUTS.activeRecovery.poolRecovery
+      '2026-02-18': WORKOUTS.activeRecovery.poolRecovery,
+      '2026-02-19': {
+        name: "Modified Thursday: Stationary Bike + Form Throwing",
+        type: "Mixed",
+        duration: "55 min",
+        location: "Rec Center → Squash Court",
+        condition: "Allergy head pressure + pre-NC weekend. Week 2 cadence bike indoors (no pollen, skip clip-in practice). Light form-only throwing -- no conditioning, just rhythm and feel.",
+        circuits: [
+          {
+            name: "A. Stationary Bike Warm-Up (15 min)",
+            instructions: "Keep effort low. Goal: get blood moving before cadence work.",
+            exercises: [
+              { id: "thu219_b1", name: "Easy Spin", sets: 1, reps: 1, notes: "5 min, low effort", isCardio: true, duration: 300, noWeight: true },
+              { id: "thu219_b2", name: "Moderate Pace Spin", sets: 1, reps: 1, notes: "5 min, settle into a rhythm", isCardio: true, duration: 300, noWeight: true },
+              { id: "thu219_b3", name: "High Cadence Bursts", sets: 3, reps: 1, notes: "1 min at 95+ RPM, 1 min easy recovery between. 6 min total.", isCardio: true, duration: 60, noWeight: true },
+              { id: "thu219_b4", name: "Easy Spin", sets: 1, reps: 1, notes: "2 min easy before main set", isCardio: true, duration: 120, noWeight: true }
+            ]
+          },
+          {
+            name: "B. Stationary Bike Main Set (24 min)",
+            instructions: "6 x 2 min at 95-105 RPM, moderate effort. 2 min easy recovery between each. Focus: smooth circular pedaling, don't mash.",
+            exercises: [
+              { id: "thu219_b5", name: "Cadence Interval", sets: 6, reps: 1, notes: "2 min at 95-105 RPM, moderate effort. 2 min easy between. Smooth circles, light pressure.", isCardio: true, duration: 120, noWeight: true }
+            ]
+          },
+          {
+            name: "C. Stationary Bike Cool-Down (10 min)",
+            instructions: "Gradually decrease effort. Hydrate before heading to squash court.",
+            exercises: [
+              { id: "thu219_b6", name: "Easy Cool-Down Spin", sets: 1, reps: 1, notes: "10 min, gradual decrease in effort", isCardio: true, duration: 600, noWeight: true }
+            ]
+          },
+          {
+            name: "D. Squash Court Warm-Up (3 min)",
+            instructions: "Gentle activation before throwing. No rushing.",
+            exercises: [
+              { id: "thu219_t1", name: "Arm Circles with Ball", sets: 1, reps: 20, notes: "10 forward, 10 backward", noWeight: true },
+              { id: "thu219_t2", name: "Shoulder-Height Passes (Both Hands)", sets: 1, reps: 20, notes: "10 each hand against wall", noWeight: true },
+              { id: "thu219_t3", name: "3-Step Rhythm (No Ball)", sets: 1, reps: 10, notes: "step, OPEN, launch. No ball -- just feel the rhythm.", noWeight: true }
+            ]
+          },
+          {
+            name: "E. Kneeling Isolation Drill (5 min)",
+            instructions: "Team practice drill. Removes footwork variable so you can isolate and feel the body rotation and arm mechanics.",
+            exercises: [
+              { id: "thu219_t4", name: "Kneeling Throw (Right Hand)", sets: 2, reps: 5, notes: "One knee down. Feel chest rotate toward wall as you throw. No steps to think about.", noWeight: true },
+              { id: "thu219_t5", name: "Kneel → Stand → Step → Throw", sets: 2, reps: 5, notes: "Start kneeling, stand up, step forward into throw. Feel how the rotation built while kneeling carries into the standing throw.", noWeight: true }
+            ]
+          },
+          {
+            name: "F. Wall Throws -- Form Focus (10 min)",
+            instructions: "FORM ONLY. No conditioning. Two cues: (1) chest OPENS on step 2. (2) jump is long not high -- push ground away behind you.",
+            exercises: [
+              { id: "thu219_t6", name: "Jump Shot -- Body Rotation Focus (Right Hand)", sets: 3, reps: 6, notes: "After each set: did your chest face the wall on step 2? If still sideways, you haven't opened. Cue: step, OPEN, launch.", noWeight: true },
+              { id: "thu219_t7", name: "Left Hand Passes (Wall)", sets: 1, reps: 8, notes: "Lower target, technique only, no power. Wrist snap and follow-through.", noWeight: true }
+            ]
+          }
+        ]
+      }
     };
 
     // Special dates with specific schedule info
