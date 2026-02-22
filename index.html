@@ -2802,6 +2802,117 @@
             }
           ]
         }
+      },
+
+      wednesdayWarmup: {
+        name: "Pre-Practice Warm-Up",
+        type: "Warmup",
+        duration: "18 min",
+        location: "Court corner (~4x4 ft space)",
+        condition: "Arrive 20 min early. Complete before practice starts.",
+        circuits: [
+          {
+            name: "A. Get Moving (4 min)",
+            instructions: "All in place — no travel needed. Get heart rate up and body temp rising.",
+            exercises: [
+              { id: "ww_a1", name: "Jog in Place", sets: 1, reps: 1, notes: "30 sec", isCardio: true, duration: 30, noWeight: true },
+              { id: "ww_a2", name: "High Knees", sets: 1, reps: 20, notes: "Each leg, in place", noWeight: true },
+              { id: "ww_a3", name: "Butt Kicks", sets: 1, reps: 20, notes: "Each leg — feel heel tap glute", noWeight: true },
+              { id: "ww_a4", name: "Step-Touch Side to Side", sets: 1, reps: 20, notes: "Total — small lateral weight shift, no travel", noWeight: true },
+              { id: "ww_a5", name: "Hip Circles", sets: 1, reps: 10, notes: "Each direction — hands on hips, feel the rotation", noWeight: true }
+            ]
+          },
+          {
+            name: "B. Lower Body + Shin Activation — Loop Band (5 min)",
+            instructions: "Band above knees for abduction/kickback. Hold wall for balance. Shin work is prehab insurance.",
+            exercises: [
+              { id: "ww_b1", name: "Standing Hip Abduction", sets: 1, reps: 15, notes: "Each side — band above knees, hold wall, feel outer glute fire", perSide: true, noWeight: true },
+              { id: "ww_b2", name: "Standing Glute Kickback", sets: 1, reps: 12, notes: "Each side — band above knees, hold wall, feel glute squeeze at top", perSide: true, noWeight: true },
+              { id: "ww_b3", name: "Calf Raises", sets: 1, reps: 20, notes: "Slow — feel full rise, controlled lower", noWeight: true },
+              { id: "ww_b4", name: "Tibialis Raises", sets: 1, reps: 20, notes: "Heels against wall, lift toes — feel front of shin work", noWeight: true }
+            ]
+          },
+          {
+            name: "C. Shoulder Activation — Bodyweight (4 min)",
+            instructions: "Shoulder prep before throwing. Feel each movement, don't rush.",
+            exercises: [
+              { id: "ww_c1", name: "Arm Circles", sets: 1, reps: 20, notes: "10 forward, 10 backward each arm — small to large", noWeight: true },
+              { id: "ww_c2", name: "Scapular Squeezes", sets: 1, reps: 15, notes: "Hold 2 sec — feel shoulder blades pinch together", noWeight: true },
+              { id: "ww_c3", name: "Pendulum Swings", sets: 1, reps: 10, notes: "Each arm — loose arm, small circles", perSide: true, noWeight: true },
+              { id: "ww_c4", name: "Wall Angels", sets: 2, reps: 8, notes: "Back and arms against wall, slide arms up", noWeight: true }
+            ]
+          },
+          {
+            name: "D. Throwing Arm Warm-Up (4 min)",
+            instructions: "Progressive arm warm-up. Start easy, build intensity. Get the rhythm into your body before practice.",
+            exercises: [
+              { id: "ww_d1", name: "Wrist Flicks with Ball", sets: 1, reps: 20, notes: "Snap wrist, feel fingers release", noWeight: true },
+              { id: "ww_d2", name: "Short Wall Passes — Both Hands", sets: 1, reps: 10, notes: "Each hand, easy effort, close to wall", perSide: true, noWeight: true },
+              { id: "ww_d3", name: "3-Step Rhythm — No Ball", sets: 1, reps: 5, notes: "In place — compress the steps, focus on chest OPEN on step 2, not the travel. Cue: step, OPEN, launch.", noWeight: true },
+              { id: "ww_d4", name: "3-Step Throw — Easy Effort", sets: 1, reps: 5, notes: "Right hand, wall target. Easy pace — feel the rhythm.", noWeight: true }
+            ]
+          },
+          {
+            name: "E. Ready Position (1 min)",
+            instructions: "Prime your nervous system for game speed.",
+            exercises: [
+              { id: "ww_e1", name: "Quick Feet in Place", sets: 1, reps: 1, notes: "15 sec — fast, light on balls of feet", isCardio: true, duration: 15, noWeight: true },
+              { id: "ww_e2", name: "Ready Position Hold", sets: 1, reps: 1, notes: "10 sec — knees bent, weight forward, feel the spring in your legs", isHold: true, holdTime: 10, noWeight: true }
+            ]
+          }
+        ]
+      },
+
+      wednesdayCooldown: {
+        name: "Post-Practice Cooldown",
+        type: "Recovery",
+        duration: "20 min",
+        location: "Court → Home",
+        condition: "Start at the court immediately after practice. Finish at home.",
+        circuits: [
+          {
+            name: "A. Court — Before You Drive (5 min)",
+            instructions: "Do this immediately after practice ends, before you sit in the car. 5 minutes now prevents 2 days of stiffness.",
+            exercises: [
+              { id: "wc_a1", name: "Easy Walk + Shake Out Arms", sets: 1, reps: 1, notes: "1 min — heart rate down, shake everything loose", isCardio: true, duration: 60, noWeight: true },
+              { id: "wc_a2", name: "Calf Stretch Against Wall", sets: 1, reps: 1, notes: "30 sec each side — feel pull in lower calf and Achilles", isHold: true, holdTime: 30, perSide: true, noWeight: true },
+              { id: "wc_a3", name: "Standing Hip Flexor Stretch", sets: 1, reps: 1, notes: "30 sec each side — feel front of hip open", isHold: true, holdTime: 30, perSide: true, noWeight: true },
+              { id: "wc_a4", name: "Cross-Body Shoulder Stretch", sets: 1, reps: 1, notes: "30 sec each side — feel back of shoulder", isHold: true, holdTime: 30, perSide: true, noWeight: true },
+              { id: "wc_a5", name: "Chest Opener — Arms Clasped Behind Back", sets: 1, reps: 1, notes: "30 sec — feel chest open", isHold: true, holdTime: 30, noWeight: true }
+            ]
+          },
+          {
+            name: "B. Home — Foam Roll + Tools (5-6 min)",
+            instructions: "Use foam roller, Chirp wheel, or massage gun. Do while muscles are still warm.",
+            exercises: [
+              { id: "wc_b1", name: "Calves — Foam Roll or Massage Gun", sets: 1, reps: 1, notes: "60 sec each leg", isHold: true, holdTime: 60, perSide: true, noWeight: true },
+              { id: "wc_b2", name: "Shins — Massage Gun", sets: 1, reps: 1, notes: "60 sec each leg — tibialis anterior, front of lower leg", isHold: true, holdTime: 60, perSide: true, noWeight: true },
+              { id: "wc_b3", name: "Quads / IT Band — Foam Roll", sets: 1, reps: 1, notes: "60 sec each side", isHold: true, holdTime: 60, perSide: true, noWeight: true },
+              { id: "wc_b4", name: "Upper Back — Chirp Wheel", sets: 1, reps: 1, notes: "90 sec — let each segment release, feel the spine open", isHold: true, holdTime: 90, noWeight: true }
+            ]
+          },
+          {
+            name: "C. Home — Shin Prehab (2 min)",
+            instructions: "Don't skip — this is the insurance policy against shin splints.",
+            exercises: [
+              { id: "wc_c1", name: "Tibialis Raises", sets: 3, reps: 15, notes: "Heels against wall — feel front of shin work", noWeight: true },
+              { id: "wc_c2", name: "Slow Calf Raises", sets: 2, reps: 15, notes: "Controlled all the way up and down", noWeight: true }
+            ]
+          },
+          {
+            name: "D. Home — Full Body Release (7-8 min)",
+            instructions: "Take your time here. This is where your body does the real recovery work.",
+            exercises: [
+              { id: "wc_d1", name: "Figure-4 Hip Stretch", sets: 1, reps: 1, notes: "60 sec each side — feel deep glute and hip rotator release", isHold: true, holdTime: 60, perSide: true, noWeight: true },
+              { id: "wc_d2", name: "Kneeling Hip Flexor Stretch", sets: 1, reps: 1, notes: "45 sec each side — feel front of hip open", isHold: true, holdTime: 45, perSide: true, noWeight: true },
+              { id: "wc_d3", name: "Seated Hamstring Stretch", sets: 1, reps: 1, notes: "45 sec each side", isHold: true, holdTime: 45, perSide: true, noWeight: true },
+              { id: "wc_d4", name: "Thread the Needle", sets: 1, reps: 1, notes: "30 sec each side — feel thoracic rotation through shoulder", isHold: true, holdTime: 30, perSide: true, noWeight: true },
+              { id: "wc_d5", name: "Overhead Tricep Stretch", sets: 1, reps: 1, notes: "30 sec each side", isHold: true, holdTime: 30, perSide: true, noWeight: true },
+              { id: "wc_d6", name: "Cross-Body Shoulder Stretch", sets: 1, reps: 1, notes: "30 sec each side — deeper than court version", isHold: true, holdTime: 30, perSide: true, noWeight: true },
+              { id: "wc_d7", name: "Child's Pose", sets: 1, reps: 1, notes: "60 sec — full release, breathe deeply", isHold: true, holdTime: 60, noWeight: true }
+            ]
+          }
+        ]
       }
     };
 
@@ -3024,6 +3135,11 @@
           }
           // Saturday has external activity (soccer) + in-app workout (handball)
           showMixedDay('saturday', WORKOUTS.saturday.handball);
+          return;
+        case 'wednesday':
+          // Wednesday: external handball practice + recurring warm-up and cooldown workouts
+          showNoWorkout(dayName, specialDate);
+          appendRecurringWorkouts(dayIndex);
           return;
         default:
           // Show rest day or no workout scheduled
@@ -3353,6 +3469,64 @@
         state.workoutStartTime = null;
         state.workoutLog = {};
         renderWorkout(state.pendingWorkout);
+      }
+    }
+
+    function startRecurringWorkout(workoutKey) {
+      const workout = WORKOUTS[workoutKey];
+      if (workout) {
+        state.activeWorkout = workout;
+        state.workoutStartTime = null;
+        state.workoutLog = {};
+        renderWorkout(workout);
+      }
+    }
+
+    function appendRecurringWorkouts(dayOfWeek) {
+      const recurringKeys = RECURRING_DAY_WORKOUTS[dayOfWeek];
+      if (!recurringKeys || recurringKeys.length === 0) return;
+
+      const content = document.getElementById('workoutContent');
+      const dateKey = formatDateKey(state.currentDate);
+      const history = getWorkoutHistory();
+
+      let tilesHtml = '';
+      recurringKeys.forEach(workoutKey => {
+        const workout = WORKOUTS[workoutKey];
+        if (!workout) return;
+
+        const workoutLogged = history.find(w =>
+          w.date === dateKey &&
+          w.workout === workout.name &&
+          w.type !== 'External Activity'
+        );
+
+        const loggedInfo = workoutLogged ? `
+          <div class="activity-tile-logged-info">
+            <span class="rating">${workoutLogged.overallFeel}/10</span> effort
+            ${workoutLogged.duration ? ` · ${workoutLogged.duration} min` : ''}
+          </div>
+        ` : '';
+
+        tilesHtml += `
+          <div class="activity-tile ${workoutLogged ? 'logged' : ''}" onclick="startRecurringWorkout('${workoutKey}')" style="border-color: ${workoutLogged ? 'var(--success)' : 'var(--accent)'};">
+            <div class="activity-tile-header">
+              <div>
+                <div class="activity-tile-type" style="color: var(--accent);">${workout.type}</div>
+                <div class="activity-tile-name">${workout.name}</div>
+                <div class="activity-tile-time">${workout.duration} · ${workout.location}</div>
+              </div>
+              <span class="activity-tile-status ${workoutLogged ? 'logged' : ''}" style="${!workoutLogged ? 'background: var(--accent); color: white;' : ''}">${workoutLogged ? 'Logged' : 'Start'}</span>
+            </div>
+            ${loggedInfo}
+          </div>
+        `;
+      });
+
+      if (tilesHtml) {
+        // Wrap existing content and append recurring workout tiles
+        const existingContent = content.innerHTML;
+        content.innerHTML = existingContent + `<div class="activity-tiles">${tilesHtml}</div>`;
       }
     }
 
@@ -4166,6 +4340,12 @@
       }
     };
 
+    // Recurring workouts by day-of-week (0=Sun...6=Sat), shown alongside external activities
+    // Each entry is an array of workout keys from the WORKOUTS object
+    const RECURRING_DAY_WORKOUTS = {
+      3: ['wednesdayWarmup', 'wednesdayCooldown']  // Wednesday: warm-up before + cooldown after handball practice
+    };
+
     // Special dates with specific schedule info
     const SPECIAL_DATES = {
       // Monday soccer game times (format: 'YYYY-MM-DD': { start, end, isLate })
@@ -4329,12 +4509,18 @@
             workoutDisplay = getShortWorkoutName(schedule, dayDate);
           }
 
+          const hasRecurring = !isTravel && RECURRING_DAY_WORKOUTS[dayOfWeek] && RECURRING_DAY_WORKOUTS[dayOfWeek].length > 0;
+          const recurringIndicator = hasRecurring
+            ? `<div class="calendar-day-workout" style="font-size: 9px; color: var(--accent); margin-top: 2px;">+Warm/Cool</div>`
+            : '';
+
           html += `
             <div class="calendar-day ${isToday ? 'today' : ''} ${isPast ? 'past' : ''} ${extraClasses}"
                  onclick="showDayPreview(${dayDate.getTime()}, ${dayOfWeek})">
               <div class="calendar-day-name">${dayNames[dayOfWeek]}</div>
               <div class="calendar-day-number">${dayDate.getDate()}</div>
               <div class="calendar-day-workout ${workoutClass}">${workoutDisplay}</div>
+              ${recurringIndicator}
             </div>
           `;
         }
@@ -4538,6 +4724,33 @@
             ${extraInfo}
           </div>
         `;
+
+        // Add recurring workout items for this day (e.g. Wednesday warm-up and cooldown)
+        if (!item.isTravel) {
+          const recurringKeys = RECURRING_DAY_WORKOUTS[item.dayOfWeek];
+          if (recurringKeys && recurringKeys.length > 0) {
+            recurringKeys.forEach(workoutKey => {
+              const recurringWorkout = WORKOUTS[workoutKey];
+              if (!recurringWorkout) return;
+              html += `
+                <div class="upcoming-workout" onclick="showDayPreview(${item.date.getTime()}, ${item.dayOfWeek})" style="border-left: 3px solid var(--accent); margin-left: 12px;">
+                  <div class="upcoming-header">
+                    <div>
+                      <div class="upcoming-day">${dateStr}</div>
+                      <div class="upcoming-name">${recurringWorkout.name}</div>
+                    </div>
+                    <span class="upcoming-badge" style="background: rgba(233,69,96,0.2); color: var(--accent-light);">${recurringWorkout.type}</span>
+                  </div>
+                  <div class="upcoming-meta">
+                    <span>⏱ ${recurringWorkout.duration}</span>
+                    <span>📍 ${recurringWorkout.location}</span>
+                  </div>
+                  ${recurringWorkout.condition ? `<div class="upcoming-preview">${recurringWorkout.condition}</div>` : ''}
+                </div>
+              `;
+            });
+          }
+        }
       });
 
       container.innerHTML = html;
@@ -4599,6 +4812,12 @@
           // Count in-app workout if this day has one
           if (schedule.workout) {
             plannedCount++;
+          }
+
+          // Count recurring workouts (e.g. Wednesday warm-up and cooldown)
+          const recurringKeys = RECURRING_DAY_WORKOUTS[dayOfWeek];
+          if (recurringKeys && recurringKeys.length > 0) {
+            plannedCount += recurringKeys.length;
           }
         }
       }
@@ -4838,6 +5057,40 @@
             <p style="color: var(--text-secondary); font-size: 13px;">This workout is scheduled externally (team practice, personal training, etc.). Just show up and give it your best!</p>
           </div>
         `;
+
+        // Show recurring workout sections for this day (e.g. Wednesday warm-up + cooldown)
+        const recurringKeys = RECURRING_DAY_WORKOUTS[dayOfWeek];
+        if (recurringKeys && recurringKeys.length > 0) {
+          recurringKeys.forEach(workoutKey => {
+            const recurringWorkout = WORKOUTS[workoutKey];
+            if (!recurringWorkout) return;
+            contentHtml += `
+              <div style="margin-top: 12px; padding: 14px; background: var(--bg-card); border-radius: 8px; border-left: 3px solid var(--accent);">
+                <div style="color: var(--accent); font-size: 11px; text-transform: uppercase; margin-bottom: 4px;">${recurringWorkout.type}</div>
+                <div style="color: var(--text-primary); font-size: 14px; font-weight: 600; margin-bottom: 4px;">${recurringWorkout.name}</div>
+                <div style="color: var(--text-secondary); font-size: 12px; margin-bottom: 8px;">⏱ ${recurringWorkout.duration} · 📍 ${recurringWorkout.location}</div>
+                ${recurringWorkout.condition ? `<div style="color: var(--text-secondary); font-size: 12px; margin-bottom: 8px; font-style: italic;">${recurringWorkout.condition}</div>` : ''}
+            `;
+            recurringWorkout.circuits.forEach(circuit => {
+              contentHtml += `
+                <div class="preview-circuit">
+                  <div class="preview-circuit-name">${circuit.name}</div>
+                  <div class="preview-exercises">
+              `;
+              circuit.exercises.forEach(ex => {
+                const repsText = ex.isHold ? `${ex.holdTime}s hold` :
+                                ex.isCardio ? 'Complete' :
+                                `${ex.reps} reps`;
+                contentHtml += `${ex.name} (${ex.sets}x${repsText})<br>`;
+              });
+              contentHtml += `
+                  </div>
+                </div>
+              `;
+            });
+            contentHtml += `</div>`;
+          });
+        }
       } else if (schedule.workout) {
         // Get detailed workout info
         const workoutData = getWorkoutForDay(schedule.workout, date);
