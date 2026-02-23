@@ -4400,126 +4400,240 @@
           }
         ]
       },
-    '2026-03-05': {
-      name: "Beer Bike Week 5: Over-Distance",
+    '2026-02-26': {
+      name: "Beer Bike Week 4: Race Pace Intervals",
       type: "Cardio",
-      duration: "55 min",
+      duration: "50 min",
       location: "Outdoor Track",
-      condition: "Focus: sustained efforts longer than race distance. Builds endurance base so race pace feels manageable.",
+      condition: "First real race-pace work. Focus on what race effort FEELS like — not RPM, just intensity. Note what gear and effort level feels right.",
       circuits: [
         {
-          name: "A. Warm-Up (15 min)",
-          instructions: "Progressive build from easy to moderate.",
+          name: "A. Warm-Up (12 min)",
+          instructions: "Build gradually from easy to moderate. Get the legs loose.",
           exercises: [
-            { id: "bb5_a1", name: "Easy Spin", sets: 1, reps: 1, notes: "5 min, easy effort", isCardio: true, duration: 300, noWeight: true },
-            { id: "bb5_a2", name: "Moderate Pace", sets: 1, reps: 1, notes: "5 min, conversational", isCardio: true, duration: 300, noWeight: true },
-            { id: "bb5_a3", name: "High Cadence Bursts", sets: 4, reps: 1, notes: "30 sec at 95+ RPM, 90 sec easy between", isCardio: true, duration: 30, noWeight: true }
+            { id: "bb4_a1", name: "Easy Spin", sets: 1, reps: 1, notes: "5 min, 60% effort", isCardio: true, duration: 300, noWeight: true },
+            { id: "bb4_a2", name: "Moderate Build", sets: 1, reps: 1, notes: "5 min, 70% effort — conversational", isCardio: true, duration: 300, noWeight: true },
+            { id: "bb4_a3", name: "Snappy Bursts", sets: 2, reps: 1, notes: "30 sec at 85% effort, 60 sec easy between. Legs should feel awake.", isCardio: true, duration: 30, noWeight: true }
           ]
         },
         {
-          name: "B. Main Set: Over-Distance (30 min)",
-          instructions: "Three blocks — sustained, race pace, then all-out. Rest between each block.",
+          name: "B. Clip-In / Clip-Out Practice (5 min)",
+          instructions: "10+ smooth clip-ins this block. Build the habit before the main set.",
           exercises: [
-            { id: "bb5_b1", name: "Sustained Effort", sets: 3, reps: 1, notes: "2 min at 85-90% race effort. 3 min easy between. Comfortably hard — short phrases only.", isCardio: true, duration: 120, noWeight: true },
-            { id: "bb5_b2", name: "Race Pace Intervals", sets: 4, reps: 1, notes: "1 min at race effort, high RPM. 2 min easy between. Note your gear and RPM.", isCardio: true, duration: 60, noWeight: true },
-            { id: "bb5_b3", name: "All-Out Sprints", sets: 2, reps: 1, notes: "30 sec ALL-OUT. 3 min full recovery between. Practice your race finish.", isCardio: true, duration: 30, noWeight: true }
+            { id: "bb4_b1", name: "Rolling Clip-Ins", sets: 5, reps: 1, notes: "Clip in while rolling — don't stop. Smooth, confident entry.", noWeight: true },
+            { id: "bb4_b2", name: "Race Start Simulations", sets: 3, reps: 1, notes: "Dead stop → explosive first 5 sec → clip in smoothly. Full rest between.", noWeight: true }
           ]
         },
         {
-          name: "C. Cool-Down (10 min)",
-          instructions: "Gradual decrease in effort.",
+          name: "C. Race Pace Intervals (18 min)",
+          instructions: "6 rounds. Race effort — hard but controlled. 2 min easy spin between each. Goal: learn what that intensity feels like.",
           exercises: [
-            { id: "bb5_c1", name: "Easy Spin", sets: 1, reps: 1, notes: "10 min, gradually decreasing effort", isCardio: true, duration: 600, noWeight: true }
-          ]
-        },
-        {
-          name: "D. Skill Work",
-          instructions: "Cornering and starts while legs are warm.",
-          exercises: [
-            { id: "bb5_d1", name: "Race Starts", sets: 5, reps: 1, notes: "Dead stop → explosive 10 sec → clip in smoothly. Full rest between.", noWeight: true },
-            { id: "bb5_d2", name: "Cornering at Speed", sets: 1, reps: 1, notes: "5 min — smooth fast turns without losing speed", isCardio: true, duration: 300, noWeight: true }
-          ]
-        },
-        {
-          name: "E. Shoulder Protocol (15-20 min)",
-          instructions: "Complete immediately after biking.",
-          exercises: [
-            { id: "bb5_e1", name: "Scapular Squeezes", sets: 1, reps: 15, notes: "Hold 3 sec each", noWeight: true },
-            { id: "bb5_e2", name: "Arm Circles Palms Up", sets: 1, reps: 20, notes: "10 forward, 10 backward each arm", noWeight: true },
-            { id: "bb5_e3", name: "External Rotation 90/90", sets: 3, reps: 12, notes: "Each arm — key for handball", noWeight: true },
-            { id: "bb5_e4", name: "Internal Rotation 90/90", sets: 3, reps: 12, notes: "Each arm", noWeight: true },
-            { id: "bb5_e5", name: "Empty Can to Full Can", sets: 2, reps: 8, notes: "3-5 lb dumbbells", noWeight: true },
-            { id: "bb5_e6", name: "Prone T's", sets: 2, reps: 10, notes: "Face down, arms out, squeeze shoulder blades", noWeight: true },
-            { id: "bb5_e7", name: "Dynamic External Rotation", sets: 2, reps: 15, notes: "Each arm — slow and controlled", noWeight: true },
-            { id: "bb5_e8", name: "Scapular Push-Ups", sets: 2, reps: 10, notes: "Plank position, scapular movement only", noWeight: true },
-            { id: "bb5_e9", name: "Bear Plank Shoulder Taps", sets: 2, reps: 20, notes: "10 each side, knees 1 inch off ground", noWeight: true },
-            { id: "bb5_e10", name: "Cross-Body Shoulder Stretch", sets: 1, reps: 1, notes: "30 sec each side", isHold: true, holdTime: 30, perSide: true, noWeight: true },
-            { id: "bb5_e11", name: "Overhead Tricep Stretch", sets: 1, reps: 1, notes: "30 sec each side", isHold: true, holdTime: 30, perSide: true, noWeight: true }
-          ]
-        }
-      ]
-    },
-
-    '2026-03-12': {
-      name: "Beer Bike Week 6: Speed Endurance Pyramid",
-      type: "Cardio",
-      duration: "60 min",
-      location: "Outdoor Track",
-      condition: "Doing Thursday Mar 12 one day early — traveling to Fort Davis Friday. Focus: maintain 95+ RPM even when fatigued.",
-      circuits: [
-        {
-          name: "A. Warm-Up (15 min)",
-          instructions: "Standard progressive build before hard intervals.",
-          exercises: [
-            { id: "bb6_a1", name: "Easy Spin", sets: 1, reps: 1, notes: "5 min easy", isCardio: true, duration: 300, noWeight: true },
-            { id: "bb6_a2", name: "Moderate Build", sets: 1, reps: 1, notes: "5 min, settle into rhythm", isCardio: true, duration: 300, noWeight: true },
-            { id: "bb6_a3", name: "High Cadence Bursts", sets: 3, reps: 1, notes: "45 sec at 100+ RPM, 90 sec easy between", isCardio: true, duration: 45, noWeight: true }
-          ]
-        },
-        {
-          name: "B. Pyramid Set #1 (17 min)",
-          instructions: "Up the pyramid then back down. Maintain 95+ RPM throughout. Rest = easy spinning, not stopped.",
-          exercises: [
-            { id: "bb6_b1", name: "30 sec Hard", sets: 1, reps: 1, notes: "Hard effort → 2 min easy", isCardio: true, duration: 30, noWeight: true },
-            { id: "bb6_b2", name: "45 sec Hard", sets: 1, reps: 1, notes: "Hard effort → 2 min easy", isCardio: true, duration: 45, noWeight: true },
-            { id: "bb6_b3", name: "60 sec Hard", sets: 1, reps: 1, notes: "Hardest effort → 3 min easy", isCardio: true, duration: 60, noWeight: true },
-            { id: "bb6_b4", name: "45 sec Hard", sets: 1, reps: 1, notes: "Hard effort → 2 min easy", isCardio: true, duration: 45, noWeight: true },
-            { id: "bb6_b5", name: "30 sec Hard", sets: 1, reps: 1, notes: "Hard effort → 2 min easy", isCardio: true, duration: 30, noWeight: true }
-          ]
-        },
-        {
-          name: "C. Pyramid Set #2 (17 min)",
-          instructions: "Repeat. This is where the session separates — stay smooth when it hurts.",
-          exercises: [
-            { id: "bb6_c1", name: "30 sec Hard", sets: 1, reps: 1, notes: "Hard effort → 2 min easy", isCardio: true, duration: 30, noWeight: true },
-            { id: "bb6_c2", name: "45 sec Hard", sets: 1, reps: 1, notes: "Hard effort → 2 min easy", isCardio: true, duration: 45, noWeight: true },
-            { id: "bb6_c3", name: "60 sec Hard", sets: 1, reps: 1, notes: "Hardest effort → 3 min easy", isCardio: true, duration: 60, noWeight: true },
-            { id: "bb6_c4", name: "45 sec Hard", sets: 1, reps: 1, notes: "Hard effort → 2 min easy", isCardio: true, duration: 45, noWeight: true },
-            { id: "bb6_c5", name: "30 sec Hard", sets: 1, reps: 1, notes: "Hard effort → 2 min easy", isCardio: true, duration: 30, noWeight: true }
+            { id: "bb4_c1", name: "Race Pace Interval", sets: 6, reps: 1, notes: "1 min at race effort (90-95%). Hard but sustainable. 2 min easy between. Notice: what gear, how does it feel?", isCardio: true, duration: 60, noWeight: true }
           ]
         },
         {
           name: "D. Cool-Down (10 min)",
-          instructions: "Easy spinning. Optional: one race-effort assessment lap at the end if feeling strong — time it.",
+          instructions: "Easy spinning. Let heart rate fully drop.",
           exercises: [
-            { id: "bb6_d1", name: "Easy Cool-Down Spin", sets: 1, reps: 1, notes: "10 min, gradual decrease. Optional: 1 timed race-effort lap to assess progress.", isCardio: true, duration: 600, noWeight: true }
+            { id: "bb4_d1", name: "Easy Cool-Down Spin", sets: 1, reps: 1, notes: "10 min, gradual decrease in effort", isCardio: true, duration: 600, noWeight: true }
           ]
         },
         {
           name: "E. Shoulder Protocol (15-20 min)",
           instructions: "Complete immediately after biking.",
           exercises: [
-            { id: "bb6_e1", name: "Scapular Squeezes", sets: 1, reps: 15, notes: "Hold 3 sec each", noWeight: true },
-            { id: "bb6_e2", name: "Arm Circles Palms Up", sets: 1, reps: 20, notes: "10 forward, 10 backward each arm", noWeight: true },
-            { id: "bb6_e3", name: "External Rotation 90/90", sets: 3, reps: 12, notes: "Each arm", noWeight: true },
-            { id: "bb6_e4", name: "Internal Rotation 90/90", sets: 3, reps: 12, notes: "Each arm", noWeight: true },
-            { id: "bb6_e5", name: "Empty Can to Full Can", sets: 2, reps: 8, notes: "3-5 lbs", noWeight: true },
-            { id: "bb6_e6", name: "Prone T's", sets: 2, reps: 10, notes: "Face down, arms out, squeeze", noWeight: true },
-            { id: "bb6_e7", name: "Dynamic External Rotation", sets: 2, reps: 15, notes: "Each arm", noWeight: true },
-            { id: "bb6_e8", name: "Scapular Push-Ups", sets: 2, reps: 10, notes: "Scapular movement only", noWeight: true },
-            { id: "bb6_e9", name: "Bear Plank Shoulder Taps", sets: 2, reps: 20, notes: "10 each side", noWeight: true },
-            { id: "bb6_e10", name: "Cross-Body Shoulder Stretch", sets: 1, reps: 1, notes: "30 sec each side", isHold: true, holdTime: 30, perSide: true, noWeight: true },
-            { id: "bb6_e11", name: "Overhead Tricep Stretch", sets: 1, reps: 1, notes: "30 sec each side", isHold: true, holdTime: 30, perSide: true, noWeight: true }
+            { id: "bb4_e1", name: "Scapular Squeezes", sets: 1, reps: 15, notes: "Hold 3 sec each", noWeight: true },
+            { id: "bb4_e2", name: "Arm Circles Palms Up", sets: 1, reps: 20, notes: "10 forward, 10 backward each arm", noWeight: true },
+            { id: "bb4_e3", name: "External Rotation 90/90", sets: 3, reps: 12, notes: "Each arm", noWeight: true },
+            { id: "bb4_e4", name: "Internal Rotation 90/90", sets: 3, reps: 12, notes: "Each arm", noWeight: true },
+            { id: "bb4_e5", name: "Empty Can to Full Can", sets: 2, reps: 8, notes: "3-5 lbs", noWeight: true },
+            { id: "bb4_e6", name: "Prone T's", sets: 2, reps: 10, notes: "Face down, arms out, squeeze", noWeight: true },
+            { id: "bb4_e7", name: "Dynamic External Rotation", sets: 2, reps: 15, notes: "Each arm", noWeight: true },
+            { id: "bb4_e8", name: "Scapular Push-Ups", sets: 2, reps: 10, notes: "Scapular movement only", noWeight: true },
+            { id: "bb4_e9", name: "Bear Plank Shoulder Taps", sets: 2, reps: 20, notes: "10 each side", noWeight: true },
+            { id: "bb4_e10", name: "Cross-Body Shoulder Stretch", sets: 1, reps: 1, notes: "30 sec each side", isHold: true, holdTime: 30, perSide: true, noWeight: true },
+            { id: "bb4_e11", name: "Overhead Tricep Stretch", sets: 1, reps: 1, notes: "30 sec each side", isHold: true, holdTime: 30, perSide: true, noWeight: true }
+          ]
+        }
+      ]
+    },
+    '2026-03-05': {
+      name: "Beer Bike Week 5: Mixed Efforts",
+      type: "Cardio",
+      duration: "50 min",
+      location: "Outdoor Track",
+      condition: "Sustained + race pace + all-out finishes. Build your range across effort levels.",
+      circuits: [
+        {
+          name: "A. Warm-Up (12 min)",
+          instructions: "Build gradually. Legs should feel ready to work by the end.",
+          exercises: [
+            { id: "bb5_a1", name: "Easy Spin", sets: 1, reps: 1, notes: "5 min, easy effort", isCardio: true, duration: 300, noWeight: true },
+            { id: "bb5_a2", name: "Moderate Build", sets: 1, reps: 1, notes: "5 min, 70% effort", isCardio: true, duration: 300, noWeight: true },
+            { id: "bb5_a3", name: "Snappy Bursts", sets: 2, reps: 1, notes: "30 sec at 85%, 60 sec easy between", isCardio: true, duration: 30, noWeight: true }
+          ]
+        },
+        {
+          name: "B. Clip-In / Clip-Out Practice (5 min)",
+          instructions: "10+ smooth clip-ins. Race starts from a dead stop today.",
+          exercises: [
+            { id: "bb5_b1", name: "Rolling Clip-Ins", sets: 4, reps: 1, notes: "Clip in while rolling — smooth and confident", noWeight: true },
+            { id: "bb5_b2", name: "Race Start Simulations", sets: 4, reps: 1, notes: "Dead stop → explosive 5 sec → clip in. Full rest between.", noWeight: true }
+          ]
+        },
+        {
+          name: "C. Sustained Efforts (12 min)",
+          instructions: "3 rounds at hard-but-controlled effort. Challenging but sustainable for 2 min.",
+          exercises: [
+            { id: "bb5_c1", name: "Sustained Effort", sets: 3, reps: 1, notes: "2 min at 80-85% effort. 2 min easy between. Short phrases only — if you can't speak at all, ease off.", isCardio: true, duration: 120, noWeight: true }
+          ]
+        },
+        {
+          name: "D. Race Pace + Finish Sprints (13 min)",
+          instructions: "Race effort intervals, then short all-out efforts to practice your finish.",
+          exercises: [
+            { id: "bb5_d1", name: "Race Pace Interval", sets: 3, reps: 1, notes: "45 sec at race effort (90-95%). 2 min easy between.", isCardio: true, duration: 45, noWeight: true },
+            { id: "bb5_d2", name: "Finish Sprint", sets: 2, reps: 1, notes: "20 sec ALL-OUT. Full 2 min rest between. Practice your race finish.", isCardio: true, duration: 20, noWeight: true }
+          ]
+        },
+        {
+          name: "E. Cool-Down (10 min)",
+          instructions: "Easy spinning. Gradual decrease.",
+          exercises: [
+            { id: "bb5_e1", name: "Easy Cool-Down Spin", sets: 1, reps: 1, notes: "10 min, gradually decreasing effort", isCardio: true, duration: 600, noWeight: true }
+          ]
+        },
+        {
+          name: "F. Shoulder Protocol (15-20 min)",
+          instructions: "Complete immediately after biking.",
+          exercises: [
+            { id: "bb5_f1", name: "Scapular Squeezes", sets: 1, reps: 15, notes: "Hold 3 sec each", noWeight: true },
+            { id: "bb5_f2", name: "Arm Circles Palms Up", sets: 1, reps: 20, notes: "10 forward, 10 backward each arm", noWeight: true },
+            { id: "bb5_f3", name: "External Rotation 90/90", sets: 3, reps: 12, notes: "Each arm — key for handball", noWeight: true },
+            { id: "bb5_f4", name: "Internal Rotation 90/90", sets: 3, reps: 12, notes: "Each arm", noWeight: true },
+            { id: "bb5_f5", name: "Empty Can to Full Can", sets: 2, reps: 8, notes: "3-5 lb dumbbells", noWeight: true },
+            { id: "bb5_f6", name: "Prone T's", sets: 2, reps: 10, notes: "Face down, arms out, squeeze", noWeight: true },
+            { id: "bb5_f7", name: "Dynamic External Rotation", sets: 2, reps: 15, notes: "Each arm", noWeight: true },
+            { id: "bb5_f8", name: "Scapular Push-Ups", sets: 2, reps: 10, notes: "Scapular movement only", noWeight: true },
+            { id: "bb5_f9", name: "Bear Plank Shoulder Taps", sets: 2, reps: 20, notes: "10 each side", noWeight: true },
+            { id: "bb5_f10", name: "Cross-Body Shoulder Stretch", sets: 1, reps: 1, notes: "30 sec each side", isHold: true, holdTime: 30, perSide: true, noWeight: true },
+            { id: "bb5_f11", name: "Overhead Tricep Stretch", sets: 1, reps: 1, notes: "30 sec each side", isHold: true, holdTime: 30, perSide: true, noWeight: true }
+          ]
+        }
+      ]
+    },
+    '2026-03-12': {
+      name: "Beer Bike Week 6: Speed Endurance",
+      type: "Cardio",
+      duration: "50 min",
+      location: "Outdoor Track",
+      condition: "Doing Thursday Mar 12 one day early — traveling to Fort Davis Friday. More intervals at race effort — build staying power.",
+      circuits: [
+        {
+          name: "A. Warm-Up (12 min)",
+          instructions: "Build gradually. More intervals today so get properly warm.",
+          exercises: [
+            { id: "bb6_a1", name: "Easy Spin", sets: 1, reps: 1, notes: "5 min, easy", isCardio: true, duration: 300, noWeight: true },
+            { id: "bb6_a2", name: "Moderate Build", sets: 1, reps: 1, notes: "5 min, 70% effort", isCardio: true, duration: 300, noWeight: true },
+            { id: "bb6_a3", name: "Snappy Bursts", sets: 2, reps: 1, notes: "30 sec at 85%, 60 sec easy between", isCardio: true, duration: 30, noWeight: true }
+          ]
+        },
+        {
+          name: "B. Clip-In / Clip-Out Practice (5 min)",
+          instructions: "Smooth and confident. Race starts from a dead stop.",
+          exercises: [
+            { id: "bb6_b1", name: "Rolling Clip-Ins", sets: 4, reps: 1, notes: "Clip in while rolling. No hesitation.", noWeight: true },
+            { id: "bb6_b2", name: "Race Start Simulations", sets: 4, reps: 1, notes: "Dead stop → explosive 5 sec → clip in. Full rest between.", noWeight: true }
+          ]
+        },
+        {
+          name: "C. Speed Endurance Intervals (18 min)",
+          instructions: "8 rounds at race effort. 90 sec easy between. Stay consistent — same intensity across all 8.",
+          exercises: [
+            { id: "bb6_c1", name: "Race Effort Interval", sets: 8, reps: 1, notes: "45 sec at race effort (90-95%). 90 sec easy spin between. Consistent effort across all 8.", isCardio: true, duration: 45, noWeight: true }
+          ]
+        },
+        {
+          name: "D. Optional Time Trial Lap",
+          instructions: "Only if you feel strong after the main set. One lap at race effort — time it.",
+          exercises: [
+            { id: "bb6_d1", name: "Time Trial Lap (Optional)", sets: 1, reps: 1, notes: "1 lap at race effort — time yourself. Baseline: 1:51 for 2 laps = ~56 sec/lap.", isCardio: true, duration: 56, noWeight: true }
+          ]
+        },
+        {
+          name: "E. Cool-Down (10 min)",
+          instructions: "Easy spinning. Full recovery before shoulder work.",
+          exercises: [
+            { id: "bb6_e1", name: "Easy Cool-Down Spin", sets: 1, reps: 1, notes: "10 min, gradual decrease", isCardio: true, duration: 600, noWeight: true }
+          ]
+        },
+        {
+          name: "F. Shoulder Protocol (15-20 min)",
+          instructions: "Complete immediately after biking.",
+          exercises: [
+            { id: "bb6_f1", name: "Scapular Squeezes", sets: 1, reps: 15, notes: "Hold 3 sec each", noWeight: true },
+            { id: "bb6_f2", name: "Arm Circles Palms Up", sets: 1, reps: 20, notes: "10 forward, 10 backward each arm", noWeight: true },
+            { id: "bb6_f3", name: "External Rotation 90/90", sets: 3, reps: 12, notes: "Each arm", noWeight: true },
+            { id: "bb6_f4", name: "Internal Rotation 90/90", sets: 3, reps: 12, notes: "Each arm", noWeight: true },
+            { id: "bb6_f5", name: "Empty Can to Full Can", sets: 2, reps: 8, notes: "3-5 lbs", noWeight: true },
+            { id: "bb6_f6", name: "Prone T's", sets: 2, reps: 10, notes: "Face down, arms out, squeeze", noWeight: true },
+            { id: "bb6_f7", name: "Dynamic External Rotation", sets: 2, reps: 15, notes: "Each arm", noWeight: true },
+            { id: "bb6_f8", name: "Scapular Push-Ups", sets: 2, reps: 10, notes: "Scapular movement only", noWeight: true },
+            { id: "bb6_f9", name: "Bear Plank Shoulder Taps", sets: 2, reps: 20, notes: "10 each side", noWeight: true },
+            { id: "bb6_f10", name: "Cross-Body Shoulder Stretch", sets: 1, reps: 1, notes: "30 sec each side", isHold: true, holdTime: 30, perSide: true, noWeight: true },
+            { id: "bb6_f11", name: "Overhead Tricep Stretch", sets: 1, reps: 1, notes: "30 sec each side", isHold: true, holdTime: 30, perSide: true, noWeight: true }
+          ]
+        }
+      ]
+    },
+    '2026-03-20': {
+      name: "Return Day: Light Bike + Handball",
+      type: "Mixed",
+      duration: "50 min",
+      location: "Rec Center → Squash Court",
+      condition: "Just back from Fort Davis overnight train. Light effort only — get moving without digging a recovery hole.",
+      circuits: [
+        {
+          name: "A. Stationary Bike (20 min)",
+          instructions: "Easy effort only. Goal: blood flow and leg flush after the train.",
+          exercises: [
+            { id: "ret20_a1", name: "Easy Spin", sets: 1, reps: 1, notes: "10 min easy, 60% effort max", isCardio: true, duration: 600, noWeight: true },
+            { id: "ret20_a2", name: "Light Moderate Spin", sets: 1, reps: 1, notes: "10 min at 65-70% — still comfortable, no pushing", isCardio: true, duration: 600, noWeight: true }
+          ]
+        },
+        {
+          name: "B. Squash Court Warm-Up (3 min)",
+          instructions: "Gentle activation before throwing.",
+          exercises: [
+            { id: "ret20_b1", name: "Arm Circles with Ball", sets: 1, reps: 20, notes: "10 forward, 10 backward", noWeight: true },
+            { id: "ret20_b2", name: "Shoulder-Height Passes (Both Hands)", sets: 1, reps: 20, notes: "10 each hand against wall", noWeight: true },
+            { id: "ret20_b3", name: "3-Step Rhythm (No Ball)", sets: 1, reps: 10, notes: "step, OPEN, launch — just feel the rhythm", noWeight: true }
+          ]
+        },
+        {
+          name: "C. Kneeling Isolation Drill (5 min)",
+          instructions: "No footwork variable. Feel the body rotation and arm mechanics in isolation.",
+          exercises: [
+            { id: "ret20_c1", name: "Kneeling Throw (Right Hand)", sets: 2, reps: 5, notes: "One knee down. Feel chest rotate toward wall as you throw.", noWeight: true },
+            { id: "ret20_c2", name: "Kneel → Stand → Step → Throw", sets: 2, reps: 5, notes: "Start kneeling, stand up, step forward into throw.", noWeight: true }
+          ]
+        },
+        {
+          name: "D. Wall Throws — Form Focus (15 min)",
+          instructions: "Light, quality reps only. Two cues: chest OPENS on step 2; jump is long not just high.",
+          exercises: [
+            { id: "ret20_d1", name: "Jump Shot — Body Rotation Focus", sets: 3, reps: 5, notes: "Cue: step, OPEN, launch. After each set: did your chest face the wall on step 2?", noWeight: true },
+            { id: "ret20_d2", name: "Left Arm Counter-Pull", sets: 2, reps: 8, notes: "On release: left arm pulls DOWN toward hip. Drives shoulder rotation.", noWeight: true },
+            { id: "ret20_d3", name: "Left Hand Passes (Wall)", sets: 1, reps: 10, notes: "Lower target, technique only, no power.", noWeight: true }
+          ]
+        },
+        {
+          name: "E. Cooldown (5 min)",
+          instructions: "Easy movement and stretch.",
+          exercises: [
+            { id: "ret20_e1", name: "Walk + Shake Out", sets: 1, reps: 1, notes: "2 min easy walking around the court", noWeight: true },
+            { id: "ret20_e2", name: "Cross-Body Shoulder Stretch", sets: 1, reps: 1, notes: "30 sec each side", isHold: true, holdTime: 30, perSide: true, noWeight: true },
+            { id: "ret20_e3", name: "Overhead Tricep Stretch", sets: 1, reps: 1, notes: "30 sec each side", isHold: true, holdTime: 30, perSide: true, noWeight: true }
           ]
         }
       ]
@@ -4564,7 +4678,8 @@
       '2026-03-16': { type: 'travel', location: 'Fort Davis, TX', note: 'Minimal facilities -- light bodyweight work', facilities: 'minimal' },
       '2026-03-17': { type: 'travel', location: 'Fort Davis, TX', note: 'Minimal facilities -- shoulder stability', facilities: 'minimal' },
       '2026-03-18': { type: 'travel', location: 'Fort Davis, TX', note: 'Minimal facilities -- rest before travel', facilities: 'minimal' },
-      '2026-03-19': { type: 'travel', location: 'Fort Davis, TX', note: 'Overnight train back to Houston', facilities: 'minimal', isTransit: true }
+      '2026-03-19': { type: 'travel', location: 'Fort Davis, TX', note: 'Overnight train back to Houston', facilities: 'minimal', isTransit: true },
+      '2026-03-20': { type: 'travel', location: 'Houston (return)', note: 'Back from Fort Davis overnight train — light day only', facilities: 'gym+wall' }
     };
 
     // Helper to check if a date is a travel day
@@ -4605,7 +4720,8 @@
       { weekNum: 2, start: new Date(2026, 1, 16), end: new Date(2026, 1, 22) },  // Feb 16-22
       { weekNum: 3, start: new Date(2026, 1, 23), end: new Date(2026, 2, 1) },   // Feb 23 - Mar 1
       { weekNum: 4, start: new Date(2026, 2, 2), end: new Date(2026, 2, 8) },   // Mar 2-8
-      { weekNum: 5, start: new Date(2026, 2, 9), end: new Date(2026, 2, 15) }   // Mar 9-15
+      { weekNum: 5, start: new Date(2026, 2, 9), end: new Date(2026, 2, 15) },  // Mar 9-15
+      { weekNum: 6, start: new Date(2026, 2, 16), end: new Date(2026, 2, 22) } // Mar 16-22
     ];
 
     function loadPlanView() {
