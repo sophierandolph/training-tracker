@@ -6038,14 +6038,14 @@ OVERTRAINING SIGNALS & GUARDRAILS
       }
     }
 
+    const DEFAULT_WORKER_URL = 'https://training-coach.randolph-sophia.workers.dev/';
+
     function initCoachView() {
-      const savedUrl = localStorage.getItem('coachProxyUrl');
-      if (savedUrl) {
-        document.getElementById('coachProxyUrl').value = savedUrl;
-        // Auto-collapse if already configured
-        document.getElementById('coachSettingsBody').classList.add('hidden');
-        document.getElementById('coachSettingsToggle').classList.add('collapsed');
-      }
+      const savedUrl = localStorage.getItem('coachProxyUrl') || DEFAULT_WORKER_URL;
+      document.getElementById('coachProxyUrl').value = savedUrl;
+      // Auto-collapse — URL is always configured
+      document.getElementById('coachSettingsBody').classList.add('hidden');
+      document.getElementById('coachSettingsToggle').classList.add('collapsed');
     }
 
     function summarizeRecentHistory() {
