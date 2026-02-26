@@ -3151,6 +3151,7 @@
         state.workoutStartTime = null;
         state.workoutLog = {};
         renderWorkout(workout);
+        restoreProgressIfAvailable();
         return;
       }
 
@@ -3197,6 +3198,7 @@
       state.workoutStartTime = null;
       state.workoutLog = {};
       renderWorkout(workout);
+      restoreProgressIfAvailable();
     }
 
     function showTravelDay(specialDate) {
@@ -3531,6 +3533,7 @@
         state.workoutStartTime = null;
         state.workoutLog = {};
         renderWorkout(state.pendingWorkout);
+        restoreProgressIfAvailable();
       }
     }
 
@@ -3541,6 +3544,7 @@
         state.workoutStartTime = null;
         state.workoutLog = {};
         renderWorkout(workout);
+        restoreProgressIfAvailable();
       }
     }
 
@@ -3687,6 +3691,55 @@
       return circuit.exercises.reduce((sum, ex) => sum + ex.sets, 0);
     }
 
+    // ==================== AUTOSAVE IN-PROGRESS WORKOUT ====================
+    function autosaveProgress() {
+      if (!state.activeWorkout) return;
+      const data = {
+        date: formatDateKey(state.currentDate),
+        workoutName: state.activeWorkout.name,
+        workoutLog: state.workoutLog,
+        startTime: state.workoutStartTime ? state.workoutStartTime.toISOString() : null
+      };
+      localStorage.setItem('workoutInProgress', JSON.stringify(data));
+    }
+
+    function restoreProgressIfAvailable() {
+      try {
+        const raw = localStorage.getItem('workoutInProgress');
+        if (!raw) return;
+        const saved = JSON.parse(raw);
+        const today = formatDateKey(state.currentDate);
+        if (saved.date !== today || !state.activeWorkout || saved.workoutName !== state.activeWorkout.name) return;
+        if (!saved.workoutLog || Object.keys(saved.workoutLog).length === 0) return;
+
+        state.workoutLog = saved.workoutLog;
+        if (saved.startTime) state.workoutStartTime = new Date(saved.startTime);
+
+        // Mark pills as complete/skipped in the DOM
+        Object.entries(state.workoutLog).forEach(([exerciseId, sets]) => {
+          if (!Array.isArray(sets)) return;
+          sets.forEach((set, setIndex) => {
+            if (!set) return;
+            const setId = `${exerciseId}-${setIndex}`;
+            const pill = document.getElementById(`set-${setId}`);
+            if (!pill) return;
+            const valueEl = document.getElementById(`set-value-${setId}`);
+            if (set.skipped) {
+              pill.classList.add('skipped');
+              if (valueEl) valueEl.textContent = 'Skip';
+            } else {
+              pill.classList.add('complete');
+              if (valueEl) valueEl.textContent = set.weight ? `${set.weight}×${set.reps}` : `${set.reps || '✓'}`;
+            }
+          });
+        });
+
+        updateProgress();
+      } catch(e) {
+        localStorage.removeItem('workoutInProgress');
+      }
+    }
+
     // ==================== SET LOGGING ====================
     function openSetModal(exerciseId, setIndex, exercise, restTime) {
       if (!state.workoutStartTime) {
@@ -3742,6 +3795,7 @@
         state.workoutLog[state.currentExercise.id] = [];
       }
       state.workoutLog[state.currentExercise.id][state.currentSet] = { weight, reps, feel, effortType };
+      autosaveProgress();
 
       // Update UI
       const pill = document.getElementById(`set-${setId}`);
@@ -3777,6 +3831,7 @@
         state.workoutLog[state.currentExercise.id] = [];
       }
       state.workoutLog[state.currentExercise.id][state.currentSet] = { skipped: true };
+      autosaveProgress();
 
       const pill = document.getElementById(`set-${setId}`);
       pill.classList.add('skipped');
@@ -3899,6 +3954,9 @@
       // Save to Firestore and localStorage
       saveWorkoutToHistory(workoutData);
 
+      // Clear autosave now that workout is fully saved
+      localStorage.removeItem('workoutInProgress');
+
       document.getElementById('completeModal').classList.remove('active');
 
       // Reset state
@@ -3910,9 +3968,10 @@
       adaptationApplied = null;
       originalScheduledWorkout = null;
 
-      // Reload workout (shows fresh state)
+      // Reload workout (shows fresh state) and refresh plan page
       loadTodaysWorkout();
       loadHistory();
+      loadPlanView();
     }
 
     // ==================== READINESS ====================
@@ -4331,6 +4390,7 @@
 
     // Date-specific workout overrides (one-offs loaded via CLI)
     const DATE_WORKOUTS = {
+      '2026-02-26': WORKOUTS.activeRecovery.poolRecovery,
       '2026-02-18': WORKOUTS.activeRecovery.poolRecovery,
       '2026-02-19': {
         name: "Modified Thursday: Stationary Bike + Form Throwing",
