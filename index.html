@@ -528,6 +528,9 @@
       color: var(--text-muted);
       text-align: center;
       margin-top: 6px;
+      user-select: none;
+      -webkit-user-select: none;
+      pointer-events: none;
     }
 
     /* Feel Slider */
@@ -3820,7 +3823,7 @@
       const isLastExerciseInCircuit = exerciseIndex === circuit.exercises.length - 1;
       const isLastRound = state.currentSet >= state.currentExercise.data.sets - 1;
 
-      if (isLastExerciseInCircuit && !isLastRound && state.currentRestTime) {
+      if (!isLastRound && state.currentRestTime) {
         startRestTimer(state.currentRestTime);
       }
     }
