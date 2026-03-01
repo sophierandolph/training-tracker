@@ -3137,14 +3137,9 @@
       const dateKey = formatDateKey(state.currentDate);
       const specialDate = SPECIAL_DATES[dateKey];
 
-      // Check if today is a travel day
-      if (specialDate && specialDate.type === 'travel' && dateKey !== '2026-02-14') {
-        showTravelDay(specialDate);
-        return;
-      }
-
       let workout = null;
 
+      // DATE_WORKOUTS takes priority over everything, including travel days
       if (DATE_WORKOUTS[dateKey]) {
         workout = DATE_WORKOUTS[dateKey];
         state.activeWorkout = workout;
@@ -3152,6 +3147,12 @@
         state.workoutLog = {};
         renderWorkout(workout);
         restoreProgressIfAvailable();
+        return;
+      }
+
+      // Check if today is a travel day
+      if (specialDate && specialDate.type === 'travel' && dateKey !== '2026-02-14') {
+        showTravelDay(specialDate);
         return;
       }
 
