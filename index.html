@@ -4390,6 +4390,80 @@
 
     // Date-specific workout overrides (one-offs loaded via CLI)
     const DATE_WORKOUTS = {
+      '2026-03-01': {
+        name: "Upper Body -- Crunch Kyle",
+        type: "Strength",
+        duration: "55 min",
+        location: "Crunch Fitness, Kyle TX",
+        condition: "Coming back after groin strain + rest days. Moderate effort -- not a PR day. No lower body load anywhere. If anything pulls in the groin, stop.",
+        circuits: [
+          {
+            name: "A. Warm-Up (8 min)",
+            instructions: "Activate the shoulders before loading them. Take your time here.",
+            exercises: [
+              { id: "ub301_a1", name: "Loop Band Pull-Aparts", sets: 1, reps: 15, notes: "Band across palms at chest height, arms straight. Pull apart squeezing shoulder blades together.", noWeight: true },
+              { id: "ub301_a2", name: "Bodyweight Y-T-W", sets: 1, reps: 10, notes: "Hinge forward ~45°. Y: arms overhead in Y shape. T: arms straight out to sides. W: arms in W, elbows bent. 10 reps each position. Squeeze shoulder blades on every rep.", noWeight: true },
+              { id: "ub301_a3", name: "Arm Circles", sets: 1, reps: 20, notes: "10 forward, 10 backward. Big slow circles.", noWeight: true },
+              { id: "ub301_a4", name: "Wall Angels", sets: 1, reps: 10, notes: "Back flat against wall, arms in W position. Slide arms up overhead keeping contact with wall. Feel chest open, shoulder blades stay down.", noWeight: true }
+            ]
+          },
+          {
+            name: "B. Horizontal Pull Superset (15 min)",
+            instructions: "3 rounds, 90 sec rest between rounds. These are the most handball-relevant moves -- focus on pulling through the elbow, not the hand.",
+            restTime: 90,
+            exercises: [
+              { id: "ub301_b1", name: "Seated Cable Row", sets: 3, reps: 10, weight: 40, notes: "Start at 40 lb -- adjust up/down after set 1. Sit tall, pull to lower chest, squeeze shoulder blades at end. Don't let lower back round. Alt if no cable: bent-over DB row with two DBs." },
+              { id: "ub301_b2", name: "Single Arm DB Row", sets: 3, reps: 10, weight: 20, notes: "Each arm. Was 15 lb at Baker in Feb -- bumping to 20 based on PT. Pull elbow back and up, keep core tight.", perSide: true }
+            ]
+          },
+          {
+            name: "C. Horizontal Push (12 min)",
+            instructions: "3 rounds, 90 sec rest. Chest press machine was 30 lb at Baker -- bumping to 35. Adjust if the machine feels different.",
+            restTime: 90,
+            exercises: [
+              { id: "ub301_c1", name: "Chest Press Machine", sets: 3, reps: 10, weight: 35, notes: "Full range of motion. If this Crunch machine feels heavier/lighter than Baker, adjust. Alt: DB chest press on bench @ 15-17.5 lb each hand." },
+              { id: "ub301_c2", name: "Pec Deck / Cable Fly", sets: 2, reps: 12, weight: 20, notes: "If available. Slow and controlled -- feel the stretch at the open position. Alt: DB chest fly on bench @ 10-12 lb each hand." }
+            ]
+          },
+          {
+            name: "D. Vertical Pull + Rear Delt (12 min)",
+            instructions: "3 rounds, 90 sec rest. Lat pulldown was ~60 lb at PT -- try 62-65 today.",
+            restTime: 90,
+            exercises: [
+              { id: "ub301_d1", name: "Lat Pulldown", sets: 3, reps: 10, weight: 62, notes: "Pull to upper chest, squeeze lats at bottom. Don't lean back too far. Was ~60 lb at PT Feb 23." },
+              { id: "ub301_d2", name: "Rear Delt Fly Machine", sets: 3, reps: 12, weight: 20, notes: "If machine available. Pinch shoulder blades together at the back. Alt: bent-over DB reverse fly @ 5-8 lb -- hinge forward, arms wide, lift to shoulder height." },
+              { id: "ub301_d3", name: "Lateral Raise", sets: 3, reps: 12, weight: 5, notes: "Was 10 lb in Feb (too hard, dropped to 5). Stay at 5-7.5 lb. Raise to shoulder height only, controlled on the way down." }
+            ]
+          },
+          {
+            name: "E. Shoulder + Arms (8 min)",
+            instructions: "3 rounds, 90 sec rest. Single arm press was 20 lb at PT -- using 17.5-20 lb seated two-arm today.",
+            restTime: 90,
+            exercises: [
+              { id: "ub301_e1", name: "Seated DB Shoulder Press", sets: 3, reps: 10, weight: 17.5, notes: "Seated, both arms. Single arm was 20 lb at PT -- start at 17.5, go to 20 if it feels easy. Press straight up, lower to ear height." },
+              { id: "ub301_e2", name: "Bicep Curl", sets: 3, reps: 10, weight: 10, notes: "Was 10 lb at Baker (feel 3-4). Hold here. No swinging -- control the lowering." },
+              { id: "ub301_e3", name: "Cable Tricep Extension", sets: 3, reps: 10, weight: 30, notes: "Was 30 lb at Baker (feel 3-4). Hold here. Elbows pinned to sides, extend fully. Alt: DB overhead tricep extension @ 15 lb." }
+            ]
+          },
+          {
+            name: "F. Core -- Rotation Only (6 min)",
+            instructions: "No hip flexor load. If anything pulls near the groin, skip and go straight to cooldown.",
+            exercises: [
+              { id: "ub301_f1", name: "Pallof Press", sets: 3, reps: 10, weight: 15, notes: "Each side. Cable at belly button height. Step out from the stack, press hands straight out and hold 2 sec, bring back to chest. Feel your core resist the rotation. Start at 15 lb -- great for throwing power.", perSide: true },
+              { id: "ub301_f2", name: "Plank Hold", sets: 3, reps: 1, notes: "40 sec each. Drop to knees if anything feels off near the groin. Straight line from head to heels, don't let hips sag.", isHold: true, holdTime: 40, noWeight: true }
+            ]
+          },
+          {
+            name: "G. Cooldown (5 min)",
+            instructions: "Let the shoulders decompress. Don't skip this.",
+            exercises: [
+              { id: "ub301_g1", name: "Cross-Body Shoulder Stretch", sets: 1, reps: 1, notes: "30 sec each side. Pull arm across chest, hold at elbow.", isHold: true, holdTime: 30, perSide: true, noWeight: true },
+              { id: "ub301_g2", name: "Doorway Pec Stretch", sets: 1, reps: 1, notes: "45 sec. Arms in goalpost position against doorframe, lean forward gently.", isHold: true, holdTime: 45, noWeight: true },
+              { id: "ub301_g3", name: "Overhead Tricep Stretch", sets: 1, reps: 1, notes: "30 sec each side. Arm overhead, hand behind head, gentle pressure on elbow.", isHold: true, holdTime: 30, perSide: true, noWeight: true }
+            ]
+          }
+        ]
+      },
       '2026-02-26': WORKOUTS.activeRecovery.poolRecovery,
       '2026-02-18': WORKOUTS.activeRecovery.poolRecovery,
       '2026-02-19': {
