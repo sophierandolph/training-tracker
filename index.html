@@ -2119,11 +2119,11 @@
       <div class="input-group">
         <label class="input-label">How hard was it?</label>
         <div class="feel-slider" id="feelSlider">
-          <button class="feel-btn" data-value="1"><span class="number">1</span><span class="label">Easy</span></button>
-          <button class="feel-btn" data-value="2"><span class="number">2</span></button>
-          <button class="feel-btn" data-value="3"><span class="number">3</span></button>
-          <button class="feel-btn" data-value="4"><span class="number">4</span></button>
-          <button class="feel-btn" data-value="5"><span class="number">5</span><span class="label">Hard</span></button>
+          <button class="feel-btn" data-value="1"><span class="number">1</span><span class="label">5+ left</span></button>
+          <button class="feel-btn" data-value="2"><span class="number">2</span><span class="label">3-4 left</span></button>
+          <button class="feel-btn" data-value="3"><span class="number">3</span><span class="label">2 left</span></button>
+          <button class="feel-btn" data-value="4"><span class="number">4</span><span class="label">1 left</span></button>
+          <button class="feel-btn" data-value="5"><span class="number">5</span><span class="label">max</span></button>
         </div>
       </div>
 
@@ -2151,6 +2151,10 @@
       <div class="adjustment-toggle" id="adjustmentToggle" onclick="showAdjustmentModal()">
         <span>Adjusted from plan?</span>
         <span style="font-size: 11px;">(reduced weight, modified, etc.)</span>
+      </div>
+
+      <div class="input-group" style="margin-top: 12px;">
+        <input type="text" id="setNoteInput" class="notes-input" style="min-height: auto; padding: 12px;" placeholder="Quick note...">
       </div>
 
       <div class="modal-actions">
@@ -3777,11 +3781,15 @@
       // Reset effort type selection
       document.querySelectorAll('#effortTypeSelector .effort-type-btn').forEach(b => b.classList.remove('selected'));
 
+      // Reset note
+      document.getElementById('setNoteInput').value = '';
+
       document.getElementById('setModal').classList.add('active');
     }
 
     function closeSetModal() {
       document.getElementById('setModal').classList.remove('active');
+      document.getElementById('setNoteInput').value = '';
     }
 
     function logSet() {
@@ -3798,7 +3806,8 @@
       if (!state.workoutLog[state.currentExercise.id]) {
         state.workoutLog[state.currentExercise.id] = [];
       }
-      state.workoutLog[state.currentExercise.id][state.currentSet] = { weight, reps, feel, effortType };
+      const setNote = document.getElementById('setNoteInput').value.trim();
+      state.workoutLog[state.currentExercise.id][state.currentSet] = { weight, reps, feel, effortType, ...(setNote && { note: setNote }) };
       autosaveProgress();
 
       // Update UI
