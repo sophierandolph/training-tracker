@@ -3175,7 +3175,7 @@
         case 'tuesday':
           // Check Monday's game time to determine workout
           const workoutType = getTuesdayWorkoutType(state.currentDate);
-          workout = workoutType === 'recovery' ? WORKOUTS.tuesday.recovery : WORKOUTS.tuesday.upperBody;
+          workout = workoutType === 'recovery' ? WORKOUTS.activeRecovery.poolRecovery : WORKOUTS.tuesday.upperBody;
           break;
         case 'thursday':
           workout = WORKOUTS.thursday.bike;
@@ -3185,7 +3185,7 @@
           break;
         case 'saturday':
           if (dateKey === '2026-02-14') {
-            workout = WORKOUTS.tuesday.recovery;
+            workout = WORKOUTS.activeRecovery.poolRecovery;
             break;
           }
           // Saturday has external activity (soccer) + in-app workout (handball)
@@ -3342,7 +3342,7 @@
 
       if (dayName === 'sunday') {
         document.getElementById('dayName').textContent = 'Rest Day';
-        const poolWorkout = WORKOUTS.poolRecovery;
+        const poolWorkout = WORKOUTS.activeRecovery.poolRecovery;
         content.innerHTML = `
           <div class="workout-header">
             <div class="workout-type">SUNDAY</div>
@@ -4045,8 +4045,8 @@
         } else if (mainRule.action === 'switch_to_recovery') {
           // Switch to recovery workout
           adaptationApplied = mainRule;
-          state.activeWorkout = WORKOUTS.tuesday.recovery;
-          renderWorkoutWithAdaptation(WORKOUTS.tuesday.recovery, mainRule);
+          state.activeWorkout = WORKOUTS.activeRecovery.poolRecovery;
+          renderWorkoutWithAdaptation(WORKOUTS.activeRecovery.poolRecovery, mainRule);
         } else {
           // Just warnings - reload normally but show banner
           loadTodaysWorkout();
@@ -5401,7 +5401,7 @@
           }
 
           // Show recovery workout details
-          const workoutData = WORKOUTS.tuesday.recovery;
+          const workoutData = WORKOUTS.activeRecovery.poolRecovery;
           workoutData.circuits.forEach(circuit => {
             contentHtml += `
               <div class="preview-circuit">
@@ -5554,7 +5554,7 @@
         case 'tuesday':
           if (date) {
             const workoutType = getTuesdayWorkoutType(date);
-            return workoutType === 'recovery' ? WORKOUTS.tuesday.recovery : WORKOUTS.tuesday.upperBody;
+            return workoutType === 'recovery' ? WORKOUTS.activeRecovery.poolRecovery : WORKOUTS.tuesday.upperBody;
           }
           return WORKOUTS.tuesday.upperBody;
         case 'thursday': return WORKOUTS.thursday.bike;
