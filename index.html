@@ -2593,8 +2593,8 @@
               ]
             },
             {
-              name: "C. Shoulder + Shin Prehab",
-              instructions: "12-15 minutes - Shoulder stability with band, then shin/ankle prehab",
+              name: "C. Shoulder, Shin + Hip Prehab",
+              instructions: "18-20 minutes - Shoulder stability with band, shin/ankle prehab, then hip prehab",
               exercises: [
                 { id: "r8", name: "Band External Rotation", sets: 2, reps: 12, notes: "Each arm. Band at elbow height, elbow tucked at 90 deg. Rotate arm outward keeping elbow at side. Slow: 2 sec out, 2 sec in.", perSide: true, noWeight: true },
                 { id: "r9", name: "Band Pull-Aparts", sets: 2, reps: 15, notes: "Hold band at chest height, arms straight. Pull apart squeezing shoulder blades together. Feel posterior deltoids and rhomboids.", noWeight: true },
@@ -2603,7 +2603,10 @@
                 { id: "r12", name: "Toe Raises (Shin Prehab)", sets: 2, reps: 15, notes: "Stand feet shoulder-width apart. Lift toes off ground keeping heels down. Hold 2 sec at top. Strengthens tibialis anterior.", noWeight: true },
                 { id: "r13", name: "Eccentric Calf Raises", sets: 2, reps: 15, notes: "Rise up on toes (2 sec), lower slowly (3 sec). The slow lowering is what matters. Use wall for balance.", noWeight: true },
                 { id: "r14", name: "Ankle Alphabet", sets: 1, reps: 2, notes: "Trace A-Z with each foot. Builds ankle stability and mobility. 1 rep = 1 foot.", perSide: true, noWeight: true },
-                { id: "r15", name: "Single-Leg Balance", sets: 1, reps: 2, notes: "30 sec each foot. Eyes open. Feel ankle stabilizers working. Close eyes to make harder.", perSide: true, isHold: true, holdTime: 30, noWeight: true }
+                { id: "r15", name: "Single-Leg Balance", sets: 1, reps: 2, notes: "30 sec each foot. Eyes open. Feel ankle stabilizers working. Close eyes to make harder.", perSide: true, isHold: true, holdTime: 30, noWeight: true },
+                { id: "r16", name: "90/90 Hip Stretch", sets: 1, reps: 1, notes: "Hold 60 sec each side. Sit with both legs at 90 degrees. Hinge forward over the front leg. Priority for hip tightness.", isHold: true, holdTime: 60, perSide: true, noWeight: true },
+                { id: "r17", name: "Elevated Pigeon Lift Off", sets: 2, reps: 8, notes: "Each side. Pigeon position on a bench or step. Hands on hips, squeeze glute of front leg and lift chest. Feel the glute fire.", perSide: true, noWeight: true },
+                { id: "r18", name: "Hip Flexor Lunge Stretch", sets: 1, reps: 1, notes: "Hold 45 sec each side. Low lunge, back knee down. Squeeze back glute and tilt pelvis under.", isHold: true, holdTime: 45, perSide: true, noWeight: true }
               ]
             }
           ]
@@ -4612,12 +4615,12 @@
         }
       ]
     },
-    '2026-03-12': {
+    '2026-03-09': {
       name: "Beer Bike Week 6: Speed Endurance",
       type: "Cardio",
       duration: "50 min",
       location: "Outdoor Track",
-      condition: "Doing Thursday Mar 12 one day early — traveling to Fort Davis Friday. More intervals at race effort — build staying power.",
+      condition: "Moved to Monday — no soccer this week. More intervals at race effort — build staying power.",
       circuits: [
         {
           name: "A. Warm-Up (12 min)",
@@ -4672,6 +4675,89 @@
             { id: "bb6_f9", name: "Bear Plank Shoulder Taps", sets: 2, reps: 20, notes: "10 each side", noWeight: true },
             { id: "bb6_f10", name: "Cross-Body Shoulder Stretch", sets: 1, reps: 1, notes: "30 sec each side", isHold: true, holdTime: 30, perSide: true, noWeight: true },
             { id: "bb6_f11", name: "Overhead Tricep Stretch", sets: 1, reps: 1, notes: "30 sec each side", isHold: true, holdTime: 30, perSide: true, noWeight: true }
+          ]
+        }
+      ]
+    },
+    '2026-03-12': {
+      name: "Upper Body Strength",
+      type: "Strength",
+      duration: "45-50 min",
+      location: "Gym",
+      condition: "PT was Tuesday this week (full body). Thursday: upper body focus. Adjust weights day-of as needed — Mar 1 Crunch Kyle weights used as baseline; Baker machines may differ.",
+      circuits: [
+        {
+          name: "Circuit A",
+          instructions: "Do A1-A2-A3, rest 90 sec, repeat 3x",
+          restTime: 90,
+          exercises: [
+            { id: "thu12_a1", name: "Single Arm DB Row", sets: 3, reps: 10, weight: 20, notes: "Each arm. Pull elbow back, core tight.", perSide: true },
+            { id: "thu12_a2", name: "Chest Press Machine", sets: 3, reps: 10, weight: 70, notes: "Full range of motion. Baker standard — adjust if it feels off." },
+            { id: "thu12_a3", name: "Russian Twists w/ Weight", sets: 3, reps: 20, weight: 20, notes: "Tap weight to floor each side" }
+          ]
+        },
+        {
+          name: "Circuit B",
+          instructions: "Do B1-B2-B3, rest 90 sec, repeat 3x",
+          restTime: 90,
+          exercises: [
+            { id: "thu12_b1", name: "Lateral Shoulder Raise", sets: 3, reps: 10, weight: 5, notes: "Raise to shoulder height, controlled. Slower on the way down." },
+            { id: "thu12_b2", name: "Lat Pulldown Machine", sets: 3, reps: 10, weight: 60, notes: "Pull to upper chest, squeeze" },
+            { id: "thu12_b3", name: "Weighted Sit-ups", sets: 3, reps: 12, weight: 5, notes: "Hold weight at chest" }
+          ]
+        },
+        {
+          name: "Circuit C",
+          instructions: "Do C1-C2, rest 90 sec, repeat 3x",
+          restTime: 90,
+          exercises: [
+            { id: "thu12_c1", name: "Bicep Curls", sets: 3, reps: 10, weight: 12.5, notes: "No swinging, control down" },
+            { id: "thu12_c2", name: "Cable Tricep Extension", sets: 3, reps: 10, weight: 22, notes: "Elbows stay pinned to sides. Baker cable may differ from Crunch — adjust if needed." }
+          ]
+        }
+      ]
+    },
+    '2026-03-14': {
+      name: "Tryout Prep: Sprint + Agility",
+      type: "Conditioning",
+      duration: "40-45 min",
+      location: "Outdoors (Fort Davis)",
+      condition: "Bodyweight only — no equipment needed. You're at ~5,000 ft elevation so aerobic work will feel harder than Houston. That's fine — ease into pace and trust the effort.",
+      circuits: [
+        {
+          name: "A. Dynamic Warm-Up (8 min)",
+          instructions: "Build blood flow and open up the hips. Don't skip — altitude makes it more important.",
+          exercises: [
+            { id: "fd14_a1", name: "Easy Jog", sets: 1, reps: 1, notes: "3 min, very easy pace", isCardio: true, duration: 180, noWeight: true },
+            { id: "fd14_a2", name: "Leg Swings (Forward/Back)", sets: 1, reps: 10, notes: "Each leg. Hold a wall or post for balance.", perSide: true, noWeight: true },
+            { id: "fd14_a3", name: "Lateral Leg Swings", sets: 1, reps: 10, notes: "Each leg", perSide: true, noWeight: true },
+            { id: "fd14_a4", name: "Hip Circles", sets: 1, reps: 10, notes: "Each direction, each leg. Big circles.", perSide: true, noWeight: true },
+            { id: "fd14_a5", name: "High Knees", sets: 1, reps: 1, notes: "30 sec", isCardio: true, duration: 30, noWeight: true },
+            { id: "fd14_a6", name: "A-Skips", sets: 2, reps: 1, notes: "20m. Drive knee up with arm drive.", noWeight: true }
+          ]
+        },
+        {
+          name: "B. 20m Sprint Intervals (15 min) -- Beep Test Prep",
+          instructions: "Mark 20m with rocks or shoes. 8 repeats at 80-85% effort. 45 sec rest between. Focus: quick feet at the turnaround, go again right on time.",
+          exercises: [
+            { id: "fd14_b1", name: "20m Sprint", sets: 8, reps: 1, notes: "Run 20m → stop → walk/jog back → go again at 45 sec mark. 80-85% effort. Not all-out — build the aerobic engine.", isCardio: true, duration: 5, noWeight: true }
+          ]
+        },
+        {
+          name: "C. T-Test Agility Pattern (12 min)",
+          instructions: "Set 4 landmarks in a T: center base, 10m ahead (top center), 5m left and 5m right of top center (corners). Sprint up → shuffle left → shuffle all the way right → shuffle back to center → backpedal home. 6 rounds, 60 sec rest between.",
+          exercises: [
+            { id: "fd14_c1", name: "T-Test Run", sets: 6, reps: 1, notes: "Sprint 10m → shuffle L 5m → shuffle R 10m → shuffle L 5m → backpedal 10m. Keep hips facing forward on shuffles. Time each round if you want a baseline.", noWeight: true }
+          ]
+        },
+        {
+          name: "D. Hip Prehab Cooldown (8 min)",
+          instructions: "Key priority. Cool down while hitting the hip work.",
+          exercises: [
+            { id: "fd14_d1", name: "90/90 Hip Stretch", sets: 1, reps: 1, notes: "Hold 60 sec each side. Sit with both legs at 90 degrees. Hinge forward over the front leg.", isHold: true, holdTime: 60, perSide: true, noWeight: true },
+            { id: "fd14_d2", name: "Elevated Pigeon Lift Off", sets: 2, reps: 8, notes: "Each side. Find a rock or low step. Pigeon position, hands on hips, squeeze glute of front leg and lift chest.", perSide: true, noWeight: true },
+            { id: "fd14_d3", name: "Glute Bridge", sets: 2, reps: 15, notes: "Squeeze at top, 2 sec hold. Feet hip-width.", noWeight: true },
+            { id: "fd14_d4", name: "Hip Flexor Lunge Stretch", sets: 1, reps: 1, notes: "Hold 45 sec each side. Low lunge, back knee down. Squeeze back glute and tilt pelvis under.", isHold: true, holdTime: 45, perSide: true, noWeight: true }
           ]
         }
       ]
@@ -4763,7 +4849,7 @@
 
       // Fort Davis Trip (Mar 13-19) - minimal facilities
       '2026-03-13': { type: 'travel', location: 'Fort Davis, TX', note: 'Travel day to Fort Davis', facilities: 'minimal', isTransit: true },
-      '2026-03-14': { type: 'travel', location: 'Fort Davis, TX', note: 'Minimal facilities -- rest and active recovery', facilities: 'minimal' },
+      '2026-03-14': { type: 'travel', location: 'Fort Davis, TX', note: 'Tryout prep conditioning -- bodyweight, outdoors', facilities: 'minimal' },
       '2026-03-15': { type: 'travel', location: 'Fort Davis, TX', note: 'Minimal facilities -- rest', facilities: 'minimal' },
       '2026-03-16': { type: 'travel', location: 'Fort Davis, TX', note: 'Minimal facilities -- light bodyweight work', facilities: 'minimal' },
       '2026-03-17': { type: 'travel', location: 'Fort Davis, TX', note: 'Minimal facilities -- shoulder stability', facilities: 'minimal' },
