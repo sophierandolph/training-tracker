@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <meta name="theme-color" content="#0f0a1a">
@@ -2273,8 +2273,8 @@
   </div>
 
   <!-- Set Input Modal -->
-  <div class="modal-overlay" id="setModal">
-    <div class="modal-content">
+  <div class="modal-overlay" id="setModal" onclick="closeSetModal()">
+    <div class="modal-content" onclick="event.stopPropagation()">
       <div class="modal-header">
         <div class="modal-title" id="modalExerciseName">Exercise Name</div>
         <button class="modal-close" onclick="closeSetModal()">&times;</button>
@@ -2343,8 +2343,8 @@
   </div>
 
   <!-- Readiness Modal -->
-  <div class="modal-overlay" id="readinessModal">
-    <div class="modal-content readiness-modal">
+  <div class="modal-overlay" id="readinessModal" onclick="closeReadinessModal()">
+    <div class="modal-content readiness-modal" onclick="event.stopPropagation()">
       <div class="modal-header">
         <div class="modal-title">Today's Readiness</div>
         <button class="modal-close" onclick="closeReadinessModal()">&times;</button>
@@ -2440,8 +2440,8 @@
   </div>
 
   <!-- Workout Preview Modal -->
-  <div class="modal-overlay" id="previewModal">
-    <div class="modal-content preview-modal">
+  <div class="modal-overlay" id="previewModal" onclick="closePreviewModal()">
+    <div class="modal-content preview-modal" onclick="event.stopPropagation()">
       <div class="modal-header">
         <div class="modal-title" id="previewTitle">Workout Preview</div>
         <button class="modal-close" onclick="closePreviewModal()">&times;</button>
@@ -2458,8 +2458,8 @@
   </div>
 
   <!-- Travel Activity Modal -->
-  <div class="modal-overlay" id="travelActivityModal">
-    <div class="modal-content">
+  <div class="modal-overlay" id="travelActivityModal" onclick="closeTravelActivityModal()">
+    <div class="modal-content" onclick="event.stopPropagation()">
       <div class="modal-header">
         <div class="modal-title">Log Travel Activity</div>
         <button class="modal-close" onclick="closeTravelActivityModal()">&times;</button>
@@ -2514,8 +2514,8 @@
   </div>
 
   <!-- External Activity Modal -->
-  <div class="modal-overlay" id="externalActivityModal">
-    <div class="modal-content">
+  <div class="modal-overlay" id="externalActivityModal" onclick="closeExternalActivityModal()">
+    <div class="modal-content" onclick="event.stopPropagation()">
       <div class="modal-header">
         <div class="modal-title" id="externalActivityTitle">Log Activity</div>
         <button class="modal-close" onclick="closeExternalActivityModal()">&times;</button>
@@ -2580,8 +2580,8 @@
   </div>
 
   <!-- Adjustment Modal -->
-  <div class="modal-overlay" id="adjustmentModal">
-    <div class="modal-content">
+  <div class="modal-overlay" id="adjustmentModal" onclick="closeAdjustmentModal()">
+    <div class="modal-content" onclick="event.stopPropagation()">
       <div class="modal-header">
         <div class="modal-title">Log Adjustment</div>
         <button class="modal-close" onclick="closeAdjustmentModal()">&times;</button>
@@ -5545,7 +5545,7 @@
       const container = document.getElementById('calendarContainer');
       const today = state.currentDate;
       const dayNames = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
-      const months = ['Jan', 'Feb', 'Mar'];
+      const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
       let html = '';
 
@@ -5671,7 +5671,7 @@
       const today = state.currentDate;
       const upcoming = [];
       const dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-      const months = ['Jan', 'Feb', 'Mar'];
+      const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
       // Find next 5 workout days (skip today, include external)
       let checkDate = new Date(today);
@@ -5966,7 +5966,7 @@
       const isTravel = specialDate && specialDate.type === 'travel';
       const schedule = SCHEDULE[dayOfWeek];
       const dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-      const months = ['January', 'February', 'March'];
+      const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
       let previewTitle = schedule.name;
       let metaHtml = '';
