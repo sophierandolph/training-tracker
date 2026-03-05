@@ -3886,8 +3886,9 @@
             </div>
         `;
 
+        const isSimple = circuit.simple || /warm|cool.?down|stretch|gentle|get moving/i.test(circuit.name);
         circuit.exercises.forEach((exercise, exerciseIndex) => {
-          html += renderExercise(exercise, circuitIndex, exerciseIndex, circuit.restTime);
+          html += renderExercise(exercise, circuitIndex, exerciseIndex, circuit.restTime, isSimple);
         });
 
         html += `</div>`;
@@ -3904,7 +3905,7 @@
       content.innerHTML = html;
     }
 
-    function renderExercise(exercise, circuitIndex, exerciseIndex, restTime) {
+    function renderExercise(exercise, circuitIndex, exerciseIndex, restTime, simple) {
       const exerciseId = `${circuitIndex}-${exerciseIndex}`;
       const repsText = exercise.isHold ? `${exercise.holdTime}s hold` :
                        exercise.isCardio ? (exercise.duration ? `${Math.floor(exercise.duration/60)}min` : 'Complete') :
@@ -3924,12 +3925,21 @@
 
       for (let i = 0; i < exercise.sets; i++) {
         const setId = `${exerciseId}-${i}`;
-        html += `
-          <div class="set-pill" id="set-${setId}" onclick="openSetModal('${exerciseId}', ${i}, ${JSON.stringify(exercise).replace(/"/g, '&quot;')}, ${restTime || 90})">
-            <div class="set-number">Set ${i + 1}</div>
-            <div class="set-value" id="set-value-${setId}">--</div>
-          </div>
-        `;
+        if (simple) {
+          html += `
+            <div class="set-pill" id="set-${setId}" onclick="quickLogSet('${exerciseId}', ${i}, ${JSON.stringify(exercise).replace(/"/g, '&quot;')})">
+              <div class="set-number">${exercise.sets === 1 ? '✓' : 'Set ' + (i + 1)}</div>
+              <div class="set-value" id="set-value-${setId}">tap</div>
+            </div>
+          `;
+        } else {
+          html += `
+            <div class="set-pill" id="set-${setId}" onclick="openSetModal('${exerciseId}', ${i}, ${JSON.stringify(exercise).replace(/"/g, '&quot;')}, ${restTime || 90})">
+              <div class="set-number">Set ${i + 1}</div>
+              <div class="set-value" id="set-value-${setId}">--</div>
+            </div>
+          `;
+        }
       }
 
       html += `
@@ -4030,6 +4040,38 @@
       document.getElementById('setNoteInput').value = '';
 
       document.getElementById('setModal').classList.add('active');
+    }
+
+    function quickLogSet(exerciseId, setIndex, exercise) {
+      if (!state.workoutStartTime) {
+        state.workoutStartTime = new Date();
+      }
+
+      const setId = `${exerciseId}-${setIndex}`;
+      const pill = document.getElementById(`set-${setId}`);
+
+      // Toggle: if already complete, undo it
+      if (pill.classList.contains('complete')) {
+        pill.classList.remove('complete');
+        document.getElementById(`set-value-${setId}`).textContent = 'tap';
+        if (state.workoutLog[exerciseId]) {
+          state.workoutLog[exerciseId][setIndex] = null;
+        }
+        autosaveProgress();
+        updateProgress();
+        return;
+      }
+
+      // Log it
+      if (!state.workoutLog[exerciseId]) {
+        state.workoutLog[exerciseId] = [];
+      }
+      state.workoutLog[exerciseId][setIndex] = { reps: exercise.reps || 1, feel: 3 };
+      autosaveProgress();
+
+      pill.classList.add('complete');
+      document.getElementById(`set-value-${setId}`).textContent = '✓';
+      updateProgress();
     }
 
     function closeSetModal() {
@@ -4380,8 +4422,9 @@
             </div>
         `;
 
+        const isSimple = circuit.simple || /warm|cool.?down|stretch|gentle|get moving/i.test(circuit.name);
         circuit.exercises.forEach((exercise, exerciseIndex) => {
-          html += renderExercise(exercise, circuitIndex, exerciseIndex, circuit.restTime);
+          html += renderExercise(exercise, circuitIndex, exerciseIndex, circuit.restTime, isSimple);
         });
 
         html += `</div>`;
