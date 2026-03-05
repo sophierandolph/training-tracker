@@ -1973,6 +1973,184 @@
     .coach-send-btn:active { transform: scale(0.92); }
     .coach-send-btn:disabled { opacity: 0.4; cursor: default; }
 
+    /* ==================== FUEL VIEW ==================== */
+    .fuel-progress {
+      background: var(--bg-card);
+      border-radius: var(--radius);
+      padding: 20px;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+    .fuel-progress-bar-track {
+      width: 100%;
+      height: 20px;
+      background: var(--bg-elevated);
+      border-radius: var(--radius-full);
+      overflow: hidden;
+      margin: 12px 0 8px;
+    }
+    .fuel-progress-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--emerald), var(--teal));
+      border-radius: var(--radius-full);
+      transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .fuel-progress-bar-fill.over-target {
+      background: linear-gradient(90deg, var(--gold), var(--rose));
+    }
+    .fuel-total {
+      font-size: 36px;
+      font-weight: 800;
+      color: var(--emerald);
+      line-height: 1;
+    }
+    .fuel-total.over-target {
+      color: var(--gold);
+    }
+    .fuel-target-label {
+      color: var(--text-secondary);
+      font-size: 13px;
+      margin-top: 4px;
+    }
+    .fuel-reset-btn {
+      background: none;
+      border: 1px solid var(--border);
+      color: var(--text-secondary);
+      font-size: 12px;
+      padding: 4px 12px;
+      border-radius: var(--radius-full);
+      cursor: pointer;
+      margin-top: 8px;
+      transition: var(--transition);
+    }
+    .fuel-reset-btn:active {
+      background: var(--bg-elevated);
+    }
+    .fuel-cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-bottom: 24px;
+    }
+    .fuel-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 12px 8px;
+      text-align: center;
+      cursor: pointer;
+      transition: var(--transition);
+      position: relative;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+    .fuel-card:active {
+      transform: scale(0.95);
+      border-color: var(--emerald);
+      background: rgba(16, 185, 129, 0.1);
+    }
+    .fuel-card.has-count {
+      border-color: var(--emerald);
+      background: rgba(16, 185, 129, 0.08);
+    }
+    .fuel-card-emoji {
+      font-size: 24px;
+      display: block;
+      margin-bottom: 4px;
+    }
+    .fuel-card-name {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-primary);
+      line-height: 1.2;
+    }
+    .fuel-card-protein {
+      font-size: 10px;
+      color: var(--text-secondary);
+      margin-top: 2px;
+    }
+    .fuel-card-serving {
+      font-size: 9px;
+      color: var(--text-muted);
+    }
+    .fuel-card-count {
+      position: absolute;
+      top: -6px;
+      right: -6px;
+      background: var(--emerald);
+      color: white;
+      font-size: 11px;
+      font-weight: 700;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .fuel-card-undo {
+      position: absolute;
+      top: -6px;
+      left: -6px;
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      color: var(--text-secondary);
+      font-size: 12px;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+    .fuel-reference {
+      background: var(--bg-card);
+      border-radius: var(--radius);
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+    .fuel-reference h3 {
+      font-size: 15px;
+      font-weight: 700;
+      margin-bottom: 12px;
+      color: var(--text-primary);
+    }
+    .fuel-combo {
+      background: var(--bg-elevated);
+      border-radius: var(--radius-sm);
+      padding: 12px;
+      margin-bottom: 8px;
+    }
+    .fuel-combo:last-child {
+      margin-bottom: 0;
+    }
+    .fuel-combo-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--emerald);
+      margin-bottom: 4px;
+    }
+    .fuel-combo-items {
+      font-size: 12px;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+    .fuel-combo-protein {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-top: 4px;
+    }
+    .fuel-tip {
+      font-size: 12px;
+      color: var(--text-secondary);
+      line-height: 1.5;
+      padding: 8px 0;
+      border-top: 1px solid var(--border);
+      margin-top: 8px;
+    }
+
   </style>
 </head>
 <body>
@@ -2441,11 +2619,75 @@
     </div>
   </div>
 
+  <!-- Fuel View -->
+  <div id="fuelView" class="view">
+    <div style="padding: 0 16px;">
+      <!-- Daily Progress -->
+      <div class="fuel-progress">
+        <div class="fuel-total" id="fuelTotal">0g</div>
+        <div class="fuel-target-label">of 150g protein target</div>
+        <div class="fuel-progress-bar-track">
+          <div class="fuel-progress-bar-fill" id="fuelProgressFill" style="width: 0%"></div>
+        </div>
+        <button class="fuel-reset-btn" onclick="resetFuelLog()">Reset today</button>
+      </div>
+
+      <!-- Protein Cards -->
+      <div class="fuel-cards" id="fuelCards">
+        <!-- Rendered by JS -->
+      </div>
+
+      <!-- Quick Reference -->
+      <div class="fuel-reference">
+        <h3>What does 35-40g look like?</h3>
+        <div class="fuel-combo">
+          <div class="fuel-combo-title">Breakfast power bowl</div>
+          <div class="fuel-combo-items">Greek yogurt + 2 eggs + glass of milk</div>
+          <div class="fuel-combo-protein">~40g protein</div>
+        </div>
+        <div class="fuel-combo">
+          <div class="fuel-combo-title">Quick lunch</div>
+          <div class="fuel-combo-items">Tofu stir-fry + cup of edamame</div>
+          <div class="fuel-combo-protein">~37g protein</div>
+        </div>
+        <div class="fuel-combo">
+          <div class="fuel-combo-title">Post-practice shake</div>
+          <div class="fuel-combo-items">Whey scoop + milk</div>
+          <div class="fuel-combo-protein">~33g protein</div>
+        </div>
+        <div class="fuel-combo">
+          <div class="fuel-combo-title">Bean bowl</div>
+          <div class="fuel-combo-items">Lentils + cheese + PB toast on the side</div>
+          <div class="fuel-combo-protein">~32g protein</div>
+        </div>
+        <div class="fuel-combo">
+          <div class="fuel-combo-title">Soylent + snack</div>
+          <div class="fuel-combo-items">Soylent bottle + cottage cheese</div>
+          <div class="fuel-combo-protein">~48g protein</div>
+        </div>
+      </div>
+
+      <div class="fuel-reference">
+        <h3>Servery tips</h3>
+        <div class="fuel-tip">Look for the tofu/tempeh station at lunch and dinner -- a full plate scoop is roughly 1 cup.</div>
+        <div class="fuel-tip">Hard-boiled eggs are usually at the salad bar. Grab 2-3 for an easy 12-18g.</div>
+        <div class="fuel-tip">Greek yogurt is at the cereal/dairy station. Pair with granola for a quick 25g+ snack.</div>
+        <div class="fuel-tip">Bean/lentil soups count -- a full bowl is ~15-17g. Double up with a cheese quesadilla for ~25g.</div>
+        <div class="fuel-tip">Cottage cheese shows up at the salad bar some days. When it's there, grab it -- 28g per cup.</div>
+        <div class="fuel-tip">Edamame appears at the stir-fry and salad stations. A full scoop is ~17g.</div>
+      </div>
+    </div>
+  </div>
+
   <!-- Bottom Navigation -->
   <nav>
     <div class="nav-item active" onclick="showView('today')">
       <span class="nav-icon">💪</span>
       <span>Today</span>
+    </div>
+    <div class="nav-item" onclick="showView('fuel')">
+      <span class="nav-icon">🍽️</span>
+      <span>Fuel</span>
     </div>
     <div class="nav-item" onclick="showView('plan')">
       <span class="nav-icon">📅</span>
@@ -4183,7 +4425,8 @@
         today: null, // Will be set by loadTodaysWorkout
         plan: 'Workout Plan',
         history: 'History',
-        coach: 'Coach'
+        coach: 'Coach',
+        fuel: 'Fuel'
       };
 
       if (viewName === 'today') {
@@ -4195,6 +4438,9 @@
       // Refresh plan view data when shown
       if (viewName === 'plan') {
         loadPlanView();
+      }
+      if (viewName === 'fuel') {
+        loadFuelView();
       }
     }
 
@@ -6489,6 +6735,118 @@ ${recentHistory}`;
 
       // Backup to localStorage
       localStorage.setItem(`coachSession_${dateKey}`, JSON.stringify(sessionData));
+    }
+
+    // ==================== FUEL (PROTEIN TRACKER) ====================
+    const PROTEIN_SOURCES = [
+      { id: 'soylent', name: 'Soylent', emoji: '🍫', serving: '1 bottle', protein: 20 },
+      { id: 'greek_yogurt', name: 'Greek yogurt', emoji: '🥛', serving: '1 cup', protein: 20 },
+      { id: 'eggs', name: 'Eggs', emoji: '🥚', serving: '2 eggs', protein: 12 },
+      { id: 'chickpeas', name: 'Chickpeas', emoji: '🫘', serving: '1 cup', protein: 15 },
+      { id: 'cashews', name: 'Cashews', emoji: '🥜', serving: '1 oz', protein: 5 },
+      { id: 'tofu', name: 'Tofu (firm)', emoji: '🧈', serving: '1 cup', protein: 20 },
+      { id: 'tempeh', name: 'Tempeh', emoji: '🍥', serving: '½ cup', protein: 16 },
+      { id: 'cottage_cheese', name: 'Cottage cheese', emoji: '🧀', serving: '1 cup', protein: 28 },
+      { id: 'whey_shake', name: 'Whey shake', emoji: '🥤', serving: '1 scoop+milk', protein: 33 },
+      { id: 'lentils', name: 'Lentils/beans', emoji: '🍲', serving: '1 cup', protein: 17 },
+      { id: 'cheese', name: 'Cheese', emoji: '🧀', serving: '1 oz', protein: 7 },
+      { id: 'pb', name: 'PB/nut butter', emoji: '🥜', serving: '2 tbsp', protein: 8 },
+      { id: 'milk', name: 'Milk', emoji: '🥛', serving: '1 cup', protein: 8 },
+      { id: 'edamame', name: 'Edamame', emoji: '🫛', serving: '1 cup', protein: 17 },
+      { id: 'clif_builder', name: 'Clif Builder', emoji: '💪', serving: '1 bar', protein: 20 },
+    ];
+
+    const PROTEIN_TARGET = 150;
+
+    function getFuelDateKey() {
+      const now = new Date();
+      return now.getFullYear() + '-' + String(now.getMonth() + 1).padStart(2, '0') + '-' + String(now.getDate()).padStart(2, '0');
+    }
+
+    function getFuelLog() {
+      const key = 'proteinLog_' + getFuelDateKey();
+      const stored = localStorage.getItem(key);
+      if (stored) return JSON.parse(stored);
+      return { foods: {}, total: 0 };
+    }
+
+    function saveFuelLog(log) {
+      const key = 'proteinLog_' + getFuelDateKey();
+      localStorage.setItem(key, JSON.stringify(log));
+    }
+
+    function logProtein(foodId) {
+      const source = PROTEIN_SOURCES.find(s => s.id === foodId);
+      if (!source) return;
+      const log = getFuelLog();
+      log.foods[foodId] = (log.foods[foodId] || 0) + 1;
+      log.total += source.protein;
+      saveFuelLog(log);
+      updateFuelDisplay(log);
+    }
+
+    function undoProtein(foodId) {
+      const source = PROTEIN_SOURCES.find(s => s.id === foodId);
+      if (!source) return;
+      const log = getFuelLog();
+      if (!log.foods[foodId] || log.foods[foodId] <= 0) return;
+      log.foods[foodId] -= 1;
+      if (log.foods[foodId] === 0) delete log.foods[foodId];
+      log.total -= source.protein;
+      if (log.total < 0) log.total = 0;
+      saveFuelLog(log);
+      updateFuelDisplay(log);
+    }
+
+    function resetFuelLog() {
+      if (!confirm('Reset today\'s protein log?')) return;
+      saveFuelLog({ foods: {}, total: 0 });
+      updateFuelDisplay({ foods: {}, total: 0 });
+    }
+
+    function updateFuelDisplay(log) {
+      const totalEl = document.getElementById('fuelTotal');
+      const fillEl = document.getElementById('fuelProgressFill');
+      const pct = Math.min((log.total / PROTEIN_TARGET) * 100, 100);
+      const over = log.total >= PROTEIN_TARGET;
+
+      totalEl.textContent = log.total + 'g';
+      totalEl.className = 'fuel-total' + (over ? ' over-target' : '');
+      fillEl.style.width = pct + '%';
+      fillEl.className = 'fuel-progress-bar-fill' + (over ? ' over-target' : '');
+
+      // Update cards
+      PROTEIN_SOURCES.forEach(source => {
+        const card = document.getElementById('fuel-card-' + source.id);
+        if (!card) return;
+        const count = log.foods[source.id] || 0;
+        card.className = 'fuel-card' + (count > 0 ? ' has-count' : '');
+        const countEl = card.querySelector('.fuel-card-count');
+        const undoEl = card.querySelector('.fuel-card-undo');
+        if (count > 0) {
+          if (countEl) { countEl.textContent = 'x' + count; countEl.style.display = 'flex'; }
+          if (undoEl) undoEl.style.display = 'flex';
+        } else {
+          if (countEl) countEl.style.display = 'none';
+          if (undoEl) undoEl.style.display = 'none';
+        }
+      });
+    }
+
+    function loadFuelView() {
+      const container = document.getElementById('fuelCards');
+      container.innerHTML = PROTEIN_SOURCES.map(source => `
+        <div class="fuel-card" id="fuel-card-${source.id}" onclick="logProtein('${source.id}')">
+          <span class="fuel-card-count" style="display:none"></span>
+          <span class="fuel-card-undo" style="display:none" onclick="event.stopPropagation(); undoProtein('${source.id}')">-</span>
+          <span class="fuel-card-emoji">${source.emoji}</span>
+          <span class="fuel-card-name">${source.name}</span>
+          <span class="fuel-card-protein">${source.protein}g</span>
+          <span class="fuel-card-serving">${source.serving}</span>
+        </div>
+      `).join('');
+
+      updateFuelDisplay(getFuelLog());
     }
 
     // ==================== START ====================
