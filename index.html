@@ -972,6 +972,50 @@
       gap: 4px;
     }
 
+    .history-detail {
+      display: none;
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px solid var(--border);
+    }
+    .history-detail.open { display: block; }
+    .history-exercise {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding: 4px 0;
+      font-size: 13px;
+    }
+    .history-exercise-name {
+      color: var(--text-primary);
+      font-weight: 500;
+    }
+    .history-exercise-sets {
+      color: var(--text-secondary);
+      font-size: 12px;
+    }
+    .history-circuit-label {
+      font-size: 11px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-top: 8px;
+      margin-bottom: 2px;
+    }
+    .history-circuit-label:first-child { margin-top: 0; }
+    .history-expand {
+      font-size: 11px;
+      color: var(--text-muted);
+      cursor: pointer;
+      margin-top: 8px;
+    }
+    .history-notes {
+      font-size: 12px;
+      color: var(--text-secondary);
+      margin-top: 8px;
+      font-style: italic;
+    }
+
     /* Plan View */
     .plan-section {
       padding: 16px;
@@ -4279,6 +4323,28 @@
     }
 
     function saveWorkout() {
+      // Build exercise summary with names for history view
+      const exercises = [];
+      if (state.activeWorkout.circuits) {
+        state.activeWorkout.circuits.forEach((circuit, ci) => {
+          circuit.exercises.forEach((ex, ei) => {
+            const id = `${ci}-${ei}`;
+            const sets = state.workoutLog[id];
+            if (sets && sets.some(s => s)) {
+              exercises.push({
+                name: ex.name,
+                circuit: circuit.name,
+                sets: sets.filter(s => s).map(s => ({
+                  weight: s.weight || null,
+                  reps: s.reps || null,
+                  feel: s.feel || null
+                }))
+              });
+            }
+          });
+        });
+      }
+
       const workoutData = {
         date: state.currentDate.toISOString().split('T')[0],
         workout: state.activeWorkout.name,
@@ -4287,6 +4353,7 @@
           Math.round((new Date() - state.workoutStartTime) / 60000) : 0,
         readiness: state.readiness,
         log: state.workoutLog,
+        exercises: exercises,
         overallFeel: state.overallFeel,
         overallEffortType: state.overallEffortType,
         notes: document.getElementById('workoutNotes').value,
@@ -4543,7 +4610,7 @@
         return;
       }
 
-      container.innerHTML = history.slice(0, 10).map(workout => {
+      container.innerHTML = history.slice(0, 10).map((workout, idx) => {
         const date = new Date(workout.date + 'T00:00:00');
         const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
         const effortIcons = { physical: '💪', technical: '🎯', mental: '🧠', tactical: '🧠' };
@@ -4590,7 +4657,7 @@
               <div class="history-stats">
                 ${workout.duration ? `<span>⏱ ${workout.duration} min</span>` : ''}
                 ${workout.location ? `<span>📍 ${workout.location}</span>` : ''}
-                ${workout.intensity ? `<span>Intensity: ${workout.intensity}/10</span>` : ''}
+                ${workout.intensity ? `<span>Intensity: ${workout.intensity}/5</span>` : ''}
                 ${workout.effortType ? `<span>${effortIcon} ${workout.effortType}</span>` : ''}
               </div>
               ${badges ? `<div class="history-badges">${badges}</div>` : ''}
@@ -4600,8 +4667,29 @@
           `;
         }
 
+        // Build expandable exercise detail
+        let detailHtml = '';
+        if (workout.exercises && workout.exercises.length > 0) {
+          let currentCircuit = '';
+          workout.exercises.forEach(ex => {
+            if (ex.circuit && ex.circuit !== currentCircuit) {
+              currentCircuit = ex.circuit;
+              detailHtml += `<div class="history-circuit-label">${currentCircuit}</div>`;
+            }
+            const setsStr = ex.sets.map(s => {
+              let parts = [];
+              if (s.weight) parts.push(`${s.weight}lb`);
+              if (s.reps) parts.push(`${s.reps}r`);
+              return parts.length ? parts.join('/') : '✓';
+            }).join(', ');
+            detailHtml += `<div class="history-exercise"><span class="history-exercise-name">${ex.name}</span><span class="history-exercise-sets">${setsStr}</span></div>`;
+          });
+        }
+        const hasDetail = detailHtml || workout.notes;
+        const uid = workout.date + '-' + idx;
+
         return `
-          <div class="history-day">
+          <div class="history-day" ${hasDetail ? `onclick="toggleHistoryDetail('${uid}')" style="cursor:pointer;"` : ''}>
             <div class="history-date">${days[date.getDay()]}, ${date.toLocaleDateString()}</div>
             <div class="history-workout">${workout.workout}</div>
             <div class="history-stats">
@@ -4611,9 +4699,24 @@
               ${workout.overallEffortType ? `<span>${effortIcons[workout.overallEffortType]} ${workout.overallEffortType}</span>` : ''}
             </div>
             ${badges ? `<div class="history-badges">${badges}</div>` : ''}
+            ${hasDetail ? `<div class="history-expand" id="expand-${uid}">tap to expand ▾</div>` : ''}
+            ${hasDetail ? `<div class="history-detail" id="detail-${uid}">
+              ${detailHtml}
+              ${workout.notes ? `<div class="history-notes">"${workout.notes}"</div>` : ''}
+            </div>` : ''}
           </div>
         `;
       }).join('');
+    }
+
+    function toggleHistoryDetail(uid) {
+      const detail = document.getElementById('detail-' + uid);
+      const expand = document.getElementById('expand-' + uid);
+      if (!detail) return;
+      detail.classList.toggle('open');
+      if (expand) {
+        expand.textContent = detail.classList.contains('open') ? 'tap to collapse ▴' : 'tap to expand ▾';
+      }
     }
 
     // ==================== PLAN VIEW ====================
