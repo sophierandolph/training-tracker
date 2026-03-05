@@ -692,6 +692,15 @@
       box-shadow: var(--shadow-glow), var(--shadow-soft);
     }
 
+    .finish-banner {
+      position: fixed;
+      bottom: 85px;
+      left: 16px;
+      right: 16px;
+      z-index: 140;
+      animation: slideUp 0.3s ease;
+    }
+
     .rest-timer.active {
       display: block;
       animation: slideUp 0.3s ease;
@@ -795,12 +804,24 @@
       background: var(--bg-card);
       border: 2px solid var(--border);
       border-radius: var(--radius-sm);
-      padding: 12px 2px;
+      padding: 10px 2px;
       cursor: pointer;
-      font-size: 14px;
-      font-weight: 600;
       color: var(--text-primary);
       transition: var(--transition);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+    }
+    .overall-btn .number {
+      font-size: 16px;
+      font-weight: 700;
+    }
+    .overall-btn .label {
+      font-size: 9px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      opacity: 0.6;
     }
 
     .overall-btn:hover {
@@ -1374,12 +1395,24 @@
       background: var(--bg-card);
       border: 2px solid var(--border);
       border-radius: var(--radius-sm);
-      padding: 14px 4px;
+      padding: 10px 2px;
       cursor: pointer;
-      font-size: 16px;
-      font-weight: 700;
       color: var(--text-primary);
       transition: var(--transition);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+    }
+    .travel-feel-btn .number {
+      font-size: 16px;
+      font-weight: 700;
+    }
+    .travel-feel-btn .label {
+      font-size: 9px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      opacity: 0.6;
     }
 
     .travel-feel-btn:hover {
@@ -2395,18 +2428,13 @@
       </div>
 
       <div class="input-group overall-feel">
-        <label class="input-label">Overall difficulty (1 = easy, 10 = max effort)</label>
+        <label class="input-label">Overall difficulty</label>
         <div class="overall-slider" id="overallSlider">
-          <button class="overall-btn" data-value="1">1</button>
-          <button class="overall-btn" data-value="2">2</button>
-          <button class="overall-btn" data-value="3">3</button>
-          <button class="overall-btn" data-value="4">4</button>
-          <button class="overall-btn" data-value="5">5</button>
-          <button class="overall-btn" data-value="6">6</button>
-          <button class="overall-btn" data-value="7">7</button>
-          <button class="overall-btn" data-value="8">8</button>
-          <button class="overall-btn" data-value="9">9</button>
-          <button class="overall-btn" data-value="10">10</button>
+          <button class="overall-btn" data-value="1"><span class="number">1</span><span class="label">Easy</span></button>
+          <button class="overall-btn" data-value="2"><span class="number">2</span><span class="label">Moderate</span></button>
+          <button class="overall-btn" data-value="3"><span class="number">3</span><span class="label">Hard</span></button>
+          <button class="overall-btn" data-value="4"><span class="number">4</span><span class="label">Very hard</span></button>
+          <button class="overall-btn" data-value="5"><span class="number">5</span><span class="label">Max</span></button>
         </div>
       </div>
 
@@ -2491,13 +2519,13 @@
       </div>
 
       <div class="input-group">
-        <label class="input-label">How did it feel? (1-5)</label>
+        <label class="input-label">How did it feel?</label>
         <div class="travel-feel-slider" id="travelFeelSlider">
-          <button class="travel-feel-btn" data-value="1">1</button>
-          <button class="travel-feel-btn" data-value="2">2</button>
-          <button class="travel-feel-btn" data-value="3">3</button>
-          <button class="travel-feel-btn" data-value="4">4</button>
-          <button class="travel-feel-btn" data-value="5">5</button>
+          <button class="travel-feel-btn" data-value="1"><span class="number">1</span><span class="label">Easy</span></button>
+          <button class="travel-feel-btn" data-value="2"><span class="number">2</span><span class="label">Moderate</span></button>
+          <button class="travel-feel-btn" data-value="3"><span class="number">3</span><span class="label">Hard</span></button>
+          <button class="travel-feel-btn" data-value="4"><span class="number">4</span><span class="label">Very hard</span></button>
+          <button class="travel-feel-btn" data-value="5"><span class="number">5</span><span class="label">Max</span></button>
         </div>
       </div>
 
@@ -2529,18 +2557,13 @@
       </div>
 
       <div class="input-group">
-        <label class="input-label">Intensity (1-10)</label>
+        <label class="input-label">Intensity</label>
         <div class="overall-slider" id="externalIntensitySlider">
-          <button class="overall-btn" data-value="1">1</button>
-          <button class="overall-btn" data-value="2">2</button>
-          <button class="overall-btn" data-value="3">3</button>
-          <button class="overall-btn" data-value="4">4</button>
-          <button class="overall-btn" data-value="5">5</button>
-          <button class="overall-btn" data-value="6">6</button>
-          <button class="overall-btn" data-value="7">7</button>
-          <button class="overall-btn" data-value="8">8</button>
-          <button class="overall-btn" data-value="9">9</button>
-          <button class="overall-btn" data-value="10">10</button>
+          <button class="overall-btn" data-value="1"><span class="number">1</span><span class="label">Easy</span></button>
+          <button class="overall-btn" data-value="2"><span class="number">2</span><span class="label">Moderate</span></button>
+          <button class="overall-btn" data-value="3"><span class="number">3</span><span class="label">Hard</span></button>
+          <button class="overall-btn" data-value="4"><span class="number">4</span><span class="label">Very hard</span></button>
+          <button class="overall-btn" data-value="5"><span class="number">5</span><span class="label">Max</span></button>
         </div>
       </div>
 
@@ -3755,7 +3778,7 @@
       // Build in-app workout tile
       const workoutLoggedInfo = workoutLogged ? `
         <div class="activity-tile-logged-info">
-          <span class="rating">${workoutLogged.overallFeel}/10</span> effort
+          <span class="rating">${workoutLogged.overallFeel}/5</span> effort
           ${workoutLogged.duration ? ` · ${workoutLogged.duration} min` : ''}
         </div>
       ` : '';
@@ -3822,7 +3845,7 @@
 
         const loggedInfo = workoutLogged ? `
           <div class="activity-tile-logged-info">
-            <span class="rating">${workoutLogged.overallFeel}/10</span> effort
+            <span class="rating">${workoutLogged.overallFeel}/5</span> effort
             ${workoutLogged.duration ? ` · ${workoutLogged.duration} min` : ''}
           </div>
         ` : '';
@@ -4030,8 +4053,19 @@
       document.getElementById('repsInput').value = exercise.reps || '';
       document.getElementById('repsInput').placeholder = exercise.isHold ? exercise.holdTime : exercise.reps;
 
-      // Reset feel selection
+      // Pre-fill feel from previous set (or reset if first set)
       document.querySelectorAll('#feelSlider .feel-btn').forEach(b => b.classList.remove('selected'));
+      const prevSets = state.workoutLog[exerciseId];
+      const prevFeel = prevSets && setIndex > 0 && prevSets[setIndex - 1] ? prevSets[setIndex - 1].feel : null;
+      if (prevFeel) {
+        const prevBtn = document.querySelector(`#feelSlider .feel-btn[data-value="${prevFeel}"]`);
+        if (prevBtn) prevBtn.classList.add('selected');
+      }
+
+      // Pre-fill weight from previous set
+      if (!exercise.noWeight && prevSets && setIndex > 0 && prevSets[setIndex - 1] && prevSets[setIndex - 1].weight) {
+        document.getElementById('weightInput').value = prevSets[setIndex - 1].weight;
+      }
 
       // Reset effort type selection
       document.querySelectorAll('#effortTypeSelector .effort-type-btn').forEach(b => b.classList.remove('selected'));
@@ -4163,6 +4197,18 @@
       const percent = Math.round((completedSets / totalSets) * 100);
       document.getElementById('progressFill').style.width = `${percent}%`;
       document.getElementById('progressText').textContent = `${percent}%`;
+
+      // Show/hide floating finish banner
+      let banner = document.getElementById('finishBanner');
+      if (percent >= 100 && !banner) {
+        banner = document.createElement('div');
+        banner.id = 'finishBanner';
+        banner.className = 'finish-banner';
+        banner.innerHTML = '<button class="btn btn-success" style="width: 100%; padding: 16px; font-size: 16px;" onclick="finishWorkout()">Finish Workout</button>';
+        document.body.appendChild(banner);
+      } else if (percent < 100 && banner) {
+        banner.remove();
+      }
     }
 
     // ==================== REST TIMER ====================
@@ -4561,7 +4607,7 @@
             <div class="history-stats">
               <span>⏱ ${workout.duration} min</span>
               ${workout.readiness ? `<span>💚 ${workout.readiness}</span>` : ''}
-              ${workout.overallFeel ? `<span>Effort: ${workout.overallFeel}/10</span>` : ''}
+              ${workout.overallFeel ? `<span>Effort: ${workout.overallFeel}/5</span>` : ''}
               ${workout.overallEffortType ? `<span>${effortIcons[workout.overallEffortType]} ${workout.overallEffortType}</span>` : ''}
             </div>
             ${badges ? `<div class="history-badges">${badges}</div>` : ''}
@@ -6509,7 +6555,7 @@
           yesterday.setDate(yesterday.getDate() - 1);
           const yesterdayKey = formatDateKey(yesterday);
           const yesterdayWorkout = history.find(w => w.date === yesterdayKey);
-          return yesterdayWorkout && yesterdayWorkout.overallFeel >= 8;
+          return yesterdayWorkout && yesterdayWorkout.overallFeel >= 4;
         },
         action: 'suggest_lighter',
         message: 'Yesterday was intense - consider lighter intensity today'
@@ -6903,7 +6949,7 @@ OVERTRAINING SIGNALS & GUARDRAILS
         const dayNames = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
         summary += `\n${dayNames[d.getDay()]} ${w.date} - ${w.name || w.type || 'Workout'}`;
         if (w.readiness) summary += ` | Readiness: ${w.readiness}`;
-        if (w.overallFeel) summary += ` | Feel: ${w.overallFeel}/10`;
+        if (w.overallFeel) summary += ` | Feel: ${w.overallFeel}/5`;
         if (w.overallEffortType) summary += ` | Effort: ${w.overallEffortType}`;
         if (w.wasAdapted) summary += ` | AUTO-ADAPTED: ${w.adaptReason || 'readiness'}`;
 
