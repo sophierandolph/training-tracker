@@ -7147,8 +7147,32 @@ ${recentHistory}`;
     }
 
     function saveFuelLog(log) {
-      const key = 'proteinLog_' + getFuelDateKey();
+      const dateKey = getFuelDateKey();
+      const key = 'proteinLog_' + dateKey;
       localStorage.setItem(key, JSON.stringify(log));
+      // Sync to Firestore
+      db.collection('fuelLogs').doc(dateKey).set({
+        date: dateKey,
+        foods: log.foods,
+        total: log.total,
+        target: PROTEIN_TARGET,
+        updatedAt: new Date().toISOString()
+      }).catch((error) => console.log('Error saving fuel log:', error));
+    }
+
+    function loadFuelLogFromCloud() {
+      const dateKey = getFuelDateKey();
+      db.collection('fuelLogs').doc(dateKey).get()
+        .then((doc) => {
+          if (doc.exists) {
+            const data = doc.data();
+            const log = { foods: data.foods || {}, total: data.total || 0 };
+            const key = 'proteinLog_' + dateKey;
+            localStorage.setItem(key, JSON.stringify(log));
+            updateFuelDisplay(log);
+          }
+        })
+        .catch((error) => console.log('Error loading fuel log:', error));
     }
 
     function logProtein(foodId) {
@@ -7223,6 +7247,7 @@ ${recentHistory}`;
       `).join('');
 
       updateFuelDisplay(getFuelLog());
+      loadFuelLogFromCloud();
     }
 
     // ==================== START ====================
