@@ -4797,11 +4797,58 @@
         ]
       },
     '2026-03-05': {
+      name: "Recovery: Hip Prehab + Shoulder Mobility",
+      type: "Recovery",
+      duration: "30-35 min",
+      location: "Home",
+      condition: "PMS/headache, lower body sore. Keep it gentle — mobility and prehab only.",
+      circuits: [
+        {
+          name: "A. Gentle Warm-Up (4 min)",
+          instructions: "Easy movement to get blood flowing. Nothing intense.",
+          exercises: [
+            { id: "rec5_a1", name: "Arm Circles", sets: 1, reps: 20, notes: "10 forward, 10 backward", noWeight: true },
+            { id: "rec5_a2", name: "Shoulder Shrugs", sets: 1, reps: 15, noWeight: true },
+            { id: "rec5_a3", name: "Cross-body Arm Swings", sets: 1, reps: 20, noWeight: true }
+          ]
+        },
+        {
+          name: "B. Hip Prehab Circuit (12 min)",
+          instructions: "Priority block. Address bilateral hip tightness.",
+          exercises: [
+            { id: "rec5_b1", name: "90/90 Hip Stretch", sets: 1, reps: 1, notes: "Hold 60 sec each side. Sit with both legs at 90 degrees. Hinge forward over the front leg.", isHold: true, holdTime: 60, perSide: true, noWeight: true },
+            { id: "rec5_b2", name: "Elevated Pigeon Lift Off", sets: 2, reps: 8, notes: "Each side. Pigeon position on a bench or step. Hands on hips, squeeze glute of front leg and lift chest.", perSide: true, noWeight: true },
+            { id: "rec5_b3", name: "Glute Bridge", sets: 2, reps: 15, notes: "Squeeze at top, 2 sec hold. Feet hip-width.", noWeight: true },
+            { id: "rec5_b4", name: "Hip Flexor Lunge Stretch", sets: 1, reps: 1, notes: "Hold 45 sec each side. Low lunge, back knee down. Squeeze back glute and tilt pelvis under.", isHold: true, holdTime: 45, perSide: true, noWeight: true }
+          ]
+        },
+        {
+          name: "C. Shoulder Mobility (8 min)",
+          instructions: "Gentle shoulder work. No load.",
+          exercises: [
+            { id: "rec5_c1", name: "Wall Angels", sets: 2, reps: 10, notes: "Back against wall, arms in W position. Slide arms up overhead keeping contact.", noWeight: true },
+            { id: "rec5_c2", name: "Thread the Needle", sets: 2, reps: 8, notes: "Each side. Hands and knees, thread arm under body rotating torso.", perSide: true, noWeight: true },
+            { id: "rec5_c3", name: "Side-Lying External Rotation", sets: 2, reps: 12, notes: "Each arm. Lie on side, elbow tucked at 90 deg against ribs. Rotate forearm up toward ceiling. Slow: 2 sec up, 2 sec down. Add a water bottle if too easy.", perSide: true, noWeight: true },
+            { id: "rec5_c4", name: "Prone Y-T-W", sets: 1, reps: 8, notes: "Lie face down. 8 reps each position: Y (arms overhead), T (arms out to sides), W (elbows bent). Hold each 2 sec. Squeeze shoulder blades.", noWeight: true }
+          ]
+        },
+        {
+          name: "D. Shin Prehab + Stretch (5 min)",
+          instructions: "Quick shin/ankle work, then done.",
+          exercises: [
+            { id: "rec5_d1", name: "Toe Raises (Shin Prehab)", sets: 2, reps: 15, notes: "Lift toes off ground keeping heels down. Hold 2 sec at top.", noWeight: true },
+            { id: "rec5_d2", name: "Eccentric Calf Raises", sets: 2, reps: 15, notes: "Rise up (2 sec), lower slowly (3 sec). Slow lowering is what matters.", noWeight: true },
+            { id: "rec5_d3", name: "Child's Pose Shoulder Stretch", sets: 1, reps: 1, notes: "Hold 60 sec. Knees wide, sit back on heels, walk hands forward.", isHold: true, holdTime: 60, noWeight: true }
+          ]
+        }
+      ]
+    },
+    '2026-03-06': {
       name: "Beer Bike Week 5: Mixed Efforts",
       type: "Cardio",
       duration: "50 min",
       location: "Outdoor Track",
-      condition: "Sustained + race pace + all-out finishes. Build your range across effort levels.",
+      condition: "Moved from Thursday — recovery day swap. Sustained + race pace + all-out finishes.",
       circuits: [
         {
           name: "A. Warm-Up (12 min)",
@@ -4861,12 +4908,127 @@
         }
       ]
     },
+    '2026-03-07': {
+      name: "Lower Body + Handball Skills",
+      type: "Mixed",
+      duration: "75-90 min",
+      location: "Gym → Squash Court / Wall",
+      condition: "No soccer today. Full lower body session then handball skill work. Take a break between if needed.",
+      circuits: [
+        {
+          name: "A. Lower Body Warm-Up (5 min)",
+          instructions: "Get moving before lifting.",
+          exercises: [
+            { id: "sat7_a1", name: "Dynamic Stretches", sets: 1, reps: 1, notes: "BW squats, glute bridges, 30s plank", noWeight: true }
+          ]
+        },
+        {
+          name: "B. Lower Body Circuit A",
+          instructions: "Do B1-B2-B3, rest 90 sec, repeat 3x",
+          restTime: 90,
+          exercises: [
+            { id: "sat7_b1", name: "DB Goblet Squat", sets: 3, reps: 12, weight: 25, notes: "Full depth, chest up" },
+            { id: "sat7_b2", name: "Jump Squats", sets: 3, reps: 10, notes: "Explosive, land softly", noWeight: true },
+            { id: "sat7_b3", name: "Front Low Plank Hold", sets: 3, reps: 1, notes: "Hold 30 sec, straight line", isHold: true, holdTime: 30, noWeight: true }
+          ]
+        },
+        {
+          name: "C. Lower Body Circuit B",
+          instructions: "Do C1-C2-C3, rest 90 sec, repeat 3x",
+          restTime: 90,
+          exercises: [
+            { id: "sat7_c1", name: "DB Reverse Lunges", sets: 3, reps: 8, weight: 15, notes: "Each leg, knee nearly to floor", perSide: true },
+            { id: "sat7_c2", name: "DB RDLs", sets: 3, reps: 10, weight: 15, notes: "Hinge at hips, feel hamstrings" },
+            { id: "sat7_c3", name: "Side Plank Hold L+R", sets: 3, reps: 1, notes: "25 sec each side", isHold: true, holdTime: 25, perSide: true, noWeight: true }
+          ]
+        },
+        {
+          name: "D. Lower Body Circuit C",
+          instructions: "Do D1-D2, rest 90 sec, repeat 3x",
+          restTime: 90,
+          exercises: [
+            { id: "sat7_d1", name: "Leg Press Machine", sets: 3, reps: 10, weight: 100, notes: "Full range, control weight" },
+            { id: "sat7_d2", name: "Hamstring Curl Machine", sets: 3, reps: 10, weight: 50, notes: "Squeeze at top, slow release" }
+          ]
+        },
+        {
+          name: "E. Handball: Jump Shot Technique (15 min)",
+          instructions: "Transition to wall/court. Cues: step, OPEN, launch. Jump up AND out.",
+          exercises: [
+            { id: "sat7_e1", name: "Wall Target Throws", sets: 3, reps: 12, notes: "6 throws each hand, alternate 2R 2L. 3-step approach. LEFT HAND: lower targets, technique over power. Rest 60 sec.", noWeight: true },
+            { id: "sat7_e2", name: "Approach from Angle", sets: 3, reps: 8, notes: "4 throws each side. Start at 45-deg angle. Feel chest rotate open on step 2. Rest 60 sec.", noWeight: true }
+          ]
+        },
+        {
+          name: "F. Handball: Left Hand Development (10 min)",
+          instructions: "Quality over speed. High elbow, wrist snap, follow-through.",
+          exercises: [
+            { id: "sat7_f1", name: "Distance Progression (Left)", sets: 1, reps: 40, notes: "15 at 2m, 15 at 4m, 10 at 6m. Proper wrist snap at each distance before moving back.", noWeight: true },
+            { id: "sat7_f2", name: "Target Practice (Left)", sets: 1, reps: 20, notes: "Mark 4 targets on wall. Hit each target 5 times. No rushing.", noWeight: true }
+          ]
+        }
+      ]
+    },
+    '2026-03-08': {
+      name: "Handball Session",
+      type: "Sport-Specific",
+      duration: "45-60 min",
+      location: "Squash Court / Wall",
+      condition: "Extra skill session — no practice until Wednesday. Legs may be tired from yesterday's lower body, so lean into upper body technique and conditioning.",
+      circuits: [
+        {
+          name: "A. Dynamic Warm-Up (8 min)",
+          instructions: "General movement then handball-specific prep.",
+          exercises: [
+            { id: "sun8_a1", name: "Light Jog + High Knees + Butt Kicks", sets: 1, reps: 1, notes: "3 min: jog 30 sec, high knees 20 each leg, butt kicks 20 each leg, lateral shuffles 10 each way, carioca 10 each way", noWeight: true, isCardio: true },
+            { id: "sun8_a2", name: "Arm Circles with Ball", sets: 1, reps: 20, notes: "10 forward, 10 backward. Then 15 ball tosses overhead.", noWeight: true },
+            { id: "sun8_a3", name: "Wall Passes Both Hands", sets: 1, reps: 20, notes: "10 each hand at shoulder height. Then 10 gentle throwing motions each arm WITHOUT ball.", noWeight: true },
+            { id: "sun8_a4", name: "3-Step Rhythm Practice (No Ball)", sets: 1, reps: 10, notes: "L-R-LEFT rhythm. Feel: step, OPEN chest on step 2, push ground away behind you on step 3.", noWeight: true }
+          ]
+        },
+        {
+          name: "B. Kneeling Drill + Jump Shot (15 min)",
+          instructions: "Start kneeling to isolate torso rotation, then add steps. Great for feeling the throw without worrying about footwork.",
+          exercises: [
+            { id: "sun8_b1", name: "Kneeling Throws (Right)", sets: 2, reps: 10, notes: "Kneel on left knee. Focus on torso rotation and arm whip. No footwork to think about.", noWeight: true },
+            { id: "sun8_b2", name: "Kneeling Throws (Left)", sets: 2, reps: 10, notes: "Kneel on right knee. Left hand. High elbow, wrist snap.", noWeight: true },
+            { id: "sun8_b3", name: "Kneeling → Stand → Throw", sets: 2, reps: 8, notes: "Start kneeling, stand up and step into 3-step rhythm, throw. Alternate hands.", noWeight: true },
+            { id: "sun8_b4", name: "Two-Step Quick Release", sets: 2, reps: 6, notes: "Quicker release with just 2 steps. Alternate hands each throw. Rest 60 sec.", noWeight: true }
+          ]
+        },
+        {
+          name: "C. Left Hand Focus (12 min)",
+          instructions: "Dedicated left hand block. Technique over power.",
+          exercises: [
+            { id: "sun8_c1", name: "Standing Shot Technique (Left)", sets: 1, reps: 20, notes: "High elbow position (90 deg). Wrist snap and follow-through. Don't worry about power.", noWeight: true },
+            { id: "sun8_c2", name: "One-Step + Jump (Left)", sets: 3, reps: 5, notes: "One step into jump shot with left hand. Very controlled. Rest 45 sec.", noWeight: true },
+            { id: "sun8_c3", name: "Target Practice (Left)", sets: 1, reps: 20, notes: "Mark 4 targets. Hit each target 5 times.", noWeight: true }
+          ]
+        },
+        {
+          name: "D. Feinting + Shooting (8 min)",
+          instructions: "Sell the fake. Low-impact on legs — more about deception and timing.",
+          exercises: [
+            { id: "sun8_d1", name: "Step Feint + Shot", sets: 3, reps: 8, notes: "4 each direction. Step one way, explode opposite, finish with jump shot. Rest 60 sec.", noWeight: true },
+            { id: "sun8_d2", name: "Shot Fake + Drive", sets: 3, reps: 6, notes: "Begin shooting motion, pull back, take 2 lateral steps, complete shot from new angle. Rest 60 sec.", noWeight: true }
+          ]
+        },
+        {
+          name: "E. Conditioning + Finisher (10 min)",
+          instructions: "Game-like demands. Go easy on legs — emphasize arm endurance and reaction.",
+          exercises: [
+            { id: "sun8_e1", name: "Defensive Hold + Shot", sets: 3, reps: 6, notes: "60 sec: hold defensive stance. Every 10 sec explode into jump shot. Alternate hands. Builds arm endurance.", noWeight: true },
+            { id: "sun8_e2", name: "30 in 3", sets: 1, reps: 30, notes: "30 successful throws in 3 minutes. Mix all shot types and both hands. Track score.", noWeight: true, isCardio: true, trackScore: true }
+          ]
+        }
+      ]
+    },
     '2026-03-09': {
-      name: "Beer Bike Week 6: Speed Endurance",
-      type: "Cardio",
-      duration: "50 min",
-      location: "Outdoor Track",
-      condition: "Moved to Monday — no soccer this week. More intervals at race effort — build staying power.",
+      name: "Beer Bike Week 6: Speed Endurance + Pool",
+      type: "Mixed",
+      duration: "70 min",
+      location: "Outdoor Track → Rec Center Pool",
+      condition: "Bike ride then pool recovery. Coming off two handball days — cycling is low-impact. Pool flushes legs before PT tomorrow.",
       circuits: [
         {
           name: "A. Warm-Up (12 min)",
@@ -4901,26 +5063,34 @@
         },
         {
           name: "E. Cool-Down (10 min)",
-          instructions: "Easy spinning. Full recovery before shoulder work.",
+          instructions: "Easy spinning. Full recovery before pool.",
           exercises: [
             { id: "bb6_e1", name: "Easy Cool-Down Spin", sets: 1, reps: 1, notes: "10 min, gradual decrease", isCardio: true, duration: 600, noWeight: true }
           ]
         },
         {
-          name: "F. Shoulder Protocol (15-20 min)",
-          instructions: "Complete immediately after biking.",
+          name: "F. Pool Recovery (20 min)",
+          instructions: "Easy laps and water walking. Flush legs before PT tomorrow.",
           exercises: [
-            { id: "bb6_f1", name: "Scapular Squeezes", sets: 1, reps: 15, notes: "Hold 3 sec each", noWeight: true },
-            { id: "bb6_f2", name: "Arm Circles Palms Up", sets: 1, reps: 20, notes: "10 forward, 10 backward each arm", noWeight: true },
-            { id: "bb6_f3", name: "External Rotation 90/90", sets: 3, reps: 12, notes: "Each arm", noWeight: true },
-            { id: "bb6_f4", name: "Internal Rotation 90/90", sets: 3, reps: 12, notes: "Each arm", noWeight: true },
-            { id: "bb6_f5", name: "Empty Can to Full Can", sets: 2, reps: 8, notes: "3-5 lbs", noWeight: true },
-            { id: "bb6_f6", name: "Prone T's", sets: 2, reps: 10, notes: "Face down, arms out, squeeze", noWeight: true },
-            { id: "bb6_f7", name: "Dynamic External Rotation", sets: 2, reps: 15, notes: "Each arm", noWeight: true },
-            { id: "bb6_f8", name: "Scapular Push-Ups", sets: 2, reps: 10, notes: "Scapular movement only", noWeight: true },
-            { id: "bb6_f9", name: "Bear Plank Shoulder Taps", sets: 2, reps: 20, notes: "10 each side", noWeight: true },
-            { id: "bb6_f10", name: "Cross-Body Shoulder Stretch", sets: 1, reps: 1, notes: "30 sec each side", isHold: true, holdTime: 30, perSide: true, noWeight: true },
-            { id: "bb6_f11", name: "Overhead Tricep Stretch", sets: 1, reps: 1, notes: "30 sec each side", isHold: true, holdTime: 30, perSide: true, noWeight: true }
+            { id: "bb6_f1", name: "Easy Swim Laps", sets: 1, reps: 1, notes: "10 min easy freestyle or backstroke. No sprinting — recovery pace.", isCardio: true, duration: 600, noWeight: true },
+            { id: "bb6_f2", name: "Water Walking / Jogging", sets: 1, reps: 1, notes: "5 min in shallow end. Forward, backward, lateral. Gentle resistance on legs.", isCardio: true, duration: 300, noWeight: true },
+            { id: "bb6_f3", name: "Treading Water", sets: 1, reps: 1, notes: "5 min easy treading. Shoulder and core engagement.", isCardio: true, duration: 300, noWeight: true }
+          ]
+        }
+      ]
+    },
+    '2026-03-10': {
+      name: "Personal Training (one-time Tuesday)",
+      type: "Strength",
+      duration: "60 min",
+      location: "Gym",
+      condition: "PT moved from Monday this week only. Trainer handles programming. Log weights/reps after.",
+      circuits: [
+        {
+          name: "Trainer-Led Session",
+          instructions: "Follow trainer's programming. Log details after for tracking.",
+          exercises: [
+            { id: "pt10_a1", name: "PT Session", sets: 1, reps: 1, notes: "Full session with trainer. Write down weights and exercises during or immediately after.", noWeight: true }
           ]
         }
       ]
@@ -4968,7 +5138,7 @@
       type: "Conditioning",
       duration: "40-45 min",
       location: "Outdoors (Fort Davis)",
-      condition: "Bodyweight only — no equipment needed. You're at ~5,000 ft elevation so aerobic work will feel harder than Houston. That's fine — ease into pace and trust the effort.",
+      condition: "~5,000 ft elevation — aerobic work will feel harder than Houston. Ease into pace and trust the effort. ParaBody strength session tomorrow, so this is all conditioning today.",
       circuits: [
         {
           name: "A. Dynamic Warm-Up (8 min)",
@@ -5008,54 +5178,212 @@
         }
       ]
     },
-    '2026-03-20': {
-      name: "Return Day: Light Bike + Handball",
-      type: "Mixed",
-      duration: "50 min",
-      location: "Rec Center → Squash Court",
-      condition: "Just back from Fort Davis overnight train. Light effort only — get moving without digging a recovery hole.",
+    '2026-03-15': {
+      name: "ParaBody: Upper Body + Light Legs",
+      type: "Strength",
+      duration: "45-50 min",
+      location: "Neighbor's garage (Fort Davis)",
+      condition: "ParaBody EX350 home gym. 3 days since last upper body (Mar 12). Legs did sprints yesterday — leg ext/curl at light weight to flush, not load. Upper body is the focus.",
       circuits: [
         {
-          name: "A. Stationary Bike (20 min)",
-          instructions: "Easy effort only. Goal: blood flow and leg flush after the train.",
+          name: "A. Warm-Up (5 min)",
+          instructions: "Get blood moving. No rushing.",
           exercises: [
-            { id: "ret20_a1", name: "Easy Spin", sets: 1, reps: 1, notes: "10 min easy, 60% effort max", isCardio: true, duration: 600, noWeight: true },
-            { id: "ret20_a2", name: "Light Moderate Spin", sets: 1, reps: 1, notes: "10 min at 65-70% — still comfortable, no pushing", isCardio: true, duration: 600, noWeight: true }
+            { id: "pb15_a1", name: "Arm Circles", sets: 1, reps: 20, notes: "10 forward, 10 backward", noWeight: true },
+            { id: "pb15_a2", name: "Shoulder Shrugs", sets: 1, reps: 15, noWeight: true },
+            { id: "pb15_a3", name: "Bodyweight Squats", sets: 1, reps: 15, notes: "Easy, just warming up", noWeight: true }
           ]
         },
         {
-          name: "B. Squash Court Warm-Up (3 min)",
-          instructions: "Gentle activation before throwing.",
+          name: "B. Upper Body Circuit A",
+          instructions: "Do B1-B2-B3, rest 90 sec, repeat 3x. Start light to find the right weight on the machine — cable weight stacks vary.",
+          restTime: 90,
           exercises: [
-            { id: "ret20_b1", name: "Arm Circles with Ball", sets: 1, reps: 20, notes: "10 forward, 10 backward", noWeight: true },
-            { id: "ret20_b2", name: "Shoulder-Height Passes (Both Hands)", sets: 1, reps: 20, notes: "10 each hand against wall", noWeight: true },
-            { id: "ret20_b3", name: "3-Step Rhythm (No Ball)", sets: 1, reps: 10, notes: "step, OPEN, launch — just feel the rhythm", noWeight: true }
+            { id: "pb15_b1", name: "Lat Pulldown", sets: 3, reps: 10, notes: "Pull to upper chest, squeeze shoulder blades. Start light — find the right pin on this machine.", noWeight: true },
+            { id: "pb15_b2", name: "Chest Press", sets: 3, reps: 10, notes: "Full range of motion. Controlled push, slow return.", noWeight: true },
+            { id: "pb15_b3", name: "Front Low Plank Hold", sets: 3, reps: 1, notes: "Hold 30 sec. Straight line from head to heels.", isHold: true, holdTime: 30, noWeight: true }
           ]
         },
         {
-          name: "C. Kneeling Isolation Drill (5 min)",
-          instructions: "No footwork variable. Feel the body rotation and arm mechanics in isolation.",
+          name: "C. Upper Body Circuit B",
+          instructions: "Do C1-C2-C3, rest 90 sec, repeat 3x",
+          restTime: 90,
           exercises: [
-            { id: "ret20_c1", name: "Kneeling Throw (Right Hand)", sets: 2, reps: 5, notes: "One knee down. Feel chest rotate toward wall as you throw.", noWeight: true },
-            { id: "ret20_c2", name: "Kneel → Stand → Step → Throw", sets: 2, reps: 5, notes: "Start kneeling, stand up, step forward into throw.", noWeight: true }
+            { id: "pb15_c1", name: "Low Cable Row", sets: 3, reps: 10, notes: "Sit on floor or bench, pull cable to lower chest. Squeeze back at end range.", noWeight: true },
+            { id: "pb15_c2", name: "Cable Tricep Extension", sets: 3, reps: 10, notes: "Elbows pinned to sides. Slow eccentric.", noWeight: true },
+            { id: "pb15_c3", name: "Side Plank Hold L+R", sets: 3, reps: 1, notes: "25 sec each side", isHold: true, holdTime: 25, perSide: true, noWeight: true }
           ]
         },
         {
-          name: "D. Wall Throws — Form Focus (15 min)",
-          instructions: "Light, quality reps only. Two cues: chest OPENS on step 2; jump is long not just high.",
+          name: "D. Light Legs (Flush, Not Load)",
+          instructions: "Easy weight — goal is blood flow through legs after yesterday's sprints, not building strength.",
           exercises: [
-            { id: "ret20_d1", name: "Jump Shot — Body Rotation Focus", sets: 3, reps: 5, notes: "Cue: step, OPEN, launch. After each set: did your chest face the wall on step 2?", noWeight: true },
-            { id: "ret20_d2", name: "Left Arm Counter-Pull", sets: 2, reps: 8, notes: "On release: left arm pulls DOWN toward hip. Drives shoulder rotation.", noWeight: true },
-            { id: "ret20_d3", name: "Left Hand Passes (Wall)", sets: 1, reps: 10, notes: "Lower target, technique only, no power.", noWeight: true }
+            { id: "pb15_d1", name: "Leg Extension", sets: 3, reps: 12, notes: "Light weight. Slow and controlled. Flushing quads from yesterday's sprint work.", noWeight: true },
+            { id: "pb15_d2", name: "Leg Curl", sets: 3, reps: 12, notes: "Light weight. Squeeze hamstrings at top, slow return.", noWeight: true }
           ]
         },
         {
-          name: "E. Cooldown (5 min)",
-          instructions: "Easy movement and stretch.",
+          name: "E. Shoulder Protocol (10 min)",
+          instructions: "Abbreviated version — hit the key movements.",
           exercises: [
-            { id: "ret20_e1", name: "Walk + Shake Out", sets: 1, reps: 1, notes: "2 min easy walking around the court", noWeight: true },
-            { id: "ret20_e2", name: "Cross-Body Shoulder Stretch", sets: 1, reps: 1, notes: "30 sec each side", isHold: true, holdTime: 30, perSide: true, noWeight: true },
-            { id: "ret20_e3", name: "Overhead Tricep Stretch", sets: 1, reps: 1, notes: "30 sec each side", isHold: true, holdTime: 30, perSide: true, noWeight: true }
+            { id: "pb15_e1", name: "External Rotation 90/90", sets: 2, reps: 12, notes: "Each arm", perSide: true, noWeight: true },
+            { id: "pb15_e2", name: "Internal Rotation 90/90", sets: 2, reps: 12, notes: "Each arm", perSide: true, noWeight: true },
+            { id: "pb15_e3", name: "Scapular Push-Ups", sets: 2, reps: 10, notes: "Scapular movement only", noWeight: true },
+            { id: "pb15_e4", name: "Cross-Body Shoulder Stretch", sets: 1, reps: 1, notes: "30 sec each side", isHold: true, holdTime: 30, perSide: true, noWeight: true }
+          ]
+        }
+      ]
+    },
+    '2026-03-16': {
+      name: "Recovery: Hip Mobility + Balmorhea Pool",
+      type: "Recovery",
+      duration: "45-60 min",
+      location: "Fort Davis → Balmorhea State Park",
+      condition: "Recovery day between strength (yesterday) and conditioning (tomorrow). Hip prehab then pool. The spring-fed pool is perfect for flushing legs.",
+      circuits: [
+        {
+          name: "A. Hip Prehab (15 min)",
+          instructions: "Priority work. Do this before driving to Balmorhea.",
+          exercises: [
+            { id: "fd16_a1", name: "90/90 Hip Stretch", sets: 1, reps: 1, notes: "Hold 60 sec each side. Hinge forward over the front leg.", isHold: true, holdTime: 60, perSide: true, noWeight: true },
+            { id: "fd16_a2", name: "Elevated Pigeon Lift Off", sets: 2, reps: 8, notes: "Each side. Use a rock or low step.", perSide: true, noWeight: true },
+            { id: "fd16_a3", name: "Glute Bridge", sets: 2, reps: 15, notes: "Squeeze at top, 2 sec hold.", noWeight: true },
+            { id: "fd16_a4", name: "Hip Flexor Lunge Stretch", sets: 1, reps: 1, notes: "Hold 45 sec each side. Squeeze back glute, tilt pelvis under.", isHold: true, holdTime: 45, perSide: true, noWeight: true }
+          ]
+        },
+        {
+          name: "B. Balmorhea Pool Recovery (30 min)",
+          instructions: "Easy swimming and water movement. Recovery, not training.",
+          exercises: [
+            { id: "fd16_b1", name: "Easy Swim Laps", sets: 1, reps: 1, notes: "10-15 min easy freestyle or backstroke. Recovery pace — enjoy the spring water.", isCardio: true, duration: 600, noWeight: true },
+            { id: "fd16_b2", name: "Water Walking / Jogging", sets: 1, reps: 1, notes: "5-10 min. Forward, backward, lateral. Gentle resistance flushes legs.", isCardio: true, duration: 300, noWeight: true },
+            { id: "fd16_b3", name: "Treading Water", sets: 1, reps: 1, notes: "5 min easy treading. Light shoulder and core engagement.", isCardio: true, duration: 300, noWeight: true }
+          ]
+        }
+      ]
+    },
+    '2026-03-17': {
+      name: "Beep Test Simulation + Bodyweight",
+      type: "Conditioning",
+      duration: "40 min",
+      location: "Outdoors (Fort Davis)",
+      condition: "Second conditioning session this week. More aerobic focus than Friday — building the engine, not max speed. Altitude training is a bonus. Lighter intensity than Mar 14.",
+      circuits: [
+        {
+          name: "A. Dynamic Warm-Up (6 min)",
+          instructions: "Shorter warm-up — body knows the drill by now.",
+          exercises: [
+            { id: "fd17_a1", name: "Easy Jog", sets: 1, reps: 1, notes: "3 min, very easy pace", isCardio: true, duration: 180, noWeight: true },
+            { id: "fd17_a2", name: "Leg Swings (Forward/Back)", sets: 1, reps: 10, notes: "Each leg", perSide: true, noWeight: true },
+            { id: "fd17_a3", name: "Lateral Leg Swings", sets: 1, reps: 10, notes: "Each leg", perSide: true, noWeight: true },
+            { id: "fd17_a4", name: "High Knees", sets: 1, reps: 1, notes: "30 sec", isCardio: true, duration: 30, noWeight: true }
+          ]
+        },
+        {
+          name: "B. Beep Test Simulation (15 min)",
+          instructions: "Mark 20m. Simulate beep test pacing: start at a jog, increase speed every 2 runs. Go until you can't maintain the pace, rest 2 min, do a second set. This is about learning your pacing, not dying.",
+          exercises: [
+            { id: "fd17_b1", name: "Beep Test Set 1", sets: 1, reps: 1, notes: "Start at a comfortable jog pace across 20m. Every 2 shuttles, increase speed slightly. When you can't hold the pace, stop. Note how many shuttles you completed.", isCardio: true, noWeight: true },
+            { id: "fd17_b2", name: "Walk Recovery", sets: 1, reps: 1, notes: "2 min easy walking", isCardio: true, duration: 120, noWeight: true },
+            { id: "fd17_b3", name: "Beep Test Set 2", sets: 1, reps: 1, notes: "Second set. Try to match or beat your first set count. Pay attention to turnover technique — quick feet, plant and go.", isCardio: true, noWeight: true }
+          ]
+        },
+        {
+          name: "C. Bodyweight Strength Circuit (10 min)",
+          instructions: "3 rounds. Moderate effort — complement the running, don't bury yourself.",
+          exercises: [
+            { id: "fd17_c1", name: "Push-Ups", sets: 3, reps: 12, notes: "Full range. Chest to ground.", noWeight: true },
+            { id: "fd17_c2", name: "Bodyweight Squats", sets: 3, reps: 15, notes: "Full depth, controlled", noWeight: true },
+            { id: "fd17_c3", name: "Glute Bridge", sets: 3, reps: 15, notes: "Squeeze at top", noWeight: true },
+            { id: "fd17_c4", name: "Plank Hold", sets: 3, reps: 1, notes: "30 sec", isHold: true, holdTime: 30, noWeight: true }
+          ]
+        },
+        {
+          name: "D. Hip Prehab Cooldown (8 min)",
+          instructions: "Same hip circuit. Consistency matters more than novelty.",
+          exercises: [
+            { id: "fd17_d1", name: "90/90 Hip Stretch", sets: 1, reps: 1, notes: "Hold 60 sec each side", isHold: true, holdTime: 60, perSide: true, noWeight: true },
+            { id: "fd17_d2", name: "Elevated Pigeon Lift Off", sets: 2, reps: 8, notes: "Each side", perSide: true, noWeight: true },
+            { id: "fd17_d3", name: "Hip Flexor Lunge Stretch", sets: 1, reps: 1, notes: "Hold 45 sec each side", isHold: true, holdTime: 45, perSide: true, noWeight: true }
+          ]
+        }
+      ]
+    },
+    '2026-03-19': {
+      name: "Davis Mountains Hike",
+      type: "Cardio",
+      duration: "60-90 min",
+      location: "Davis Mountains State Park",
+      condition: "Train departs 9pm. Goal: burn energy so you sleep on the train. Moderate effort — not a death march. Bring water, the altitude makes you thirstier than you think.",
+      circuits: [
+        {
+          name: "A. Hike (60-90 min)",
+          instructions: "Pick a trail that fits your energy. Skyline Drive Trail is ~5 miles with great views. Or do a shorter loop if you want time to pack and chill before the train.",
+          exercises: [
+            { id: "fd19_a1", name: "Hike", sets: 1, reps: 1, notes: "Moderate pace. Enjoy it — last day in Fort Davis. Bring water and a snack.", isCardio: true, duration: 3600, noWeight: true }
+          ]
+        },
+        {
+          name: "B. Post-Hike Stretch (5 min)",
+          instructions: "Quick stretch before you head back to pack.",
+          exercises: [
+            { id: "fd19_b1", name: "Hip Flexor Lunge Stretch", sets: 1, reps: 1, notes: "Hold 45 sec each side", isHold: true, holdTime: 45, perSide: true, noWeight: true },
+            { id: "fd19_b2", name: "Standing Quad Stretch", sets: 1, reps: 1, notes: "Hold 30 sec each side", isHold: true, holdTime: 30, perSide: true, noWeight: true },
+            { id: "fd19_b3", name: "Cross-Body Shoulder Stretch", sets: 1, reps: 1, notes: "30 sec each side", isHold: true, holdTime: 30, perSide: true, noWeight: true }
+          ]
+        }
+      ]
+    },
+    '2026-03-18': {
+      name: "Balmorhea Pool Recovery",
+      type: "Recovery",
+      duration: "30-40 min",
+      location: "Balmorhea State Park",
+      condition: "Last active day before overnight train tomorrow. Easy pool session — flush everything out and enjoy the water.",
+      circuits: [
+        {
+          name: "A. Pool Recovery (30 min)",
+          instructions: "Easy swimming and water movement. This is recovery, not training.",
+          exercises: [
+            { id: "fd18_a1", name: "Easy Swim Laps", sets: 1, reps: 1, notes: "10-15 min easy freestyle or backstroke. Recovery pace.", isCardio: true, duration: 600, noWeight: true },
+            { id: "fd18_a2", name: "Water Walking / Jogging", sets: 1, reps: 1, notes: "5-10 min. Forward, backward, lateral. Gentle resistance.", isCardio: true, duration: 300, noWeight: true },
+            { id: "fd18_a3", name: "Treading Water", sets: 1, reps: 1, notes: "5 min easy. Light shoulder and core engagement.", isCardio: true, duration: 300, noWeight: true }
+          ]
+        },
+        {
+          name: "B. Poolside Stretching (10 min)",
+          instructions: "Stretch while you dry off.",
+          exercises: [
+            { id: "fd18_b1", name: "90/90 Hip Stretch", sets: 1, reps: 1, notes: "Hold 60 sec each side", isHold: true, holdTime: 60, perSide: true, noWeight: true },
+            { id: "fd18_b2", name: "Hip Flexor Lunge Stretch", sets: 1, reps: 1, notes: "Hold 45 sec each side", isHold: true, holdTime: 45, perSide: true, noWeight: true },
+            { id: "fd18_b3", name: "Cross-Body Shoulder Stretch", sets: 1, reps: 1, notes: "30 sec each side", isHold: true, holdTime: 30, perSide: true, noWeight: true }
+          ]
+        }
+      ]
+    },
+    '2026-03-20': {
+      name: "Return Day: Light Recovery",
+      type: "Recovery",
+      duration: "30-40 min",
+      location: "Rec Center",
+      condition: "Train arrives 11am. Chill day — pool or light bike, nothing more. Save energy for regular schedule Friday.",
+      circuits: [
+        {
+          name: "A. Pick One: Pool or Light Bike (20-25 min)",
+          instructions: "Whatever sounds better after the train. Don't do both.",
+          exercises: [
+            { id: "ret20_a1", name: "Option A: Easy Swim Laps", sets: 1, reps: 1, notes: "15 min easy freestyle or backstroke. Recovery pace. Skip if doing bike.", isCardio: true, duration: 900, noWeight: true },
+            { id: "ret20_a2", name: "Option A: Water Walking", sets: 1, reps: 1, notes: "10 min. Forward, backward, lateral. Skip if doing bike.", isCardio: true, duration: 600, noWeight: true },
+            { id: "ret20_a3", name: "Option B: Easy Stationary Bike", sets: 1, reps: 1, notes: "20 min at 60-65% effort. Just blood flow. Skip if doing pool.", isCardio: true, duration: 1200, noWeight: true }
+          ]
+        },
+        {
+          name: "B. Stretch (10 min)",
+          instructions: "Hip prehab and shoulder stretch. Keep the streak going.",
+          exercises: [
+            { id: "ret20_b1", name: "90/90 Hip Stretch", sets: 1, reps: 1, notes: "Hold 60 sec each side", isHold: true, holdTime: 60, perSide: true, noWeight: true },
+            { id: "ret20_b2", name: "Elevated Pigeon Lift Off", sets: 2, reps: 8, notes: "Each side", perSide: true, noWeight: true },
+            { id: "ret20_b3", name: "Cross-Body Shoulder Stretch", sets: 1, reps: 1, notes: "30 sec each side", isHold: true, holdTime: 30, perSide: true, noWeight: true }
           ]
         }
       ]
@@ -5095,13 +5423,13 @@
 
       // Fort Davis Trip (Mar 13-19) - minimal facilities
       '2026-03-13': { type: 'travel', location: 'Fort Davis, TX', note: 'Travel day to Fort Davis', facilities: 'minimal', isTransit: true },
-      '2026-03-14': { type: 'travel', location: 'Fort Davis, TX', note: 'Tryout prep conditioning -- bodyweight, outdoors', facilities: 'minimal' },
-      '2026-03-15': { type: 'travel', location: 'Fort Davis, TX', note: 'Minimal facilities -- rest', facilities: 'minimal' },
-      '2026-03-16': { type: 'travel', location: 'Fort Davis, TX', note: 'Minimal facilities -- light bodyweight work', facilities: 'minimal' },
-      '2026-03-17': { type: 'travel', location: 'Fort Davis, TX', note: 'Minimal facilities -- shoulder stability', facilities: 'minimal' },
-      '2026-03-18': { type: 'travel', location: 'Fort Davis, TX', note: 'Minimal facilities -- rest before travel', facilities: 'minimal' },
-      '2026-03-19': { type: 'travel', location: 'Fort Davis, TX', note: 'Overnight train back to Houston', facilities: 'minimal', isTransit: true },
-      '2026-03-20': { type: 'travel', location: 'Houston (return)', note: 'Back from Fort Davis overnight train — light day only', facilities: 'gym+wall' }
+      '2026-03-14': { type: 'travel', location: 'Fort Davis, TX', note: 'Sprint + agility outdoors, ParaBody at neighbor', facilities: 'gym' },
+      '2026-03-15': { type: 'travel', location: 'Fort Davis, TX', note: 'ParaBody upper body + light legs at neighbor', facilities: 'gym' },
+      '2026-03-16': { type: 'travel', location: 'Fort Davis, TX', note: 'Rest + hip mobility. Balmorhea pool available.', facilities: 'pool' },
+      '2026-03-17': { type: 'travel', location: 'Fort Davis, TX', note: 'Beep test simulation + bodyweight conditioning', facilities: 'gym' },
+      '2026-03-18': { type: 'travel', location: 'Fort Davis, TX', note: 'Balmorhea pool recovery before overnight train', facilities: 'pool' },
+      '2026-03-19': { type: 'travel', location: 'Fort Davis, TX', note: 'Hike + train departs 9pm to Houston', facilities: 'minimal' },
+      '2026-03-20': { type: 'travel', location: 'Houston (return)', note: 'Train arrives 11am. Recovery day — pool or light bike only.', facilities: 'gym+wall' }
     };
 
     // Helper to check if a date is a travel day
@@ -5216,8 +5544,10 @@
             workoutClass = 'external';
             workoutDisplay = DATE_ACTIVITIES[dateKey][0].name.includes('Handball') ? 'Handball' : DATE_ACTIVITIES[dateKey][0].type;
           } else if (DATE_WORKOUTS[dateKey]) {
-            workoutClass = 'recovery';
-            workoutDisplay = 'Recovery';
+            const dw = DATE_WORKOUTS[dateKey];
+            const dwType = (dw.type || '').toLowerCase();
+            workoutClass = dwType === 'recovery' ? 'recovery' : dwType === 'cardio' ? 'external' : dwType === 'sport-specific' ? 'external' : '';
+            workoutDisplay = dw.name.length > 12 ? dw.type : dw.name;
           } else if (isTravel) {
             const facilities = specialDate.facilities;
             const isHandballTraining = specialDate.isTraining;
@@ -5310,7 +5640,7 @@
         const dateKey = formatDateKey(checkDate);
         const specialDate = SPECIAL_DATES[dateKey];
 
-        if (schedule.type !== 'rest') {
+        if (schedule.type !== 'rest' || DATE_WORKOUTS[dateKey]) {
           upcoming.push({
             date: new Date(checkDate),
             dayOfWeek,
@@ -5339,7 +5669,8 @@
         let previewText = schedule.preview || '';
 
         // Handle travel days - different types based on facilities
-        if (item.isTravel) {
+        // Skip travel display if DATE_WORKOUTS exists (it takes priority)
+        if (item.isTravel && !DATE_WORKOUTS[dateKey]) {
           const facilities = item.specialDate.facilities;
           const isHandballTraining = item.specialDate.isTraining;
 
@@ -5515,10 +5846,10 @@
         const isTravel = specialDate && specialDate.type === 'travel';
         const dayName = dayNames[dayOfWeek];
 
-        if (schedule.type === 'rest') continue;
+        if (schedule.type === 'rest' && !DATE_WORKOUTS[dateKey]) continue;
 
         if (isTravel) {
-          if (specialDate.facilities === 'minimal') continue;
+          if (specialDate.facilities === 'minimal' && !DATE_WORKOUTS[dateKey]) continue;
           // Check for date-specific activities (tournament games, etc.)
           const dateActivities = DATE_ACTIVITIES[dateKey];
           if (dateActivities && dateActivities.length > 0) {
@@ -5597,6 +5928,51 @@
       let previewTitle = schedule.name;
       let metaHtml = '';
       let contentHtml = '';
+
+      // Handle DATE_WORKOUTS overrides FIRST (one-off workouts loaded via CLI)
+      // This must be before travel handler so Fort Davis dates with DATE_WORKOUTS show the actual workout
+      const dateWorkoutPreview = DATE_WORKOUTS[dateKey];
+      if (dateWorkoutPreview) {
+        previewTitle = dateWorkoutPreview.name;
+        document.getElementById('previewTitle').textContent = previewTitle;
+        document.getElementById('previewDate').textContent = `${dayNames[date.getDay()]}, ${months[date.getMonth()]} ${date.getDate()}, 2026`;
+
+        metaHtml = '';
+        if (dateWorkoutPreview.duration) metaHtml += `<span>⏱ ${dateWorkoutPreview.duration}</span>`;
+        if (dateWorkoutPreview.location) metaHtml += `<span>📍 ${dateWorkoutPreview.location}</span>`;
+        document.getElementById('previewMeta').innerHTML = metaHtml;
+
+        contentHtml = '';
+        if (dateWorkoutPreview.condition) {
+          contentHtml += `
+            <div style="padding: 12px; background: var(--bg-card); border-radius: 8px; margin-bottom: 12px; font-style: italic; color: var(--text-secondary); font-size: 13px;">
+              ${dateWorkoutPreview.condition}
+            </div>
+          `;
+        }
+        dateWorkoutPreview.circuits.forEach(circuit => {
+          contentHtml += `
+            <div class="preview-circuit">
+              <div class="preview-circuit-name">${circuit.name}</div>
+              ${circuit.instructions ? `<div style="color: var(--text-muted); font-size: 11px; margin-bottom: 6px;">${circuit.instructions}</div>` : ''}
+              <div class="preview-exercises">
+          `;
+          circuit.exercises.forEach(ex => {
+            const repsText = ex.isHold ? `${ex.holdTime}s hold` :
+                            ex.isCardio ? 'Complete' :
+                            `${ex.reps} reps`;
+            contentHtml += `${ex.name} (${ex.sets}x${repsText})<br>`;
+          });
+          contentHtml += `
+              </div>
+            </div>
+          `;
+        });
+
+        document.getElementById('previewContent').innerHTML = contentHtml;
+        document.getElementById('previewModal').classList.add('active');
+        return;
+      }
 
       // Handle travel days - with different types
       if (isTravel) {
