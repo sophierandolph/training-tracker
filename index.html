@@ -3459,8 +3459,15 @@
       let workout = null;
 
       // DATE_WORKOUTS takes priority over everything, including travel days
+      // Supports single workout object OR array of workouts (multi-session days)
       if (DATE_WORKOUTS[dateKey]) {
-        workout = DATE_WORKOUTS[dateKey];
+        const dw = DATE_WORKOUTS[dateKey];
+        if (Array.isArray(dw)) {
+          // Multi-workout day: render as selectable tiles
+          renderMultiWorkoutDay(dw, dateKey);
+          return;
+        }
+        workout = dw;
         state.activeWorkout = workout;
         state.workoutStartTime = null;
         state.workoutLog = {};
@@ -3853,6 +3860,57 @@
         state.workoutStartTime = null;
         state.workoutLog = {};
         renderWorkout(state.pendingWorkout);
+        restoreProgressIfAvailable();
+      }
+    }
+
+    // Multi-workout days: store the array so tile onclick can reference by index
+    let multiWorkoutList = null;
+
+    function renderMultiWorkoutDay(workouts, dateKey) {
+      multiWorkoutList = workouts;
+      const content = document.getElementById('workoutContent');
+      const history = getWorkoutHistory();
+
+      document.getElementById('dayName').textContent = workouts[0].name.split(':')[0] || 'Today';
+
+      let tilesHtml = '';
+      workouts.forEach((w, i) => {
+        const workoutLogged = history.find(h =>
+          h.date === dateKey && h.workout === w.name
+        );
+
+        const loggedInfo = workoutLogged ? `
+          <div class="activity-tile-logged-info">
+            <span class="rating">${workoutLogged.overallFeel}/5</span> effort
+            ${workoutLogged.duration ? ` · ${workoutLogged.duration} min` : ''}
+          </div>
+        ` : '';
+
+        tilesHtml += `
+          <div class="activity-tile ${workoutLogged ? 'logged' : ''}" onclick="startMultiWorkout(${i})" style="border-color: ${workoutLogged ? 'var(--success)' : 'var(--accent)'};">
+            <div class="activity-tile-header">
+              <div>
+                <div class="activity-tile-type" style="color: var(--accent);">${w.type}</div>
+                <div class="activity-tile-name">${w.name}</div>
+                <div class="activity-tile-time">${w.duration} · ${w.location}</div>
+              </div>
+              <span class="activity-tile-status ${workoutLogged ? 'logged' : ''}" style="${!workoutLogged ? 'background: var(--accent); color: white;' : ''}">${workoutLogged ? 'Logged' : 'Start'}</span>
+            </div>
+            ${loggedInfo}
+          </div>
+        `;
+      });
+
+      content.innerHTML = `<div class="activity-tiles">${tilesHtml}</div>`;
+    }
+
+    function startMultiWorkout(index) {
+      if (multiWorkoutList && multiWorkoutList[index]) {
+        state.activeWorkout = multiWorkoutList[index];
+        state.workoutStartTime = null;
+        state.workoutLog = {};
+        renderWorkout(multiWorkoutList[index]);
         restoreProgressIfAvailable();
       }
     }
@@ -5035,71 +5093,82 @@
         }
       ]
     },
-    '2026-03-06': {
-      name: "Beer Bike Week 5: Mixed Efforts",
-      type: "Cardio",
-      duration: "50 min",
-      location: "Outdoor Track",
-      condition: "Moved from Thursday — recovery day swap. Sustained + race pace + all-out finishes.",
-      circuits: [
-        {
-          name: "A. Warm-Up (12 min)",
-          instructions: "Build gradually. Legs should feel ready to work by the end.",
-          exercises: [
-            { id: "bb5_a1", name: "Easy Spin", sets: 1, reps: 1, notes: "5 min, easy effort", isCardio: true, duration: 300, noWeight: true },
-            { id: "bb5_a2", name: "Moderate Build", sets: 1, reps: 1, notes: "5 min, 70% effort", isCardio: true, duration: 300, noWeight: true },
-            { id: "bb5_a3", name: "Snappy Bursts", sets: 2, reps: 1, notes: "30 sec at 85%, 60 sec easy between", isCardio: true, duration: 30, noWeight: true }
-          ]
-        },
-        {
-          name: "B. Clip-In / Clip-Out Practice (5 min)",
-          instructions: "10+ smooth clip-ins. Race starts from a dead stop today.",
-          exercises: [
-            { id: "bb5_b1", name: "Rolling Clip-Ins", sets: 4, reps: 1, notes: "Clip in while rolling — smooth and confident", noWeight: true },
-            { id: "bb5_b2", name: "Race Start Simulations", sets: 4, reps: 1, notes: "Dead stop → explosive 5 sec → clip in. Full rest between.", noWeight: true }
-          ]
-        },
-        {
-          name: "C. Sustained Efforts (12 min)",
-          instructions: "3 rounds at hard-but-controlled effort. Challenging but sustainable for 2 min.",
-          exercises: [
-            { id: "bb5_c1", name: "Sustained Effort", sets: 3, reps: 1, notes: "2 min at 80-85% effort. 2 min easy between. Short phrases only — if you can't speak at all, ease off.", isCardio: true, duration: 120, noWeight: true }
-          ]
-        },
-        {
-          name: "D. Race Pace + Finish Sprints (13 min)",
-          instructions: "Race effort intervals, then short all-out efforts to practice your finish.",
-          exercises: [
-            { id: "bb5_d1", name: "Race Pace Interval", sets: 3, reps: 1, notes: "45 sec at race effort (90-95%). 2 min easy between.", isCardio: true, duration: 45, noWeight: true },
-            { id: "bb5_d2", name: "Finish Sprint", sets: 2, reps: 1, notes: "20 sec ALL-OUT. Full 2 min rest between. Practice your race finish.", isCardio: true, duration: 20, noWeight: true }
-          ]
-        },
-        {
-          name: "E. Cool-Down (10 min)",
-          instructions: "Easy spinning. Gradual decrease.",
-          exercises: [
-            { id: "bb5_e1", name: "Easy Cool-Down Spin", sets: 1, reps: 1, notes: "10 min, gradually decreasing effort", isCardio: true, duration: 600, noWeight: true }
-          ]
-        },
-        {
-          name: "F. Shoulder Protocol (15-20 min)",
-          instructions: "Complete immediately after biking.",
-          exercises: [
-            { id: "bb5_f1", name: "Scapular Squeezes", sets: 1, reps: 15, notes: "Hold 3 sec each", noWeight: true },
-            { id: "bb5_f2", name: "Arm Circles Palms Up", sets: 1, reps: 20, notes: "10 forward, 10 backward each arm", noWeight: true },
-            { id: "bb5_f3", name: "External Rotation 90/90", sets: 3, reps: 12, notes: "Each arm — key for handball", noWeight: true },
-            { id: "bb5_f4", name: "Internal Rotation 90/90", sets: 3, reps: 12, notes: "Each arm", noWeight: true },
-            { id: "bb5_f5", name: "Empty Can to Full Can", sets: 2, reps: 8, notes: "3-5 lb dumbbells", noWeight: true },
-            { id: "bb5_f6", name: "Prone T's", sets: 2, reps: 10, notes: "Face down, arms out, squeeze", noWeight: true },
-            { id: "bb5_f7", name: "Dynamic External Rotation", sets: 2, reps: 15, notes: "Each arm", noWeight: true },
-            { id: "bb5_f8", name: "Scapular Push-Ups", sets: 2, reps: 10, notes: "Scapular movement only", noWeight: true },
-            { id: "bb5_f9", name: "Bear Plank Shoulder Taps", sets: 2, reps: 20, notes: "10 each side", noWeight: true },
-            { id: "bb5_f10", name: "Cross-Body Shoulder Stretch", sets: 1, reps: 1, notes: "30 sec each side", isHold: true, holdTime: 30, perSide: true, noWeight: true },
-            { id: "bb5_f11", name: "Overhead Tricep Stretch", sets: 1, reps: 1, notes: "30 sec each side", isHold: true, holdTime: 30, perSide: true, noWeight: true }
-          ]
-        }
-      ]
-    },
+    '2026-03-06': [
+      {
+        name: "Beer Bike Week 5: Mixed Efforts",
+        type: "Cardio",
+        duration: "50 min",
+        location: "Outdoor Track",
+        condition: "Sustained + race pace + all-out finishes.",
+        circuits: [
+          {
+            name: "A. Warm-Up (12 min)",
+            instructions: "Build gradually. Legs should feel ready to work by the end.",
+            exercises: [
+              { id: "bb5_a1", name: "Easy Spin", sets: 1, reps: 1, notes: "5 min, easy effort", isCardio: true, duration: 300, noWeight: true },
+              { id: "bb5_a2", name: "Moderate Build", sets: 1, reps: 1, notes: "5 min, 70% effort", isCardio: true, duration: 300, noWeight: true },
+              { id: "bb5_a3", name: "Snappy Bursts", sets: 2, reps: 1, notes: "30 sec at 85%, 60 sec easy between", isCardio: true, duration: 30, noWeight: true }
+            ]
+          },
+          {
+            name: "B. Clip-In / Clip-Out Practice (5 min)",
+            instructions: "10+ smooth clip-ins. Race starts from a dead stop today.",
+            exercises: [
+              { id: "bb5_b1", name: "Rolling Clip-Ins", sets: 4, reps: 1, notes: "Clip in while rolling — smooth and confident", noWeight: true },
+              { id: "bb5_b2", name: "Race Start Simulations", sets: 4, reps: 1, notes: "Dead stop → explosive 5 sec → clip in. Full rest between.", noWeight: true }
+            ]
+          },
+          {
+            name: "C. Sustained Efforts (12 min)",
+            instructions: "3 rounds at hard-but-controlled effort. Challenging but sustainable for 2 min.",
+            exercises: [
+              { id: "bb5_c1", name: "Sustained Effort", sets: 3, reps: 1, notes: "2 min at 80-85% effort. 2 min easy between. Short phrases only — if you can't speak at all, ease off.", isCardio: true, duration: 120, noWeight: true }
+            ]
+          },
+          {
+            name: "D. Race Pace + Finish Sprints (13 min)",
+            instructions: "Race effort intervals, then short all-out efforts to practice your finish.",
+            exercises: [
+              { id: "bb5_d1", name: "Race Pace Interval", sets: 3, reps: 1, notes: "45 sec at race effort (90-95%). 2 min easy between.", isCardio: true, duration: 45, noWeight: true },
+              { id: "bb5_d2", name: "Finish Sprint", sets: 2, reps: 1, notes: "20 sec ALL-OUT. Full 2 min rest between. Practice your race finish.", isCardio: true, duration: 20, noWeight: true }
+            ]
+          },
+          {
+            name: "E. Cool-Down (10 min)",
+            instructions: "Easy spinning. Gradual decrease.",
+            exercises: [
+              { id: "bb5_e1", name: "Easy Cool-Down Spin", sets: 1, reps: 1, notes: "10 min, gradually decreasing effort", isCardio: true, duration: 600, noWeight: true }
+            ]
+          }
+        ]
+      },
+      {
+        name: "Shoulder Protocol",
+        type: "Prehab",
+        duration: "15-20 min",
+        location: "Home / Gym",
+        condition: "Shoulder stability and mobility. Do anytime today -- doesn't need to follow biking.",
+        circuits: [
+          {
+            name: "A. Shoulder Stability + Mobility",
+            instructions: "Full shoulder protocol. Key for handball throwing.",
+            exercises: [
+              { id: "bb5_f1", name: "Scapular Squeezes", sets: 1, reps: 15, notes: "Hold 3 sec each", noWeight: true },
+              { id: "bb5_f2", name: "Arm Circles Palms Up", sets: 1, reps: 20, notes: "10 forward, 10 backward each arm", noWeight: true },
+              { id: "bb5_f3", name: "External Rotation 90/90", sets: 3, reps: 12, notes: "Each arm — key for handball", noWeight: true },
+              { id: "bb5_f4", name: "Internal Rotation 90/90", sets: 3, reps: 12, notes: "Each arm", noWeight: true },
+              { id: "bb5_f5", name: "Empty Can to Full Can", sets: 2, reps: 8, notes: "3-5 lb dumbbells", noWeight: true },
+              { id: "bb5_f6", name: "Prone T's", sets: 2, reps: 10, notes: "Face down, arms out, squeeze", noWeight: true },
+              { id: "bb5_f7", name: "Dynamic External Rotation", sets: 2, reps: 15, notes: "Each arm", noWeight: true },
+              { id: "bb5_f8", name: "Scapular Push-Ups", sets: 2, reps: 10, notes: "Scapular movement only", noWeight: true },
+              { id: "bb5_f9", name: "Bear Plank Shoulder Taps", sets: 2, reps: 20, notes: "10 each side", noWeight: true },
+              { id: "bb5_f10", name: "Cross-Body Shoulder Stretch", sets: 1, reps: 1, notes: "30 sec each side", isHold: true, holdTime: 30, perSide: true, noWeight: true },
+              { id: "bb5_f11", name: "Overhead Tricep Stretch", sets: 1, reps: 1, notes: "30 sec each side", isHold: true, holdTime: 30, perSide: true, noWeight: true }
+            ]
+          }
+        ]
+      }
+    ],
     '2026-03-07': {
       name: "Lower Body + Handball Skills",
       type: "Mixed",
@@ -5639,6 +5708,18 @@
       return `${year}-${month}-${day}`;
     }
 
+    // Get the first (or only) DATE_WORKOUTS entry for a date key.
+    // DATE_WORKOUTS values can be a single object or an array of objects.
+    function getDateWorkout(dateKey) {
+      const dw = DATE_WORKOUTS[dateKey];
+      if (!dw) return null;
+      return Array.isArray(dw) ? dw[0] : dw;
+    }
+
+    function hasDateWorkout(dateKey) {
+      return !!DATE_WORKOUTS[dateKey];
+    }
+
     // Helper to get previous Monday's game info for a Tuesday
     function getPreviousMondayGameInfo(tuesdayDate) {
       const monday = new Date(tuesdayDate);
@@ -5735,11 +5816,11 @@
           if (DATE_ACTIVITIES[dateKey] && DATE_ACTIVITIES[dateKey].length > 0) {
             workoutClass = 'external';
             workoutDisplay = DATE_ACTIVITIES[dateKey][0].name.includes('Handball') ? 'Handball' : DATE_ACTIVITIES[dateKey][0].type;
-          } else if (DATE_WORKOUTS[dateKey]) {
-            const dw = DATE_WORKOUTS[dateKey];
+          } else if (hasDateWorkout(dateKey)) {
+            const dw = getDateWorkout(dateKey);
             const dwType = (dw.type || '').toLowerCase();
             workoutClass = dwType === 'recovery' ? 'recovery' : dwType === 'cardio' ? 'external' : dwType === 'sport-specific' ? 'external' : '';
-            workoutDisplay = dw.name.length > 12 ? dw.type : dw.name;
+            workoutDisplay = Array.isArray(DATE_WORKOUTS[dateKey]) ? dw.type + '+' : (dw.name.length > 12 ? dw.type : dw.name);
           } else if (isTravel) {
             const facilities = specialDate.facilities;
             const isHandballTraining = specialDate.isTraining;
@@ -5832,7 +5913,7 @@
         const dateKey = formatDateKey(checkDate);
         const specialDate = SPECIAL_DATES[dateKey];
 
-        if (schedule.type !== 'rest' || DATE_WORKOUTS[dateKey]) {
+        if (schedule.type !== 'rest' || hasDateWorkout(dateKey)) {
           upcoming.push({
             date: new Date(checkDate),
             dayOfWeek,
@@ -5862,7 +5943,7 @@
 
         // Handle travel days - different types based on facilities
         // Skip travel display if DATE_WORKOUTS exists (it takes priority)
-        if (item.isTravel && !DATE_WORKOUTS[dateKey]) {
+        if (item.isTravel && !hasDateWorkout(dateKey)) {
           const facilities = item.specialDate.facilities;
           const isHandballTraining = item.specialDate.isTraining;
 
@@ -5899,11 +5980,12 @@
         }
 
         // Check for date-specific workout overrides (one-offs loaded via CLI)
-        const dateWorkout = DATE_WORKOUTS[dateKey];
+        const dateWorkout = getDateWorkout(dateKey);
         if (dateWorkout) {
-          displayName = dateWorkout.name;
+          const dwArr = Array.isArray(DATE_WORKOUTS[dateKey]) ? DATE_WORKOUTS[dateKey] : [dateWorkout];
+          displayName = dwArr.map(w => w.name).join(' + ');
           previewText = dateWorkout.circuits.map(c => c.name).join(', ');
-          badgeText = dateWorkout.type;
+          badgeText = dwArr.length > 1 ? dwArr.map(w => w.type).join(' + ') : dateWorkout.type;
         }
 
         // Check for date-specific activities that override normal schedule
@@ -6038,10 +6120,10 @@
         const isTravel = specialDate && specialDate.type === 'travel';
         const dayName = dayNames[dayOfWeek];
 
-        if (schedule.type === 'rest' && !DATE_WORKOUTS[dateKey]) continue;
+        if (schedule.type === 'rest' && !hasDateWorkout(dateKey)) continue;
 
         if (isTravel) {
-          if (specialDate.facilities === 'minimal' && !DATE_WORKOUTS[dateKey]) continue;
+          if (specialDate.facilities === 'minimal' && !hasDateWorkout(dateKey)) continue;
           // Check for date-specific activities (tournament games, etc.)
           const dateActivities = DATE_ACTIVITIES[dateKey];
           if (dateActivities && dateActivities.length > 0) {
@@ -6056,12 +6138,12 @@
         // Check for date-specific overrides
         const dateActivities = DATE_ACTIVITIES[dateKey];
         const hasDateOverride = dateActivities && dateActivities.length > 0;
-        const hasDateWorkout = !!DATE_WORKOUTS[dateKey];
+        const hasDW = hasDateWorkout(dateKey);
 
-        if (hasDateOverride || hasDateWorkout) {
+        if (hasDateOverride || hasDW) {
           // Date-specific activities/workouts replace normal schedule
           if (hasDateOverride) plannedCount += dateActivities.length;
-          if (hasDateWorkout) plannedCount++;
+          if (hasDW) plannedCount += Array.isArray(DATE_WORKOUTS[dateKey]) ? DATE_WORKOUTS[dateKey].length : 1;
         } else {
           // Count external activities for this day
           const externalActivities = EXTERNAL_ACTIVITIES[dayName] || [];
@@ -6123,44 +6205,51 @@
 
       // Handle DATE_WORKOUTS overrides FIRST (one-off workouts loaded via CLI)
       // This must be before travel handler so Fort Davis dates with DATE_WORKOUTS show the actual workout
-      const dateWorkoutPreview = DATE_WORKOUTS[dateKey];
+      const dateWorkoutPreview = getDateWorkout(dateKey);
       if (dateWorkoutPreview) {
-        previewTitle = dateWorkoutPreview.name;
+        const dwArr = Array.isArray(DATE_WORKOUTS[dateKey]) ? DATE_WORKOUTS[dateKey] : [dateWorkoutPreview];
+        previewTitle = dwArr.map(w => w.name).join(' + ');
         document.getElementById('previewTitle').textContent = previewTitle;
         document.getElementById('previewDate').textContent = `${dayNames[date.getDay()]}, ${months[date.getMonth()]} ${date.getDate()}, 2026`;
 
-        metaHtml = '';
-        if (dateWorkoutPreview.duration) metaHtml += `<span>⏱ ${dateWorkoutPreview.duration}</span>`;
-        if (dateWorkoutPreview.location) metaHtml += `<span>📍 ${dateWorkoutPreview.location}</span>`;
-        document.getElementById('previewMeta').innerHTML = metaHtml;
-
         contentHtml = '';
-        if (dateWorkoutPreview.condition) {
-          contentHtml += `
-            <div style="padding: 12px; background: var(--bg-card); border-radius: 8px; margin-bottom: 12px; font-style: italic; color: var(--text-secondary); font-size: 13px;">
-              ${dateWorkoutPreview.condition}
-            </div>
-          `;
-        }
-        dateWorkoutPreview.circuits.forEach(circuit => {
-          contentHtml += `
-            <div class="preview-circuit">
-              <div class="preview-circuit-name">${circuit.name}</div>
-              ${circuit.instructions ? `<div style="color: var(--text-muted); font-size: 11px; margin-bottom: 6px;">${circuit.instructions}</div>` : ''}
-              <div class="preview-exercises">
-          `;
-          circuit.exercises.forEach(ex => {
-            const repsText = ex.isHold ? `${ex.holdTime}s hold` :
-                            ex.isCardio ? 'Complete' :
-                            `${ex.reps} reps`;
-            contentHtml += `${ex.name} (${ex.sets}x${repsText})<br>`;
-          });
-          contentHtml += `
+        dwArr.forEach(dw => {
+          if (dwArr.length > 1) {
+            contentHtml += `<div style="font-weight: 700; font-size: 15px; margin: 12px 0 4px; color: var(--text-primary);">${dw.name}</div>`;
+          }
+          metaHtml = '';
+          if (dw.duration) metaHtml += `<span>⏱ ${dw.duration}</span>`;
+          if (dw.location) metaHtml += `<span>📍 ${dw.location}</span>`;
+          if (metaHtml) contentHtml += `<div class="history-stats" style="margin-bottom: 8px;">${metaHtml}</div>`;
+
+          if (dw.condition) {
+            contentHtml += `
+              <div style="padding: 12px; background: var(--bg-card); border-radius: 8px; margin-bottom: 12px; font-style: italic; color: var(--text-secondary); font-size: 13px;">
+                ${dw.condition}
               </div>
-            </div>
-          `;
+            `;
+          }
+          dw.circuits.forEach(circuit => {
+            contentHtml += `
+              <div class="preview-circuit">
+                <div class="preview-circuit-name">${circuit.name}</div>
+                ${circuit.instructions ? `<div style="color: var(--text-muted); font-size: 11px; margin-bottom: 6px;">${circuit.instructions}</div>` : ''}
+                <div class="preview-exercises">
+            `;
+            circuit.exercises.forEach(ex => {
+              const repsText = ex.isHold ? `${ex.holdTime}s hold` :
+                              ex.isCardio ? 'Complete' :
+                              `${ex.reps} reps`;
+              contentHtml += `${ex.name} (${ex.sets}x${repsText})<br>`;
+            });
+            contentHtml += `
+                </div>
+              </div>
+            `;
+          });
         });
 
+        document.getElementById('previewMeta').innerHTML = '';
         document.getElementById('previewContent').innerHTML = contentHtml;
         document.getElementById('previewModal').classList.add('active');
         return;
