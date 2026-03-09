@@ -3427,12 +3427,37 @@
     }
 
     // ==================== WORKOUT LOADING ====================
+    function showWorkoutComplete(saved) {
+      const content = document.getElementById('workoutContent');
+      document.getElementById('dayName').textContent = saved.workout || saved.name || 'Workout';
+      content.innerHTML = `
+        <div style="text-align: center; padding: 60px 20px;">
+          <div style="font-size: 48px; margin-bottom: 16px;">&#9989;</div>
+          <h2 style="color: var(--text-primary); margin-bottom: 8px;">${saved.workout || saved.name || 'Workout'}</h2>
+          <p style="color: var(--text-secondary); margin-bottom: 4px;">Saved${saved.duration ? ' · ' + saved.duration + ' min' : ''}</p>
+          ${saved.overallFeel ? `<p style="color: var(--text-muted);">Effort: ${saved.overallFeel}/5${saved.overallEffortType ? ' · ' + saved.overallEffortType : ''}</p>` : ''}
+          ${saved.notes ? `<p style="color: var(--text-muted); font-style: italic; margin-top: 12px;">"${saved.notes}"</p>` : ''}
+        </div>
+      `;
+    }
+
     function loadTodaysWorkout() {
       const dayIndex = state.currentDate.getDay();
       const dayNames = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
       const dayName = dayNames[dayIndex];
       const dateKey = formatDateKey(state.currentDate);
       const specialDate = SPECIAL_DATES[dateKey];
+
+      // Check if today's workout was already saved (skip for multi-workout days — they handle it per-tile)
+      const isMultiWorkout = DATE_WORKOUTS[dateKey] && Array.isArray(DATE_WORKOUTS[dateKey]);
+      if (!isMultiWorkout && !localStorage.getItem('workoutInProgress')) {
+        const history = getWorkoutHistory();
+        const todaySaved = history.filter(h => h.date === dateKey);
+        if (todaySaved.length > 0) {
+          showWorkoutComplete(todaySaved[0]);
+          return;
+        }
+      }
 
       let workout = null;
 
@@ -4372,20 +4397,8 @@
       adaptationApplied = null;
       originalScheduledWorkout = null;
 
-      // Show completion state instead of reloading fresh workout
-      const workoutName = workoutData.workout || 'Workout';
-      const duration = workoutData.duration;
-      const content = document.getElementById('workoutContent');
-      document.getElementById('dayName').textContent = workoutName;
-      content.innerHTML = `
-        <div style="text-align: center; padding: 60px 20px;">
-          <div style="font-size: 48px; margin-bottom: 16px;">✅</div>
-          <h2 style="color: var(--text-primary); margin-bottom: 8px;">${workoutName}</h2>
-          <p style="color: var(--text-secondary); margin-bottom: 4px;">Saved${duration ? ' · ' + duration + ' min' : ''}</p>
-          ${workoutData.overallFeel ? `<p style="color: var(--text-muted);">Effort: ${workoutData.overallFeel}/5${workoutData.overallEffortType ? ' · ' + workoutData.overallEffortType : ''}</p>` : ''}
-          ${workoutData.notes ? `<p style="color: var(--text-muted); font-style: italic; margin-top: 12px;">"${workoutData.notes}"</p>` : ''}
-        </div>
-      `;
+      // Show completion state
+      showWorkoutComplete(workoutData);
 
       loadHistory();
       loadPlanView();
