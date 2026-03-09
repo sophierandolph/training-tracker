@@ -5810,7 +5810,7 @@
             const dw = getDateWorkout(dateKey);
             const dwType = (dw.type || '').toLowerCase();
             workoutClass = dwType === 'recovery' ? 'recovery' : dwType === 'cardio' ? 'external' : dwType === 'sport-specific' ? 'external' : '';
-            workoutDisplay = Array.isArray(DATE_WORKOUTS[dateKey]) ? dw.type + '+' : (dw.name.length > 12 ? dw.type : dw.name);
+            workoutDisplay = getShortTypeName(dw, dateKey);
           } else if (isTravel) {
             const facilities = specialDate.facilities;
             const isHandballTraining = specialDate.isTraining;
@@ -5837,18 +5837,12 @@
             workoutDisplay = getShortWorkoutName(schedule, dayDate);
           }
 
-          const hasRecurring = !isTravel && RECURRING_DAY_WORKOUTS[dayOfWeek] && RECURRING_DAY_WORKOUTS[dayOfWeek].length > 0;
-          const recurringIndicator = hasRecurring
-            ? `<div class="calendar-day-workout" style="font-size: 9px; color: var(--accent); margin-top: 2px;">+Warm/Cool</div>`
-            : '';
-
           html += `
             <div class="calendar-day ${isToday ? 'today' : ''} ${isPast ? 'past' : ''} ${extraClasses}"
                  onclick="showDayPreview(${dayDate.getTime()}, ${dayOfWeek})">
               <div class="calendar-day-name">${dayNames[dayOfWeek]}</div>
               <div class="calendar-day-number">${dayDate.getDate()}</div>
               <div class="calendar-day-workout ${workoutClass}">${workoutDisplay}</div>
-              ${recurringIndicator}
             </div>
           `;
         }
@@ -5884,6 +5878,19 @@
         case 'sport': return 'Soccer+HB';
         default: return schedule.name;
       }
+    }
+
+    function getShortTypeName(dw, dateKey) {
+      const isMulti = Array.isArray(DATE_WORKOUTS[dateKey]);
+      if (isMulti) {
+        // For multi-workout days, show first type with +
+        return dw.type.replace('Sport-Specific', 'Sport') + '+';
+      }
+      const SHORT_TYPES = {
+        'Sport-Specific': 'Sport',
+        'Conditioning': 'Cardio+',
+      };
+      return SHORT_TYPES[dw.type] || (dw.type || dw.name);
     }
 
     function renderUpcomingWorkouts() {
