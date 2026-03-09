@@ -2797,8 +2797,9 @@
       // Save to localStorage as backup
       localStorage.setItem('workoutHistory', JSON.stringify(workoutHistoryCache));
 
-      // Save to Firestore
-      db.collection('workouts').add(workoutData)
+      // Save to Firestore (idempotent: doc ID based on date + workout name prevents duplicates)
+      const docId = `${workoutData.date}_${(workoutData.workout || workoutData.activityId || 'workout').replace(/[^a-zA-Z0-9]/g, '_')}`;
+      db.collection('workouts').doc(docId).set(workoutData)
         .then(() => console.log('Workout saved to cloud'))
         .catch((error) => console.log('Error saving workout:', error));
     }
@@ -3916,7 +3917,10 @@
     }
 
     function startRecurringWorkout(workoutKey) {
-      const workout = WORKOUTS[workoutKey];
+      // Support dotted paths like 'activeRecovery.poolRecovery'
+      const workout = workoutKey.includes('.')
+        ? workoutKey.split('.').reduce((obj, key) => obj && obj[key], WORKOUTS)
+        : WORKOUTS[workoutKey] || (WORKOUTS.activeRecovery && WORKOUTS.activeRecovery[workoutKey]);
       if (workout) {
         state.activeWorkout = workout;
         state.workoutStartTime = null;
@@ -4404,7 +4408,7 @@
       }
 
       const workoutData = {
-        date: state.currentDate.toISOString().split('T')[0],
+        date: formatDateKey(state.currentDate),
         workout: state.activeWorkout.name,
         type: state.activeWorkout.type,
         duration: state.workoutStartTime ?
@@ -5235,7 +5239,7 @@
       type: "Sport-Specific",
       duration: "50-60 min",
       location: "Squash Court / Wall",
-      condition: "Video analysis showed torso staying square on every shot type. Today's #1 goal: feel the chest open before every throw. Secondary: release at the TOP of jump shots, not on the way down. Legs may be tired from yesterday — lean into upper body technique.",
+      condition: "Post-session update: Chest opening solid in drills (kneeling, standing, jump shot). Degrades in unstructured finisher — pattern not yet automatic. Jump shot release is post-peak. Pivot arm separation too late (ball stays low during turn). Next session: keep drilling + add movement snacks during the week.",
       circuits: [
         {
           name: "A. Warm-Up + Rotation Primer (10 min)",
@@ -5252,8 +5256,8 @@
           name: "B. Kneeling Rotation Isolation (12 min)",
           instructions: "Kneeling removes footwork so you can ONLY think about rotation. Every throw: feel the chest open, then snap closed. If you don't feel the stretch across your chest, you didn't open enough.",
           exercises: [
-            { id: "sun8_b1", name: "Kneeling Chest-Open Throws (Right)", sets: 3, reps: 8, notes: "Kneel on left knee. Before each throw: pull right shoulder back until you feel a stretch across your chest. HOLD that open position for a beat. Then throw. The pause is the point — you're training the position.", noWeight: true },
-            { id: "sun8_b2", name: "Kneeling Chest-Open Throws (Left)", sets: 2, reps: 8, notes: "Kneel on right knee. Same thing: pull left shoulder back, feel the chest stretch, pause, throw.", noWeight: true },
+            { id: "sun8_b1", name: "Kneeling Chest-Open Throws (Right)", sets: 3, reps: 8, notes: "Kneel on RIGHT knee (throwing-side down). Pull right shoulder back — feel stretch across chest. HOLD a beat. Then throw. The pause trains the position.", noWeight: true },
+            { id: "sun8_b2", name: "Kneeling Chest-Open Throws (Left)", sets: 2, reps: 8, notes: "Kneel on LEFT knee (throwing-side down). Pull left shoulder back, feel chest stretch, pause, throw.", noWeight: true },
             { id: "sun8_b3", name: "Kneeling → Stand → Open → Throw", sets: 2, reps: 6, notes: "Start kneeling. Stand up, take one step, OPEN chest (feel it), throw. Keep the pause for now — speed comes later. Right hand only.", noWeight: true }
           ]
         },
@@ -5268,19 +5272,19 @@
         },
         {
           name: "D. Jump Shot: Release at the Top (8 min)",
-          instructions: "Video showed releasing on the way down. Goal: ball leaves hand at PEAK height. Cue: 'UP, release, THEN fall.' Also jump OUT toward the wall, not straight up.",
+          instructions: "Video confirmed: release happens on the way down, not at peak. Goal: ball leaves hand at the TOP. Test: if you feel yourself falling when you release, you were late. Jump OUT toward the wall, not straight up.",
           exercises: [
-            { id: "sun8_d1", name: "Jump + Catch at Peak (No Throw)", sets: 1, reps: 6, notes: "Hold ball overhead. Jump forward (toward wall). At the peak, squeeze the ball hard. Land. No throw — just feeling the peak moment.", noWeight: true },
-            { id: "sun8_d2", name: "One-Step Jump Shot (Right)", sets: 3, reps: 5, notes: "One step into jump. Open chest in the air, release at the TOP. Cue: 'step, jump OUT, open, release at peak.' If you feel yourself falling when you release, you were late. Rest 45 sec.", noWeight: true },
-            { id: "sun8_d3", name: "One-Step Jump Shot (Left)", sets: 2, reps: 5, notes: "Same thing, left hand. Step, jump out, open, release at peak.", noWeight: true }
+            { id: "sun8_d1", name: "Jump + Hold at Peak (No Throw)", sets: 1, reps: 6, notes: "Hold ball overhead. Jump forward. At the PEAK, squeeze ball hard and hold a beat. Land. No throw — just finding the peak moment so you know the feeling.", noWeight: true },
+            { id: "sun8_d2", name: "One-Step Jump Shot (Right)", sets: 3, reps: 5, notes: "One step, jump OUT. Open chest, release at the TOP. Cue: 'step, UP, release.' If falling when you release = late. Rest 45 sec.", noWeight: true },
+            { id: "sun8_d3", name: "One-Step Jump Shot (Left)", sets: 2, reps: 5, notes: "Same cue, left hand. Step, UP, release at peak.", noWeight: true }
           ]
         },
         {
           name: "E. Pivot/Turn Shots: Add the Chest Opening (8 min)",
-          instructions: "Video showed zero chest opening on pivot shots. The turn happens but the torso stays locked. Goal: after the pivot, OPEN the chest before throwing. Two separate movements until it becomes one.",
+          instructions: "Video showed arm separating too late — ball stayed low during the turn, then arm loaded after. Goal: start pulling the arm up and back DURING the turn so rotation does the loading. Cue: 'turn-PULL-throw.'",
           exercises: [
-            { id: "sun8_e1", name: "Pivot → Pause → Open → Throw", sets: 3, reps: 6, notes: "Face away from wall. Pivot/turn toward wall. STOP. Open chest (pull throwing shoulder back, feel stretch). Then throw. Three beats: turn, open, throw. Exaggerate the pause between open and throw. 3 each direction. Rest 45 sec.", noWeight: true },
-            { id: "sun8_e2", name: "Feint → Turn → Open → Shot", sets: 2, reps: 6, notes: "Fake one way, turn the other. After the turn: open chest, then shoot. Sell the fake but don't rush the shot — the opening is what matters today. 3 each direction. Rest 60 sec.", noWeight: true }
+            { id: "sun8_e1", name: "Pivot → Open → Throw", sets: 3, reps: 6, notes: "Face away from wall. As you pivot, start pulling throwing arm up and back — don't wait until after the turn. Cue: 'turn-PULL-throw' as a rhythm. 3 each direction. Rest 45 sec.", noWeight: true },
+            { id: "sun8_e2", name: "Feint → Turn → Open → Shot", sets: 2, reps: 6, notes: "Fake one way, turn the other. Arm starts separating DURING the turn, not after. Sell the fake but don't rush — feel the arm load as you rotate. 3 each direction. Rest 60 sec.", noWeight: true }
           ]
         },
         {
@@ -6390,11 +6394,12 @@
         const mondayGame = getPreviousMondayGameInfo(date);
 
         if (workoutType === 'recovery') {
-          previewTitle = 'Shoulder Mobility & Stability';
+          const recoveryWorkout = WORKOUTS.activeRecovery.poolRecovery;
+          previewTitle = recoveryWorkout.name;
           document.getElementById('previewTitle').textContent = previewTitle;
           document.getElementById('previewDate').textContent = `${dayNames[date.getDay()]}, ${months[date.getMonth()]} ${date.getDate()}, 2026`;
 
-          metaHtml = `<span>⏱ 20-25 min</span><span>📍 Home</span>`;
+          metaHtml = `<span>⏱ ${recoveryWorkout.duration}</span><span>📍 ${recoveryWorkout.location}</span>`;
           document.getElementById('previewMeta').innerHTML = metaHtml;
 
           contentHtml = '';
@@ -6725,6 +6730,7 @@
         effortType: effortType,
         focus: focus,
         notes: notes,
+        readiness: state.readiness,
         timestamp: new Date().toISOString()
       };
 
@@ -6830,6 +6836,8 @@
       if (originalScheduledWorkout) {
         adaptationApplied = null;
         state.activeWorkout = originalScheduledWorkout;
+        state.workoutLog = {};
+        state.workoutStartTime = null;
         renderWorkout(originalScheduledWorkout);
         originalScheduledWorkout = null;
       }
@@ -6896,7 +6904,7 @@
       const threeWeeksAgo = new Date();
       threeWeeksAgo.setDate(threeWeeksAgo.getDate() - 21);
 
-      const recentWorkouts = history.filter(w => new Date(w.date) >= threeWeeksAgo);
+      const recentWorkouts = history.filter(w => new Date(w.date + 'T00:00:00') >= threeWeeksAgo);
 
       const patterns = {
         totalWorkouts: recentWorkouts.length,
@@ -7150,14 +7158,14 @@ OVERTRAINING SIGNALS & GUARDRAILS
       const sevenDaysAgo = new Date();
       sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
 
-      const recent = history.filter(w => new Date(w.date) >= sevenDaysAgo);
+      const recent = history.filter(w => new Date(w.date + 'T00:00:00') >= sevenDaysAgo);
       if (recent.length === 0) return 'No workouts logged in the last 7 days.';
 
       let summary = 'LAST 7 DAYS:\n';
       recent.forEach(w => {
         const d = new Date(w.date + 'T00:00:00');
         const dayNames = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
-        summary += `\n${dayNames[d.getDay()]} ${w.date} - ${w.name || w.type || 'Workout'}`;
+        summary += `\n${dayNames[d.getDay()]} ${w.date} - ${w.workout || w.name || w.type || 'Workout'}`;
         if (w.readiness) summary += ` | Readiness: ${w.readiness}`;
         if (w.overallFeel) summary += ` | Feel: ${w.overallFeel}/5`;
         if (w.overallEffortType) summary += ` | Effort: ${w.overallEffortType}`;
