@@ -1995,6 +1995,34 @@
     .coach-send-btn:disabled { opacity: 0.4; cursor: default; }
 
     /* ==================== FUEL VIEW ==================== */
+    .creatine-check {
+      background: var(--bg-card);
+      border-radius: var(--radius);
+      padding: 14px 20px;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    .creatine-check.checked {
+      background: rgba(16, 185, 129, 0.15);
+      border: 1px solid var(--success);
+    }
+    .creatine-check:not(.checked) {
+      border: 1px solid transparent;
+    }
+    .creatine-checkbox {
+      font-size: 22px;
+      line-height: 1;
+    }
+    .creatine-label {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+
     .fuel-progress {
       background: var(--bg-card);
       border-radius: var(--radius);
@@ -2405,6 +2433,10 @@
         </div>
       </div>
 
+      <div style="background: rgba(56, 189, 248, 0.1); border-radius: 12px; padding: 12px 16px; margin-bottom: 16px; text-align: center;">
+        <span style="font-size: 14px; color: var(--text-secondary);">Drink a full bottle of water now</span>
+      </div>
+
       <div class="input-group overall-feel">
         <label class="input-label">Overall difficulty</label>
         <div class="overall-slider" id="overallSlider">
@@ -2623,10 +2655,19 @@
   <!-- Fuel View -->
   <div id="fuelView" class="view">
     <div style="padding: 0 16px;">
+      <!-- Creatine Checkbox -->
+      <div class="creatine-check" id="creatineCheck" onclick="toggleCreatine()">
+        <span class="creatine-checkbox" id="creatineCheckbox">&#9744;</span>
+        <span class="creatine-label">Creatine (5g)</span>
+      </div>
+
+      <!-- Training Context -->
+      <div id="fuelContext" style="text-align: center; padding: 8px 0 4px; color: var(--text-muted); font-size: 13px;"></div>
+
       <!-- Daily Progress -->
       <div class="fuel-progress">
         <div class="fuel-total" id="fuelTotal">0g</div>
-        <div class="fuel-target-label">of 150g protein target</div>
+        <div class="fuel-target-label" id="fuelTargetLabel">of 150g protein target</div>
         <div class="fuel-progress-bar-track">
           <div class="fuel-progress-bar-fill" id="fuelProgressFill" style="width: 0%"></div>
         </div>
@@ -2676,6 +2717,10 @@
         <div class="fuel-tip">Bean/lentil soups count -- a full bowl is ~15-17g. Double up with a cheese quesadilla for ~25g.</div>
         <div class="fuel-tip">Cottage cheese shows up at the salad bar some days. When it's there, grab it -- 28g per cup.</div>
         <div class="fuel-tip">Edamame appears at the stir-fry and salad stations. A full scoop is ~17g.</div>
+      </div>
+
+      <div style="text-align: center; padding: 16px 0 8px; color: var(--text-muted); font-size: 13px;">
+        4-5 bottles of water today (more on training days)
       </div>
     </div>
   </div>
@@ -7336,7 +7381,48 @@ ${recentHistory}`;
       { id: 'clif_builder', name: 'Clif Builder', emoji: '💪', serving: '1 bar', protein: 20 },
     ];
 
-    const PROTEIN_TARGET = 150;
+    function getTodayFuelContext() {
+      const dateKey = formatDateKey(state.currentDate);
+      const dayIndex = state.currentDate.getDay();
+      const specialDate = SPECIAL_DATES[dateKey];
+
+      // Check what's actually loaded for today
+      let type = 'rest';
+      let label = '';
+
+      if (DATE_WORKOUTS[dateKey]) {
+        const dw = DATE_WORKOUTS[dateKey];
+        const workout = Array.isArray(dw) ? dw[0] : dw;
+        type = workout.type || 'gym';
+        label = workout.name || '';
+      } else if (specialDate && specialDate.type === 'travel' && specialDate.facilities === 'minimal') {
+        type = 'rest';
+      } else if (state.activeWorkout) {
+        type = state.activeWorkout.type || 'gym';
+        label = state.activeWorkout.name || '';
+      } else {
+        const schedule = SCHEDULE[dayIndex];
+        if (schedule) type = schedule.type;
+      }
+
+      // Normalize type (DATE_WORKOUTS uses capitalized types like "Strength", "Recovery")
+      const t = type.toLowerCase();
+      const isLight = ['rest', 'cardio', 'recovery', 'prehab'].includes(t);
+      const target = isLight ? 130 : 150;
+
+      let context = '';
+      if (['rest', 'recovery', 'prehab'].includes(t)) context = 'Rest day — prioritize protein and sleep';
+      else if (t === 'cardio') context = 'Light day — stay hydrated';
+      else if (['sport', 'sport-specific'].includes(t)) context = 'Sport day — carbs pre-practice, protein after';
+      else if (t === 'external') context = 'Training day — fuel up, protein within 1hr post';
+      else context = 'Training day — hit your protein target';
+
+      return { target, context };
+    }
+
+    function getProteinTarget() {
+      return getTodayFuelContext().target;
+    }
 
     function getFuelDateKey() {
       const now = new Date();
@@ -7347,7 +7433,7 @@ ${recentHistory}`;
       const key = 'proteinLog_' + getFuelDateKey();
       const stored = localStorage.getItem(key);
       if (stored) return JSON.parse(stored);
-      return { foods: {}, total: 0 };
+      return { foods: {}, total: 0, creatine: false };
     }
 
     function saveFuelLog(log) {
@@ -7359,7 +7445,8 @@ ${recentHistory}`;
         date: dateKey,
         foods: log.foods,
         total: log.total,
-        target: PROTEIN_TARGET,
+        creatine: log.creatine || false,
+        target: getProteinTarget(),
         updatedAt: new Date().toISOString()
       }).catch((error) => console.log('Error saving fuel log:', error));
     }
@@ -7370,10 +7457,11 @@ ${recentHistory}`;
         .then((doc) => {
           if (doc.exists) {
             const data = doc.data();
-            const log = { foods: data.foods || {}, total: data.total || 0 };
+            const log = { foods: data.foods || {}, total: data.total || 0, creatine: data.creatine || false };
             const key = 'proteinLog_' + dateKey;
             localStorage.setItem(key, JSON.stringify(log));
             updateFuelDisplay(log);
+            updateCreatineDisplay(log);
           }
         })
         .catch((error) => console.log('Error loading fuel log:', error));
@@ -7403,21 +7491,29 @@ ${recentHistory}`;
     }
 
     function resetFuelLog() {
-      if (!confirm('Reset today\'s protein log?')) return;
-      saveFuelLog({ foods: {}, total: 0 });
-      updateFuelDisplay({ foods: {}, total: 0 });
+      if (!confirm('Reset today\'s fuel log?')) return;
+      const empty = { foods: {}, total: 0, creatine: false };
+      saveFuelLog(empty);
+      updateFuelDisplay(empty);
+      updateCreatineDisplay(empty);
     }
 
     function updateFuelDisplay(log) {
       const totalEl = document.getElementById('fuelTotal');
       const fillEl = document.getElementById('fuelProgressFill');
-      const pct = Math.min((log.total / PROTEIN_TARGET) * 100, 100);
-      const over = log.total >= PROTEIN_TARGET;
+      const targetLabel = document.getElementById('fuelTargetLabel');
+      const contextEl = document.getElementById('fuelContext');
+      const target = getProteinTarget();
+      const { context } = getTodayFuelContext();
+      const pct = Math.min((log.total / target) * 100, 100);
+      const over = log.total >= target;
 
       totalEl.textContent = log.total + 'g';
       totalEl.className = 'fuel-total' + (over ? ' over-target' : '');
       fillEl.style.width = pct + '%';
       fillEl.className = 'fuel-progress-bar-fill' + (over ? ' over-target' : '');
+      if (targetLabel) targetLabel.textContent = `of ${target}g protein target`;
+      if (contextEl) contextEl.textContent = context;
 
       // Update cards
       PROTEIN_SOURCES.forEach(source => {
@@ -7437,6 +7533,26 @@ ${recentHistory}`;
       });
     }
 
+    function toggleCreatine() {
+      const log = getFuelLog();
+      log.creatine = !log.creatine;
+      saveFuelLog(log);
+      updateCreatineDisplay(log);
+    }
+
+    function updateCreatineDisplay(log) {
+      const el = document.getElementById('creatineCheck');
+      const box = document.getElementById('creatineCheckbox');
+      if (!el || !box) return;
+      if (log.creatine) {
+        el.classList.add('checked');
+        box.innerHTML = '&#9745;';
+      } else {
+        el.classList.remove('checked');
+        box.innerHTML = '&#9744;';
+      }
+    }
+
     function loadFuelView() {
       const container = document.getElementById('fuelCards');
       container.innerHTML = PROTEIN_SOURCES.map(source => `
@@ -7450,7 +7566,9 @@ ${recentHistory}`;
         </div>
       `).join('');
 
-      updateFuelDisplay(getFuelLog());
+      const currentLog = getFuelLog();
+      updateFuelDisplay(currentLog);
+      updateCreatineDisplay(currentLog);
       loadFuelLogFromCloud();
     }
 
