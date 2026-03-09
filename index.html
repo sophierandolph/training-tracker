@@ -1995,32 +1995,34 @@
     .coach-send-btn:disabled { opacity: 0.4; cursor: default; }
 
     /* ==================== FUEL VIEW ==================== */
-    .creatine-check {
-      background: var(--bg-card);
-      border-radius: var(--radius);
-      padding: 14px 20px;
+    .supplement-row {
+      display: flex;
+      gap: 8px;
       margin-bottom: 12px;
+    }
+    .supplement-pill {
+      flex: 1;
+      background: var(--bg-card);
+      border: 1px solid transparent;
+      border-radius: var(--radius);
+      padding: 10px 8px;
       display: flex;
       align-items: center;
-      gap: 12px;
+      justify-content: center;
+      gap: 6px;
       cursor: pointer;
       transition: var(--transition);
-    }
-    .creatine-check.checked {
-      background: rgba(16, 185, 129, 0.15);
-      border: 1px solid var(--success);
-    }
-    .creatine-check:not(.checked) {
-      border: 1px solid transparent;
-    }
-    .creatine-checkbox {
-      font-size: 22px;
-      line-height: 1;
-    }
-    .creatine-label {
-      font-size: 15px;
+      font-size: 13px;
       font-weight: 600;
       color: var(--text-primary);
+    }
+    .supplement-pill.checked {
+      background: rgba(16, 185, 129, 0.15);
+      border-color: var(--success);
+    }
+    .supplement-check {
+      font-size: 18px;
+      line-height: 1;
     }
 
     .fuel-progress {
@@ -2655,10 +2657,20 @@
   <!-- Fuel View -->
   <div id="fuelView" class="view">
     <div style="padding: 0 16px;">
-      <!-- Creatine Checkbox -->
-      <div class="creatine-check" id="creatineCheck" onclick="toggleCreatine()">
-        <span class="creatine-checkbox" id="creatineCheckbox">&#9744;</span>
-        <span class="creatine-label">Creatine (5g)</span>
+      <!-- Daily Supplements -->
+      <div class="supplement-row">
+        <div class="supplement-pill" id="pillCreatine" onclick="toggleSupplement('creatine')">
+          <span class="supplement-check" id="checkCreatine">&#9744;</span>
+          <span>Creatine</span>
+        </div>
+        <div class="supplement-pill" id="pillOmega3" onclick="toggleSupplement('omega3')">
+          <span class="supplement-check" id="checkOmega3">&#9744;</span>
+          <span>Omega-3</span>
+        </div>
+        <div class="supplement-pill" id="pillMagnesium" onclick="toggleSupplement('magnesium')">
+          <span class="supplement-check" id="checkMagnesium">&#9744;</span>
+          <span>Magnesium</span>
+        </div>
       </div>
 
       <!-- Training Context -->
@@ -7446,7 +7458,7 @@ ${recentHistory}`;
       const key = 'proteinLog_' + getFuelDateKey();
       const stored = localStorage.getItem(key);
       if (stored) return JSON.parse(stored);
-      return { foods: {}, total: 0, creatine: false };
+      return { foods: {}, total: 0, creatine: false, supplements: {} };
     }
 
     function saveFuelLog(log) {
@@ -7459,6 +7471,7 @@ ${recentHistory}`;
         foods: log.foods,
         total: log.total,
         creatine: log.creatine || false,
+        supplements: log.supplements || {},
         target: getProteinTarget(),
         updatedAt: new Date().toISOString()
       }).catch((error) => console.log('Error saving fuel log:', error));
@@ -7470,11 +7483,11 @@ ${recentHistory}`;
         .then((doc) => {
           if (doc.exists) {
             const data = doc.data();
-            const log = { foods: data.foods || {}, total: data.total || 0, creatine: data.creatine || false };
+            const log = { foods: data.foods || {}, total: data.total || 0, creatine: data.creatine || false, supplements: data.supplements || {} };
             const key = 'proteinLog_' + dateKey;
             localStorage.setItem(key, JSON.stringify(log));
             updateFuelDisplay(log);
-            updateCreatineDisplay(log);
+            updateSupplementDisplay(log);
           }
         })
         .catch((error) => console.log('Error loading fuel log:', error));
@@ -7505,10 +7518,10 @@ ${recentHistory}`;
 
     function resetFuelLog() {
       if (!confirm('Reset today\'s fuel log?')) return;
-      const empty = { foods: {}, total: 0, creatine: false };
+      const empty = { foods: {}, total: 0, creatine: false, supplements: {} };
       saveFuelLog(empty);
       updateFuelDisplay(empty);
-      updateCreatineDisplay(empty);
+      updateSupplementDisplay(empty);
     }
 
     function updateFuelDisplay(log) {
@@ -7546,24 +7559,34 @@ ${recentHistory}`;
       });
     }
 
-    function toggleCreatine() {
+    const SUPPLEMENTS = ['creatine', 'omega3', 'magnesium'];
+
+    function toggleSupplement(name) {
       const log = getFuelLog();
-      log.creatine = !log.creatine;
+      if (!log.supplements) log.supplements = {};
+      log.supplements[name] = !log.supplements[name];
+      // Keep creatine field for backwards compatibility
+      if (name === 'creatine') log.creatine = log.supplements[name];
       saveFuelLog(log);
-      updateCreatineDisplay(log);
+      updateSupplementDisplay(log);
     }
 
-    function updateCreatineDisplay(log) {
-      const el = document.getElementById('creatineCheck');
-      const box = document.getElementById('creatineCheckbox');
-      if (!el || !box) return;
-      if (log.creatine) {
-        el.classList.add('checked');
-        box.innerHTML = '&#9745;';
-      } else {
-        el.classList.remove('checked');
-        box.innerHTML = '&#9744;';
-      }
+    function updateSupplementDisplay(log) {
+      const supps = (log && log.supplements) || {};
+      // Backwards compat: check old creatine field
+      if (!supps.creatine && log && log.creatine) supps.creatine = true;
+      SUPPLEMENTS.forEach(name => {
+        const pill = document.getElementById('pill' + name.charAt(0).toUpperCase() + name.slice(1));
+        const check = document.getElementById('check' + name.charAt(0).toUpperCase() + name.slice(1));
+        if (!pill || !check) return;
+        if (supps[name]) {
+          pill.classList.add('checked');
+          check.innerHTML = '&#9745;';
+        } else {
+          pill.classList.remove('checked');
+          check.innerHTML = '&#9744;';
+        }
+      });
     }
 
     function loadFuelView() {
@@ -7581,7 +7604,7 @@ ${recentHistory}`;
 
       const currentLog = getFuelLog();
       updateFuelDisplay(currentLog);
-      updateCreatineDisplay(currentLog);
+      updateSupplementDisplay(currentLog);
       loadFuelLogFromCloud();
     }
 
