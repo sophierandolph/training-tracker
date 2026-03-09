@@ -59,7 +59,7 @@
       /* Text */
       --text-primary: #f5f3ff;
       --text-secondary: #a8a3b8;
-      --text-muted: #6b6280;
+      --text-muted: #8b82a0;
 
       /* Functional */
       --success: #10b981;
@@ -677,21 +677,6 @@
       transform: translateY(-1px);
     }
 
-    /* Timer */
-    .rest-timer {
-      display: none;
-      position: fixed;
-      bottom: 85px;
-      left: 16px;
-      right: 16px;
-      background: linear-gradient(135deg, var(--bg-elevated) 0%, var(--bg-card) 100%);
-      border: 2px solid var(--accent);
-      border-radius: var(--radius);
-      padding: 18px 20px;
-      z-index: 150;
-      box-shadow: var(--shadow-glow), var(--shadow-soft);
-    }
-
     .finish-banner {
       position: fixed;
       bottom: 85px;
@@ -699,47 +684,6 @@
       right: 16px;
       z-index: 140;
       animation: slideUp 0.3s ease;
-    }
-
-    .rest-timer.active {
-      display: block;
-      animation: slideUp 0.3s ease;
-    }
-
-    .timer-content {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .timer-label {
-      font-size: 11px;
-      color: var(--text-secondary);
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-    }
-
-    .timer-display {
-      font-size: 36px;
-      font-weight: 700;
-      font-variant-numeric: tabular-nums;
-      color: var(--accent-light);
-    }
-
-    .timer-btn {
-      background: linear-gradient(135deg, var(--accent) 0%, #9333ea 100%);
-      border: none;
-      color: white;
-      padding: 12px 24px;
-      border-radius: var(--radius-full);
-      font-size: 14px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: var(--transition);
-    }
-
-    .timer-btn:hover {
-      transform: scale(1.05);
     }
 
     /* Workout Complete Modal */
@@ -1171,7 +1115,7 @@
     }
 
     .calendar-day-workout {
-      font-size: 8px;
+      font-size: 10px;
       color: var(--accent-light);
       line-height: 1.3;
       word-wrap: break-word;
@@ -1235,7 +1179,7 @@
 
     .travel-badge {
       display: inline-block;
-      font-size: 8px;
+      font-size: 10px;
       background: rgba(20, 184, 166, 0.3);
       color: var(--teal);
       padding: 2px 6px;
@@ -2172,9 +2116,9 @@
       background: var(--bg-elevated);
       border: 1px solid var(--border);
       color: var(--text-secondary);
-      font-size: 12px;
-      width: 20px;
-      height: 20px;
+      font-size: 14px;
+      width: 28px;
+      height: 28px;
       border-radius: 50%;
       display: flex;
       align-items: center;
@@ -2338,16 +2282,6 @@
     </div>
   </div>
 
-  <!-- Rest Timer -->
-  <div class="rest-timer" id="restTimer">
-    <div class="timer-content">
-      <div>
-        <div class="timer-label">Rest Time</div>
-        <div class="timer-display" id="timerDisplay">1:30</div>
-      </div>
-      <button class="timer-btn" onclick="skipTimer()">Skip</button>
-    </div>
-  </div>
 
   <!-- Set Input Modal -->
   <div class="modal-overlay" id="setModal" onclick="closeSetModal()">
@@ -3293,8 +3227,6 @@
       currentExercise: null,
       currentSet: null,
       workoutLog: {},
-      timerInterval: null,
-      timerSeconds: 0,
       overallFeel: null,
       overallEffortType: null,
       // New state for travel and adjustments
@@ -3626,7 +3558,7 @@
                         <div class="activity-tile-name">${activity.name}</div>
                         <div class="activity-tile-time">${activity.time || 'TBD'} · ${activity.location}</div>
                       </div>
-                      <span class="activity-tile-status ${logged ? 'logged' : ''}">${logged ? 'Logged' : 'Tap to log'}</span>
+                      <span class="activity-tile-status ${logged ? 'logged' : ''}">${logged ? 'Logged' : 'Log'}</span>
                     </div>
                     ${loggedInfo}
                   </div>
@@ -3750,7 +3682,7 @@
                 <div class="activity-tile-time">${activityTime || 'TBD'} · ${activity.location}</div>
                 ${extraInfo}
               </div>
-              <span class="activity-tile-status ${logged ? 'logged' : ''}">${logged ? 'Logged' : 'Tap to log'}</span>
+              <span class="activity-tile-status ${logged ? 'logged' : ''}">${logged ? 'Logged' : 'Log'}</span>
             </div>
             ${loggedInfo}
           </div>
@@ -3813,7 +3745,7 @@
                 <div class="activity-tile-name">${activity.name}</div>
                 <div class="activity-tile-time">${activity.time || 'TBD'} · ${activity.location}</div>
               </div>
-              <span class="activity-tile-status ${logged ? 'logged' : ''}">${logged ? 'Logged' : 'Tap to log'}</span>
+              <span class="activity-tile-status ${logged ? 'logged' : ''}">${logged ? 'Logged' : 'Log'}</span>
             </div>
             ${loggedInfo}
           </div>
@@ -4058,7 +3990,7 @@
           html += `
             <div class="set-pill" id="set-${setId}" onclick="quickLogSet('${exerciseId}', ${i}, ${JSON.stringify(exercise).replace(/"/g, '&quot;')})">
               <div class="set-number">${exercise.sets === 1 ? '✓' : 'Set ' + (i + 1)}</div>
-              <div class="set-value" id="set-value-${setId}">tap</div>
+              <div class="set-value" id="set-value-${setId}">—</div>
             </div>
           `;
         } else {
@@ -4140,7 +4072,7 @@
 
       state.currentExercise = { id: exerciseId, data: exercise };
       state.currentSet = setIndex;
-      state.currentRestTime = restTime;
+
 
       document.getElementById('modalExerciseName').textContent = exercise.name;
       document.getElementById('modalSetNumber').textContent = setIndex + 1;
@@ -4193,7 +4125,7 @@
       // Toggle: if already complete, undo it
       if (pill.classList.contains('complete')) {
         pill.classList.remove('complete');
-        document.getElementById(`set-value-${setId}`).textContent = 'tap';
+        document.getElementById(`set-value-${setId}`).textContent = '—';
         if (state.workoutLog[exerciseId]) {
           state.workoutLog[exerciseId][setIndex] = null;
         }
@@ -4250,18 +4182,6 @@
 
       closeSetModal();
 
-      // Start rest timer after completing the last exercise in a circuit round
-      // In a circuit (A1-A2-A3, repeat 3x), rest comes after A3 each round, not after each exercise
-      const parts = state.currentExercise.id.split('-');
-      const circuitIndex = parseInt(parts[0]);
-      const exerciseIndex = parseInt(parts[1]);
-      const circuit = state.activeWorkout.circuits[circuitIndex];
-      const isLastExerciseInCircuit = exerciseIndex === circuit.exercises.length - 1;
-      const isLastRound = state.currentSet >= state.currentExercise.data.sets - 1;
-
-      if (!isLastRound && state.currentRestTime) {
-        startRestTimer(state.currentRestTime);
-      }
     }
 
     function skipSet() {
@@ -4315,42 +4235,6 @@
       } else if (percent < 100 && banner) {
         banner.remove();
       }
-    }
-
-    // ==================== REST TIMER ====================
-    function startRestTimer(seconds) {
-      // Use wall-clock time so timer stays accurate across tab switches
-      state.timerEndTime = Date.now() + (seconds * 1000);
-      state.timerDuration = seconds;
-      updateTimerDisplay();
-      document.getElementById('restTimer').classList.add('active');
-
-      clearInterval(state.timerInterval);
-      state.timerInterval = setInterval(() => {
-        const remaining = Math.ceil((state.timerEndTime - Date.now()) / 1000);
-        if (remaining <= 0) {
-          skipTimer();
-          // Vibrate if supported
-          if (navigator.vibrate) navigator.vibrate(200);
-        } else {
-          state.timerSeconds = remaining;
-          updateTimerDisplay();
-        }
-      }, 250); // Check 4x/sec for smoother updates after tab switch
-    }
-
-    function updateTimerDisplay() {
-      const remaining = Math.max(0, Math.ceil((state.timerEndTime - Date.now()) / 1000));
-      const mins = Math.floor(remaining / 60);
-      const secs = remaining % 60;
-      document.getElementById('timerDisplay').textContent =
-        `${mins}:${secs.toString().padStart(2, '0')}`;
-    }
-
-    function skipTimer() {
-      clearInterval(state.timerInterval);
-      state.timerEndTime = null;
-      document.getElementById('restTimer').classList.remove('active');
     }
 
     // ==================== WORKOUT COMPLETION ====================
@@ -4443,8 +4327,21 @@
       adaptationApplied = null;
       originalScheduledWorkout = null;
 
-      // Reload workout (shows fresh state) and refresh plan page
-      loadTodaysWorkout();
+      // Show completion state instead of reloading fresh workout
+      const workoutName = workoutData.workout || 'Workout';
+      const duration = workoutData.duration;
+      const content = document.getElementById('workoutContent');
+      document.getElementById('dayName').textContent = workoutName;
+      content.innerHTML = `
+        <div style="text-align: center; padding: 60px 20px;">
+          <div style="font-size: 48px; margin-bottom: 16px;">✅</div>
+          <h2 style="color: var(--text-primary); margin-bottom: 8px;">${workoutName}</h2>
+          <p style="color: var(--text-secondary); margin-bottom: 4px;">Saved${duration ? ' · ' + duration + ' min' : ''}</p>
+          ${workoutData.overallFeel ? `<p style="color: var(--text-muted);">Effort: ${workoutData.overallFeel}/5${workoutData.overallEffortType ? ' · ' + workoutData.overallEffortType : ''}</p>` : ''}
+          ${workoutData.notes ? `<p style="color: var(--text-muted); font-style: italic; margin-top: 12px;">"${workoutData.notes}"</p>` : ''}
+        </div>
+      `;
+
       loadHistory();
       loadPlanView();
     }
@@ -4761,7 +4658,7 @@
               ${workout.overallEffortType ? `<span>${effortIcons[workout.overallEffortType]} ${workout.overallEffortType}</span>` : ''}
             </div>
             ${badges ? `<div class="history-badges">${badges}</div>` : ''}
-            ${hasDetail ? `<div class="history-expand" id="expand-${uid}">tap to expand ▾</div>` : ''}
+            ${hasDetail ? `<div class="history-expand" id="expand-${uid}">expand ▾</div>` : ''}
             ${hasDetail ? `<div class="history-detail" id="detail-${uid}">
               ${detailHtml}
               ${workout.notes ? `<div class="history-notes">"${workout.notes}"</div>` : ''}
@@ -4777,7 +4674,7 @@
       if (!detail) return;
       detail.classList.toggle('open');
       if (expand) {
-        expand.textContent = detail.classList.contains('open') ? 'tap to collapse ▴' : 'tap to expand ▾';
+        expand.textContent = detail.classList.contains('open') ? 'collapse ▴' : 'expand ▾';
       }
     }
 
