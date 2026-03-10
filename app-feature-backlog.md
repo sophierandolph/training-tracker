@@ -48,7 +48,7 @@ Collected from sessions through Mar 8, 2026. Includes holistic review from 7 age
 - [ ] **History view** -- week-over-week calendar layout with checkboxes for completed workouts per day
 - [ ] **Re-edit completed sets** -- go back and fix a logged set after saving
 - [x] **Movement snack mini-sessions** -- DONE: built into DATE_WORKOUTS as separate array entries (10-15 min handball form drills). In-app, logged independently.
-- [ ] **Free-entry protein logging** -- custom gram amount for items not in the preset list (e.g. a random bar that's 14g). Should track what gets free-entered over time so frequently logged items can be promoted to presets. Could be a "+" card or a modal with a name field + gram input.
+- [x] **Free-entry protein logging** -- DONE: "+" card in fuel grid opens modal with name + grams. Custom entries shown as cards with remove button. Saved in fuel log `custom` array.
 - [ ] **Streak/consistency tracking** -- running streak, weekly completion rate. Cheapest motivation lever. (Athlete)
 - [ ] **Offline sync indicator** -- show "saved locally, will sync" when no connection. Currently silent. (Athlete, Backend)
 - [ ] **Rest day logging** -- mark rest as intentional vs missed. Log quick body check (soreness, energy). (PM, Athlete)
@@ -131,7 +131,7 @@ Collected from sessions through Mar 8, 2026. Includes holistic review from 7 age
 - [ ] **History re-fetches all 100 docs on every page load** -- use `.onSnapshot()` listener instead. (Backend)
 - [ ] **dailyState single-doc pattern** -- no historical readiness record. Once day resets, previous readiness gone. (Backend)
 - [ ] **Firebase SDK loaded synchronously** -- add `async`/`defer` to unblock HTML parsing. (Frontend)
-- [ ] **No request timeout on coach** -- if Anthropic API hangs, UI stuck in "typing" state. Add AbortController. (Backend)
+- [x] **No request timeout on coach** -- DONE: AbortController with 30s timeout. Shows "Request timed out. Try again." on abort.
 - [ ] **State not reset between multi-workout days** -- `adaptationApplied` can leak between workouts in same session. (QA)
 - [x] **Midnight rollover** -- DONE: visibilitychange listener detects date change when app returns to foreground, resets to new day.
 - [ ] **Duplicate log and exercises fields in saved data** -- raw workoutLog + processed exercises array. Pick one canonical shape. (Backend)

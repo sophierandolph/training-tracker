@@ -2316,6 +2316,27 @@
       align-items: center;
       justify-content: center;
     }
+    .fuel-card-add {
+      background: transparent;
+      border: 2px dashed var(--border-light);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      cursor: pointer;
+    }
+    .fuel-card-add:active {
+      border-color: var(--lavender);
+    }
+    .fuel-card-add-icon {
+      font-size: 24px;
+      color: var(--text-muted);
+    }
+    .fuel-card-add-label {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
     .fuel-card-undo {
       position: absolute;
       top: -6px;
@@ -2856,6 +2877,31 @@
       <div class="modal-actions">
         <button class="btn btn-secondary" onclick="closeAdjustmentModal()">Cancel</button>
         <button class="btn btn-primary" style="background: var(--warning);" onclick="saveAdjustment()">Save Adjustment</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Custom Protein Modal -->
+  <div class="modal-overlay" id="customProteinModal" onclick="closeCustomProteinModal()">
+    <div class="modal-content" onclick="event.stopPropagation()">
+      <div class="modal-header">
+        <div class="modal-title">Log Custom Protein</div>
+        <button class="modal-close" onclick="closeCustomProteinModal()">&times;</button>
+      </div>
+
+      <div class="input-group">
+        <label class="input-label">What did you eat?</label>
+        <input type="text" class="notes-input" id="customProteinName" placeholder="e.g., protein bar, chicken wrap" style="padding: 10px 12px; font-size: 14px;">
+      </div>
+
+      <div class="input-group">
+        <label class="input-label">Protein (grams)</label>
+        <input type="number" class="notes-input" id="customProteinGrams" placeholder="e.g., 14" inputmode="numeric" style="padding: 10px 12px; font-size: 14px;">
+      </div>
+
+      <div class="modal-actions">
+        <button class="btn btn-secondary" onclick="closeCustomProteinModal()">Cancel</button>
+        <button class="btn btn-primary" onclick="saveCustomProtein()">Log</button>
       </div>
     </div>
   </div>
@@ -6250,6 +6296,8 @@
     }
 
     // Helper to format date as YYYY-MM-DD
+    function escHtml(s) { return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+
     function formatDateKey(date) {
       const year = date.getFullYear();
       const month = String(date.getMonth() + 1).padStart(2, '0');
@@ -7935,14 +7983,18 @@ ${recentHistory}`;
 
       try {
         const systemPrompt = buildCoachSystemPrompt();
+        const controller = new AbortController();
+        const timeout = setTimeout(() => controller.abort(), 30000);
         const response = await fetch(proxyUrl, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             system: systemPrompt,
             messages: coachMessages.map(m => ({ role: m.role, content: m.content }))
-          })
+          }),
+          signal: controller.signal
         });
+        clearTimeout(timeout);
 
         if (!response.ok) {
           const errText = await response.text();
@@ -7958,7 +8010,8 @@ ${recentHistory}`;
         saveCoachSession();
       } catch (err) {
         hideTypingIndicator();
-        renderCoachMessage(`Error: ${err.message}`, 'error');
+        const msg = err.name === 'AbortError' ? 'Request timed out. Try again.' : `Error: ${err.message}`;
+        renderCoachMessage(msg, 'error');
         // Remove the failed user message from history so conversation stays clean
         coachMessages.pop();
       } finally {
@@ -8079,7 +8132,7 @@ ${recentHistory}`;
       const key = 'proteinLog_' + dateKey;
       localStorage.setItem(key, JSON.stringify(log));
       // Sync to Firestore
-      db.collection('fuelLogs').doc(dateKey).set({
+      const fuelData = {
         date: dateKey,
         foods: log.foods,
         total: log.total,
@@ -8087,7 +8140,10 @@ ${recentHistory}`;
         supplements: log.supplements || {},
         target: getProteinTarget(),
         updatedAt: new Date().toISOString()
-      }).catch((error) => console.log('Error saving fuel log:', error));
+      };
+      if (log.custom && log.custom.length > 0) fuelData.custom = log.custom;
+      db.collection('fuelLogs').doc(dateKey).set(fuelData)
+        .catch((error) => console.log('Error saving fuel log:', error));
     }
 
     function loadFuelLogFromCloud() {
@@ -8097,6 +8153,7 @@ ${recentHistory}`;
           if (doc.exists) {
             const data = doc.data();
             const log = { foods: data.foods || {}, total: data.total || 0, creatine: data.creatine || false, supplements: data.supplements || {} };
+            if (data.custom) log.custom = data.custom;
             const key = 'proteinLog_' + dateKey;
             localStorage.setItem(key, JSON.stringify(log));
             updateFuelDisplay(log);
@@ -8135,6 +8192,42 @@ ${recentHistory}`;
       saveFuelLog(empty);
       updateFuelDisplay(empty);
       updateSupplementDisplay(empty);
+    }
+
+    function openCustomProteinModal() {
+      document.getElementById('customProteinName').value = '';
+      document.getElementById('customProteinGrams').value = '';
+      document.getElementById('customProteinModal').classList.add('active');
+      document.getElementById('customProteinName').focus();
+    }
+
+    function closeCustomProteinModal() {
+      document.getElementById('customProteinModal').classList.remove('active');
+    }
+
+    function saveCustomProtein() {
+      const name = document.getElementById('customProteinName').value.trim();
+      const grams = parseInt(document.getElementById('customProteinGrams').value);
+      if (!name || !grams || grams <= 0) return;
+
+      const log = getFuelLog();
+      if (!log.custom) log.custom = [];
+      log.custom.push({ name, protein: grams });
+      log.total += grams;
+      saveFuelLog(log);
+      closeCustomProteinModal();
+      loadFuelView();
+    }
+
+    function removeCustomProtein(index) {
+      const log = getFuelLog();
+      if (!log.custom || !log.custom[index]) return;
+      log.total -= log.custom[index].protein;
+      if (log.total < 0) log.total = 0;
+      log.custom.splice(index, 1);
+      if (log.custom.length === 0) delete log.custom;
+      saveFuelLog(log);
+      loadFuelView();
     }
 
     function updateFuelDisplay(log) {
@@ -8204,7 +8297,9 @@ ${recentHistory}`;
 
     function loadFuelView() {
       const container = document.getElementById('fuelCards');
-      container.innerHTML = PROTEIN_SOURCES.map(source => `
+      const log = getFuelLog();
+      // Preset cards
+      let html = PROTEIN_SOURCES.map(source => `
         <div class="fuel-card" id="fuel-card-${source.id}" onclick="logProtein('${source.id}')">
           <span class="fuel-card-count" style="display:none"></span>
           <span class="fuel-card-undo" style="display:none" onclick="event.stopPropagation(); undoProtein('${source.id}')">-</span>
@@ -8214,6 +8309,25 @@ ${recentHistory}`;
           <span class="fuel-card-serving">${source.serving}</span>
         </div>
       `).join('');
+      // Custom entries logged today
+      if (log.custom) {
+        log.custom.forEach((entry, i) => {
+          html += `
+            <div class="fuel-card has-count" id="fuel-card-custom-${i}">
+              <span class="fuel-card-undo" style="display:flex" onclick="event.stopPropagation(); removeCustomProtein(${i})">-</span>
+              <span class="fuel-card-emoji">+</span>
+              <span class="fuel-card-name">${escHtml(entry.name)}</span>
+              <span class="fuel-card-protein">${entry.protein}g</span>
+            </div>`;
+        });
+      }
+      // Add custom button
+      html += `
+        <div class="fuel-card fuel-card-add" onclick="openCustomProteinModal()">
+          <span class="fuel-card-add-icon">+</span>
+          <span class="fuel-card-add-label">Custom</span>
+        </div>`;
+      container.innerHTML = html;
 
       const currentLog = getFuelLog();
       updateFuelDisplay(currentLog);
