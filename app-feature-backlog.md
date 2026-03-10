@@ -48,6 +48,7 @@ Collected from sessions through Mar 8, 2026. Includes holistic review from 7 age
 - [ ] **History view** -- week-over-week calendar layout with checkboxes for completed workouts per day
 - [ ] **Re-edit completed sets** -- go back and fix a logged set after saving
 - [x] **Movement snack mini-sessions** -- DONE: built into DATE_WORKOUTS as separate array entries (10-15 min handball form drills). In-app, logged independently.
+- [ ] **Free-entry protein logging** -- custom gram amount for items not in the preset list (e.g. a random bar that's 14g). Should track what gets free-entered over time so frequently logged items can be promoted to presets. Could be a "+" card or a modal with a name field + gram input.
 - [ ] **Streak/consistency tracking** -- running streak, weekly completion rate. Cheapest motivation lever. (Athlete)
 - [ ] **Offline sync indicator** -- show "saved locally, will sync" when no connection. Currently silent. (Athlete, Backend)
 - [ ] **Rest day logging** -- mark rest as intentional vs missed. Log quick body check (soreness, energy). (PM, Athlete)
@@ -157,6 +158,7 @@ Collected from sessions through Mar 8, 2026. Includes holistic review from 7 age
 - [ ] **Menstrual cycle integration** -- revisit early April once cycle stabilizes. Follicular=peak training, late luteal=back off. (Coach)
 - [ ] **Planned deload weeks in future blocks** -- systematic, not accidental from travel. (Coach)
 - [x] **Update or replace static SCHEDULE** -- DONE (Phase 1): loadTodaysWorkout() now falls back to showNoWorkout() instead of day-of-week switch. DATE_WORKOUTS is primary. SCHEDULE kept as cosmetic fallback for calendar/preview only.
+- [ ] **Deprecate SCHEDULE for coach/agent context** -- SCHEDULE caused the coach agent to assume Mon=PT+Soccer when Sophie actually did Pool Recovery + Pilates. Agents should ALWAYS pull from Firestore history, never from SCHEDULE. Consider removing SCHEDULE entirely or clearly marking it as "default template only, not actual history."
 
 ## Done (Mar 8)
 
