@@ -19,7 +19,7 @@ Collected from sessions through Mar 8, 2026. Includes holistic review from 7 age
 
 ## Security (important)
 
-- [ ] **Firestore security rules missing** -- no `firestore.rules` in repo. If still on test-mode rules, anyone can read/write all data. Deploy restrictive rules. (Backend)
+- [x] **Firestore security rules missing** -- DONE: configured in Firebase console. No local `firestore.rules` file yet (consider exporting for version control).
 - [x] **Worker CORS is `*`** -- FIXED: restricted to GitHub Pages + localhost + file://
 - [x] **Worker passes client-controlled system prompt directly to Anthropic** -- FIXED: origin check, input validation, message cap, error sanitization
 
@@ -35,31 +35,31 @@ Collected from sessions through Mar 8, 2026. Includes holistic review from 7 age
 
 ## High Impact Features
 
-- [ ] **Show last-session weight/reps next to each exercise** -- "Last: 60lb x 10" under each target. Pull from Firestore history. #1 most-requested across PM and Athlete reviews. Eliminates guesswork every gym session.
-- [ ] **Simplify set modal** -- weight + reps as primary, feel/effort/notes collapsed or deferred. Auto-carry forward feel and effort from previous set. Quick +/- buttons for weight. Reduce from 3-6 taps to 1-2 per set. (UX, Athlete)
+- [x] **Show last-session weight/reps next to each exercise** -- DONE: getLastSessionData() pulls from history, "Last:" line shown under exercise target for weighted exercises.
+- [x] **Simplify set modal** -- DONE: effort type, adjustment, and notes collapsed under "More options...". Auto-carry effort type from previous set. Video toggle added. Primary view: weight + reps + feel + filmed + log.
 - [ ] **Navigate to past/future days from Today view** -- date picker or arrows. Fix "forgot to log yesterday" dead-end. (PM)
 - [ ] **History filtering and pagination** -- currently 10 items, no filter. Add "Load more" + type filter (Strength/Sport/Recovery/External). (PM, Athlete)
-- [ ] **Auto-extend plan calendar beyond WEEK_DATES** -- after Week 6 (Mar 22), show default weekly schedule instead of going blank. (PM)
+- [x] **Auto-extend plan calendar beyond WEEK_DATES** -- DONE: getActiveWeeks() hides past weeks, auto-generates future weeks through today + 2 weeks. No more blank calendar.
 - [ ] **Post-workout comparison to last time** -- "Total volume: 4,320 lbs (up 8% from last Upper Body)". Surface PRs. (Athlete)
 
 ## Features
 
-- [ ] **"Took video" toggle** -- mark individual sets where you filmed for later review
+- [x] **"Took video" toggle** -- DONE: camera toggle in set modal, 🎬 indicator on filmed set pills, saved to set data.
 - [ ] **History view** -- week-over-week calendar layout with checkboxes for completed workouts per day
 - [ ] **Re-edit completed sets** -- go back and fix a logged set after saving
-- [ ] **Movement snack mini-sessions** -- decide in-app vs informal
+- [x] **Movement snack mini-sessions** -- DONE: built into DATE_WORKOUTS as separate array entries (10-15 min handball form drills). In-app, logged independently.
 - [ ] **Streak/consistency tracking** -- running streak, weekly completion rate. Cheapest motivation lever. (Athlete)
 - [ ] **Offline sync indicator** -- show "saved locally, will sync" when no connection. Currently silent. (Athlete, Backend)
 - [ ] **Rest day logging** -- mark rest as intentional vs missed. Log quick body check (soreness, energy). (PM, Athlete)
-- [ ] **Equipment checklist** -- "Bring: loop band, handball" at top of workout header. (Athlete)
+- [x] **Equipment checklist** -- DONE: embedded in DATE_WORKOUTS `condition` field text (e.g. "Bring: loop band, handball, foam roller").
 - [ ] **Score history for trackScore exercises** -- show last score on finisher/scored drills. (Athlete)
 - [ ] **Coach conversation restore on refresh** -- sessions saved to Firestore but never loaded back. (Backend)
 - [ ] **"You are here" indicator in workout** -- dim/collapse completed circuits, highlight current. (UX, Athlete)
-- [ ] **Sticky finish button** -- don't bury at bottom of long workouts. Float or pin. (UX)
+- [x] **Sticky finish button** -- DONE: sticky bottom with gradient fade background.
 - [ ] **Swipe-to-dismiss on modals** -- feels more native on iPhone. (UX)
 - [ ] **Scroll position preserved on view switch** -- switching away from Today mid-workout loses your place. (UX, Frontend)
 - [ ] **Injury/discomfort prompt post-workout** -- specific "Any pain or discomfort?" field. (Athlete)
-- [ ] **Confirmation flash on set log** -- brief visual pulse when set pill goes green. (UX)
+- [x] **Confirmation flash on set log** -- DONE: scale + glow animation on set pill when logged.
 
 ## Nutrition / Fuel Tab
 
@@ -91,7 +91,7 @@ Collected from sessions through Mar 8, 2026. Includes holistic review from 7 age
 - [ ] **Session load score** -- RPE x duration = load. Display weekly total. Minimal effort, real insight. (Coach)
 - [ ] **Acute:chronic workload ratio** -- rolling 7-day vs 28-day load. Color-coded injury risk indicator. (Coach)
 - [ ] **Connect fuel to workout data** -- "trained hard, only hit 80g protein" insight. Both datasets exist. (PM)
-- [ ] **Readiness gate beyond Tuesday** -- extend to Friday lower body and Saturday handball. (Coach)
+- [x] **Readiness gate beyond Tuesday** -- DONE: ADAPTATION_RULES now apply to any day with a DATE_WORKOUTS entry or non-rest SCHEDULE type. Hard rules: <70 rest, <75 recovery, post-180min 48h recovery.
 - [ ] **Performance baselines in-app** -- T-test, 20m sprint, beep test targets. Currently only in markdown file. (Coach)
 - [ ] **Body-side tracking for bilateral exercises** -- left vs right performance for injury monitoring. (Coach)
 - [ ] **Effort type (physical/technical) analysis** -- captured but never surfaced. Training balance insight. (PM)
@@ -108,15 +108,15 @@ Collected from sessions through Mar 8, 2026. Includes holistic review from 7 age
 
 ## Workout Design (Coach Review)
 
-- [ ] **Update default Tuesday upper body** -- missing warm-up, no rotational core (Pallof press), no rear delt work. Use Crunch Kyle session as template. (Coach)
-- [ ] **Add hip prehab to Friday lower body** -- Section 8 exercises designed for this but not in the Friday workout. (Coach)
-- [ ] **Thursday shoulder protocol missing from app** -- SCHEDULE says "Bike + Shoulder Protocol" but workout only has bike. (Coach)
-- [ ] **Saturday handball session too long** -- 7 blocks, 100+ throws. Cap at 60-70 throws, rotate blocks weekly. Fatigue degrades form (confirmed by video analysis). (Coach)
-- [ ] **Conditioning block placement** -- "Sprint + Catch + Shoot" asks for form under fatigue. Move after finisher or use non-throwing conditioning. (Coach)
-- [ ] **Add passing drills** -- Saturday is heavily shot-focused. Short passing accuracy block (5 min) for left-hand comfort. (Coach)
-- [ ] **Add defensive footwork drills** -- lateral slides, drop steps, closeouts. Needed for tryouts. (Coach)
-- [ ] **Build in deload week** -- no planned lighter week in 6-week block. Week 4 or 5: reduce volume 30-40%, maintain intensity. (Coach)
-- [ ] **30-in-3 finisher structure** -- add "say one cue word before each throw" rule. Semi-structured interleaved practice. (Coach)
+- [x] **Update default Tuesday upper body** -- DONE: warm-ups and cool-downs built into workout base templates (workout_bases.md). Pallof press and rear delt fly are required exercises.
+- [x] **Add hip prehab to Friday lower body** -- DONE: Section 8 hip prehab circuit is the Lower Body warm-up in workout_bases.md.
+- [x] **Thursday shoulder protocol missing from app** -- DONE: shoulder protocol is the Bike/Conditioning cool-down in workout_bases.md.
+- [x] **Saturday handball session too long** -- DONE: redesigned to modular format with ~65 throw cap, rotatable technique blocks, passing+defense block.
+- [x] **Conditioning block placement** -- DONE: non-throwing conditioning moved after technique work in handball session.
+- [x] **Add passing drills** -- DONE: passing + defense block with left-hand passing included.
+- [x] **Add defensive footwork drills** -- DONE: lateral slides, drop steps, closeouts in passing+defense block.
+- [x] **Build in deload week** -- DONE: Fort Davis week (Mar 14-19) structured as ~40-50% volume deload.
+- [x] **30-in-3 finisher structure** -- DONE: cue word rule added ("say one cue word before each throw").
 - [x] **Add "turn-PULL-throw" rhythm cue to pivot drill in app** -- DONE: identified in video analysis, added to drill cues
 
 ## Technical Debt (Frontend/Backend)
@@ -156,7 +156,7 @@ Collected from sessions through Mar 8, 2026. Includes holistic review from 7 age
 - [ ] **Handball drill cue pass** -- shorter, clearer, feel-based and rhythmic cues (aphantasia)
 - [ ] **Menstrual cycle integration** -- revisit early April once cycle stabilizes. Follicular=peak training, late luteal=back off. (Coach)
 - [ ] **Planned deload weeks in future blocks** -- systematic, not accidental from travel. (Coach)
-- [ ] **Update or replace static SCHEDULE** -- current day-of-week schedule is outdated (e.g. Saturday soccer no longer exists). Either update to reflect current reality or migrate to full DATE_WORKOUTS-driven approach. Touches 5+ references (calendar, preview, workout loading, history, coach).
+- [x] **Update or replace static SCHEDULE** -- DONE (Phase 1): loadTodaysWorkout() now falls back to showNoWorkout() instead of day-of-week switch. DATE_WORKOUTS is primary. SCHEDULE kept as cosmetic fallback for calendar/preview only.
 
 ## Done (Mar 8)
 
