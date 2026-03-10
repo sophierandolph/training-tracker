@@ -738,15 +738,6 @@
       transform: translateY(-1px);
     }
 
-    .finish-banner {
-      position: fixed;
-      bottom: 85px;
-      left: 16px;
-      right: 16px;
-      z-index: 140;
-      animation: slideUp 0.3s ease;
-    }
-
     /* Workout Complete Modal */
     .complete-modal {
       text-align: center;
@@ -4455,17 +4446,9 @@
       document.getElementById('progressFill').style.width = `${percent}%`;
       document.getElementById('progressText').textContent = `${percent}%`;
 
-      // Show/hide floating finish banner
+      // Remove legacy floating finish banner if it exists (sticky button handles this now)
       let banner = document.getElementById('finishBanner');
-      if (percent >= 100 && !banner) {
-        banner = document.createElement('div');
-        banner.id = 'finishBanner';
-        banner.className = 'finish-banner';
-        banner.innerHTML = '<button class="btn btn-success" style="width: 100%; padding: 16px; font-size: 16px;" onclick="finishWorkout()">Finish Workout</button>';
-        document.body.appendChild(banner);
-      } else if (percent < 100 && banner) {
-        banner.remove();
-      }
+      if (banner) banner.remove();
     }
 
     // ==================== WORKOUT COMPLETION ====================
@@ -7735,7 +7718,7 @@ ${recentHistory}`;
       { id: 'tofu', name: 'Tofu (firm)', emoji: '🧈', serving: '½ cup', protein: 10 },
       { id: 'tempeh', name: 'Tempeh', emoji: '🍥', serving: '½ cup', protein: 16 },
       { id: 'cottage_cheese', name: 'Cottage cheese', emoji: '🏠', serving: '½ cup', protein: 13 },
-      { id: 'whey_shake', name: 'Whey shake', emoji: '🥤', serving: '1 scoop+milk', protein: 33 },
+      { id: 'whey_shake', name: 'Whey shake', emoji: '🥤', serving: 'full recipe', protein: 48 },
       { id: 'lentils', name: 'Lentils/beans', emoji: '🍲', serving: '½ cup', protein: 9 },
       { id: 'cheese', name: 'Cheese', emoji: '🧀', serving: '1 oz', protein: 7 },
       { id: 'pb', name: 'PB/nut butter', emoji: '🥜', serving: '2 tbsp', protein: 8 },
