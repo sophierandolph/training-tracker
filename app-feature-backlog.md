@@ -55,10 +55,10 @@ Collected from sessions through Mar 8, 2026. Includes holistic review from 7 age
 - [x] **Equipment checklist** -- DONE: embedded in DATE_WORKOUTS `condition` field text (e.g. "Bring: loop band, handball, foam roller").
 - [ ] **Score history for trackScore exercises** -- show last score on finisher/scored drills. (Athlete)
 - [ ] **Coach conversation restore on refresh** -- sessions saved to Firestore but never loaded back. (Backend)
-- [ ] **"You are here" indicator in workout** -- dim/collapse completed circuits, highlight current. (UX, Athlete)
+- [x] **"You are here" indicator in workout** -- DONE: completed circuits dim to 50% opacity, current circuit gets lavender border. Updates live as sets are logged.
 - [x] **Sticky finish button** -- DONE: sticky bottom with gradient fade background.
 - [ ] **Swipe-to-dismiss on modals** -- feels more native on iPhone. (UX)
-- [ ] **Scroll position preserved on view switch** -- switching away from Today mid-workout loses your place. (UX, Frontend)
+- [x] **Scroll position preserved on view switch** -- DONE: saves/restores scroll position per view tab.
 - [ ] **Injury/discomfort prompt post-workout** -- specific "Any pain or discomfort?" field. (Athlete)
 - [x] **Confirmation flash on set log** -- DONE: scale + glow animation on set pill when logged.
 
@@ -103,9 +103,9 @@ Collected from sessions through Mar 8, 2026. Includes holistic review from 7 age
 - [ ] **Review all exercises: tap vs detail** -- decide simple tap vs detailed entry per exercise
 - [ ] **Review all workouts: break into multiple entries?** -- check all days like Wed warmup/cooldown split
 - [ ] **Shoulder protocol instructions/cues** -- better descriptions, band types
-- [ ] **Exercise notes truncation** -- long notes (50+ words) should truncate to 1-2 lines with "more" tap. (UX)
+- [x] **Exercise notes truncation** -- DONE: CSS line-clamp to 2 lines, tap to expand/collapse.
 - [ ] **Adjustment modal stacking** -- "Adjusted from plan?" opens modal-on-modal. Inline instead. (UX, Athlete)
-- [ ] **Feel scale label inconsistency** -- set modal uses RIR (reps in reserve), completion modal uses RPE. Inverted scales. (UX)
+- [x] **Feel scale label inconsistency** -- DONE: set modal now uses same Easy/Moderate/Hard/Very hard/Max scale as completion modal.
 
 ## Workout Design (Coach Review)
 
