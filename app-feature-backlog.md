@@ -38,9 +38,9 @@ Collected from sessions through Mar 8, 2026. Includes holistic review from 7 age
 - [x] **Show last-session weight/reps next to each exercise** -- DONE: getLastSessionData() pulls from history, "Last:" line shown under exercise target for weighted exercises.
 - [x] **Simplify set modal** -- DONE: effort type, adjustment, and notes collapsed under "More options...". Auto-carry effort type from previous set. Video toggle added. Primary view: weight + reps + feel + filmed + log.
 - [x] **Navigate to past/future days from Today view** -- DONE: left/right arrow buttons on date display + "Today" pill to return. Shows completed workouts for past days, lets you log missed workouts.
-- [ ] **History filtering and pagination** -- currently 10 items, no filter. Add "Load more" + type filter (Strength/Sport/Recovery/External). (PM, Athlete)
+- [x] **History filtering and pagination** -- DONE: filter pills (All/Strength/Sport/Recovery/External) + "Load more" button with remaining count. 10 items per page.
 - [x] **Auto-extend plan calendar beyond WEEK_DATES** -- DONE: getActiveWeeks() hides past weeks, auto-generates future weeks through today + 2 weeks. No more blank calendar.
-- [ ] **Post-workout comparison to last time** -- "Total volume: 4,320 lbs (up 8% from last Upper Body)". Surface PRs. (Athlete)
+- [x] **Post-workout comparison to last time** -- DONE: completion modal shows volume % change vs last same-name session + exercise-level weight PRs.
 
 ## Features
 

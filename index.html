@@ -1069,6 +1069,72 @@
       margin-top: 8px;
       font-style: italic;
     }
+    .history-filters {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+    }
+    .history-filter-btn {
+      font-size: 12px;
+      font-weight: 600;
+      padding: 6px 14px;
+      border-radius: 16px;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--text-secondary);
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .history-filter-btn.active {
+      background: rgba(176, 157, 255, 0.15);
+      color: var(--lavender);
+      border-color: var(--lavender);
+    }
+    .history-load-more {
+      text-align: center;
+      padding: 12px;
+      color: var(--lavender);
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      border-radius: var(--radius);
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+    }
+    .history-load-more:active {
+      background: rgba(176, 157, 255, 0.1);
+    }
+    .comparison-section {
+      background: var(--bg-card);
+      border-radius: 12px;
+      padding: 14px 16px;
+      margin-bottom: 16px;
+      border: 1px solid var(--border);
+    }
+    .comparison-title {
+      font-size: 12px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 8px;
+    }
+    .comparison-stat {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 4px 0;
+      font-size: 13px;
+    }
+    .comparison-label {
+      color: var(--text-secondary);
+    }
+    .comparison-value {
+      font-weight: 600;
+    }
+    .comparison-value.up { color: var(--emerald); }
+    .comparison-value.down { color: var(--rose); }
+    .comparison-value.same { color: var(--text-muted); }
 
     /* Plan View */
     .plan-section {
@@ -2351,6 +2417,13 @@
     <div id="historyView" class="view">
       <div class="history-section">
         <h2 style="margin-bottom: 16px;">Recent Workouts</h2>
+        <div class="history-filters" id="historyFilters">
+          <button class="history-filter-btn active" onclick="filterHistory('all')">All</button>
+          <button class="history-filter-btn" onclick="filterHistory('Strength')">Strength</button>
+          <button class="history-filter-btn" onclick="filterHistory('Sport')">Sport</button>
+          <button class="history-filter-btn" onclick="filterHistory('Recovery')">Recovery</button>
+          <button class="history-filter-btn" onclick="filterHistory('External')">External</button>
+        </div>
         <div id="historyList">
           <!-- History loaded dynamically -->
         </div>
@@ -2565,6 +2638,8 @@
           <div class="stat-label">Total Volume (lbs)</div>
         </div>
       </div>
+
+      <div id="comparisonSection" class="comparison-section" style="display:none;"></div>
 
       <div style="background: rgba(56, 189, 248, 0.1); border-radius: 12px; padding: 12px 16px; margin-bottom: 16px; text-align: center;">
         <span style="font-size: 14px; color: var(--text-secondary);">Drink a full bottle of water now</span>
@@ -4543,6 +4618,86 @@
       if (banner) banner.remove();
     }
 
+    // ==================== WORKOUT COMPARISON ====================
+    function buildComparison(currentVolume) {
+      const section = document.getElementById('comparisonSection');
+      if (!state.activeWorkout) { section.style.display = 'none'; return; }
+
+      const history = getWorkoutHistory();
+      const workoutName = state.activeWorkout.name;
+      const lastSession = history.find(h => h.workout === workoutName && h.date !== formatDateKey(state.currentDate));
+
+      if (!lastSession || !lastSession.exercises) {
+        section.style.display = 'none';
+        return;
+      }
+
+      let html = `<div class="comparison-title">vs. last ${workoutName}</div>`;
+
+      // Volume comparison
+      let lastVolume = 0;
+      if (lastSession.exercises) {
+        lastSession.exercises.forEach(ex => {
+          if (ex.sets) ex.sets.forEach(s => { lastVolume += (s.weight || 0) * (s.reps || 0); });
+        });
+      }
+
+      if (lastVolume > 0 && currentVolume > 0) {
+        const diff = currentVolume - lastVolume;
+        const pct = Math.round((diff / lastVolume) * 100);
+        const cls = diff > 0 ? 'up' : diff < 0 ? 'down' : 'same';
+        const sign = diff > 0 ? '+' : '';
+        html += `<div class="comparison-stat">
+          <span class="comparison-label">Total volume</span>
+          <span class="comparison-value ${cls}">${sign}${pct}% (${sign}${diff.toLocaleString()} lbs)</span>
+        </div>`;
+      }
+
+      // Exercise-level PRs (weight PRs only)
+      const prs = [];
+      const lastExByName = {};
+      lastSession.exercises.forEach(ex => { lastExByName[ex.name] = ex; });
+
+      if (state.activeWorkout.circuits) {
+        state.activeWorkout.circuits.forEach((circuit, ci) => {
+          circuit.exercises.forEach((ex, ei) => {
+            const id = `${ci}-${ei}`;
+            const sets = state.workoutLog[id];
+            if (!sets) return;
+            const completedSets = sets.filter(s => s && !s.skipped && s.weight);
+            if (completedSets.length === 0) return;
+            const maxWeight = Math.max(...completedSets.map(s => s.weight));
+            const lastEx = lastExByName[ex.name];
+            if (lastEx && lastEx.sets) {
+              const lastMax = Math.max(...lastEx.sets.map(s => s.weight || 0));
+              if (maxWeight > lastMax && lastMax > 0) {
+                prs.push({ name: ex.name, weight: maxWeight, prev: lastMax });
+              }
+            }
+          });
+        });
+      }
+
+      if (prs.length > 0) {
+        html += `<div style="margin-top: 8px; padding-top: 8px; border-top: 1px solid var(--border);">`;
+        prs.forEach(pr => {
+          html += `<div class="comparison-stat">
+            <span class="comparison-label">${pr.name}</span>
+            <span class="comparison-value up">${pr.prev} → ${pr.weight} lbs</span>
+          </div>`;
+        });
+        html += `</div>`;
+      }
+
+      // Only show if we have something meaningful
+      if (lastVolume > 0 || prs.length > 0) {
+        section.innerHTML = html;
+        section.style.display = 'block';
+      } else {
+        section.style.display = 'none';
+      }
+    }
+
     // ==================== WORKOUT COMPLETION ====================
     function finishWorkout() {
       const duration = state.workoutStartTime ?
@@ -4563,6 +4718,9 @@
       document.getElementById('workoutDuration').textContent = `${duration} minutes`;
       document.getElementById('setsCompleted').textContent = setsCompleted;
       document.getElementById('totalVolume').textContent = totalVolume.toLocaleString();
+
+      // Compare to last session with same workout name
+      buildComparison(totalVolume);
 
       // Reset selections
       document.querySelectorAll('#overallSlider .overall-btn').forEach(b => b.classList.remove('selected'));
@@ -4862,16 +5020,47 @@
     }
 
     // ==================== HISTORY ====================
+    let historyFilter = 'all';
+    let historyLimit = 10;
+
+    function filterHistory(filter) {
+      historyFilter = filter;
+      historyLimit = 10;
+      document.querySelectorAll('.history-filter-btn').forEach(b => b.classList.remove('active'));
+      document.querySelector(`.history-filter-btn[onclick="filterHistory('${filter}')"]`).classList.add('active');
+      loadHistory();
+    }
+
+    function loadMoreHistory() {
+      historyLimit += 10;
+      loadHistory();
+    }
+
     function loadHistory() {
-      const history = getWorkoutHistory();
+      const allHistory = getWorkoutHistory();
       const container = document.getElementById('historyList');
 
+      // Apply filter
+      let history = allHistory;
+      if (historyFilter !== 'all') {
+        if (historyFilter === 'External') {
+          history = allHistory.filter(w => w.type === 'External Activity' || w.type === 'Travel Activity');
+        } else {
+          history = allHistory.filter(w => w.type === historyFilter || (w.type || '').toLowerCase().includes(historyFilter.toLowerCase()));
+        }
+      }
+
       if (history.length === 0) {
-        container.innerHTML = '<p style="color: var(--text-secondary);">No workouts logged yet. Complete your first workout to see it here!</p>';
+        container.innerHTML = historyFilter === 'all'
+          ? '<p style="color: var(--text-secondary);">No workouts logged yet. Complete your first workout to see it here!</p>'
+          : `<p style="color: var(--text-secondary);">No ${historyFilter.toLowerCase()} workouts found.</p>`;
         return;
       }
 
-      container.innerHTML = history.slice(0, 10).map((workout, idx) => {
+      const showing = history.slice(0, historyLimit);
+      const hasMore = history.length > historyLimit;
+
+      container.innerHTML = showing.map((workout, idx) => {
         const date = new Date(workout.date + 'T00:00:00');
         const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
         const effortIcons = { physical: '💪', technical: '🎯', mental: '🧠', tactical: '🧠' };
@@ -4968,6 +5157,10 @@
           </div>
         `;
       }).join('');
+
+      if (hasMore) {
+        container.innerHTML += `<div class="history-load-more" onclick="loadMoreHistory()">Load more (${history.length - historyLimit} remaining)</div>`;
+      }
     }
 
     function toggleHistoryDetail(uid) {
