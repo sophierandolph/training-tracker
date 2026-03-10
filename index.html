@@ -5403,38 +5403,22 @@
         ]
       }
     ],
-    '2026-03-10': {
-      name: "Personal Training (one-time Tuesday)",
-      type: "Strength",
-      duration: "60 min",
-      location: "Gym",
-      condition: "PT moved from Monday this week only. Trainer handles programming. Log weights/reps after.",
-      circuits: [
-        {
-          name: "Trainer-Led Session",
-          instructions: "Follow trainer's programming. Log details after for tracking.",
-          exercises: [
-            { id: "pt10_a1", name: "PT Session", sets: 1, reps: 1, notes: "Full session with trainer. Write down weights and exercises during or immediately after.", noWeight: true }
-          ]
-        }
-      ]
-    },
-    '2026-03-12': [
+    '2026-03-10': [
       {
         name: "Upper Body Strength",
         type: "Strength",
         duration: "55 min",
         location: "Gym",
-        condition: "Last gym day before Fort Davis. Updated base: warm-up, Pallof press, rear delt fly added per coach review.\nBring: nothing extra (gym day)",
+        condition: "9 days since last upper body (Mar 1). Last strength session before Fort Davis deload.\nBring: nothing extra (gym day)",
         circuits: [
           {
             name: "A. Upper Body Warm-Up (8 min)",
             instructions: "Activate shoulders and upper back before loading. Take your time.",
             exercises: [
-              { id: "ub12_a1", name: "Loop Band Pull-Aparts", sets: 1, reps: 15, notes: "Band at chest height, arms straight. Squeeze shoulder blades together.", noWeight: true },
-              { id: "ub12_a2", name: "Bodyweight Y-T-W", sets: 1, reps: 10, notes: "Hinge forward 45 deg. Y: arms overhead. T: arms out to sides. W: elbows bent. 10 reps each position.", noWeight: true },
-              { id: "ub12_a3", name: "Arm Circles", sets: 1, reps: 20, notes: "10 forward, 10 backward. Big slow circles.", noWeight: true },
-              { id: "ub12_a4", name: "Wall Angels", sets: 1, reps: 10, notes: "Back flat against wall, slide arms up keeping contact. Feel chest open, shoulder blades stay down.", noWeight: true }
+              { id: "ub10_a1", name: "Loop Band Pull-Aparts", sets: 1, reps: 15, notes: "Band at chest height, arms straight. Squeeze shoulder blades together.", noWeight: true },
+              { id: "ub10_a2", name: "Bodyweight Y-T-W", sets: 1, reps: 10, notes: "Hinge forward 45 deg. Y: arms overhead. T: arms out to sides. W: elbows bent. 10 reps each position.", noWeight: true },
+              { id: "ub10_a3", name: "Arm Circles", sets: 1, reps: 20, notes: "10 forward, 10 backward. Big slow circles.", noWeight: true },
+              { id: "ub10_a4", name: "Wall Angels", sets: 1, reps: 10, notes: "Back flat against wall, slide arms up keeping contact. Feel chest open, shoulder blades stay down.", noWeight: true }
             ]
           },
           {
@@ -5442,9 +5426,9 @@
             instructions: "Do B1-B2-B3, rest 90 sec, repeat 3x",
             restTime: 90,
             exercises: [
-              { id: "ub12_b1", name: "Single Arm DB Row", sets: 3, reps: 10, weight: 20, notes: "Each arm. Pull elbow back, core tight.", perSide: true },
-              { id: "ub12_b2", name: "Chest Press Machine", sets: 3, reps: 10, weight: 45, notes: "Full range of motion." },
-              { id: "ub12_b3", name: "Pallof Press", sets: 3, reps: 10, weight: 15, notes: "Each side. Cable or band at chest height. Press out, hold 2 sec, return. Resist rotation.", perSide: true }
+              { id: "ub10_b1", name: "Single Arm DB Row", sets: 3, reps: 10, weight: 20, notes: "Each arm. Pull elbow back, core tight.", perSide: true },
+              { id: "ub10_b2", name: "Chest Press Machine", sets: 3, reps: 10, weight: 45, notes: "Full range of motion." },
+              { id: "ub10_b3", name: "Pallof Press", sets: 3, reps: 10, weight: 15, notes: "Each side. Cable or band at chest height. Press out, hold 2 sec, return. Resist rotation.", perSide: true }
             ]
           },
           {
@@ -5452,9 +5436,9 @@
             instructions: "Do C1-C2-C3, rest 90 sec, repeat 3x",
             restTime: 90,
             exercises: [
-              { id: "ub12_c1", name: "Lat Pulldown Machine", sets: 3, reps: 10, weight: 60, notes: "Pull to upper chest, squeeze" },
-              { id: "ub12_c2", name: "Lateral Raise Combo", sets: 3, reps: 10, weight: 5, notes: "Lateral up, forward, down. Front up, lateral, down = 1 rep. Slow on the way down." },
-              { id: "ub12_c3", name: "Rear Delt Fly", sets: 3, reps: 12, weight: 32.5, notes: "Machine or cable. Squeeze shoulder blades at end range. Light and controlled." }
+              { id: "ub10_c1", name: "Lat Pulldown Machine", sets: 3, reps: 10, weight: 60, notes: "Pull to upper chest, squeeze" },
+              { id: "ub10_c2", name: "Lateral Raise Combo", sets: 3, reps: 10, weight: 5, notes: "Lateral up, forward, down. Front up, lateral, down = 1 rep. Slow on the way down." },
+              { id: "ub10_c3", name: "Rear Delt Fly", sets: 3, reps: 12, weight: 32.5, notes: "Machine or cable. Squeeze shoulder blades at end range. Light and controlled." }
             ]
           },
           {
@@ -5462,41 +5446,38 @@
             instructions: "Do D1-D2, rest 90 sec, repeat 3x",
             restTime: 90,
             exercises: [
-              { id: "ub12_d1", name: "Bicep Curls", sets: 3, reps: 10, weight: 12.5, notes: "No swinging, control down" },
-              { id: "ub12_d2", name: "Cable Tricep Extension", sets: 3, reps: 10, weight: 22, notes: "Elbows stay pinned to sides." }
+              { id: "ub10_d1", name: "Bicep Curls", sets: 3, reps: 10, weight: 12.5, notes: "No swinging, control down" },
+              { id: "ub10_d2", name: "Cable Tricep Extension", sets: 3, reps: 10, weight: 22, notes: "Elbows stay pinned to sides." }
             ]
           },
           {
             name: "E. Cool-Down (5 min)",
             instructions: "Shoulder and upper back release.",
             exercises: [
-              { id: "ub12_e1", name: "Cross-Body Shoulder Stretch", sets: 1, reps: 1, notes: "30 sec each side", isHold: true, holdTime: 30, perSide: true, noWeight: true },
-              { id: "ub12_e2", name: "Chest Opener", sets: 1, reps: 1, notes: "Arms clasped behind back, 30 sec", isHold: true, holdTime: 30, noWeight: true },
-              { id: "ub12_e3", name: "Thread the Needle", sets: 1, reps: 1, notes: "30 sec each side. Thoracic rotation.", isHold: true, holdTime: 30, perSide: true, noWeight: true }
-            ]
-          }
-        ]
-      },
-      {
-        name: "Movement Snack: Handball Form",
-        type: "Sport-Specific",
-        duration: "10-15 min",
-        location: "Squash Court or any wall",
-        condition: "Distributed practice for motor learning. Interleaved, not blocked.\nBring: handball",
-        circuits: [
-          {
-            name: "Handball Movement Snack",
-            instructions: "Mix these up, don't do all of one then all of another. 2-3 reps of each, rotate through. Say your cue word before each throw.",
-            exercises: [
-              { id: "ms12_a1", name: "3-Step Rhythm (No Ball)", sets: 2, reps: 5, notes: "Step, OPEN, launch. Feel chest rotate open on step 2. Slow and deliberate.", noWeight: true },
-              { id: "ms12_a2", name: "Kneeling Throws (R)", sets: 2, reps: 6, notes: "Throwing-side knee down. Isolates torso rotation. Say cue before each throw.", noWeight: true },
-              { id: "ms12_a3", name: "Standing Jump Shot (R)", sets: 2, reps: 5, notes: "3-step approach. Release at peak of jump, not on the way down. Cue: step, OPEN, launch.", noWeight: true },
-              { id: "ms12_a4", name: "Standing Throws (L)", sets: 2, reps: 6, notes: "Left hand. Low target, technique over power. Feel the release point.", noWeight: true }
+              { id: "ub10_e1", name: "Cross-Body Shoulder Stretch", sets: 1, reps: 1, notes: "30 sec each side", isHold: true, holdTime: 30, perSide: true, noWeight: true },
+              { id: "ub10_e2", name: "Chest Opener", sets: 1, reps: 1, notes: "Arms clasped behind back, 30 sec", isHold: true, holdTime: 30, noWeight: true },
+              { id: "ub10_e3", name: "Thread the Needle", sets: 1, reps: 1, notes: "30 sec each side. Thoracic rotation.", isHold: true, holdTime: 30, perSide: true, noWeight: true }
             ]
           }
         ]
       }
     ],
+    '2026-03-12': {
+      name: "Personal Training (rescheduled)",
+      type: "Strength",
+      duration: "60 min",
+      location: "Gym",
+      condition: "PT rescheduled from Tue. Tell trainer you did upper body Tuesday so they can adjust. Last strength session before Fort Davis deload.",
+      circuits: [
+        {
+          name: "Trainer-Led Session",
+          instructions: "Follow trainer's programming. Log details after for tracking.",
+          exercises: [
+            { id: "pt12_a1", name: "PT Session", sets: 1, reps: 1, notes: "Full session with trainer. Write down weights and exercises during or immediately after.", noWeight: true }
+          ]
+        }
+      ]
+    },
     '2026-03-13': {
       name: "Travel Day: Stretch + Foam Roll",
       type: "Recovery",
