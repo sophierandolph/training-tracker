@@ -3708,13 +3708,7 @@
 
       // Clear any in-progress workout state for the current day
       state.activeWorkout = null;
-      state.workoutStartTime = null;
-      state.workoutLog = {};
-      state.currentExercise = null;
-      state.currentSet = null;
-      state.overallFeel = null;
-      state.overallEffortType = null;
-      state.pendingWorkout = null;
+      resetWorkoutState();
 
       // Move the date
       const newDate = new Date(state.currentDate);
@@ -3729,13 +3723,7 @@
     function navigateToToday() {
       state.currentDate = new Date();
       state.activeWorkout = null;
-      state.workoutStartTime = null;
-      state.workoutLog = {};
-      state.currentExercise = null;
-      state.currentSet = null;
-      state.overallFeel = null;
-      state.overallEffortType = null;
-      state.pendingWorkout = null;
+      resetWorkoutState();
 
       updateDateDisplay();
       loadTodaysWorkout();
@@ -3828,9 +3816,8 @@
           return;
         }
         workout = dw;
+        resetWorkoutState();
         state.activeWorkout = workout;
-        state.workoutStartTime = null;
-        state.workoutLog = {};
         renderWorkout(workout);
         restoreProgressIfAvailable();
         return;
@@ -4185,10 +4172,10 @@
 
     function startInAppWorkout() {
       if (state.pendingWorkout) {
-        state.activeWorkout = state.pendingWorkout;
-        state.workoutStartTime = null;
-        state.workoutLog = {};
-        renderWorkout(state.pendingWorkout);
+        const workout = state.pendingWorkout;
+        resetWorkoutState();
+        state.activeWorkout = workout;
+        renderWorkout(workout);
         restoreProgressIfAvailable();
       }
     }
@@ -4234,11 +4221,23 @@
       content.innerHTML = `<div class="activity-tiles">${tilesHtml}</div>`;
     }
 
+    function resetWorkoutState() {
+      state.workoutStartTime = null;
+      state.workoutLog = {};
+      state.currentExercise = null;
+      state.currentSet = null;
+      state.overallFeel = null;
+      state.overallEffortType = null;
+      state.pendingWorkout = null;
+      state.workoutAdjustments = [];
+      adaptationApplied = null;
+      originalScheduledWorkout = null;
+    }
+
     function startMultiWorkout(index) {
       if (multiWorkoutList && multiWorkoutList[index]) {
+        resetWorkoutState();
         state.activeWorkout = multiWorkoutList[index];
-        state.workoutStartTime = null;
-        state.workoutLog = {};
         renderWorkout(multiWorkoutList[index]);
         restoreProgressIfAvailable();
       }
@@ -4250,9 +4249,8 @@
         ? workoutKey.split('.').reduce((obj, key) => obj && obj[key], WORKOUTS)
         : WORKOUTS[workoutKey] || (WORKOUTS.activeRecovery && WORKOUTS.activeRecovery[workoutKey]);
       if (workout) {
+        resetWorkoutState();
         state.activeWorkout = workout;
-        state.workoutStartTime = null;
-        state.workoutLog = {};
         renderWorkout(workout);
         restoreProgressIfAvailable();
       }
@@ -4306,11 +4304,13 @@
       }
     }
 
-    function renderWorkout(workout) {
+    function renderWorkout(workout, adaptationRule) {
       const content = document.getElementById('workoutContent');
       document.getElementById('dayName').textContent = workout.name;
 
-      let html = `
+      let html = adaptationRule ? renderAdaptationBanner([adaptationRule], originalScheduledWorkout) : '';
+
+      html += `
         <div class="workout-header">
           <div class="workout-type">${workout.type}</div>
           <div class="workout-title">${workout.name}</div>
@@ -4360,6 +4360,7 @@
       `;
 
       content.innerHTML = html;
+      if (adaptationRule) state.activeWorkout = workout;
     }
 
     function getLastSessionData(exerciseName) {
@@ -4383,8 +4384,11 @@
       return null;
     }
 
+    const exerciseLookup = {};
+
     function renderExercise(exercise, circuitIndex, exerciseIndex, restTime, simple) {
       const exerciseId = `${circuitIndex}-${exerciseIndex}`;
+      exerciseLookup[exerciseId] = { exercise, restTime: restTime || 90 };
       const repsText = exercise.isHold ? `${exercise.holdTime}s hold` :
                        exercise.isCardio ? (exercise.duration ? `${Math.floor(exercise.duration/60)}min` : 'Complete') :
                        `${exercise.reps} reps`;
@@ -4422,14 +4426,14 @@
         const setId = `${exerciseId}-${i}`;
         if (simple) {
           html += `
-            <div class="set-pill" id="set-${setId}" onclick="quickLogSet('${exerciseId}', ${i}, ${JSON.stringify(exercise).replace(/"/g, '&quot;')})">
+            <div class="set-pill" id="set-${setId}" onclick="quickLogSetById('${exerciseId}', ${i})">
               <div class="set-number">${exercise.sets === 1 ? '✓' : 'Set ' + (i + 1)}</div>
               <div class="set-value" id="set-value-${setId}">—</div>
             </div>
           `;
         } else {
           html += `
-            <div class="set-pill" id="set-${setId}" onclick="openSetModal('${exerciseId}', ${i}, ${JSON.stringify(exercise).replace(/"/g, '&quot;')}, ${restTime || 90})">
+            <div class="set-pill" id="set-${setId}" onclick="openSetModalById('${exerciseId}', ${i})">
               <div class="set-number">Set ${i + 1}</div>
               <div class="set-value" id="set-value-${setId}">--</div>
             </div>
@@ -4500,6 +4504,18 @@
     }
 
     // ==================== SET LOGGING ====================
+    function openSetModalById(exerciseId, setIndex) {
+      const entry = exerciseLookup[exerciseId];
+      if (!entry) return;
+      openSetModal(exerciseId, setIndex, entry.exercise, entry.restTime);
+    }
+
+    function quickLogSetById(exerciseId, setIndex) {
+      const entry = exerciseLookup[exerciseId];
+      if (!entry) return;
+      quickLogSet(exerciseId, setIndex, entry.exercise);
+    }
+
     function openSetModal(exerciseId, setIndex, exercise, restTime) {
       if (!state.workoutStartTime) {
         state.workoutStartTime = new Date();
@@ -4858,7 +4874,6 @@
         duration: state.workoutStartTime ?
           Math.round((new Date() - state.workoutStartTime) / 60000) : 0,
         readiness: state.readiness,
-        log: state.workoutLog,
         exercises: exercises,
         overallFeel: state.overallFeel,
         overallEffortType: state.overallEffortType,
@@ -4879,13 +4894,7 @@
       document.getElementById('completeModal').classList.remove('active');
 
       // Reset state
-      state.workoutLog = {};
-      state.workoutStartTime = null;
-      state.overallFeel = null;
-      state.overallEffortType = null;
-      state.workoutAdjustments = [];
-      adaptationApplied = null;
-      originalScheduledWorkout = null;
+      resetWorkoutState();
 
       // Show completion state
       showWorkoutComplete(workoutData);
@@ -4954,8 +4963,7 @@
         } else if (mainRule.action === 'switch_to_recovery') {
           // Switch to recovery workout
           adaptationApplied = mainRule;
-          state.activeWorkout = WORKOUTS.activeRecovery.poolRecovery;
-          renderWorkoutWithAdaptation(WORKOUTS.activeRecovery.poolRecovery, mainRule);
+          renderWorkout(WORKOUTS.activeRecovery.poolRecovery, mainRule);
         } else {
           // Just warnings - reload normally but show banner
           loadTodaysWorkout();
@@ -5003,65 +5011,6 @@
           </div>
         </div>
       `;
-    }
-
-    function renderWorkoutWithAdaptation(workout, rule) {
-      const content = document.getElementById('workoutContent');
-      document.getElementById('dayName').textContent = workout.name;
-
-      let html = renderAdaptationBanner([rule], originalScheduledWorkout);
-
-      html += `
-        <div class="workout-header">
-          <div class="workout-type">${workout.type}</div>
-          <div class="workout-title">${workout.name}</div>
-          <div class="workout-meta">
-            <span>⏱ ${workout.duration}</span>
-            <span>📍 ${workout.location}</span>
-          </div>
-        </div>
-
-        <div class="progress-container">
-          <div class="progress-label">
-            <span>Progress</span>
-            <span id="progressText">0%</span>
-          </div>
-          <div class="progress-bar">
-            <div class="progress-fill" id="progressFill" style="width: 0%"></div>
-          </div>
-        </div>
-      `;
-
-      workout.circuits.forEach((circuit, circuitIndex) => {
-        html += `
-          <div class="circuit-section" id="circuit-${circuitIndex}">
-            <div class="circuit-header">
-              <div>
-                <h3>${circuit.name}</h3>
-                <div class="circuit-instructions">${circuit.instructions}</div>
-              </div>
-              <div class="circuit-status" id="circuit-status-${circuitIndex}">0/${getTotalSets(circuit)}</div>
-            </div>
-        `;
-
-        const isSimple = circuit.simple || /warm|cool.?down|stretch|gentle|get moving/i.test(circuit.name);
-        circuit.exercises.forEach((exercise, exerciseIndex) => {
-          html += renderExercise(exercise, circuitIndex, exerciseIndex, circuit.restTime, isSimple);
-        });
-
-        html += `</div>`;
-      });
-
-      html += `
-        <div class="finish-workout-wrap" style="padding: 16px 20px;">
-          <button class="btn btn-success" style="width: 100%;" onclick="finishWorkout()">
-            Finish Workout
-          </button>
-        </div>
-      `;
-
-      content.innerHTML = html;
-      state.activeWorkout = workout;
     }
 
     function updateReadinessDisplay() {
@@ -7509,12 +7458,10 @@
 
     function showOriginalWorkout() {
       if (originalScheduledWorkout) {
-        adaptationApplied = null;
-        state.activeWorkout = originalScheduledWorkout;
-        state.workoutLog = {};
-        state.workoutStartTime = null;
-        renderWorkout(originalScheduledWorkout);
-        originalScheduledWorkout = null;
+        const workout = originalScheduledWorkout;
+        resetWorkoutState();
+        state.activeWorkout = workout;
+        renderWorkout(workout);
       }
     }
 

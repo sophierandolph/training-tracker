@@ -124,17 +124,17 @@ Collected from sessions through Mar 8, 2026. Includes holistic review from 7 age
 
 - [x] **Worker model version hardcoded** -- DONE: now configurable via env var
 - [ ] **showDayPreview() is 350 lines** -- refactor into type-specific renderers. (Frontend)
-- [ ] **renderWorkout() and renderWorkoutWithAdaptation() duplicate ~40 lines** -- merge into one function with optional banner. (Frontend)
-- [ ] **JSON.stringify in onclick handlers is fragile** -- use lookup map + key instead. (Frontend, QA)
+- [x] **renderWorkout() and renderWorkoutWithAdaptation() duplicate ~40 lines** -- DONE: merged into renderWorkout(workout, adaptationRule) with optional second param.
+- [x] **JSON.stringify in onclick handlers is fragile** -- DONE: exerciseLookup map populated during render, onclick uses string key lookup.
 - [ ] **Inconsistent persistence strategies** -- readiness=Firestore-first, fuel=localStorage-first, history=Firestore-first. Standardize. (Frontend, Backend)
 - [ ] **System prompt rebuilt on every coach message** -- cache until new workout saved. (Backend)
 - [ ] **History re-fetches all 100 docs on every page load** -- use `.onSnapshot()` listener instead. (Backend)
 - [ ] **dailyState single-doc pattern** -- no historical readiness record. Once day resets, previous readiness gone. (Backend)
 - [ ] **Firebase SDK loaded synchronously** -- add `async`/`defer` to unblock HTML parsing. (Frontend)
 - [x] **No request timeout on coach** -- DONE: AbortController with 30s timeout. Shows "Request timed out. Try again." on abort.
-- [ ] **State not reset between multi-workout days** -- `adaptationApplied` can leak between workouts in same session. (QA)
+- [x] **State not reset between multi-workout days** -- DONE: `resetWorkoutState()` consolidates all workout state cleanup, used in all 6 workout-start paths.
 - [x] **Midnight rollover** -- DONE: visibilitychange listener detects date change when app returns to foreground, resets to new day.
-- [ ] **Duplicate log and exercises fields in saved data** -- raw workoutLog + processed exercises array. Pick one canonical shape. (Backend)
+- [x] **Duplicate log and exercises fields in saved data** -- DONE: removed raw `log` field from saved data. `exercises` is the canonical shape.
 
 ## Low Priority / Nice to Have
 
