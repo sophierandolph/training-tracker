@@ -3128,10 +3128,10 @@
               name: "C. Shoulder, Shin + Hip Prehab",
               instructions: "18-20 minutes - Shoulder stability with band, shin/ankle prehab, then hip prehab",
               exercises: [
-                { id: "r8", name: "Band External Rotation", sets: 2, reps: 12, notes: "Each arm. Band at elbow height, elbow tucked at 90 deg. Rotate arm outward keeping elbow at side. Slow: 2 sec out, 2 sec in.", perSide: true, noWeight: true },
-                { id: "r9", name: "Band Pull-Aparts", sets: 2, reps: 15, notes: "Hold band at chest height, arms straight. Pull apart squeezing shoulder blades together. Feel posterior deltoids and rhomboids.", noWeight: true },
-                { id: "r10", name: "Scapular Wall Slides", sets: 2, reps: 10, notes: "Back against wall, arms in goal post position. Slide arms up wall while pulling shoulder blades DOWN. Feel scapular depression and retraction.", noWeight: true },
-                { id: "r11", name: "Band Y-T-W Series", sets: 1, reps: 8, notes: "8 reps each position. Y: arms overhead. T: arms straight out to sides. W: arms in W, elbows bent. Hold each 2 sec, focus on shoulder blade position.", noWeight: true },
+                { id: "r8", name: "Band External Rotation", sets: 2, reps: 12, notes: "Each arm. Loop or long band anchored at a door handle. Stand sideways. Elbow tucked tight to your ribs, bent 90 deg. Rotate forearm outward against band, keeping elbow glued to side. Slow: 2 sec out, 2 sec back. Feel the back of the shoulder working.", perSide: true, noWeight: true },
+                { id: "r9", name: "Band Pull-Aparts", sets: 2, reps: 15, notes: "Hold band in front of you at chest height, arms straight, hands shoulder-width. Pull hands apart stretching the band until it touches your chest. Squeeze shoulder blades together at the end. Slow return. Feel between the shoulder blades and back of shoulders.", noWeight: true },
+                { id: "r10", name: "Scapular Wall Slides", sets: 2, reps: 10, notes: "Stand with back flat against wall. Arms up in goal post position (elbows and wrists touching wall). Slide arms up overhead keeping contact with the wall the whole time. As you slide up, actively pull shoulder blades DOWN. If wrists lose wall contact, that's your current range -- work within it.", noWeight: true },
+                { id: "r11", name: "Band Y-T-W Series", sets: 1, reps: 8, notes: "Each position, 8 reps. Light band or no band. Hinge forward 45 deg. Y: arms overhead in Y, thumbs up -- feel lower traps. T: arms straight to sides -- feel mid-back squeeze. W: elbows bent, squeeze shoulder blades -- feel rhomboids. Hold each rep 2 sec at the top.", noWeight: true },
                 { id: "r12", name: "Toe Raises (Shin Prehab)", sets: 2, reps: 15, notes: "Stand feet shoulder-width apart. Lift toes off ground keeping heels down. Hold 2 sec at top. Strengthens tibialis anterior.", noWeight: true },
                 { id: "r13", name: "Eccentric Calf Raises", sets: 2, reps: 15, notes: "Rise up on toes (2 sec), lower slowly (3 sec). The slow lowering is what matters. Use wall for balance.", noWeight: true },
                 { id: "r14", name: "Ankle Alphabet", sets: 1, reps: 2, notes: "Trace A-Z with each foot. Builds ankle stability and mobility. 1 rep = 1 foot.", perSide: true, noWeight: true },
@@ -5603,20 +5603,38 @@
         condition: "Shoulder stability and mobility. Do anytime today -- doesn't need to follow biking.",
         circuits: [
           {
-            name: "A. Shoulder Stability + Mobility",
-            instructions: "Full shoulder protocol. Key for handball throwing.",
+            name: "A. Warm-Up (3 min)",
+            instructions: "Wake up the shoulders before loading them. No band needed yet.",
             exercises: [
-              { id: "bb5_f1", name: "Scapular Squeezes", sets: 1, reps: 15, notes: "Hold 3 sec each", noWeight: true },
-              { id: "bb5_f2", name: "Arm Circles Palms Up", sets: 1, reps: 20, notes: "10 forward, 10 backward each arm", noWeight: true },
-              { id: "bb5_f3", name: "External Rotation 90/90", sets: 3, reps: 12, notes: "Each arm — key for handball", noWeight: true },
-              { id: "bb5_f4", name: "Internal Rotation 90/90", sets: 3, reps: 12, notes: "Each arm", noWeight: true },
-              { id: "bb5_f5", name: "Empty Can to Full Can", sets: 2, reps: 8, notes: "3-5 lb dumbbells", noWeight: true },
-              { id: "bb5_f6", name: "Prone T's", sets: 2, reps: 10, notes: "Face down, arms out, squeeze", noWeight: true },
-              { id: "bb5_f7", name: "Dynamic External Rotation", sets: 2, reps: 15, notes: "Each arm", noWeight: true },
-              { id: "bb5_f8", name: "Scapular Push-Ups", sets: 2, reps: 10, notes: "Scapular movement only", noWeight: true },
-              { id: "bb5_f9", name: "Bear Plank Shoulder Taps", sets: 2, reps: 20, notes: "10 each side", noWeight: true },
-              { id: "bb5_f10", name: "Cross-Body Shoulder Stretch", sets: 1, reps: 1, notes: "30 sec each side", isHold: true, holdTime: 30, perSide: true, noWeight: true },
-              { id: "bb5_f11", name: "Overhead Tricep Stretch", sets: 1, reps: 1, notes: "30 sec each side", isHold: true, holdTime: 30, perSide: true, noWeight: true }
+              { id: "bb5_f1", name: "Scapular Squeezes", sets: 1, reps: 15, notes: "Stand tall, arms at sides. Pinch shoulder blades together and hold 3 sec, then release. Feel the squeeze between your shoulder blades.", noWeight: true },
+              { id: "bb5_f2", name: "Arm Circles Palms Up", sets: 1, reps: 20, notes: "Arms straight out to sides, palms facing ceiling. 10 small circles forward, 10 backward. Keep shoulders down away from ears.", noWeight: true }
+            ]
+          },
+          {
+            name: "B. Rotator Cuff (10-12 min)",
+            instructions: "The core of the protocol. Use a long resistance band anchored at a door handle or pole. These protect your throwing shoulder. 30 sec rest between sets.",
+            exercises: [
+              { id: "bb5_f3", name: "External Rotation 90/90", sets: 3, reps: 12, notes: "Both arms. Long band anchored at shoulder height, face the anchor. Hold each end of the band, both arms in goal post (upper arms parallel to floor, elbows bent 90 deg). Rotate both hands up toward ceiling at a quick pace, keeping elbows and shoulders still. Keep shoulder blades squeezed back the whole time. Don't shrug, don't lean back, don't flare elbows. Feel outside and back of shoulders + shoulder blade muscles.", noWeight: true },
+              { id: "bb5_f4", name: "Internal Rotation 90/90", sets: 3, reps: 12, notes: "Both arms. Same band at shoulder height, turn around so band pulls from behind. Goal post position. Rotate both hands down/forward at a quick pace. Lighter tension than external. Same rules: blades squeezed back, no shrugging, no leaning. Feel front of shoulders.", noWeight: true },
+              { id: "bb5_f5", name: "Empty Can to Full Can", sets: 2, reps: 8, notes: "Light DBs (3-5 lb). Arms at sides. Empty Can: thumbs pointing DOWN, raise arms forward to 45 deg angle (like pouring out a can). Lower. Full Can: thumbs pointing UP, raise to same 45 deg angle. Feel the top of the shoulder (supraspinatus) working. Slow and controlled.", noWeight: true },
+              { id: "bb5_f6", name: "Prone T's", sets: 2, reps: 10, notes: "Lie face down on a bench, arms hanging straight down, thumbs up. Raise both arms out to sides making a T shape. Squeeze shoulder blades together at the top, hold 1 sec. Lower slowly. Feel the muscles between and below your shoulder blades.", noWeight: true },
+              { id: "bb5_f7", name: "Dynamic External Rotation", sets: 2, reps: 15, notes: "Each arm. Anchor band at chest height. Face the anchor. Raise throwing arm -- elbow at shoulder height, forearm pointing forward toward anchor (arm forward, not yet pulled back). Slowly pull forearm back against the band until hand is behind your head -- this is the loaded/cocked position right before you release a throw. Return forward slowly. The band makes the loading-up motion harder, strengthening the muscles that decelerate your arm after release.", perSide: true, noWeight: true }
+            ]
+          },
+          {
+            name: "C. Scapular Stability (4 min)",
+            instructions: "No equipment needed. These teach your shoulder blades to stay stable when your arms move -- critical for consistent throws.",
+            exercises: [
+              { id: "bb5_f8", name: "Scapular Push-Ups", sets: 2, reps: 10, notes: "Plank position (or on knees). Arms stay straight the whole time -- no bending elbows. Let your chest sink toward the floor (shoulder blades pinch together), then push the floor away rounding your upper back (shoulder blades spread apart). Small movement, all in the shoulder blades.", noWeight: true },
+              { id: "bb5_f9", name: "Bear Plank Shoulder Taps", sets: 2, reps: 20, notes: "10 each side. Hands and knees, lift knees 1 inch off ground. Tap opposite shoulder with one hand, keeping hips square -- don't let your body rock side to side. Feel your shoulder and core fighting to stay still.", noWeight: true }
+            ]
+          },
+          {
+            name: "D. Stretch (3 min)",
+            instructions: "Hold each stretch. Breathe into it.",
+            exercises: [
+              { id: "bb5_f10", name: "Cross-Body Shoulder Stretch", sets: 1, reps: 1, notes: "Pull one arm across your chest with the other hand. Keep the stretched arm straight. Feel the stretch in the back of the shoulder. 30 sec each side.", isHold: true, holdTime: 30, perSide: true, noWeight: true },
+              { id: "bb5_f11", name: "Overhead Tricep Stretch", sets: 1, reps: 1, notes: "Reach one arm overhead, bend elbow so hand drops behind your head. Use other hand to gently pull elbow back. Feel the stretch along the back of the upper arm and into the lat. 30 sec each side.", isHold: true, holdTime: 30, perSide: true, noWeight: true }
             ]
           }
         ]
@@ -5999,13 +6017,13 @@
         },
         {
           name: "D. Shoulder Protocol (15 min)",
-          instructions: "Full protocol. Key for handball throwing. Use long bands for rotations.",
+          instructions: "Protects the throwing shoulder. Anchor long band to a door handle, pole, or ParaBody frame at elbow/chest height.",
           exercises: [
-            { id: "pb16_d1", name: "External Rotation 90/90", sets: 3, reps: 12, notes: "Each arm. Long band anchored at elbow height.", perSide: true, noWeight: true },
-            { id: "pb16_d2", name: "Internal Rotation 90/90", sets: 3, reps: 12, notes: "Each arm.", perSide: true, noWeight: true },
-            { id: "pb16_d3", name: "Prone T's", sets: 2, reps: 10, notes: "Face down on bench, arms out, squeeze shoulder blades.", noWeight: true },
-            { id: "pb16_d4", name: "Scapular Push-Ups", sets: 2, reps: 10, notes: "Scapular movement only.", noWeight: true },
-            { id: "pb16_d5", name: "Cross-Body Shoulder Stretch", sets: 1, reps: 1, notes: "30 sec each side", isHold: true, holdTime: 30, perSide: true, noWeight: true }
+            { id: "pb16_d1", name: "External Rotation 90/90", sets: 3, reps: 12, notes: "Both arms. Long band at shoulder height, face anchor, hold each end. Goal post position. Rotate hands up toward ceiling, quick pace. Blades squeezed back, don't shrug or lean. Feel outside/back of shoulders.", noWeight: true },
+            { id: "pb16_d2", name: "Internal Rotation 90/90", sets: 3, reps: 12, notes: "Both arms. Same band, turn around. Goal post position. Rotate hands down/forward, quick pace. Lighter tension. Blades stay back. Feel front of shoulders.", noWeight: true },
+            { id: "pb16_d3", name: "Prone T's", sets: 2, reps: 10, notes: "Face down on bench, arms hanging, thumbs up. Raise arms out to sides making a T. Squeeze shoulder blades at top, hold 1 sec. Feel muscles between and below shoulder blades.", noWeight: true },
+            { id: "pb16_d4", name: "Scapular Push-Ups", sets: 2, reps: 10, notes: "Plank position, arms stay straight. Let chest sink (blades pinch), then push floor away rounding upper back (blades spread). Small movement, all in the shoulder blades.", noWeight: true },
+            { id: "pb16_d5", name: "Cross-Body Shoulder Stretch", sets: 1, reps: 1, notes: "Pull one arm across chest with other hand. Arm stays straight. Feel stretch in back of shoulder. 30 sec each side.", isHold: true, holdTime: 30, perSide: true, noWeight: true }
           ]
         }
       ]
