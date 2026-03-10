@@ -3024,13 +3024,12 @@
         .catch((error) => console.log('Error saving workout:', error));
     }
 
-    // Load workout history from Firestore (call once on init)
+    // Listen for workout history changes from Firestore (realtime)
     function loadWorkoutHistoryFromCloud() {
       db.collection('workouts')
         .orderBy('timestamp', 'desc')
         .limit(100)
-        .get()
-        .then((querySnapshot) => {
+        .onSnapshot((querySnapshot) => {
           const cloudHistory = [];
           querySnapshot.forEach((doc) => {
             const data = doc.data();
@@ -3044,16 +3043,17 @@
             // Refresh displays
             loadHistory();
             loadPlanView();
-          } else {
-            // No cloud data, use localStorage
+          } else if (!historyLoaded) {
+            // No cloud data on first load, use localStorage
             workoutHistoryCache = JSON.parse(localStorage.getItem('workoutHistory') || '[]');
           }
           historyLoaded = true;
-        })
-        .catch((error) => {
-          console.log('Error loading history from cloud:', error);
-          workoutHistoryCache = JSON.parse(localStorage.getItem('workoutHistory') || '[]');
-          historyLoaded = true;
+        }, (error) => {
+          console.log('Error listening to history:', error);
+          if (!historyLoaded) {
+            workoutHistoryCache = JSON.parse(localStorage.getItem('workoutHistory') || '[]');
+            historyLoaded = true;
+          }
         });
     }
 

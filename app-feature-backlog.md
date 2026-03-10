@@ -128,7 +128,7 @@ Collected from sessions through Mar 8, 2026. Includes holistic review from 7 age
 - [x] **JSON.stringify in onclick handlers is fragile** -- DONE: exerciseLookup map populated during render, onclick uses string key lookup.
 - [ ] **Inconsistent persistence strategies** -- readiness=Firestore-first, fuel=localStorage-first, history=Firestore-first. Standardize. (Frontend, Backend)
 - [ ] **System prompt rebuilt on every coach message** -- cache until new workout saved. (Backend)
-- [ ] **History re-fetches all 100 docs on every page load** -- use `.onSnapshot()` listener instead. (Backend)
+- [x] **History re-fetches all 100 docs on every page load** -- DONE: switched to `.onSnapshot()` realtime listener. Only fetches full set once, then receives incremental updates.
 - [ ] **dailyState single-doc pattern** -- no historical readiness record. Once day resets, previous readiness gone. (Backend)
 - [ ] **Firebase SDK loaded synchronously** -- add `async`/`defer` to unblock HTML parsing. (Frontend)
 - [x] **No request timeout on coach** -- DONE: AbortController with 30s timeout. Shows "Request timed out. Try again." on abort.
