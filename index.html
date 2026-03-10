@@ -3502,6 +3502,25 @@
 
       // Load workout history from cloud (will refresh displays when done)
       loadWorkoutHistoryFromCloud();
+
+      // Midnight rollover: when app comes back to foreground, check if date changed
+      let lastKnownToday = formatDateKey(new Date());
+      document.addEventListener('visibilitychange', () => {
+        if (document.visibilityState !== 'visible') return;
+        const nowKey = formatDateKey(new Date());
+        if (nowKey === lastKnownToday) return;
+        lastKnownToday = nowKey;
+        // Reset to new day
+        state.currentDate = new Date();
+        state.readiness = null;
+        state.sleepScore = null;
+        state.hrv = null;
+        loadState();
+        updateDateDisplay();
+        loadTodaysWorkout();
+        loadHistory();
+        loadPlanView();
+      });
     }
 
     function loadState() {

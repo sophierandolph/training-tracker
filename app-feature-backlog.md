@@ -133,7 +133,7 @@ Collected from sessions through Mar 8, 2026. Includes holistic review from 7 age
 - [ ] **Firebase SDK loaded synchronously** -- add `async`/`defer` to unblock HTML parsing. (Frontend)
 - [ ] **No request timeout on coach** -- if Anthropic API hangs, UI stuck in "typing" state. Add AbortController. (Backend)
 - [ ] **State not reset between multi-workout days** -- `adaptationApplied` can leak between workouts in same session. (QA)
-- [ ] **Midnight rollover** -- `state.currentDate` set at init, never updated. App shows yesterday's workout if kept open past midnight. (Frontend)
+- [x] **Midnight rollover** -- DONE: visibilitychange listener detects date change when app returns to foreground, resets to new day.
 - [ ] **Duplicate log and exercises fields in saved data** -- raw workoutLog + processed exercises array. Pick one canonical shape. (Backend)
 
 ## Low Priority / Nice to Have
