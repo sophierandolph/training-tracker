@@ -7787,19 +7787,18 @@ OVERTRAINING SIGNALS & GUARDRAILS
         if (w.overallEffortType) summary += ` | Effort: ${w.overallEffortType}`;
         if (w.wasAdapted) summary += ` | AUTO-ADAPTED: ${w.adaptReason || 'readiness'}`;
 
-        // Exercise details
-        if (w.exerciseLog) {
-          Object.entries(w.exerciseLog).forEach(([id, log]) => {
-            if (log.sets && log.sets.length > 0) {
-              const setDetails = log.sets.map((s, i) => {
+        // Exercise details from canonical exercises array
+        if (w.exercises && w.exercises.length > 0) {
+          w.exercises.forEach(ex => {
+            if (ex.sets && ex.sets.length > 0) {
+              const setDetails = ex.sets.map((s, i) => {
                 let detail = `S${i+1}`;
                 if (s.reps) detail += `:${s.reps}r`;
                 if (s.weight) detail += `@${s.weight}lb`;
                 if (s.feel) detail += `(feel:${s.feel}/5)`;
-                if (s.effortType) detail += `[${s.effortType}]`;
                 return detail;
               }).join(' ');
-              summary += `\n  ${log.name || id}: ${setDetails}`;
+              summary += `\n  ${ex.name}: ${setDetails}`;
             }
           });
         }
@@ -7839,10 +7838,19 @@ OVERTRAINING SIGNALS & GUARDRAILS
       const dayOfWeek = today.getDay();
       const specialDate = SPECIAL_DATES[dateKey];
 
-      // Get today's scheduled workout
-      const schedule = SCHEDULE[dayOfWeek];
-      let todaySchedule = `Today: ${dayNames[dayOfWeek]}, ${dateKey}. Scheduled: ${schedule.name}`;
-      if (schedule.duration) todaySchedule += ` (${schedule.duration})`;
+      // Get today's actual workout (DATE_WORKOUTS is the source of truth, not SCHEDULE)
+      let todaySchedule = `Today: ${dayNames[dayOfWeek]}, ${dateKey}.`;
+      const dateWorkout = DATE_WORKOUTS[dateKey];
+      if (dateWorkout) {
+        const dw = Array.isArray(dateWorkout) ? dateWorkout : [dateWorkout];
+        todaySchedule += ` Planned: ${dw.map(w => w.name).join(' + ')}`;
+        if (dw[0].duration) todaySchedule += ` (${dw[0].duration})`;
+        if (dw[0].condition) todaySchedule += `\nCondition: ${dw[0].condition}`;
+      } else {
+        // No specific workout loaded -- fall back to SCHEDULE as default template
+        const schedule = SCHEDULE[dayOfWeek];
+        todaySchedule += ` Default template: ${schedule.name} (no specific workout loaded for today)`;
+      }
       if (specialDate) {
         todaySchedule += `\nSpecial: ${specialDate.note || ''}`;
         if (specialDate.location) todaySchedule += ` (${specialDate.location})`;
@@ -7875,6 +7883,7 @@ KEY RULES:
 - Keep responses concise and actionable. Use bullet points for workout plans.
 - Format workout suggestions clearly: exercise name, sets x reps, weight if applicable
 - Never suggest exercises that could aggravate shoulders without proper warm-up/protocol
+- IMPORTANT: The RECENT TRAINING LOG below shows what Sophie ACTUALLY did. Never assume what she did based on the day of the week -- always reference the log. Her schedule changes frequently.
 
 CURRENT STATE:
 ${todaySchedule}

@@ -158,7 +158,7 @@ Collected from sessions through Mar 8, 2026. Includes holistic review from 7 age
 - [ ] **Menstrual cycle integration** -- revisit early April once cycle stabilizes. Follicular=peak training, late luteal=back off. (Coach)
 - [ ] **Planned deload weeks in future blocks** -- systematic, not accidental from travel. (Coach)
 - [x] **Update or replace static SCHEDULE** -- DONE (Phase 1): loadTodaysWorkout() now falls back to showNoWorkout() instead of day-of-week switch. DATE_WORKOUTS is primary. SCHEDULE kept as cosmetic fallback for calendar/preview only.
-- [ ] **Deprecate SCHEDULE for coach/agent context** -- SCHEDULE caused the coach agent to assume Mon=PT+Soccer when Sophie actually did Pool Recovery + Pilates. Agents should ALWAYS pull from Firestore history, never from SCHEDULE. Consider removing SCHEDULE entirely or clearly marking it as "default template only, not actual history."
+- [x] **Deprecate SCHEDULE for coach/agent context** -- DONE: coach system prompt now pulls from DATE_WORKOUTS first. Falls back to SCHEDULE only with "default template" label. Added rule: "never assume what she did based on day of week." Fixed dead exerciseLog reference in history summary.
 
 ## Done (Mar 8)
 
