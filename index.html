@@ -119,6 +119,61 @@
       letter-spacing: 0.3px;
     }
 
+    .date-nav {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .date-nav-btn {
+      background: none;
+      border: none;
+      color: var(--text-secondary);
+      font-size: 20px;
+      min-width: 44px;
+      min-height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      border-radius: 8px;
+      line-height: 1;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .date-nav-btn:active {
+      background: rgba(255,255,255,0.08);
+    }
+
+    .today-pill {
+      font-size: 12px;
+      color: var(--lavender);
+      background: rgba(176, 157, 255, 0.15);
+      border: none;
+      padding: 6px 14px;
+      min-height: 32px;
+      border-radius: 16px;
+      cursor: pointer;
+      font-weight: 600;
+      letter-spacing: 0.3px;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .today-pill:active {
+      background: rgba(176, 157, 255, 0.25);
+    }
+
+    .past-date-banner {
+      background: rgba(255, 193, 7, 0.12);
+      color: var(--gold);
+      font-size: 12px;
+      font-weight: 600;
+      padding: 6px 16px;
+      border-radius: 8px;
+      margin-top: 4px;
+      display: none;
+    }
+
     .day-name {
       font-size: 24px;
       font-weight: 800;
@@ -2264,8 +2319,14 @@
     <header>
       <div class="header-top">
         <div>
-          <div class="date-display" id="dateDisplay">Saturday, Feb 8</div>
+          <div class="date-nav" id="dateNav" role="navigation" aria-label="Day navigation">
+            <button class="date-nav-btn" onclick="navigateDay(-1)" aria-label="Previous day">&#8249;</button>
+            <div class="date-display" id="dateDisplay">Saturday, Feb 8</div>
+            <button class="date-nav-btn" onclick="navigateDay(1)" aria-label="Next day">&#8250;</button>
+            <button class="today-pill" id="todayPill" onclick="navigateToToday()" aria-label="Return to today" style="display:none;">Today</button>
+          </div>
           <div class="day-name" id="dayName">Today's Training</div>
+          <div class="past-date-banner" id="pastDateBanner"></div>
         </div>
         <div class="readiness-badge" onclick="showReadinessModal()">
           <div>
@@ -3460,6 +3521,65 @@
 
       document.getElementById('dateDisplay').textContent =
         `${days[d.getDay()]}, ${months[d.getMonth()]} ${d.getDate()}`;
+
+      // Show/hide Today pill and past-date banner
+      const today = new Date();
+      const isToday = formatDateKey(d) === formatDateKey(today);
+      document.getElementById('todayPill').style.display = isToday ? 'none' : 'inline-block';
+
+      const banner = document.getElementById('pastDateBanner');
+      if (!isToday) {
+        const diffDays = Math.round((new Date(today.getFullYear(), today.getMonth(), today.getDate()) - new Date(d.getFullYear(), d.getMonth(), d.getDate())) / 86400000);
+        if (diffDays > 0) {
+          banner.textContent = diffDays === 1 ? 'Viewing yesterday' : `Viewing ${diffDays} days ago`;
+        } else {
+          banner.textContent = diffDays === -1 ? 'Viewing tomorrow' : `Viewing ${Math.abs(diffDays)} days from now`;
+        }
+        banner.style.display = 'block';
+      } else {
+        banner.style.display = 'none';
+      }
+    }
+
+    function navigateDay(offset) {
+      // Guard against accidental navigation during a workout
+      if (state.activeWorkout && state.workoutStartTime) {
+        if (!confirm('You have a workout in progress. Navigate away?')) return;
+      }
+
+      // Clear any in-progress workout state for the current day
+      state.activeWorkout = null;
+      state.workoutStartTime = null;
+      state.workoutLog = {};
+      state.currentExercise = null;
+      state.currentSet = null;
+      state.overallFeel = null;
+      state.overallEffortType = null;
+      state.pendingWorkout = null;
+
+      // Move the date
+      const newDate = new Date(state.currentDate);
+      newDate.setDate(newDate.getDate() + offset);
+      state.currentDate = newDate;
+
+      // Reload the view
+      updateDateDisplay();
+      loadTodaysWorkout();
+    }
+
+    function navigateToToday() {
+      state.currentDate = new Date();
+      state.activeWorkout = null;
+      state.workoutStartTime = null;
+      state.workoutLog = {};
+      state.currentExercise = null;
+      state.currentSet = null;
+      state.overallFeel = null;
+      state.overallEffortType = null;
+      state.pendingWorkout = null;
+
+      updateDateDisplay();
+      loadTodaysWorkout();
     }
 
     function setupEventListeners() {
@@ -3520,9 +3640,15 @@
       const dateKey = formatDateKey(state.currentDate);
       const specialDate = SPECIAL_DATES[dateKey];
 
-      // Check if today's workout was already saved (skip for multi-workout days — they handle it per-tile)
+      // Check if this day's workout was already saved (skip for multi-workout days — they handle it per-tile)
       const isMultiWorkout = DATE_WORKOUTS[dateKey] && Array.isArray(DATE_WORKOUTS[dateKey]);
-      if (!isMultiWorkout && !localStorage.getItem('workoutInProgress')) {
+      let inProgressForThisDay = false;
+      const inProgressRaw = localStorage.getItem('workoutInProgress');
+      if (inProgressRaw) {
+        try { inProgressForThisDay = JSON.parse(inProgressRaw).date === dateKey; }
+        catch(e) { localStorage.removeItem('workoutInProgress'); }
+      }
+      if (!isMultiWorkout && !inProgressForThisDay) {
         const history = getWorkoutHistory();
         const todaySaved = history.filter(h => h.date === dateKey);
         if (todaySaved.length > 0) {
@@ -4711,9 +4837,15 @@
         fuel: 'Fuel'
       };
 
+      // Show date nav only on Today tab
+      const dateNav = document.getElementById('dateNav');
+      const pastBanner = document.getElementById('pastDateBanner');
       if (viewName === 'today') {
+        dateNav.style.display = 'flex';
         loadTodaysWorkout(); // This sets the appropriate title
       } else {
+        dateNav.style.display = 'none';
+        pastBanner.style.display = 'none';
         document.getElementById('dayName').textContent = headerTitles[viewName];
       }
 
@@ -5951,7 +6083,7 @@
 
     // Returns weeks relevant for display: current week + future weeks, plus auto-generated weeks beyond WEEK_DATES
     function getActiveWeeks() {
-      const today = state.currentDate;
+      const today = new Date();
       const todayStart = new Date(today.getFullYear(), today.getMonth(), today.getDate());
 
       // Filter to current + future weeks only
@@ -6007,7 +6139,7 @@
 
     function renderCalendar() {
       const container = document.getElementById('calendarContainer');
-      const today = state.currentDate;
+      const today = new Date();
       const dayNames = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
       const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
@@ -6139,7 +6271,7 @@
 
     function renderUpcomingWorkouts() {
       const container = document.getElementById('upcomingWorkouts');
-      const today = state.currentDate;
+      const today = new Date();
       const upcoming = [];
       const dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
       const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
@@ -6340,7 +6472,7 @@
     }
 
     function updateWeekProgress() {
-      const today = state.currentDate;
+      const today = new Date();
       const history = getWorkoutHistory();
 
       // Find current week
@@ -6427,7 +6559,7 @@
       const dateKey = formatDateKey(date);
 
       // If clicking on today, navigate to Today tab instead of showing preview
-      const today = state.currentDate;
+      const today = new Date();
       const isToday = date.getDate() === today.getDate() &&
                       date.getMonth() === today.getMonth() &&
                       date.getFullYear() === today.getFullYear();
@@ -7448,7 +7580,7 @@ OVERTRAINING SIGNALS & GUARDRAILS
     }
 
     function buildCoachSystemPrompt() {
-      const today = state.currentDate;
+      const today = new Date();
       const dateKey = formatDateKey(today);
       const dayNames = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
       const dayOfWeek = today.getDay();
