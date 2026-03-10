@@ -31,7 +31,7 @@ Collected from sessions through Mar 8, 2026. Includes holistic review from 7 age
 - [x] **Fix muted text contrast** -- DONE: #6b6280 → #8b82a0
 - [x] **Calendar font too small** -- DONE: 8px → 10px for workout text and travel badges
 - [x] **Workout Plan Calendar View needs short names** - DONE: Sport-Specific→Sport, Conditioning→Cardio+, removed +Warm/Cool indicator. Added getShortTypeName() function.
-- [ ] **No doc ID stored in workout records** -- can't update or delete specific workouts from client. Store Firestore doc ID in cache. (Backend)
+- [x] **No doc ID stored in workout records** -- DONE: docId stored on save and captured from Firestore doc.id on load. Enables future edit/delete from client.
 
 ## High Impact Features
 
@@ -71,7 +71,7 @@ Collected from sessions through Mar 8, 2026. Includes holistic review from 7 age
 - [x] **Pick emojis for fuel cards** -- DONE: Greek flag for yogurt, heart for cashews, house for cottage cheese.
 - [x] **Meal/snack catch-all card** -- DONE: ~10g per tap for incidental protein from non-tracked foods. Top-left position.
 - [x] **Hydration nudges** -- DONE: "Drink a full bottle of water now" in completion modal + gentle reminder at bottom of Fuel tab. No tracking.
-- [ ] **Update whey shake protein value** -- waiting on Sophie to dial in recipe (whey arriving Mar 10). Currently 33g.
+- [x] **Update whey shake protein value** -- DONE: updated to 48g (full recipe: 1/2 cup milk, 1/2 cup cottage cheese, 2 scoops whey, 2TB cocoa, 1TB maple syrup). Also added dessert shake (37g) and Kodiak waffles (12g).
 - [ ] **Post-workout fuel prompt** -- "Have you eaten protein in the last hour?" nudge after saving. (deferred)
 - [ ] **Electrolyte tracking** -- especially important as Houston heats up + creatine increases water needs. Add LMNT/Liquid IV as loggable item. (Nutritionist)
 - ~~ **Meal combo quick-log** ~~ -- skipped, Sophie doesn't use the combo suggestions much

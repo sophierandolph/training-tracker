@@ -2817,6 +2817,7 @@
 
       // Save to Firestore (idempotent: doc ID based on date + workout name prevents duplicates)
       const docId = `${workoutData.date}_${(workoutData.workout || workoutData.activityId || 'workout').replace(/[^a-zA-Z0-9]/g, '_')}`;
+      workoutData.docId = docId;
       db.collection('workouts').doc(docId).set(workoutData)
         .then(() => console.log('Workout saved to cloud'))
         .catch((error) => console.log('Error saving workout:', error));
@@ -2831,7 +2832,9 @@
         .then((querySnapshot) => {
           const cloudHistory = [];
           querySnapshot.forEach((doc) => {
-            cloudHistory.push(doc.data());
+            const data = doc.data();
+            data.docId = doc.id;
+            cloudHistory.push(data);
           });
 
           if (cloudHistory.length > 0) {
