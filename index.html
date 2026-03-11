@@ -5868,43 +5868,194 @@
         ]
       }
     ],
-    '2026-03-12': {
-      name: "Personal Training (rescheduled)",
-      type: "Strength",
-      duration: "60 min",
-      location: "Gym",
-      condition: "PT rescheduled from Tue. Tell trainer you did upper body Tuesday so they can adjust. Last strength session before Fort Davis deload.",
-      circuits: [
-        {
-          name: "Trainer-Led Session",
-          instructions: "Follow trainer's programming. Log details after for tracking.",
-          exercises: [
-            { id: "pt12_a1", name: "PT Session", sets: 1, reps: 1, notes: "Full session with trainer. Write down weights and exercises during or immediately after.", noWeight: true }
-          ]
-        }
-      ]
-    },
-    '2026-03-13': {
-      name: "Travel Day: Stretch + Foam Roll",
-      type: "Recovery",
-      duration: "15-20 min",
-      location: "Fort Davis (on arrival)",
-      condition: "Drive day. Stretch and roll out after the long car ride.\nBring to Fort Davis: loop bands, long resistance bands, yoga mat, foam roller, massage gun, handball",
-      circuits: [
-        {
-          name: "Post-Drive Recovery",
-          instructions: "Do this when you arrive. Undo the car stiffness.",
-          exercises: [
-            { id: "fd13_a1", name: "Foam Roll Quads/IT Band", sets: 1, reps: 1, notes: "60 sec each side. Slow rolls, pause on tender spots.", noWeight: true },
-            { id: "fd13_a2", name: "Foam Roll Upper Back", sets: 1, reps: 1, notes: "60 sec. Arms crossed over chest.", noWeight: true },
-            { id: "fd13_a3", name: "Hip Flexor Lunge Stretch", sets: 1, reps: 1, notes: "Hold 45 sec each side. Squeeze back glute, tilt pelvis under.", isHold: true, holdTime: 45, perSide: true, noWeight: true },
-            { id: "fd13_a4", name: "90/90 Hip Stretch", sets: 1, reps: 1, notes: "Hold 60 sec each side. Hinge forward over front leg.", isHold: true, holdTime: 60, perSide: true, noWeight: true },
-            { id: "fd13_a5", name: "Standing Quad Stretch", sets: 1, reps: 1, notes: "Hold 30 sec each side.", isHold: true, holdTime: 30, perSide: true, noWeight: true },
-            { id: "fd13_a6", name: "Chest Opener", sets: 1, reps: 1, notes: "Arms clasped behind back, 30 sec. Undo the driving hunch.", isHold: true, holdTime: 30, noWeight: true }
-          ]
-        }
-      ]
-    },
+    '2026-03-11': [
+      {
+        name: "Pre-Practice: Psoas-Aware Warm-Up",
+        type: "Warmup",
+        duration: "20 min",
+        location: "Court corner (~4x4 ft space)",
+        condition: "RIGHT PSOAS FLARE (3/10 post-workout Mar 10). Arrive 20 min early.\nPractice rules: shorten stride on approaches, favor clockwise pivots, bail back to passing/positioning if hip hits 3/10, stop completely at 4/10.\nBring: loop band, handball",
+        circuits: [
+          {
+            name: "A. Psoas Release (4 min)",
+            instructions: "Do this FIRST. Lengthens the psoas before you load it.",
+            exercises: [
+              { id: "ww11_a1", name: "Prone Lying + Belly Breathing", sets: 1, reps: 1, notes: "3 min. Lie face down, breathe into belly against the floor. Feel front of hip lengthen passively.", isHold: true, holdTime: 180, noWeight: true },
+              { id: "ww11_a2", name: "Half-Kneeling Hip Flexor Stretch", sets: 1, reps: 1, notes: "45 sec each side. Squeeze back glute, tilt pelvis under. Extra focus on right side.", isHold: true, holdTime: 45, perSide: true, noWeight: true }
+            ]
+          },
+          {
+            name: "B. Get Moving (4 min)",
+            instructions: "All in place. Get heart rate up.",
+            exercises: [
+              { id: "ww11_b1", name: "Jog in Place", sets: 1, reps: 1, notes: "30 sec", isCardio: true, duration: 30, noWeight: true },
+              { id: "ww11_b2", name: "High Knees", sets: 1, reps: 20, notes: "Each leg, in place", noWeight: true },
+              { id: "ww11_b3", name: "Butt Kicks", sets: 1, reps: 20, notes: "Each leg", noWeight: true },
+              { id: "ww11_b4", name: "Step-Touch Side to Side", sets: 1, reps: 20, notes: "Total. Small lateral weight shift, no travel.", noWeight: true },
+              { id: "ww11_b5", name: "Hip Circles", sets: 1, reps: 10, notes: "CLOCKWISE ONLY on right side (counterclockwise is the snap direction). Both directions fine on left.", noWeight: true }
+            ]
+          },
+          {
+            name: "C. Lower Body + Shin Activation (5 min)",
+            instructions: "Band above knees. Hold wall for balance.",
+            exercises: [
+              { id: "ww11_c1", name: "Standing Hip Abduction", sets: 1, reps: 15, notes: "Each side. Band above knees, feel outer glute.", perSide: true, noWeight: true },
+              { id: "ww11_c2", name: "Standing Glute Kickback", sets: 1, reps: 12, notes: "Each side. Feel glute squeeze at top.", perSide: true, noWeight: true },
+              { id: "ww11_c3", name: "Calf Raises", sets: 1, reps: 20, notes: "Slow, full rise, controlled lower.", noWeight: true },
+              { id: "ww11_c4", name: "Tibialis Raises", sets: 1, reps: 20, notes: "Heels against wall, lift toes.", noWeight: true }
+            ]
+          },
+          {
+            name: "D. Shoulder + Throwing Arm (5 min)",
+            instructions: "Shoulder prep, then progressive throwing warm-up.",
+            exercises: [
+              { id: "ww11_d1", name: "Arm Circles", sets: 1, reps: 20, notes: "10 forward, 10 backward each arm", noWeight: true },
+              { id: "ww11_d2", name: "Scapular Squeezes", sets: 1, reps: 15, notes: "Hold 2 sec, blades pinch together.", noWeight: true },
+              { id: "ww11_d3", name: "Wrist Flicks with Ball", sets: 1, reps: 20, notes: "Snap wrist, feel fingers release.", noWeight: true },
+              { id: "ww11_d4", name: "3-Step Rhythm — No Ball", sets: 1, reps: 5, notes: "SHORTEN stride on step 2. Focus on chest OPEN, not power. If right hip flexor fires above 2/10, stop and switch to standing throws only during practice.", noWeight: true }
+            ]
+          },
+          {
+            name: "E. Ready Position (1 min)",
+            instructions: "Prime for game speed.",
+            exercises: [
+              { id: "ww11_e1", name: "Quick Feet in Place", sets: 1, reps: 1, notes: "15 sec, fast, light on balls of feet.", isCardio: true, duration: 15, noWeight: true },
+              { id: "ww11_e2", name: "Ready Position Hold", sets: 1, reps: 1, notes: "10 sec. Slightly taller stance than usual to reduce hip flexion demand.", isHold: true, holdTime: 10, noWeight: true }
+            ]
+          }
+        ]
+      },
+      {
+        name: "Post-Practice: Psoas-Aware Cooldown",
+        type: "Recovery",
+        duration: "22 min",
+        location: "Court → Home",
+        condition: "DO NOT sit in car immediately. Do Section A in the parking lot first.\nWhen home: massage gun on RIGHT rectus femoris and TFL are the priority targets tonight.",
+        circuits: [
+          {
+            name: "A. Court — Before You Drive (5 min)",
+            instructions: "Do this immediately. Standing hip flexor stretch is the most important one tonight.",
+            exercises: [
+              { id: "wc11_a1", name: "Easy Walk + Shake Out Arms", sets: 1, reps: 1, notes: "1 min. Heart rate down, shake everything loose.", isCardio: true, duration: 60, noWeight: true },
+              { id: "wc11_a2", name: "Standing Hip Flexor Stretch", sets: 1, reps: 1, notes: "45 sec each side. Squeeze back glute, tilt pelvis under. Extra time on right. This prevents the sit-then-seize pattern.", isHold: true, holdTime: 45, perSide: true, noWeight: true },
+              { id: "wc11_a3", name: "Calf Stretch Against Wall", sets: 1, reps: 1, notes: "30 sec each side.", isHold: true, holdTime: 30, perSide: true, noWeight: true },
+              { id: "wc11_a4", name: "Cross-Body Shoulder Stretch", sets: 1, reps: 1, notes: "30 sec each side.", isHold: true, holdTime: 30, perSide: true, noWeight: true },
+              { id: "wc11_a5", name: "Chest Opener — Arms Clasped Behind Back", sets: 1, reps: 1, notes: "30 sec.", isHold: true, holdTime: 30, noWeight: true }
+            ]
+          },
+          {
+            name: "B. Home — Massage Gun + Foam Roll (6 min)",
+            instructions: "Massage gun targets are specific tonight: rectus femoris and TFL on the right side are priority. These pick up slack when the psoas is irritated.",
+            exercises: [
+              { id: "wc11_b1", name: "Massage Gun: Right Rectus Femoris", sets: 1, reps: 1, notes: "2 min. Full length of front thigh, extra time on upper third near the hip. Medium-firm pressure.", isHold: true, holdTime: 120, noWeight: true },
+              { id: "wc11_b2", name: "Massage Gun: Right TFL / IT Band", sets: 1, reps: 1, notes: "90 sec. Start just below and lateral to the front hip bone, work down the IT band.", isHold: true, holdTime: 90, noWeight: true },
+              { id: "wc11_b3", name: "Massage Gun: Right Adductors", sets: 1, reps: 1, notes: "60 sec. Inner thigh, mid-thigh toward knee. Medium pressure.", isHold: true, holdTime: 60, noWeight: true },
+              { id: "wc11_b4", name: "Calves — Foam Roll or Massage Gun", sets: 1, reps: 1, notes: "60 sec each leg.", isHold: true, holdTime: 60, perSide: true, noWeight: true },
+              { id: "wc11_b5", name: "Upper Back — Chirp Wheel", sets: 1, reps: 1, notes: "90 sec. T-spine mobility reduces psoas demand.", isHold: true, holdTime: 90, noWeight: true }
+            ]
+          },
+          {
+            name: "C. Home — Shin Prehab (2 min)",
+            instructions: "Don't skip.",
+            exercises: [
+              { id: "wc11_c1", name: "Tibialis Raises", sets: 3, reps: 15, notes: "Heels against wall.", noWeight: true },
+              { id: "wc11_c2", name: "Slow Calf Raises", sets: 2, reps: 15, notes: "Controlled all the way up and down.", noWeight: true }
+            ]
+          },
+          {
+            name: "D. Home — Full Body Release + Psoas (9 min)",
+            instructions: "The prone lying at the end is the most important piece. Do NOT skip it and sit down.",
+            exercises: [
+              { id: "wc11_d1", name: "Figure-4 Hip Stretch", sets: 1, reps: 1, notes: "60 sec each side. Deep glute and hip rotator release.", isHold: true, holdTime: 60, perSide: true, noWeight: true },
+              { id: "wc11_d2", name: "Kneeling Hip Flexor Stretch", sets: 1, reps: 1, notes: "60 sec each side. Extra time on right. Squeeze back glute, pelvis tilted under.", isHold: true, holdTime: 60, perSide: true, noWeight: true },
+              { id: "wc11_d3", name: "Seated Hamstring Stretch", sets: 1, reps: 1, notes: "45 sec each side.", isHold: true, holdTime: 45, perSide: true, noWeight: true },
+              { id: "wc11_d4", name: "Thread the Needle", sets: 1, reps: 1, notes: "30 sec each side. Thoracic rotation.", isHold: true, holdTime: 30, perSide: true, noWeight: true },
+              { id: "wc11_d5", name: "Overhead Tricep Stretch", sets: 1, reps: 1, notes: "30 sec each side.", isHold: true, holdTime: 30, perSide: true, noWeight: true },
+              { id: "wc11_d6", name: "Prone Lying + Belly Breathing", sets: 1, reps: 1, notes: "3-5 min. Breathe into belly against the floor. This is the psoas reset. Do this BEFORE you sit down for the evening.", isHold: true, holdTime: 240, noWeight: true }
+            ]
+          }
+        ]
+      }
+    ],
+    '2026-03-12': [
+      {
+        name: "Morning Psoas Protocol",
+        type: "Recovery",
+        duration: "7 min",
+        location: "Home",
+        condition: "Daily psoas management. Do this morning and/or evening.\nSitting rule: break every 30 min, stand + brief hip flexor stretch.",
+        circuits: [
+          {
+            name: "Psoas Release",
+            instructions: "Calm the psoas down. Breathing is part of the exercise.",
+            exercises: [
+              { id: "psoas12_a1", name: "Prone Lying + Belly Breathing", sets: 1, reps: 1, notes: "3 min. Lie face down, breathe into belly against the floor. Feel front of hip lengthen passively.", isHold: true, holdTime: 180, noWeight: true },
+              { id: "psoas12_a2", name: "Supine Psoas March (Supported)", sets: 2, reps: 8, notes: "Each side. Lie on back, feet flat, neutral spine. Slowly lift one foot 2 inches off ground. If right side hurts, just press foot into floor without lifting.", perSide: true, noWeight: true },
+              { id: "psoas12_a3", name: "Half-Kneeling Hip Flexor Stretch", sets: 1, reps: 1, notes: "60 sec each side. Squeeze back glute, tilt pelvis under. Extra focus on right.", isHold: true, holdTime: 60, perSide: true, noWeight: true },
+              { id: "psoas12_a4", name: "Foam Roller Thoracic Extension", sets: 1, reps: 1, notes: "2 min. T-spine mobility reduces psoas demand. Use Chirp wheel if preferred.", isHold: true, holdTime: 120, noWeight: true }
+            ]
+          }
+        ]
+      },
+      {
+        name: "Personal Training (rescheduled)",
+        type: "Strength",
+        duration: "60 min",
+        location: "Gym",
+        condition: "PT rescheduled from Tue. Tell trainer you did upper body Tuesday so they can adjust. Last strength session before Fort Davis deload.\nFLAG FOR TRAINER: right psoas flare (3/10 post-workout Mar 10, recurring pattern). Clicking on hip circles counterclockwise. Ask trainer to assess and adjust. Pallof press aggravated it.",
+        circuits: [
+          {
+            name: "Trainer-Led Session",
+            instructions: "Follow trainer's programming. Log details after for tracking.",
+            exercises: [
+              { id: "pt12_a1", name: "PT Session", sets: 1, reps: 1, notes: "Full session with trainer. Write down weights and exercises during or immediately after.", noWeight: true }
+            ]
+          }
+        ]
+      }
+    ],
+    '2026-03-13': [
+      {
+        name: "Morning Psoas Protocol",
+        type: "Recovery",
+        duration: "7 min",
+        location: "Home (before drive)",
+        condition: "Do before the long drive. The drive will shorten the psoas.\nSitting rule: stop every 60-90 min on the drive for a standing hip flexor stretch.",
+        circuits: [
+          {
+            name: "Psoas Release",
+            instructions: "Calm the psoas before hours of sitting.",
+            exercises: [
+              { id: "psoas13_a1", name: "Prone Lying + Belly Breathing", sets: 1, reps: 1, notes: "3-5 min. Lie face down, breathe into belly against the floor.", isHold: true, holdTime: 240, noWeight: true },
+              { id: "psoas13_a2", name: "Supine Psoas March (Supported)", sets: 2, reps: 8, notes: "Each side. Feet flat, lift one foot 2 inches. Press into floor if right side hurts.", perSide: true, noWeight: true },
+              { id: "psoas13_a3", name: "Half-Kneeling Hip Flexor Stretch", sets: 1, reps: 1, notes: "60 sec each side. Squeeze back glute, tilt pelvis under.", isHold: true, holdTime: 60, perSide: true, noWeight: true }
+            ]
+          }
+        ]
+      },
+      {
+        name: "Travel Day: Stretch + Foam Roll",
+        type: "Recovery",
+        duration: "15-20 min",
+        location: "Fort Davis (on arrival)",
+        condition: "Drive day. Stretch and roll out after the long car ride.\nBring to Fort Davis: loop bands, long resistance bands, yoga mat, foam roller, massage gun, handball",
+        circuits: [
+          {
+            name: "Post-Drive Recovery",
+            instructions: "Do this when you arrive. Prone lying FIRST (reduces guarding before stretching).",
+            exercises: [
+              { id: "fd13_a0", name: "Prone Lying + Belly Breathing", sets: 1, reps: 1, notes: "3 min. Undo the drive position. Do this before stretching.", isHold: true, holdTime: 180, noWeight: true },
+              { id: "fd13_a1", name: "Foam Roll Quads/IT Band", sets: 1, reps: 1, notes: "60 sec each side. Slow rolls, pause on tender spots.", noWeight: true },
+              { id: "fd13_a2", name: "Foam Roll Upper Back", sets: 1, reps: 1, notes: "60 sec. Arms crossed over chest.", noWeight: true },
+              { id: "fd13_a3", name: "Hip Flexor Lunge Stretch", sets: 1, reps: 1, notes: "Hold 45 sec each side. Squeeze back glute, tilt pelvis under.", isHold: true, holdTime: 45, perSide: true, noWeight: true },
+              { id: "fd13_a4", name: "90/90 Hip Stretch", sets: 1, reps: 1, notes: "Hold 60 sec each side. Static holds only, no fast transitions between sides.", isHold: true, holdTime: 60, perSide: true, noWeight: true },
+              { id: "fd13_a5", name: "Standing Quad Stretch", sets: 1, reps: 1, notes: "Hold 30 sec each side.", isHold: true, holdTime: 30, perSide: true, noWeight: true },
+              { id: "fd13_a6", name: "Chest Opener", sets: 1, reps: 1, notes: "Arms clasped behind back, 30 sec. Undo the driving hunch.", isHold: true, holdTime: 30, noWeight: true }
+            ]
+          }
+        ]
+      }
+    ],
     '2026-03-14': [
       {
         name: "Hip Prehab + Band Work",
@@ -5920,7 +6071,7 @@
               { id: "fd14_a1", name: "Standing Hip Hydrants", sets: 2, reps: 12, notes: "Each side. Loop band above knees, wall for balance. Feel standing hip stay level.", perSide: true, noWeight: true },
               { id: "fd14_a2", name: "Glute Bridge (Banded)", sets: 2, reps: 15, notes: "Loop band above knees. Squeeze at top, 2 sec hold. Push knees out against band.", noWeight: true },
               { id: "fd14_a3", name: "Kickstand RDL (Bodyweight)", sets: 2, reps: 10, notes: "Each side. No weight, just the pattern. 90% weight on working leg, back toe for balance. Feel hamstring load.", perSide: true, noWeight: true },
-              { id: "fd14_a4", name: "Copenhagen Adductor Hold", sets: 2, reps: 1, notes: "20 sec each side. Side plank, top foot on a low step or rock. Bottom leg hangs. Groin monitoring.", isHold: true, holdTime: 20, perSide: true, noWeight: true },
+              { id: "fd14_a4", name: "Copenhagen Adductor Hold", sets: 2, reps: 1, notes: "10-15 sec each side. PSOAS MOD: shortened hold. Side plank, top foot on a low step or rock. Bottom leg hangs. If right hip crease pain appears, switch to side-lying adductor squeeze instead.", isHold: true, holdTime: 15, perSide: true, noWeight: true },
               { id: "fd14_a5", name: "Elevated Pigeon Lift Off", sets: 1, reps: 8, notes: "Each side. Use a rock or low step.", perSide: true, noWeight: true }
             ]
           },
@@ -5937,97 +6088,164 @@
             name: "C. Stretch (5 min)",
             instructions: "Hip and back release.",
             exercises: [
-              { id: "fd14_c1", name: "90/90 Hip Stretch", sets: 1, reps: 1, notes: "Hold 60 sec each side", isHold: true, holdTime: 60, perSide: true, noWeight: true },
-              { id: "fd14_c2", name: "Hip Flexor Lunge Stretch", sets: 1, reps: 1, notes: "Hold 45 sec each side", isHold: true, holdTime: 45, perSide: true, noWeight: true }
+              { id: "fd14_c1", name: "90/90 Hip Stretch", sets: 1, reps: 1, notes: "Hold 60 sec each side. Static holds only, no fast transitions between sides.", isHold: true, holdTime: 60, perSide: true, noWeight: true },
+              { id: "fd14_c2", name: "Hip Flexor Lunge Stretch", sets: 1, reps: 1, notes: "Hold 60 sec each side. Extra time on right. Squeeze back glute, tilt pelvis under.", isHold: true, holdTime: 60, perSide: true, noWeight: true }
             ]
           }
         ]
       },
       {
-        name: "Movement Snack: Loaded Rehearsal",
+        name: "Morning Psoas Protocol",
+        type: "Recovery",
+        duration: "7 min",
+        location: "Fort Davis (porch or indoors)",
+        condition: "Daily psoas management. Do morning and/or evening.\nSitting rule: break every 30 min, stand + brief hip flexor stretch.",
+        circuits: [
+          {
+            name: "Psoas Release",
+            instructions: "Calm the psoas down. Breathing is part of the exercise.",
+            exercises: [
+              { id: "psoas14_a1", name: "Prone Lying + Belly Breathing", sets: 1, reps: 1, notes: "3 min. Lie face down, breathe into belly against the floor.", isHold: true, holdTime: 180, noWeight: true },
+              { id: "psoas14_a2", name: "Supine Psoas March (Supported)", sets: 2, reps: 8, notes: "Each side. Feet flat, lift one foot 2 inches. Press into floor if right side hurts.", perSide: true, noWeight: true },
+              { id: "psoas14_a3", name: "Half-Kneeling Hip Flexor Stretch", sets: 1, reps: 1, notes: "60 sec each side. Squeeze back glute, tilt pelvis under.", isHold: true, holdTime: 60, perSide: true, noWeight: true },
+              { id: "psoas14_a4", name: "Foam Roller Thoracic Extension", sets: 1, reps: 1, notes: "2 min. T-spine mobility reduces psoas demand.", isHold: true, holdTime: 120, noWeight: true }
+            ]
+          }
+        ]
+      },
+      {
+        name: "Movement Snack: Defensive Slides Only",
         type: "Sport-Specific",
-        duration: "10 min",
+        duration: "8 min",
         location: "Any flat spot (Fort Davis)",
-        condition: "No ball needed. Slow pattern rehearsal for motor learning.\nEquipment: none",
+        condition: "PSOAS MODIFICATION: Defensive slides only today. No 3-step rhythm, no pivots. Assess how the hip responds over 24 hours before adding those back.\nEquipment: none",
         circuits: [
           {
             name: "Form Rehearsal",
-            instructions: "Slow, deliberate. Feel each position. Say the cue out loud before each rep.",
+            instructions: "Slides only today. Stay slightly taller in your stance to reduce hip flexion demand.",
             exercises: [
-              { id: "ms14_a1", name: "3-Step Rhythm (No Ball)", sets: 3, reps: 5, notes: "Step, OPEN, launch. Feel chest rotate open on step 2. Exaggerate the opening.", noWeight: true },
-              { id: "ms14_a2", name: "Pivot Footwork (No Ball)", sets: 3, reps: 5, notes: "Turn-PULL-throw. Arm separation starts DURING the turn, not after. Feel it.", noWeight: true },
-              { id: "ms14_a3", name: "Defensive Slides", sets: 3, reps: 1, notes: "30 sec each set. Lateral shuffle, stay low, quick feet. Find a flat patch.", noWeight: true }
+              { id: "ms14_a3", name: "Defensive Slides", sets: 4, reps: 1, notes: "30 sec each set. Lateral shuffle, slightly taller stance than usual. Quick feet. Find a flat patch.", noWeight: true }
             ]
           }
         ]
       }
     ],
-    '2026-03-15': {
-      name: "Rest Day",
-      type: "Rest",
-      duration: "0 min",
-      location: "Fort Davis",
-      condition: "Deload week. Full rest or optional Balmorhea pool if it sounds fun. Don't train.\nEquipment: none",
-      circuits: [
-        {
-          name: "Rest",
-          instructions: "Enjoy Fort Davis. If you go to Balmorhea, it's for fun, not training.",
-          exercises: [
-            { id: "fd15_a1", name: "Rest Day", sets: 1, reps: 1, notes: "Read, hike easy, stargaze. Optional Balmorhea pool for fun.", noWeight: true }
-          ]
-        }
-      ]
-    },
-    '2026-03-16': {
-      name: "ParaBody: Upper Body + Shoulder Protocol",
-      type: "Strength",
-      duration: "50-55 min",
-      location: "Neighbor's garage (Fort Davis)",
-      condition: "One real strength session this week. ParaBody EX350. 4 days since last upper body (Mar 12). Shoulder protocol baked in as cool-down.\nEquipment: long bands (for rotations)",
-      circuits: [
-        {
-          name: "A. Warm-Up (8 min)",
-          instructions: "Activate shoulders before loading.",
-          exercises: [
-            { id: "pb16_a1", name: "Band Pull-Aparts", sets: 1, reps: 15, notes: "Long band at chest height. Squeeze shoulder blades.", noWeight: true },
-            { id: "pb16_a2", name: "Arm Circles", sets: 1, reps: 20, notes: "10 forward, 10 backward", noWeight: true },
-            { id: "pb16_a3", name: "Bodyweight Y-T-W", sets: 1, reps: 10, notes: "Hinge forward 45 deg. 10 reps each position.", noWeight: true },
-            { id: "pb16_a4", name: "Bodyweight Squats", sets: 1, reps: 15, notes: "Easy, just warming up", noWeight: true }
-          ]
-        },
-        {
-          name: "B. Pull + Press + Core (12 min)",
-          instructions: "Do B1-B2-B3, rest 90 sec, repeat 3x. Start light to find the right weight on this machine.",
-          restTime: 90,
-          exercises: [
-            { id: "pb16_b1", name: "Lat Pulldown", sets: 3, reps: 10, notes: "Pull to upper chest, squeeze shoulder blades.", noWeight: true },
-            { id: "pb16_b2", name: "Chest Press", sets: 3, reps: 10, notes: "Full range of motion. Controlled push, slow return.", noWeight: true },
-            { id: "pb16_b3", name: "Front Low Plank Hold", sets: 3, reps: 1, notes: "Hold 30 sec. Straight line from head to heels.", isHold: true, holdTime: 30, noWeight: true }
-          ]
-        },
-        {
-          name: "C. Row + Tri + Anti-Rotation (12 min)",
-          instructions: "Do C1-C2-C3, rest 90 sec, repeat 3x",
-          restTime: 90,
-          exercises: [
-            { id: "pb16_c1", name: "Low Cable Row", sets: 3, reps: 10, notes: "Pull cable to lower chest. Squeeze back at end range.", noWeight: true },
-            { id: "pb16_c2", name: "Cable Tricep Extension", sets: 3, reps: 10, notes: "Elbows pinned to sides. Slow eccentric.", noWeight: true },
-            { id: "pb16_c3", name: "Pallof Press (Band)", sets: 3, reps: 10, notes: "Each side. Anchor long band to the machine frame. Press out, hold 2 sec, resist rotation.", perSide: true, noWeight: true }
-          ]
-        },
-        {
-          name: "D. Shoulder Protocol (15 min)",
-          instructions: "Protects the throwing shoulder. Anchor long band to a door handle, pole, or ParaBody frame at elbow/chest height.",
-          exercises: [
-            { id: "pb16_d1", name: "External Rotation 90/90", sets: 3, reps: 12, notes: "Both arms. Long band at shoulder height, face anchor, hold each end. Goal post position. Rotate hands up toward ceiling, quick pace. Blades squeezed back, don't shrug or lean. Feel outside/back of shoulders.", noWeight: true },
-            { id: "pb16_d2", name: "Internal Rotation 90/90", sets: 3, reps: 12, notes: "Both arms. Same band, turn around. Goal post position. Rotate hands down/forward, quick pace. Lighter tension. Blades stay back. Feel front of shoulders.", noWeight: true },
-            { id: "pb16_d3", name: "Prone T's", sets: 2, reps: 10, notes: "Face down on bench, arms hanging, thumbs up. Raise arms out to sides making a T. Squeeze shoulder blades at top, hold 1 sec. Feel muscles between and below shoulder blades.", noWeight: true },
-            { id: "pb16_d4", name: "Scapular Push-Ups", sets: 2, reps: 10, notes: "Plank position, arms stay straight. Let chest sink (blades pinch), then push floor away rounding upper back (blades spread). Small movement, all in the shoulder blades.", noWeight: true },
-            { id: "pb16_d5", name: "Cross-Body Shoulder Stretch", sets: 1, reps: 1, notes: "Pull one arm across chest with other hand. Arm stays straight. Feel stretch in back of shoulder. 30 sec each side.", isHold: true, holdTime: 30, perSide: true, noWeight: true }
-          ]
-        }
-      ]
-    },
+    '2026-03-15': [
+      {
+        name: "Morning Psoas Protocol",
+        type: "Recovery",
+        duration: "7 min",
+        location: "Fort Davis (porch or indoors)",
+        condition: "Daily psoas management. Even on rest day, this helps.\nSitting rule: break every 30 min.",
+        circuits: [
+          {
+            name: "Psoas Release",
+            instructions: "Calm the psoas down. Breathing is part of the exercise.",
+            exercises: [
+              { id: "psoas15_a1", name: "Prone Lying + Belly Breathing", sets: 1, reps: 1, notes: "3-5 min. Lie face down, breathe into belly against the floor.", isHold: true, holdTime: 240, noWeight: true },
+              { id: "psoas15_a2", name: "Supine Psoas March (Supported)", sets: 2, reps: 8, notes: "Each side. Feet flat, lift one foot 2 inches. Press into floor if right side hurts.", perSide: true, noWeight: true },
+              { id: "psoas15_a3", name: "Half-Kneeling Hip Flexor Stretch", sets: 1, reps: 1, notes: "60 sec each side. Squeeze back glute, tilt pelvis under.", isHold: true, holdTime: 60, perSide: true, noWeight: true },
+              { id: "psoas15_a4", name: "Foam Roller Thoracic Extension", sets: 1, reps: 1, notes: "2 min. Use Chirp wheel if preferred.", isHold: true, holdTime: 120, noWeight: true }
+            ]
+          }
+        ]
+      },
+      {
+        name: "Rest Day",
+        type: "Rest",
+        duration: "0 min",
+        location: "Fort Davis",
+        condition: "Deload week. Full rest or optional Balmorhea pool if it sounds fun. Don't train.\nEquipment: none",
+        circuits: [
+          {
+            name: "Rest",
+            instructions: "Enjoy Fort Davis. If you go to Balmorhea, it's for fun, not training.",
+            exercises: [
+              { id: "fd15_a1", name: "Rest Day", sets: 1, reps: 1, notes: "Read, hike easy, stargaze. Optional Balmorhea pool for fun.", noWeight: true }
+            ]
+          }
+        ]
+      }
+    ],
+    '2026-03-16': [
+      {
+        name: "Morning Psoas Protocol",
+        type: "Recovery",
+        duration: "7 min",
+        location: "Fort Davis (porch or indoors)",
+        condition: "Daily psoas management.\nSitting rule: break every 30 min.",
+        circuits: [
+          {
+            name: "Psoas Release",
+            instructions: "Calm the psoas down. Breathing is part of the exercise.",
+            exercises: [
+              { id: "psoas16_a1", name: "Prone Lying + Belly Breathing", sets: 1, reps: 1, notes: "3 min. Lie face down, breathe into belly against the floor.", isHold: true, holdTime: 180, noWeight: true },
+              { id: "psoas16_a2", name: "Supine Psoas March (Supported)", sets: 2, reps: 8, notes: "Each side. Feet flat, lift one foot 2 inches. Press into floor if right side hurts.", perSide: true, noWeight: true },
+              { id: "psoas16_a3", name: "Half-Kneeling Hip Flexor Stretch", sets: 1, reps: 1, notes: "60 sec each side. Squeeze back glute, tilt pelvis under.", isHold: true, holdTime: 60, perSide: true, noWeight: true },
+              { id: "psoas16_a4", name: "Foam Roller Thoracic Extension", sets: 1, reps: 1, notes: "2 min. T-spine mobility reduces psoas demand.", isHold: true, holdTime: 120, noWeight: true }
+            ]
+          }
+        ]
+      },
+      {
+        name: "ParaBody: Upper Body + Shoulder Protocol",
+        type: "Strength",
+        duration: "55-60 min",
+        location: "Neighbor's garage (Fort Davis)",
+        condition: "One real strength session this week. ParaBody EX350. 4 days since last upper body (Mar 12). Shoulder protocol + hip flexor cool-down baked in.\nEquipment: long bands (for rotations)",
+        circuits: [
+          {
+            name: "A. Warm-Up (8 min)",
+            instructions: "Activate shoulders before loading.",
+            exercises: [
+              { id: "pb16_a1", name: "Band Pull-Aparts", sets: 1, reps: 15, notes: "Long band at chest height. Squeeze shoulder blades.", noWeight: true },
+              { id: "pb16_a2", name: "Arm Circles", sets: 1, reps: 20, notes: "10 forward, 10 backward", noWeight: true },
+              { id: "pb16_a3", name: "Bodyweight Y-T-W", sets: 1, reps: 10, notes: "Hinge forward 45 deg. 10 reps each position.", noWeight: true },
+              { id: "pb16_a4", name: "Bodyweight Squats", sets: 1, reps: 15, notes: "Easy, just warming up", noWeight: true }
+            ]
+          },
+          {
+            name: "B. Pull + Press + Core (12 min)",
+            instructions: "Do B1-B2-B3, rest 90 sec, repeat 3x. Start light to find the right weight on this machine.",
+            restTime: 90,
+            exercises: [
+              { id: "pb16_b1", name: "Lat Pulldown", sets: 3, reps: 10, notes: "Pull to upper chest, squeeze shoulder blades.", noWeight: true },
+              { id: "pb16_b2", name: "Chest Press", sets: 3, reps: 10, notes: "Full range of motion. Controlled push, slow return.", noWeight: true },
+              { id: "pb16_b3", name: "Front Low Plank Hold", sets: 3, reps: 1, notes: "Hold 30 sec. Straight line from head to heels.", isHold: true, holdTime: 30, noWeight: true }
+            ]
+          },
+          {
+            name: "C. Row + Tri + Anti-Rotation (12 min)",
+            instructions: "Do C1-C2-C3, rest 90 sec, repeat 3x. PSOAS NOTE: Pallof replaced with tall-kneeling band hold.",
+            restTime: 90,
+            exercises: [
+              { id: "pb16_c1", name: "Low Cable Row", sets: 3, reps: 10, notes: "Pull cable to lower chest. Squeeze back at end range.", noWeight: true },
+              { id: "pb16_c2", name: "Cable Tricep Extension", sets: 3, reps: 10, notes: "Elbows pinned to sides. Slow eccentric.", noWeight: true },
+              { id: "pb16_c3", name: "Tall-Kneeling Band Hold", sets: 3, reps: 1, notes: "Each side. Anchor band to machine frame at chest height. Kneel tall, hold band at chest with arms extended. Hold 15 sec, resist rotation. NO press-out (reduces psoas demand vs Pallof). If even the hold reproduces hip pain, switch to dead bugs with feet on wall.", isHold: true, holdTime: 15, perSide: true, noWeight: true }
+            ]
+          },
+          {
+            name: "D. Shoulder Protocol (15 min)",
+            instructions: "Protects the throwing shoulder. Anchor long band to a door handle, pole, or ParaBody frame at elbow/chest height.",
+            exercises: [
+              { id: "pb16_d1", name: "External Rotation 90/90", sets: 3, reps: 12, notes: "Both arms. Long band at shoulder height, face anchor, hold each end. Goal post position. Rotate hands up toward ceiling, quick pace. Blades squeezed back, don't shrug or lean. Feel outside/back of shoulders.", noWeight: true },
+              { id: "pb16_d2", name: "Internal Rotation 90/90", sets: 3, reps: 12, notes: "Both arms. Same band, turn around. Goal post position. Rotate hands down/forward, quick pace. Lighter tension. Blades stay back. Feel front of shoulders.", noWeight: true },
+              { id: "pb16_d3", name: "Prone T's", sets: 2, reps: 10, notes: "Face down on bench, arms hanging, thumbs up. Raise arms out to sides making a T. Squeeze shoulder blades at top, hold 1 sec. Feel muscles between and below shoulder blades.", noWeight: true },
+              { id: "pb16_d4", name: "Scapular Push-Ups", sets: 2, reps: 10, notes: "Plank position, arms stay straight. Let chest sink (blades pinch), then push floor away rounding upper back (blades spread). Small movement, all in the shoulder blades.", noWeight: true },
+              { id: "pb16_d5", name: "Cross-Body Shoulder Stretch", sets: 1, reps: 1, notes: "Pull one arm across chest with other hand. Arm stays straight. Feel stretch in back of shoulder. 30 sec each side.", isHold: true, holdTime: 30, perSide: true, noWeight: true }
+            ]
+          },
+          {
+            name: "E. Hip Flexor Cool-Down (5 min)",
+            instructions: "Added for psoas management. Do this before sitting down.",
+            exercises: [
+              { id: "pb16_e1", name: "Half-Kneeling Hip Flexor Stretch", sets: 1, reps: 1, notes: "60 sec each side. Squeeze back glute, tilt pelvis under. Extra time on right.", isHold: true, holdTime: 60, perSide: true, noWeight: true },
+              { id: "pb16_e2", name: "Prone Lying + Belly Breathing", sets: 1, reps: 1, notes: "2-3 min. Passive psoas lengthening before you sit.", isHold: true, holdTime: 150, noWeight: true }
+            ]
+          }
+        ]
+      }
+    ],
     '2026-03-17': [
       {
         name: "Band Lower Body + Conditioning",
@@ -6042,14 +6260,14 @@
             exercises: [
               { id: "fd17_a1", name: "Standing Hip Hydrants", sets: 2, reps: 12, notes: "Each side. Loop band above knees.", perSide: true, noWeight: true },
               { id: "fd17_a2", name: "Glute Bridge (Banded)", sets: 2, reps: 15, notes: "Loop band above knees. Squeeze at top.", noWeight: true },
-              { id: "fd17_a3", name: "Copenhagen Adductor Hold", sets: 2, reps: 1, notes: "20 sec each side. Groin monitoring.", isHold: true, holdTime: 20, perSide: true, noWeight: true }
+              { id: "fd17_a3", name: "Copenhagen Adductor Hold", sets: 2, reps: 1, notes: "10-15 sec each side. PSOAS MOD: shortened hold. If right hip crease pain appears, switch to side-lying adductor squeeze instead.", isHold: true, holdTime: 15, perSide: true, noWeight: true }
             ]
           },
           {
             name: "B. Band Lower Body Circuit (15 min)",
             instructions: "3 rounds. Loop band above knees for all. Controlled tempo.",
             exercises: [
-              { id: "fd17_b1", name: "Banded Squats", sets: 3, reps: 15, notes: "Full depth, push knees out against band.", noWeight: true },
+              { id: "fd17_b1", name: "Banded Squats", sets: 3, reps: 15, notes: "PSOAS MOD: parallel depth only, no pause at bottom. Elevate heels on a rolled towel if possible. Push knees out against band.", noWeight: true },
               { id: "fd17_b2", name: "Banded Lateral Walks", sets: 3, reps: 12, notes: "Each direction. Quarter squat, feel outer glute.", perSide: true, noWeight: true },
               { id: "fd17_b3", name: "Banded Glute Kickbacks", sets: 3, reps: 12, notes: "Each side. Hold wall for balance. Squeeze glute at top.", perSide: true, noWeight: true },
               { id: "fd17_b4", name: "Single Leg Glute Bridge", sets: 3, reps: 10, notes: "Each side. One foot flat, other leg extended. Squeeze at top.", perSide: true, noWeight: true }
@@ -6060,7 +6278,7 @@
             instructions: "2 rounds. Light effort. Altitude bonus.",
             exercises: [
               { id: "fd17_c1", name: "Push-Ups", sets: 2, reps: 12, notes: "Full range.", noWeight: true },
-              { id: "fd17_c2", name: "Reverse Lunges (Bodyweight)", sets: 2, reps: 10, notes: "Each side. Controlled.", perSide: true, noWeight: true },
+              { id: "fd17_c2", name: "Reverse Lunges (Bodyweight)", sets: 2, reps: 10, notes: "Each side. PSOAS MOD: shorter step back than normal. No knee drive at top -- just step back, lower, stand. If right hip pain exceeds 2/10, sub with banded glute bridges.", perSide: true, noWeight: true },
               { id: "fd17_c3", name: "Plank Hold", sets: 2, reps: 1, notes: "30 sec", isHold: true, holdTime: 30, noWeight: true }
             ]
           },
@@ -6068,84 +6286,145 @@
             name: "D. Stretch (5 min)",
             instructions: "Hip release.",
             exercises: [
-              { id: "fd17_d1", name: "90/90 Hip Stretch", sets: 1, reps: 1, notes: "Hold 60 sec each side", isHold: true, holdTime: 60, perSide: true, noWeight: true },
+              { id: "fd17_d1", name: "90/90 Hip Stretch", sets: 1, reps: 1, notes: "Hold 60 sec each side. Static holds only, no fast transitions between sides.", isHold: true, holdTime: 60, perSide: true, noWeight: true },
               { id: "fd17_d2", name: "Hip Flexor Lunge Stretch", sets: 1, reps: 1, notes: "Hold 45 sec each side", isHold: true, holdTime: 45, perSide: true, noWeight: true }
             ]
           }
         ]
       },
       {
-        name: "Movement Snack: Loaded Rehearsal",
+        name: "Morning Psoas Protocol",
+        type: "Recovery",
+        duration: "7 min",
+        location: "Fort Davis (porch or indoors)",
+        condition: "Daily psoas management. This is the heaviest hip day of the week -- psoas protocol is especially important today.\nSitting rule: break every 30 min.",
+        circuits: [
+          {
+            name: "Psoas Release",
+            instructions: "Calm the psoas down. Breathing is part of the exercise.",
+            exercises: [
+              { id: "psoas17_a1", name: "Prone Lying + Belly Breathing", sets: 1, reps: 1, notes: "3 min. Lie face down, breathe into belly against the floor.", isHold: true, holdTime: 180, noWeight: true },
+              { id: "psoas17_a2", name: "Supine Psoas March (Supported)", sets: 2, reps: 8, notes: "Each side. Feet flat, lift one foot 2 inches. Press into floor if right side hurts.", perSide: true, noWeight: true },
+              { id: "psoas17_a3", name: "Half-Kneeling Hip Flexor Stretch", sets: 1, reps: 1, notes: "60 sec each side. Squeeze back glute, tilt pelvis under.", isHold: true, holdTime: 60, perSide: true, noWeight: true },
+              { id: "psoas17_a4", name: "Foam Roller Thoracic Extension", sets: 1, reps: 1, notes: "2 min. T-spine mobility reduces psoas demand.", isHold: true, holdTime: 120, noWeight: true }
+            ]
+          }
+        ]
+      },
+      {
+        name: "Movement Snack: Slides + Walkthrough",
         type: "Sport-Specific",
         duration: "10 min",
         location: "Any flat spot (Fort Davis)",
-        condition: "No ball needed. Pattern rehearsal.\nEquipment: none",
+        condition: "PSOAS MODIFICATION: If Mar 14 slides went well, add 3-step at walkthrough speed. Pivots clockwise only, slow. No full-speed anything.\nEquipment: none",
         circuits: [
           {
             name: "Form Rehearsal",
-            instructions: "Slow, deliberate. Say the cue out loud.",
+            instructions: "Slow, deliberate. Say the cue out loud. This is motor learning, not conditioning.",
             exercises: [
-              { id: "ms17_a1", name: "3-Step Rhythm (No Ball)", sets: 3, reps: 5, notes: "Step, OPEN, launch. Feel chest rotate open on step 2.", noWeight: true },
-              { id: "ms17_a2", name: "Pivot Footwork (No Ball)", sets: 3, reps: 5, notes: "Turn-PULL-throw. Arm separation starts DURING the turn.", noWeight: true },
-              { id: "ms17_a3", name: "Ready Position + Drop Steps", sets: 3, reps: 1, notes: "20 sec each set. Defensive stance, react to imaginary attacker. Quick feet.", noWeight: true }
+              { id: "ms17_a3", name: "Defensive Slides + Drop Steps", sets: 3, reps: 1, notes: "20 sec each set. Slightly taller stance. Quick feet.", noWeight: true },
+              { id: "ms17_a1", name: "3-Step Rhythm (No Ball)", sets: 3, reps: 5, notes: "WALKTHROUGH SPEED ONLY. Shortened stride. Step, OPEN, launch. Feel chest rotate open on step 2. If right hip talks to you above 2/10, stop.", noWeight: true },
+              { id: "ms17_a2", name: "Pivot Footwork (No Ball)", sets: 3, reps: 5, notes: "CLOCKWISE PIVOTS ONLY (lower psoas demand). Slow. Turn-PULL-throw. If hip catches at any point, stop.", noWeight: true }
             ]
           }
         ]
       }
     ],
-    '2026-03-18': {
-      name: "Balmorhea Pool + Hip Mobility",
-      type: "Recovery",
-      duration: "40-50 min",
-      location: "Balmorhea State Park",
-      condition: "Deload week. Pool recovery + hip mobility. No handball practice this week (spring break).\nEquipment: none",
-      circuits: [
-        {
-          name: "A. Hip Mobility (15 min)",
-          instructions: "Do before or after pool. Priority prehab work.",
-          exercises: [
-            { id: "fd18_a1", name: "90/90 Hip Stretch", sets: 1, reps: 1, notes: "Hold 60 sec each side. Hinge forward over front leg.", isHold: true, holdTime: 60, perSide: true, noWeight: true },
-            { id: "fd18_a2", name: "Elevated Pigeon Lift Off", sets: 2, reps: 8, notes: "Each side. Use a poolside ledge or low wall.", perSide: true, noWeight: true },
-            { id: "fd18_a3", name: "Hip Flexor Lunge Stretch", sets: 1, reps: 1, notes: "Hold 45 sec each side. Squeeze back glute.", isHold: true, holdTime: 45, perSide: true, noWeight: true },
-            { id: "fd18_a4", name: "Figure-4 Hip Stretch", sets: 1, reps: 1, notes: "Hold 60 sec each side. Deep glute and hip rotator release.", isHold: true, holdTime: 60, perSide: true, noWeight: true }
-          ]
-        },
-        {
-          name: "B. Pool Recovery (25-30 min)",
-          instructions: "Easy swimming and water movement. Enjoy the spring water.",
-          exercises: [
-            { id: "fd18_b1", name: "Easy Swim Laps", sets: 1, reps: 1, notes: "10-15 min easy freestyle or backstroke. Recovery pace.", isCardio: true, duration: 600, noWeight: true },
-            { id: "fd18_b2", name: "Water Walking / Jogging", sets: 1, reps: 1, notes: "5-10 min. Forward, backward, lateral.", isCardio: true, duration: 300, noWeight: true },
-            { id: "fd18_b3", name: "Treading Water", sets: 1, reps: 1, notes: "5 min easy. Light shoulder and core engagement.", isCardio: true, duration: 300, noWeight: true }
-          ]
-        }
-      ]
-    },
-    '2026-03-19': {
-      name: "Davis Mountains Hike",
-      type: "Cardio",
-      duration: "60-90 min",
-      location: "Davis Mountains State Park",
-      condition: "Train departs 9pm. Moderate effort. Burn energy so you sleep on the train.\nBring: water, snack",
-      circuits: [
-        {
-          name: "A. Hike (60-90 min)",
-          instructions: "Skyline Drive Trail (~5 mi) or a shorter loop if you want time to pack.",
-          exercises: [
-            { id: "fd19_a1", name: "Hike", sets: 1, reps: 1, notes: "Moderate pace. Enjoy it. Bring water — altitude makes you thirstier.", isCardio: true, duration: 3600, noWeight: true }
-          ]
-        },
-        {
-          name: "B. Post-Hike Stretch (5 min)",
-          instructions: "Quick stretch before heading back to pack.",
-          exercises: [
-            { id: "fd19_b1", name: "Hip Flexor Lunge Stretch", sets: 1, reps: 1, notes: "Hold 45 sec each side", isHold: true, holdTime: 45, perSide: true, noWeight: true },
-            { id: "fd19_b2", name: "Standing Quad Stretch", sets: 1, reps: 1, notes: "Hold 30 sec each side", isHold: true, holdTime: 30, perSide: true, noWeight: true },
-            { id: "fd19_b3", name: "Cross-Body Shoulder Stretch", sets: 1, reps: 1, notes: "30 sec each side", isHold: true, holdTime: 30, perSide: true, noWeight: true }
-          ]
-        }
-      ]
-    },
+    '2026-03-18': [
+      {
+        name: "Morning Psoas Protocol",
+        type: "Recovery",
+        duration: "7 min",
+        location: "Fort Davis (porch or indoors)",
+        condition: "Daily psoas management.\nSitting rule: break every 30 min.",
+        circuits: [
+          {
+            name: "Psoas Release",
+            instructions: "Calm the psoas down. Breathing is part of the exercise.",
+            exercises: [
+              { id: "psoas18_a1", name: "Prone Lying + Belly Breathing", sets: 1, reps: 1, notes: "3 min. Lie face down, breathe into belly against the floor.", isHold: true, holdTime: 180, noWeight: true },
+              { id: "psoas18_a2", name: "Supine Psoas March (Supported)", sets: 2, reps: 8, notes: "Each side. Feet flat, lift one foot 2 inches. Press into floor if right side hurts.", perSide: true, noWeight: true },
+              { id: "psoas18_a3", name: "Half-Kneeling Hip Flexor Stretch", sets: 1, reps: 1, notes: "60 sec each side. Squeeze back glute, tilt pelvis under.", isHold: true, holdTime: 60, perSide: true, noWeight: true },
+              { id: "psoas18_a4", name: "Foam Roller Thoracic Extension", sets: 1, reps: 1, notes: "2 min. T-spine mobility reduces psoas demand.", isHold: true, holdTime: 120, noWeight: true }
+            ]
+          }
+        ]
+      },
+      {
+        name: "Balmorhea Pool + Hip Mobility",
+        type: "Recovery",
+        duration: "40-50 min",
+        location: "Balmorhea State Park",
+        condition: "Deload week. Pool recovery + hip mobility. No handball practice this week (spring break).\nEquipment: none",
+        circuits: [
+          {
+            name: "A. Hip Mobility (15 min)",
+            instructions: "Do before or after pool. Priority prehab work. Static holds, no fast transitions.",
+            exercises: [
+              { id: "fd18_a1", name: "90/90 Hip Stretch", sets: 1, reps: 1, notes: "Hold 60 sec each side. Static holds only, no fast transitions. Hinge forward over front leg.", isHold: true, holdTime: 60, perSide: true, noWeight: true },
+              { id: "fd18_a2", name: "Elevated Pigeon Lift Off", sets: 2, reps: 8, notes: "Each side. Use a poolside ledge or low wall. If right hip is front leg and there's pinching at the hip crease, reduce elevation or switch to supine figure-4.", perSide: true, noWeight: true },
+              { id: "fd18_a3", name: "Hip Flexor Lunge Stretch", sets: 1, reps: 1, notes: "Hold 45 sec each side. Squeeze back glute.", isHold: true, holdTime: 45, perSide: true, noWeight: true },
+              { id: "fd18_a4", name: "Figure-4 Hip Stretch", sets: 1, reps: 1, notes: "Hold 60 sec each side. Deep glute and hip rotator release.", isHold: true, holdTime: 60, perSide: true, noWeight: true }
+            ]
+          },
+          {
+            name: "B. Pool Recovery (25-30 min)",
+            instructions: "Easy swimming and water movement. Enjoy the spring water.",
+            exercises: [
+              { id: "fd18_b1", name: "Easy Swim Laps", sets: 1, reps: 1, notes: "10-15 min easy freestyle or backstroke. Recovery pace.", isCardio: true, duration: 600, noWeight: true },
+              { id: "fd18_b2", name: "Water Walking / Jogging", sets: 1, reps: 1, notes: "5-10 min. Forward, backward, lateral.", isCardio: true, duration: 300, noWeight: true },
+              { id: "fd18_b3", name: "Treading Water", sets: 1, reps: 1, notes: "5 min easy. Light shoulder and core engagement.", isCardio: true, duration: 300, noWeight: true }
+            ]
+          }
+        ]
+      }
+    ],
+    '2026-03-19': [
+      {
+        name: "Morning Psoas Protocol",
+        type: "Recovery",
+        duration: "7 min",
+        location: "Fort Davis (porch or indoors)",
+        condition: "Daily psoas management. Do this BEFORE the hike.\nSitting rule: break every 30 min (especially on the train tonight).",
+        circuits: [
+          {
+            name: "Psoas Release",
+            instructions: "Pre-hike psoas prep. Lengthens it before sustained hip flexion.",
+            exercises: [
+              { id: "psoas19_a1", name: "Prone Lying + Belly Breathing", sets: 1, reps: 1, notes: "3 min. Lie face down, breathe into belly against the floor.", isHold: true, holdTime: 180, noWeight: true },
+              { id: "psoas19_a2", name: "Supine Psoas March (Supported)", sets: 2, reps: 8, notes: "Each side. Feet flat, lift one foot 2 inches.", perSide: true, noWeight: true },
+              { id: "psoas19_a3", name: "Half-Kneeling Hip Flexor Stretch", sets: 1, reps: 1, notes: "60 sec each side. Squeeze back glute, tilt pelvis under.", isHold: true, holdTime: 60, perSide: true, noWeight: true }
+            ]
+          }
+        ]
+      },
+      {
+        name: "Davis Mountains Hike",
+        type: "Cardio",
+        duration: "60-90 min",
+        location: "Davis Mountains State Park",
+        condition: "Train departs 9pm. Moderate effort.\nPSOAS RULES: Stop every 30-45 min for standing hip flexor stretch. Shorten stride on uphills. If hip hits 3/10, shorten the route. Do post-hike stretches BEFORE sitting down.\nBring: water, snack, trekking poles if available",
+        circuits: [
+          {
+            name: "A. Hike (60-90 min)",
+            instructions: "Skyline Drive Trail (~5 mi) or shorter loop. Break every 30-45 min for a standing hip flexor stretch (30 sec each side). Shorten stride on steep uphills.",
+            exercises: [
+              { id: "fd19_a1", name: "Hike", sets: 1, reps: 1, notes: "Moderate pace. Shorten stride on uphills. Use trekking poles if available (reduces hip flexor demand). Bring water — altitude makes you thirstier.", isCardio: true, duration: 3600, noWeight: true }
+            ]
+          },
+          {
+            name: "B. Post-Hike: Psoas Recovery (8 min)",
+            instructions: "Do this BEFORE sitting down for a meal or in the car. This is the most important post-hike step given the psoas pattern.",
+            exercises: [
+              { id: "fd19_b0", name: "Prone Lying + Belly Breathing", sets: 1, reps: 1, notes: "3-5 min. Lie face down on the grass. Passive psoas lengthening before you sit.", isHold: true, holdTime: 240, noWeight: true },
+              { id: "fd19_b1", name: "Hip Flexor Lunge Stretch", sets: 1, reps: 1, notes: "Hold 60 sec each side. Extra time on right.", isHold: true, holdTime: 60, perSide: true, noWeight: true },
+              { id: "fd19_b2", name: "Standing Quad Stretch", sets: 1, reps: 1, notes: "Hold 30 sec each side.", isHold: true, holdTime: 30, perSide: true, noWeight: true },
+              { id: "fd19_b3", name: "Cross-Body Shoulder Stretch", sets: 1, reps: 1, notes: "30 sec each side.", isHold: true, holdTime: 30, perSide: true, noWeight: true }
+            ]
+          }
+        ]
+      }
+    ],
     '2026-03-20': {
       name: "Return Day: Pool or Rest",
       type: "Recovery",
