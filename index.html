@@ -194,6 +194,7 @@
       justify-content: space-between;
       align-items: center;
       margin-bottom: 8px;
+      gap: 8px;
     }
 
     .date-display {
@@ -201,14 +202,15 @@
       color: var(--text-secondary);
       font-weight: 500;
       letter-spacing: 0.3px;
-      min-width: 130px;
+      min-width: 0;
       text-align: center;
     }
 
     .date-nav {
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 4px;
+      flex-wrap: wrap;
     }
 
     .date-nav-btn {
@@ -279,6 +281,7 @@
       cursor: pointer;
       border: 1px solid var(--border);
       transition: var(--transition);
+      flex-shrink: 0;
     }
 
     .readiness-badge:hover {
@@ -1239,6 +1242,7 @@
     /* Plan View */
     .plan-section {
       padding: 16px;
+      overflow-x: hidden;
     }
 
     .plan-section h2 {
@@ -1318,6 +1322,7 @@
       margin-bottom: 10px;
       border: 1px solid var(--border);
       transition: var(--transition);
+      overflow: hidden;
     }
 
     .calendar-week.current-week {
@@ -1351,12 +1356,14 @@
     .calendar-day {
       background: var(--bg-primary);
       border-radius: var(--radius-sm);
-      padding: 8px 4px;
+      padding: 8px 2px;
       text-align: center;
       cursor: pointer;
       transition: var(--transition);
       min-height: 62px;
       border: 1px solid transparent;
+      overflow: hidden;
+      min-width: 0;
     }
 
     .calendar-day:hover {
@@ -3919,14 +3926,23 @@
 
     function canEditCompletedWorkout(saved) {
       // Only show edit button if we can find the original workout definition
-      // PT sessions, external activities, and CLI-logged workouts don't have definitions
+      // with real exercises (not a PT placeholder like "PT Session" x1)
       if (!saved || !saved.date) return false;
       const dateKey = saved.date;
+
+      function hasRealExercises(def) {
+        if (!def || !def.circuits) return false;
+        let count = 0;
+        def.circuits.forEach(c => { count += (c.exercises || []).length; });
+        return count > 1;
+      }
+
       if (DATE_WORKOUTS[dateKey]) {
         const dw = DATE_WORKOUTS[dateKey];
         if (Array.isArray(dw)) {
-          if (dw.find(w => w.name === saved.workout)) return true;
-        } else if ((dw.name || '') === saved.workout) {
+          const match = dw.find(w => w.name === saved.workout);
+          if (match && hasRealExercises(match)) return true;
+        } else if ((dw.name || '') === saved.workout && hasRealExercises(dw)) {
           return true;
         }
       }
@@ -4463,7 +4479,10 @@
       const history = getWorkoutHistory();
       const inProgressName = getInProgressWorkoutName();
 
-      document.getElementById('dayName').textContent = workouts[0].name.split(':')[0] || 'Today';
+      // Show the highest-intensity workout as the day title, not just the first one
+      const typePriority = { 'strength': 5, 'sport-specific': 4, 'sport': 4, 'handball': 4, 'clinic': 4, 'mixed': 4, 'conditioning': 3, 'cardio': 3, 'warmup': 2, 'recovery': 1, 'prehab': 1, 'rest': 0 };
+      const primary = [...workouts].sort((a, b) => (typePriority[(b.type || '').toLowerCase()] || 0) - (typePriority[(a.type || '').toLowerCase()] || 0))[0];
+      document.getElementById('dayName').textContent = primary.name.split(':')[0] || 'Today';
 
       let tilesHtml = '';
       workouts.forEach((w, i) => {
@@ -8741,9 +8760,16 @@ ${recentHistory}`;
 
       if (DATE_WORKOUTS[dateKey]) {
         const dw = DATE_WORKOUTS[dateKey];
-        const workout = Array.isArray(dw) ? dw[0] : dw;
-        type = workout.type || 'gym';
-        label = workout.name || '';
+        if (Array.isArray(dw)) {
+          // Use highest-intensity workout type for protein target
+          const typePri = { 'strength': 5, 'sport-specific': 4, 'sport': 4, 'handball': 4, 'clinic': 4, 'mixed': 4, 'conditioning': 3, 'cardio': 3, 'warmup': 2, 'recovery': 1, 'prehab': 1, 'rest': 0 };
+          const primary = [...dw].sort((a, b) => (typePri[(b.type || '').toLowerCase()] || 0) - (typePri[(a.type || '').toLowerCase()] || 0))[0];
+          type = primary.type || 'gym';
+          label = primary.name || '';
+        } else {
+          type = dw.type || 'gym';
+          label = dw.name || '';
+        }
       } else if (specialDate && specialDate.type === 'travel' && specialDate.facilities === 'minimal') {
         type = 'rest';
       } else if (state.activeWorkout) {
