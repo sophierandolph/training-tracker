@@ -15,7 +15,7 @@ rules_version = '2';
 // 2. Open browser console (Cmd+Option+J on Mac)
 // 3. Type: firebase.auth().currentUser.uid
 // 4. Copy that UID string
-// 5. Replace YOUR_UID_HERE below with your actual UID
+// 5. Replace x07FO5MVDJMJFB63He23GW3ohDG2 below with your actual UID
 // 6. Re-deploy rules in Firebase Console
 
 service cloud.firestore {
@@ -24,13 +24,13 @@ service cloud.firestore {
     // Workouts collection
     match /workouts/{docId} {
       allow read, write: if request.auth != null
-        && request.auth.uid == 'YOUR_UID_HERE';
+        && request.auth.uid == 'x07FO5MVDJMJFB63He23GW3ohDG2';
     }
 
     // Fuel logs collection
     match /fuelLogs/{docId} {
       allow read, write: if request.auth != null
-        && request.auth.uid == 'YOUR_UID_HERE';
+        && request.auth.uid == 'x07FO5MVDJMJFB63He23GW3ohDG2';
     }
 
     // Deny everything else by default
