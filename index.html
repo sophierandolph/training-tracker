@@ -87,13 +87,7 @@
     function googleSignIn() {
       const provider = new firebase.auth.GoogleAuthProvider();
       provider.setCustomParameters({ prompt: 'select_account' });
-      auth.signInWithPopup(provider).catch((err) => {
-        console.log('Sign-in error:', err.code);
-        if (err.code === 'auth/popup-blocked') {
-          // Fallback to redirect for mobile
-          auth.signInWithRedirect(provider);
-        }
-      });
+      auth.signInWithRedirect(provider);
     }
 
     // Enable offline persistence
