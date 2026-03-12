@@ -61,7 +61,8 @@
     function showAuthGate() {
       // Only add if not already present
       if (document.getElementById('authGate')) return;
-      document.addEventListener('DOMContentLoaded', () => {
+      function appendGate() {
+        if (document.getElementById('authGate')) return;
         const gate = document.createElement('div');
         gate.id = 'authGate';
         gate.style.cssText = 'position:fixed;inset:0;z-index:10000;background:#0f0a1a;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;';
@@ -74,7 +75,13 @@
           </button>
         `;
         document.body.appendChild(gate);
-      });
+      }
+      // Append immediately if body exists, otherwise wait for DOMContentLoaded
+      if (document.body) {
+        appendGate();
+      } else {
+        document.addEventListener('DOMContentLoaded', appendGate);
+      }
     }
 
     function googleSignIn() {
