@@ -3550,7 +3550,12 @@
       // New state for travel and adjustments
       currentTravelDay: null,
       workoutAdjustments: [],
-      pendingWorkout: null
+      pendingWorkout: null,
+      // Completed workout viewing and editing
+      lastCompletedWorkout: null,
+      isEditingCompleted: false,
+      editingDocId: null,
+      editingOriginalData: null
     };
 
     // ==================== INITIALIZATION ====================
@@ -3769,15 +3774,142 @@
     function showWorkoutComplete(saved) {
       const content = document.getElementById('workoutContent');
       document.getElementById('dayName').textContent = saved.workout || saved.name || 'Workout';
+
+      // Build exercise details HTML
+      let detailsHtml = '';
+      if (saved.exercises && saved.exercises.length > 0) {
+        let currentCircuit = '';
+        saved.exercises.forEach(ex => {
+          if (ex.circuit && ex.circuit !== currentCircuit) {
+            currentCircuit = ex.circuit;
+            detailsHtml += `<div style="font-size: 12px; font-weight: 700; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.5px; margin-top: 16px; margin-bottom: 8px; padding: 0 4px;">${escHtml(currentCircuit)}</div>`;
+          }
+          const setsStr = ex.sets.map(s => {
+            if (s.skipped) return '<span style="color: var(--text-muted);">Skip</span>';
+            if (s.weight && s.reps) return `${s.weight}lb x ${s.reps}`;
+            if (s.reps) return `x ${s.reps}`;
+            return '✓';
+          }).join(' · ');
+          const feelStr = ex.sets.filter(s => s.feel).map(s => s.feel).join('/');
+          detailsHtml += `
+            <div style="display: flex; justify-content: space-between; align-items: baseline; padding: 6px 4px; border-bottom: 1px solid var(--bg-tertiary);">
+              <div style="font-size: 13px; color: var(--text-primary); flex: 1;">${escHtml(ex.name)}</div>
+              <div style="font-size: 12px; color: var(--text-secondary); text-align: right; margin-left: 12px;">${setsStr}</div>
+            </div>
+          `;
+        });
+      }
+
       content.innerHTML = `
-        <div style="text-align: center; padding: 60px 20px;">
+        <div style="text-align: center; padding: 40px 20px 16px;">
           <div style="font-size: 48px; margin-bottom: 16px;">&#9989;</div>
-          <h2 style="color: var(--text-primary); margin-bottom: 8px;">${saved.workout || saved.name || 'Workout'}</h2>
+          <h2 style="color: var(--text-primary); margin-bottom: 8px;">${escHtml(saved.workout || saved.name || 'Workout')}</h2>
           <p style="color: var(--text-secondary); margin-bottom: 4px;">Saved${saved.duration ? ' · ' + saved.duration + ' min' : ''}</p>
           ${saved.overallFeel ? `<p style="color: var(--text-muted);">Effort: ${saved.overallFeel}/5${saved.overallEffortType ? ' · ' + saved.overallEffortType : ''}</p>` : ''}
-          ${saved.notes ? `<p style="color: var(--text-muted); font-style: italic; margin-top: 12px;">"${saved.notes}"</p>` : ''}
+          ${saved.notes ? `<p style="color: var(--text-muted); font-style: italic; margin-top: 12px;">"${escHtml(saved.notes)}"</p>` : ''}
+        </div>
+        ${detailsHtml ? `
+          <div style="padding: 0 16px 16px;">
+            <div style="background: var(--bg-secondary); border-radius: var(--radius); padding: 12px;">
+              ${detailsHtml}
+            </div>
+          </div>
+        ` : ''}
+        <div style="text-align: center; padding: 0 16px 24px;">
+          <button onclick="editCompletedWorkout()" style="background: none; border: 1px solid var(--border); color: var(--text-secondary); padding: 8px 20px; border-radius: var(--radius); font-size: 13px; cursor: pointer;">Edit Logged Sets</button>
         </div>
       `;
+
+      // Store for edit access
+      state.lastCompletedWorkout = saved;
+    }
+
+    function editCompletedWorkout() {
+      const saved = state.lastCompletedWorkout;
+      if (!saved) return;
+
+      const dateKey = saved.date;
+
+      // Find the original workout definition to re-render the full workout UI
+      let workoutDef = null;
+      if (DATE_WORKOUTS[dateKey]) {
+        const dw = DATE_WORKOUTS[dateKey];
+        if (Array.isArray(dw)) {
+          workoutDef = dw.find(w => w.name === saved.workout);
+        } else if ((dw.name || '') === saved.workout) {
+          workoutDef = dw;
+        }
+      }
+      if (!workoutDef) {
+        // Try WORKOUTS by day-of-week schedule fallback
+        const dayIndex = new Date(dateKey + 'T00:00:00').getDay();
+        const scheduleEntry = SCHEDULE[dayIndex];
+        if (scheduleEntry && scheduleEntry.workout && WORKOUTS[scheduleEntry.workout]) {
+          const dayWorkouts = WORKOUTS[scheduleEntry.workout];
+          // dayWorkouts may be a single workout or an object of sub-workouts
+          if (dayWorkouts.name === saved.workout) {
+            workoutDef = dayWorkouts;
+          } else {
+            // Search sub-keys for matching workout name
+            Object.values(dayWorkouts).forEach(w => {
+              if (w && w.name === saved.workout) workoutDef = w;
+            });
+          }
+        }
+      }
+
+      if (!workoutDef) {
+        alert('Cannot find the original workout definition to edit.');
+        return;
+      }
+
+      // Reset state and render the workout
+      resetWorkoutState();
+      state.activeWorkout = workoutDef;
+      state.isEditingCompleted = true;
+      state.editingDocId = saved.docId || null;
+      state.editingOriginalData = saved;
+      renderWorkout(workoutDef);
+
+      // Populate sets from saved exercise data
+      if (saved.exercises && saved.exercises.length > 0) {
+        workoutDef.circuits.forEach((circuit, ci) => {
+          circuit.exercises.forEach((ex, ei) => {
+            const exerciseId = `${ci}-${ei}`;
+            const savedEx = saved.exercises.find(se => se.name === ex.name);
+            if (savedEx && savedEx.sets) {
+              if (!state.workoutLog[exerciseId]) {
+                state.workoutLog[exerciseId] = new Array(ex.sets).fill(null);
+              }
+              savedEx.sets.forEach((s, si) => {
+                if (si < ex.sets) {
+                  state.workoutLog[exerciseId][si] = { ...s };
+                  const setId = `${exerciseId}-${si}`;
+                  const pill = document.getElementById(`set-${setId}`);
+                  const valueEl = document.getElementById(`set-value-${setId}`);
+                  if (pill && valueEl) {
+                    if (s.skipped) {
+                      pill.classList.add('skipped');
+                      valueEl.textContent = 'Skip';
+                    } else {
+                      pill.classList.add('complete');
+                      if (s.filmed) pill.classList.add('filmed');
+                      valueEl.textContent = s.weight ? `${s.weight}×${s.reps}` : `${s.reps || '✓'}`;
+                    }
+                  }
+                }
+              });
+            }
+          });
+        });
+        updateProgress();
+      }
+
+      // Set start time from original so duration calc doesn't reset
+      if (saved.timestamp) {
+        const savedDuration = saved.duration || 0;
+        state.workoutStartTime = new Date(new Date(saved.timestamp).getTime() - savedDuration * 60000);
+      }
     }
 
     function loadTodaysWorkout() {
@@ -4141,6 +4273,8 @@
         w.workout === workout.name &&
         w.type !== 'External Activity'
       );
+      const inProgressName = getInProgressWorkoutName();
+      const workoutInProgress = !workoutLogged && inProgressName === workout.name;
 
       // Build in-app workout tile
       const workoutLoggedInfo = workoutLogged ? `
@@ -4150,15 +4284,19 @@
         </div>
       ` : '';
 
+      const wStatusLabel = workoutLogged ? 'Logged' : (workoutInProgress ? 'Resume' : 'Start');
+      const wStatusStyle = workoutLogged ? '' : (workoutInProgress ? 'background: var(--warning, #f0ad4e); color: white;' : 'background: var(--accent); color: white;');
+      const wBorderColor = workoutLogged ? 'var(--success)' : (workoutInProgress ? 'var(--warning, #f0ad4e)' : 'var(--accent)');
+
       activitiesHtml += `
-        <div class="activity-tile ${workoutLogged ? 'logged' : ''}" onclick="startInAppWorkout()" style="border-color: ${workoutLogged ? 'var(--success)' : 'var(--accent)'};">
+        <div class="activity-tile ${workoutLogged ? 'logged' : ''}" onclick="startInAppWorkout()" style="border-color: ${wBorderColor};">
           <div class="activity-tile-header">
             <div>
               <div class="activity-tile-type" style="color: var(--accent);">${workout.type}</div>
               <div class="activity-tile-name">${workout.name}</div>
               <div class="activity-tile-time">${workout.duration} · ${workout.location}</div>
             </div>
-            <span class="activity-tile-status ${workoutLogged ? 'logged' : ''}" style="${!workoutLogged ? 'background: var(--accent); color: white;' : ''}">${workoutLogged ? 'Logged' : 'Start'}</span>
+            <span class="activity-tile-status ${workoutLogged ? 'logged' : ''}" style="${wStatusStyle}">${wStatusLabel}</span>
           </div>
           ${workoutLoggedInfo}
         </div>
@@ -4183,10 +4321,24 @@
     // Multi-workout days: store the array so tile onclick can reference by index
     let multiWorkoutList = null;
 
+    function getInProgressWorkoutName() {
+      try {
+        const raw = localStorage.getItem('workoutInProgress');
+        if (!raw) return null;
+        const saved = JSON.parse(raw);
+        const today = formatDateKey(state.currentDate);
+        if (saved.date === today && saved.workoutLog && Object.keys(saved.workoutLog).length > 0) {
+          return saved.workoutName;
+        }
+      } catch(e) {}
+      return null;
+    }
+
     function renderMultiWorkoutDay(workouts, dateKey) {
       multiWorkoutList = workouts;
       const content = document.getElementById('workoutContent');
       const history = getWorkoutHistory();
+      const inProgressName = getInProgressWorkoutName();
 
       document.getElementById('dayName').textContent = workouts[0].name.split(':')[0] || 'Today';
 
@@ -4195,6 +4347,7 @@
         const workoutLogged = history.find(h =>
           h.date === dateKey && h.workout === w.name
         );
+        const isInProgress = !workoutLogged && inProgressName === w.name;
 
         const loggedInfo = workoutLogged ? `
           <div class="activity-tile-logged-info">
@@ -4203,15 +4356,18 @@
           </div>
         ` : '';
 
+        const statusLabel = workoutLogged ? 'Logged' : (isInProgress ? 'Resume' : 'Start');
+        const statusStyle = workoutLogged ? '' : (isInProgress ? 'background: var(--warning, #f0ad4e); color: white;' : 'background: var(--accent); color: white;');
+
         tilesHtml += `
-          <div class="activity-tile ${workoutLogged ? 'logged' : ''}" onclick="startMultiWorkout(${i})" style="border-color: ${workoutLogged ? 'var(--success)' : 'var(--accent)'};">
+          <div class="activity-tile ${workoutLogged ? 'logged' : ''}" onclick="startMultiWorkout(${i})" style="border-color: ${workoutLogged ? 'var(--success)' : (isInProgress ? 'var(--warning, #f0ad4e)' : 'var(--accent)')};">
             <div class="activity-tile-header">
               <div>
                 <div class="activity-tile-type" style="color: var(--accent);">${w.type}</div>
                 <div class="activity-tile-name">${w.name}</div>
                 <div class="activity-tile-time">${w.duration} · ${w.location}</div>
               </div>
-              <span class="activity-tile-status ${workoutLogged ? 'logged' : ''}" style="${!workoutLogged ? 'background: var(--accent); color: white;' : ''}">${workoutLogged ? 'Logged' : 'Start'}</span>
+              <span class="activity-tile-status ${workoutLogged ? 'logged' : ''}" style="${statusStyle}">${statusLabel}</span>
             </div>
             ${loggedInfo}
           </div>
@@ -4230,6 +4386,10 @@
       state.overallEffortType = null;
       state.pendingWorkout = null;
       state.workoutAdjustments = [];
+      state.lastCompletedWorkout = null;
+      state.isEditingCompleted = false;
+      state.editingDocId = null;
+      state.editingOriginalData = null;
       adaptationApplied = null;
       originalScheduledWorkout = null;
     }
@@ -4265,6 +4425,7 @@
       const history = getWorkoutHistory();
 
       let tilesHtml = '';
+      const inProgressName = getInProgressWorkoutName();
       recurringKeys.forEach(workoutKey => {
         const workout = WORKOUTS[workoutKey];
         if (!workout) return;
@@ -4274,6 +4435,7 @@
           w.workout === workout.name &&
           w.type !== 'External Activity'
         );
+        const isInProgress = !workoutLogged && inProgressName === workout.name;
 
         const loggedInfo = workoutLogged ? `
           <div class="activity-tile-logged-info">
@@ -4282,15 +4444,19 @@
           </div>
         ` : '';
 
+        const rStatusLabel = workoutLogged ? 'Logged' : (isInProgress ? 'Resume' : 'Start');
+        const rStatusStyle = workoutLogged ? '' : (isInProgress ? 'background: var(--warning, #f0ad4e); color: white;' : 'background: var(--accent); color: white;');
+        const rBorderColor = workoutLogged ? 'var(--success)' : (isInProgress ? 'var(--warning, #f0ad4e)' : 'var(--accent)');
+
         tilesHtml += `
-          <div class="activity-tile ${workoutLogged ? 'logged' : ''}" onclick="startRecurringWorkout('${workoutKey}')" style="border-color: ${workoutLogged ? 'var(--success)' : 'var(--accent)'};">
+          <div class="activity-tile ${workoutLogged ? 'logged' : ''}" onclick="startRecurringWorkout('${workoutKey}')" style="border-color: ${rBorderColor};">
             <div class="activity-tile-header">
               <div>
                 <div class="activity-tile-type" style="color: var(--accent);">${workout.type}</div>
                 <div class="activity-tile-name">${workout.name}</div>
                 <div class="activity-tile-time">${workout.duration} · ${workout.location}</div>
               </div>
-              <span class="activity-tile-status ${workoutLogged ? 'logged' : ''}" style="${!workoutLogged ? 'background: var(--accent); color: white;' : ''}">${workoutLogged ? 'Logged' : 'Start'}</span>
+              <span class="activity-tile-status ${workoutLogged ? 'logged' : ''}" style="${rStatusStyle}">${rStatusLabel}</span>
             </div>
             ${loggedInfo}
           </div>
@@ -4834,12 +5000,31 @@
       // Compare to last session with same workout name
       buildComparison(totalVolume);
 
-      // Reset selections
+      // Reset selections, then pre-fill if editing
       document.querySelectorAll('#overallSlider .overall-btn').forEach(b => b.classList.remove('selected'));
       document.querySelectorAll('#overallEffortType .effort-type-btn').forEach(b => b.classList.remove('selected'));
       document.getElementById('workoutNotes').value = '';
       state.overallFeel = null;
       state.overallEffortType = null;
+
+      if (state.isEditingCompleted && state.editingOriginalData) {
+        const orig = state.editingOriginalData;
+        if (orig.overallFeel) {
+          state.overallFeel = orig.overallFeel;
+          document.querySelectorAll('#overallSlider .overall-btn').forEach(b => {
+            if (parseInt(b.dataset.value) === orig.overallFeel) b.classList.add('selected');
+          });
+        }
+        if (orig.overallEffortType) {
+          state.overallEffortType = orig.overallEffortType;
+          document.querySelectorAll('#overallEffortType .effort-type-btn').forEach(b => {
+            if (b.dataset.value === orig.overallEffortType) b.classList.add('selected');
+          });
+        }
+        if (orig.notes) {
+          document.getElementById('workoutNotes').value = orig.notes;
+        }
+      }
 
       document.getElementById('completeModal').classList.add('active');
     }
@@ -4867,26 +5052,48 @@
         });
       }
 
+      // When editing a completed workout, preserve original metadata
+      const isEditing = state.isEditingCompleted;
+      const originalData = state.editingOriginalData;
+
       const workoutData = {
         date: formatDateKey(state.currentDate),
         workout: state.activeWorkout.name,
         type: state.activeWorkout.type,
-        duration: state.workoutStartTime ?
-          Math.round((new Date() - state.workoutStartTime) / 60000) : 0,
-        readiness: state.readiness,
+        duration: isEditing && originalData ? originalData.duration :
+          (state.workoutStartTime ? Math.round((new Date() - state.workoutStartTime) / 60000) : 0),
+        readiness: isEditing && originalData ? (originalData.readiness || state.readiness) : state.readiness,
         exercises: exercises,
-        overallFeel: state.overallFeel,
-        overallEffortType: state.overallEffortType,
+        overallFeel: state.overallFeel !== null ? state.overallFeel : (isEditing && originalData ? originalData.overallFeel : null),
+        overallEffortType: state.overallEffortType !== null ? state.overallEffortType : (isEditing && originalData ? originalData.overallEffortType : null),
         notes: document.getElementById('workoutNotes').value,
-        timestamp: new Date().toISOString(),
-        // New fields for adaptation and adjustments
-        adjustments: state.workoutAdjustments || [],
-        wasAdapted: adaptationApplied !== null,
-        adaptationReason: adaptationApplied ? adaptationApplied.message : null
+        timestamp: isEditing && originalData ? originalData.timestamp : new Date().toISOString(),
+        adjustments: isEditing && originalData ? (originalData.adjustments || []) : (state.workoutAdjustments || []),
+        wasAdapted: isEditing && originalData ? (originalData.wasAdapted || false) : (adaptationApplied !== null),
+        adaptationReason: isEditing && originalData ? (originalData.adaptationReason || null) : (adaptationApplied ? adaptationApplied.message : null)
       };
 
-      // Save to Firestore and localStorage
-      saveWorkoutToHistory(workoutData);
+      if (isEditing && state.editingDocId) {
+        // Update existing record in Firestore
+        workoutData.docId = state.editingDocId;
+        workoutData.editedAt = new Date().toISOString();
+        db.collection('workouts').doc(state.editingDocId).set(workoutData)
+          .then(() => console.log('Workout edit saved to cloud'))
+          .catch((error) => console.log('Error saving workout edit:', error));
+
+        // Update local cache
+        const cacheIdx = workoutHistoryCache.findIndex(h => h.docId === state.editingDocId);
+        if (cacheIdx >= 0) {
+          workoutHistoryCache[cacheIdx] = workoutData;
+        } else {
+          workoutHistoryCache.unshift(workoutData);
+        }
+        workoutHistoryCache = workoutHistoryCache.slice(0, 100);
+        localStorage.setItem('workoutHistory', JSON.stringify(workoutHistoryCache));
+      } else {
+        // Normal save
+        saveWorkoutToHistory(workoutData);
+      }
 
       // Clear autosave now that workout is fully saved
       localStorage.removeItem('workoutInProgress');
