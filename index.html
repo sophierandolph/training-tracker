@@ -4311,6 +4311,13 @@
     function startInAppWorkout() {
       if (state.pendingWorkout) {
         const workout = state.pendingWorkout;
+        const dateKey = formatDateKey(state.currentDate);
+        const history = getWorkoutHistory();
+        const saved = history.find(h => h.date === dateKey && h.workout === workout.name && h.type !== 'External Activity');
+        if (saved) {
+          showWorkoutComplete(saved);
+          return;
+        }
         resetWorkoutState();
         state.activeWorkout = workout;
         renderWorkout(workout);
@@ -4396,9 +4403,18 @@
 
     function startMultiWorkout(index) {
       if (multiWorkoutList && multiWorkoutList[index]) {
+        const workout = multiWorkoutList[index];
+        const dateKey = formatDateKey(state.currentDate);
+        // Check if this specific workout is already logged
+        const history = getWorkoutHistory();
+        const saved = history.find(h => h.date === dateKey && h.workout === workout.name);
+        if (saved) {
+          showWorkoutComplete(saved);
+          return;
+        }
         resetWorkoutState();
-        state.activeWorkout = multiWorkoutList[index];
-        renderWorkout(multiWorkoutList[index]);
+        state.activeWorkout = workout;
+        renderWorkout(workout);
         restoreProgressIfAvailable();
       }
     }
@@ -4409,6 +4425,13 @@
         ? workoutKey.split('.').reduce((obj, key) => obj && obj[key], WORKOUTS)
         : WORKOUTS[workoutKey] || (WORKOUTS.activeRecovery && WORKOUTS.activeRecovery[workoutKey]);
       if (workout) {
+        const dateKey = formatDateKey(state.currentDate);
+        const history = getWorkoutHistory();
+        const saved = history.find(h => h.date === dateKey && h.workout === workout.name);
+        if (saved) {
+          showWorkoutComplete(saved);
+          return;
+        }
         resetWorkoutState();
         state.activeWorkout = workout;
         renderWorkout(workout);
