@@ -3906,13 +3906,38 @@
             </div>
           </div>
         ` : ''}
+        ${canEditCompletedWorkout(saved) ? `
         <div style="text-align: center; padding: 0 16px 24px;">
           <button onclick="editCompletedWorkout()" style="background: none; border: 1px solid var(--border); color: var(--text-secondary); padding: 8px 20px; border-radius: var(--radius); font-size: 13px; cursor: pointer;">Edit Logged Sets</button>
         </div>
+        ` : ''}
       `;
 
       // Store for edit access
       state.lastCompletedWorkout = saved;
+    }
+
+    function canEditCompletedWorkout(saved) {
+      // Only show edit button if we can find the original workout definition
+      // PT sessions, external activities, and CLI-logged workouts don't have definitions
+      if (!saved || !saved.date) return false;
+      const dateKey = saved.date;
+      if (DATE_WORKOUTS[dateKey]) {
+        const dw = DATE_WORKOUTS[dateKey];
+        if (Array.isArray(dw)) {
+          if (dw.find(w => w.name === saved.workout)) return true;
+        } else if ((dw.name || '') === saved.workout) {
+          return true;
+        }
+      }
+      const dayIndex = new Date(dateKey + 'T00:00:00').getDay();
+      const scheduleEntry = SCHEDULE[dayIndex];
+      if (scheduleEntry && scheduleEntry.workout && WORKOUTS[scheduleEntry.workout]) {
+        const dayWorkouts = WORKOUTS[scheduleEntry.workout];
+        if (dayWorkouts.name === saved.workout) return true;
+        if (Object.values(dayWorkouts).some(w => w && w.name === saved.workout)) return true;
+      }
+      return false;
     }
 
     function editCompletedWorkout() {
