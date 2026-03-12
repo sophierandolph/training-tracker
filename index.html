@@ -2807,6 +2807,11 @@
         <textarea class="notes-input" id="workoutNotes" placeholder="Anything to remember for next time?"></textarea>
       </div>
 
+      <div class="input-group">
+        <label class="input-label">Any pain or discomfort? (optional)</label>
+        <textarea class="notes-input" id="discomfortNotes" placeholder="Location, severity (0-10), what triggered it..." style="min-height: 48px;"></textarea>
+      </div>
+
       <div class="modal-actions">
         <button class="btn btn-success" onclick="saveWorkout()">Save Workout</button>
       </div>
@@ -3905,6 +3910,7 @@
           <p style="color: var(--text-secondary); margin-bottom: 4px;">Saved${saved.duration ? ' · ' + saved.duration + ' min' : ''}</p>
           ${saved.overallFeel ? `<p style="color: var(--text-muted);">Effort: ${saved.overallFeel}/5${saved.overallEffortType ? ' · ' + saved.overallEffortType : ''}</p>` : ''}
           ${saved.notes ? `<p style="color: var(--text-muted); font-style: italic; margin-top: 12px;">"${escHtml(saved.notes)}"</p>` : ''}
+          ${saved.discomfort ? `<p style="color: var(--rose); font-size: 13px; margin-top: 8px;">⚠ ${escHtml(saved.discomfort)}</p>` : ''}
         </div>
         ${detailsHtml ? `
           <div style="padding: 0 16px 16px;">
@@ -5162,6 +5168,7 @@
       document.querySelectorAll('#overallSlider .overall-btn').forEach(b => b.classList.remove('selected'));
       document.querySelectorAll('#overallEffortType .effort-type-btn').forEach(b => b.classList.remove('selected'));
       document.getElementById('workoutNotes').value = '';
+      document.getElementById('discomfortNotes').value = '';
       state.overallFeel = null;
       state.overallEffortType = null;
 
@@ -5181,6 +5188,9 @@
         }
         if (orig.notes) {
           document.getElementById('workoutNotes').value = orig.notes;
+        }
+        if (orig.discomfort) {
+          document.getElementById('discomfortNotes').value = orig.discomfort;
         }
       }
 
@@ -5225,6 +5235,7 @@
         overallFeel: state.overallFeel !== null ? state.overallFeel : (isEditing && originalData ? originalData.overallFeel : null),
         overallEffortType: state.overallEffortType !== null ? state.overallEffortType : (isEditing && originalData ? originalData.overallEffortType : null),
         notes: document.getElementById('workoutNotes').value,
+        discomfort: document.getElementById('discomfortNotes').value || null,
         timestamp: isEditing && originalData ? originalData.timestamp : new Date().toISOString(),
         adjustments: isEditing && originalData ? (originalData.adjustments || []) : (state.workoutAdjustments || []),
         wasAdapted: isEditing && originalData ? (originalData.wasAdapted || false) : (adaptationApplied !== null),
@@ -5467,6 +5478,12 @@
       if (historyFilter !== 'all') {
         if (historyFilter === 'External') {
           history = allHistory.filter(w => w.type === 'External Activity' || w.type === 'Travel Activity');
+        } else if (historyFilter === 'Sport') {
+          history = allHistory.filter(w => {
+            const t = (w.type || '').toLowerCase();
+            return t === 'sport' || t === 'sport-specific' || t.includes('handball') ||
+              (t === 'external activity' && /handball|soccer|futsal|basketball|volleyball/i.test(w.workout || ''));
+          });
         } else {
           history = allHistory.filter(w => w.type === historyFilter || (w.type || '').toLowerCase().includes(historyFilter.toLowerCase()));
         }
@@ -8490,6 +8507,7 @@ OVERTRAINING SIGNALS & GUARDRAILS
 
         // Notes
         if (w.notes) summary += `\n  Notes: "${w.notes}"`;
+        if (w.discomfort) summary += `\n  ⚠ Discomfort: "${w.discomfort}"`;
       });
 
       // Add patterns
