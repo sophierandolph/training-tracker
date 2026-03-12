@@ -5,14 +5,13 @@
 const ALLOWED_ORIGINS = [
   'https://sophierandolph.github.io',
   'http://localhost',
-  'file://',
 ];
 
 function isAllowedOrigin(request) {
   const origin = request.headers.get('Origin') || '';
   const referer = request.headers.get('Referer') || '';
-  // Allow listed origins, local file access (no origin), and localhost for dev
-  if (!origin && !referer) return true; // local file:// access sends no origin
+  // Require a valid origin or referer -- no anonymous requests allowed
+  if (!origin && !referer) return false;
   return ALLOWED_ORIGINS.some(allowed => origin.startsWith(allowed) || referer.startsWith(allowed));
 }
 

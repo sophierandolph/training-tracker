@@ -13,6 +13,7 @@
 
   <!-- Firebase SDK -->
   <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
   <script>
     // Firebase configuration
@@ -29,6 +30,22 @@
     // Initialize Firebase
     firebase.initializeApp(firebaseConfig);
     const db = firebase.firestore();
+    const auth = firebase.auth();
+
+    // Sign in anonymously -- gates Firestore access via security rules
+    let authReady = false;
+    let authUid = null;
+    const authPromise = auth.signInAnonymously()
+      .then((cred) => {
+        authUid = cred.user.uid;
+        authReady = true;
+        console.log('Auth ready:', authUid);
+      })
+      .catch((err) => {
+        console.log('Auth error:', err.code);
+        // Still allow app to function with cached data
+        authReady = true;
+      });
 
     // Enable offline persistence
     db.enablePersistence().catch((err) => {
@@ -3571,8 +3588,11 @@
       loadPlanView();
       setupEventListeners();
 
-      // Load workout history from cloud (will refresh displays when done)
-      loadWorkoutHistoryFromCloud();
+      // Wait for auth, then load workout history from cloud
+      authPromise.then(() => {
+        loadWorkoutHistoryFromCloud();
+        loadFuelLogFromCloud();
+      });
 
       // Midnight rollover: when app comes back to foreground, check if date changed
       let lastKnownToday = formatDateKey(new Date());
