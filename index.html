@@ -3136,6 +3136,9 @@
           if (cloudHistory.length > 0) {
             workoutHistoryCache = cloudHistory;
             localStorage.setItem('workoutHistory', JSON.stringify(cloudHistory));
+            // Invalidate coach prompt cache (history changed)
+            cachedHistorySummary = null;
+            cachedSystemPrompt = null;
             // Refresh displays
             loadHistory();
             loadPlanView();
@@ -8436,6 +8439,8 @@ OVERTRAINING SIGNALS & GUARDRAILS
     // Coach conversation state
     let coachMessages = [];
     const COACH_MAX_HISTORY = 10; // message pairs
+    let cachedHistorySummary = null;
+    let cachedSystemPrompt = null;
 
     function toggleCoachSettings() {
       const body = document.getElementById('coachSettingsBody');
@@ -8465,6 +8470,7 @@ OVERTRAINING SIGNALS & GUARDRAILS
     }
 
     function summarizeRecentHistory() {
+      if (cachedHistorySummary) return cachedHistorySummary;
       const history = getWorkoutHistory();
       const sevenDaysAgo = new Date();
       sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
@@ -8524,6 +8530,7 @@ OVERTRAINING SIGNALS & GUARDRAILS
         }
       }
 
+      cachedHistorySummary = summary;
       return summary;
     }
 
