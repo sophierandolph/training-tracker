@@ -8635,7 +8635,9 @@ ${recentHistory}`;
     }
 
     function getFuelDateKey() {
+      // Fuel day resets at 2am instead of midnight -- late-night snacks count toward today
       const now = new Date();
+      now.setHours(now.getHours() - 2);
       return now.getFullYear() + '-' + String(now.getMonth() + 1).padStart(2, '0') + '-' + String(now.getDate()).padStart(2, '0');
     }
 
