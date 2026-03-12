@@ -3043,6 +3043,10 @@
             // Refresh displays
             loadHistory();
             loadPlanView();
+            // Re-render Today tab if showing tiles (so Logged/Start status updates)
+            if (!state.activeWorkout && !state.isEditingCompleted) {
+              loadTodaysWorkout();
+            }
           } else if (!historyLoaded) {
             // No cloud data on first load, use localStorage
             workoutHistoryCache = JSON.parse(localStorage.getItem('workoutHistory') || '[]');
@@ -4279,8 +4283,8 @@
       // Build in-app workout tile
       const workoutLoggedInfo = workoutLogged ? `
         <div class="activity-tile-logged-info">
-          <span class="rating">${workoutLogged.overallFeel}/5</span> effort
-          ${workoutLogged.duration ? ` · ${workoutLogged.duration} min` : ''}
+          ${workoutLogged.overallFeel ? `<span class="rating">${workoutLogged.overallFeel}/5</span> effort` : ''}
+          ${workoutLogged.duration ? `${workoutLogged.overallFeel ? ' · ' : ''}${workoutLogged.duration} min` : ''}
         </div>
       ` : '';
 
@@ -4358,8 +4362,8 @@
 
         const loggedInfo = workoutLogged ? `
           <div class="activity-tile-logged-info">
-            <span class="rating">${workoutLogged.overallFeel}/5</span> effort
-            ${workoutLogged.duration ? ` · ${workoutLogged.duration} min` : ''}
+            ${workoutLogged.overallFeel ? `<span class="rating">${workoutLogged.overallFeel}/5</span> effort` : ''}
+            ${workoutLogged.duration ? `${workoutLogged.overallFeel ? ' · ' : ''}${workoutLogged.duration} min` : ''}
           </div>
         ` : '';
 
@@ -4462,8 +4466,8 @@
 
         const loggedInfo = workoutLogged ? `
           <div class="activity-tile-logged-info">
-            <span class="rating">${workoutLogged.overallFeel}/5</span> effort
-            ${workoutLogged.duration ? ` · ${workoutLogged.duration} min` : ''}
+            ${workoutLogged.overallFeel ? `<span class="rating">${workoutLogged.overallFeel}/5</span> effort` : ''}
+            ${workoutLogged.duration ? `${workoutLogged.overallFeel ? ' · ' : ''}${workoutLogged.duration} min` : ''}
           </div>
         ` : '';
 
