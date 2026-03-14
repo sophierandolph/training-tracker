@@ -8789,9 +8789,14 @@ ${recentHistory}`;
       if (DATE_WORKOUTS[dateKey]) {
         const dw = DATE_WORKOUTS[dateKey];
         if (Array.isArray(dw)) {
-          // Use highest-intensity workout type for protein target
+          // For protein target: only consider workouts >= 20 min (ignore movement snacks, psoas protocols)
           const typePri = { 'strength': 5, 'sport-specific': 4, 'sport': 4, 'handball': 4, 'clinic': 4, 'mixed': 4, 'conditioning': 3, 'cardio': 3, 'warmup': 2, 'recovery': 1, 'prehab': 1, 'rest': 0 };
-          const primary = [...dw].sort((a, b) => (typePri[(b.type || '').toLowerCase()] || 0) - (typePri[(a.type || '').toLowerCase()] || 0))[0];
+          const substantial = dw.filter(w => {
+            const dur = parseInt(w.duration) || 0;
+            return dur >= 20;
+          });
+          const pool = substantial.length > 0 ? substantial : dw;
+          const primary = [...pool].sort((a, b) => (typePri[(b.type || '').toLowerCase()] || 0) - (typePri[(a.type || '').toLowerCase()] || 0))[0];
           type = primary.type || 'gym';
           label = primary.name || '';
         } else {
