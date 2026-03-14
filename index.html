@@ -8775,8 +8775,11 @@ ${recentHistory}`;
     ];
 
     function getTodayFuelContext() {
-      const dateKey = formatDateKey(state.currentDate);
-      const dayIndex = state.currentDate.getDay();
+      // Always use actual today for fuel context (not the navigated date on Today tab)
+      const now = new Date();
+      now.setHours(now.getHours() - 2); // Match fuel 2am rollover
+      const dateKey = formatDateKey(now);
+      const dayIndex = now.getDay();
       const specialDate = SPECIAL_DATES[dateKey];
 
       // Check what's actually loaded for today
