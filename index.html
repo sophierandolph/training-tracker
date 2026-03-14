@@ -3161,6 +3161,8 @@
     }
 
     // ==================== DATA ====================
+    // LEGACY: WORKOUTS kept for Sunday pool recovery option (showNoWorkout) and adaptation system recovery fallback.
+    // All weekly programming now comes from DATE_WORKOUTS via /plan-workouts.
     const WORKOUTS = {
       tuesday: {
         upperBody: {
@@ -3955,13 +3957,6 @@
           return true;
         }
       }
-      const dayIndex = new Date(dateKey + 'T00:00:00').getDay();
-      const scheduleEntry = SCHEDULE[dayIndex];
-      if (scheduleEntry && scheduleEntry.workout && WORKOUTS[scheduleEntry.workout]) {
-        const dayWorkouts = WORKOUTS[scheduleEntry.workout];
-        if (dayWorkouts.name === saved.workout) return true;
-        if (Object.values(dayWorkouts).some(w => w && w.name === saved.workout)) return true;
-      }
       return false;
     }
 
@@ -3981,24 +3976,6 @@
           workoutDef = dw;
         }
       }
-      if (!workoutDef) {
-        // Try WORKOUTS by day-of-week schedule fallback
-        const dayIndex = new Date(dateKey + 'T00:00:00').getDay();
-        const scheduleEntry = SCHEDULE[dayIndex];
-        if (scheduleEntry && scheduleEntry.workout && WORKOUTS[scheduleEntry.workout]) {
-          const dayWorkouts = WORKOUTS[scheduleEntry.workout];
-          // dayWorkouts may be a single workout or an object of sub-workouts
-          if (dayWorkouts.name === saved.workout) {
-            workoutDef = dayWorkouts;
-          } else {
-            // Search sub-keys for matching workout name
-            Object.values(dayWorkouts).forEach(w => {
-              if (w && w.name === saved.workout) workoutDef = w;
-            });
-          }
-        }
-      }
-
       if (!workoutDef) {
         alert('Cannot find the original workout definition to edit.');
         return;
@@ -4110,11 +4087,7 @@
       }
 
       // No DATE_WORKOUTS entry for today -- show external activities or no workout
-      // Wednesday gets recurring warm-up/cooldown appended
       showNoWorkout(dayName, specialDate);
-      if (dayName === 'wednesday') {
-        appendRecurringWorkouts(dayIndex);
-      }
     }
 
     function showTravelDay(specialDate) {
@@ -4580,60 +4553,6 @@
         state.activeWorkout = workout;
         renderWorkout(workout);
         restoreProgressIfAvailable();
-      }
-    }
-
-    function appendRecurringWorkouts(dayOfWeek) {
-      const recurringKeys = RECURRING_DAY_WORKOUTS[dayOfWeek];
-      if (!recurringKeys || recurringKeys.length === 0) return;
-
-      const content = document.getElementById('workoutContent');
-      const dateKey = formatDateKey(state.currentDate);
-      const history = getWorkoutHistory();
-
-      let tilesHtml = '';
-      const inProgressName = getInProgressWorkoutName();
-      recurringKeys.forEach(workoutKey => {
-        const workout = WORKOUTS[workoutKey];
-        if (!workout) return;
-
-        const workoutLogged = history.find(w =>
-          w.date === dateKey &&
-          w.workout === workout.name &&
-          w.type !== 'External Activity'
-        );
-        const isInProgress = !workoutLogged && inProgressName === workout.name;
-
-        const loggedInfo = workoutLogged ? `
-          <div class="activity-tile-logged-info">
-            ${workoutLogged.overallFeel ? `<span class="rating">${workoutLogged.overallFeel}/5</span> effort` : ''}
-            ${workoutLogged.duration ? `${workoutLogged.overallFeel ? ' · ' : ''}${workoutLogged.duration} min` : ''}
-          </div>
-        ` : '';
-
-        const rStatusLabel = workoutLogged ? 'Logged' : (isInProgress ? 'Resume' : 'Start');
-        const rStatusStyle = workoutLogged ? '' : (isInProgress ? 'background: var(--warning, #f0ad4e); color: white;' : 'background: var(--accent); color: white;');
-        const rBorderColor = workoutLogged ? 'var(--success)' : (isInProgress ? 'var(--warning, #f0ad4e)' : 'var(--accent)');
-
-        tilesHtml += `
-          <div class="activity-tile ${workoutLogged ? 'logged' : ''}" onclick="startRecurringWorkout('${workoutKey}')" style="border-color: ${rBorderColor};">
-            <div class="activity-tile-header">
-              <div>
-                <div class="activity-tile-type" style="color: var(--accent);">${workout.type}</div>
-                <div class="activity-tile-name">${workout.name}</div>
-                <div class="activity-tile-time">${workout.duration} · ${workout.location}</div>
-              </div>
-              <span class="activity-tile-status ${workoutLogged ? 'logged' : ''}" style="${rStatusStyle}">${rStatusLabel}</span>
-            </div>
-            ${loggedInfo}
-          </div>
-        `;
-      });
-
-      if (tilesHtml) {
-        // Wrap existing content and append recurring workout tiles
-        const existingContent = content.innerHTML;
-        content.innerHTML = existingContent + `<div class="activity-tiles">${tilesHtml}</div>`;
       }
     }
 
@@ -5328,9 +5247,8 @@
 
         // Only adapt if we have a workout scheduled (not travel, not rest)
         if (specialDate && specialDate.type === 'travel') return;
-        const schedule = SCHEDULE[dayIndex];
         const hasDateWorkout = DATE_WORKOUTS && DATE_WORKOUTS[dateKey];
-        if (!hasDateWorkout && schedule && (schedule.type === 'rest' || schedule.optional)) return;
+        if (!hasDateWorkout) return;
 
         // Store original workout
         originalScheduledWorkout = state.activeWorkout;
@@ -5727,18 +5645,7 @@
       ]
     };
 
-    const SCHEDULE = {
-      // Day of week (0=Sun, 1=Mon, etc) -> workout info
-      0: { type: 'rest', name: 'Rest or Pool Recovery', workout: 'poolRecovery', optional: true, external: false },
-      1: { type: 'external', name: 'Personal Training (4pm) + Soccer', external: true, duration: 'Varies', location: 'Gym + Field' },
-      2: { type: 'gym', name: 'Upper Body OR Recovery', workout: 'tuesday', duration: '45-50 min', location: 'Gym/Home', preview: 'Rows, Chest Press, Shoulder Work, Core' },
-      3: { type: 'external', name: 'Handball Practice (7-9pm)', external: true, duration: '90 min', location: 'Court' },
-      4: { type: 'cardio', name: 'Bike + Shoulder Protocol', workout: 'thursday', duration: '45 min', location: 'Outdoor Track', preview: 'Tempo Intervals, Cadence Work, Clip Practice' },
-      5: { type: 'gym', name: 'Lower Body + Yoga (6:30pm)', workout: 'friday', duration: '45 min', location: 'Gym', preview: 'Squats, Lunges, RDLs, Core Stability' },
-      6: { type: 'sport', name: 'Soccer (2-3pm) + Handball Skills', workout: 'saturday', duration: '45-60 min', location: 'Field + Court', preview: 'Jump Shots, Left Hand Work, Conditioning' }
-    };
-
-    // Date-specific workout overrides (one-offs loaded via CLI)
+    // Date-specific workouts planned via /plan-workouts (sole source of truth for weekly programming)
     const DATE_WORKOUTS = {
       '2026-03-01': {
         name: "Upper Body -- Crunch Kyle",
@@ -6936,12 +6843,6 @@
     ]
     };
 
-    // Recurring workouts by day-of-week (0=Sun...6=Sat), shown alongside external activities
-    // Each entry is an array of workout keys from the WORKOUTS object
-    const RECURRING_DAY_WORKOUTS = {
-      3: ['wednesdayWarmup', 'wednesdayCooldown']  // Wednesday: warm-up before + cooldown after handball practice
-    };
-
     // Special dates with specific schedule info
     const SPECIAL_DATES = {
       // Monday soccer game times (format: 'YYYY-MM-DD': { start, end, isLate })
@@ -7005,23 +6906,6 @@
 
     function hasDateWorkout(dateKey) {
       return !!DATE_WORKOUTS[dateKey];
-    }
-
-    // Helper to get previous Monday's game info for a Tuesday
-    function getPreviousMondayGameInfo(tuesdayDate) {
-      const monday = new Date(tuesdayDate);
-      monday.setDate(monday.getDate() - 1);
-      const mondayKey = formatDateKey(monday);
-      return SPECIAL_DATES[mondayKey];
-    }
-
-    // Determine Tuesday workout based on Monday's game
-    function getTuesdayWorkoutType(date) {
-      const mondayGame = getPreviousMondayGameInfo(date);
-      if (mondayGame && mondayGame.type === 'soccer' && mondayGame.isLate) {
-        return 'recovery';
-      }
-      return 'upperBody';
     }
 
     // 3-week plan: Monday-Sunday, starting Feb 9, 2026
@@ -7123,7 +7007,6 @@
           const dateKey = formatDateKey(dayDate);
           const specialDate = SPECIAL_DATES[dateKey];
           const isTravel = specialDate && specialDate.type === 'travel';
-          const schedule = SCHEDULE[dayOfWeek];
 
           const isToday = dayDate.toDateString() === today.toDateString();
           const isPast = dayDate < today && !isToday;
@@ -7156,14 +7039,15 @@
               extraClasses = 'travel-day gym';
               workoutDisplay = 'GYM';
             }
-          } else if (schedule.type === 'rest') {
-            workoutClass = 'rest';
-            workoutDisplay = (schedule.workout) ? 'Rest/Pool' : 'Rest';
-          } else if (schedule.external) {
-            workoutClass = 'external';
-            workoutDisplay = getShortWorkoutName(schedule, dayDate);
           } else {
-            workoutDisplay = getShortWorkoutName(schedule, dayDate);
+            // Check for EXTERNAL_ACTIVITIES on this day
+            const dayNames = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
+            const extActs = EXTERNAL_ACTIVITIES[dayNames[dayOfWeek]];
+            if (extActs && extActs.length > 0) {
+              workoutClass = 'external';
+              workoutDisplay = extActs[0].name.includes('Personal') ? 'PT' : extActs[0].name.includes('Handball') ? 'Handball' : extActs[0].type || '';
+            }
+            // Otherwise leave blank -- no workout planned
           }
 
           html += `
@@ -7183,30 +7067,6 @@
       });
 
       container.innerHTML = html;
-    }
-
-    function getShortWorkoutName(schedule, date) {
-      switch(schedule.type) {
-        case 'rest': return 'Rest';
-        case 'external':
-          if (schedule.name.includes('Personal')) return 'PT+Soccer';
-          if (schedule.name.includes('Handball Practice')) return 'Handball';
-          return schedule.name;
-        case 'gym':
-          if (schedule.name.includes('Upper')) {
-            // For Tuesday, check Monday's game time
-            if (date) {
-              const workoutType = getTuesdayWorkoutType(date);
-              return workoutType === 'recovery' ? 'Recovery' : 'Upper';
-            }
-            return 'Upper';
-          }
-          if (schedule.name.includes('Lower')) return 'Lower';
-          return schedule.name;
-        case 'cardio': return 'Bike';
-        case 'sport': return 'Soccer+HB';
-        default: return schedule.name;
-      }
     }
 
     function getShortTypeName(dw, dateKey) {
@@ -7229,23 +7089,26 @@
       const dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
       const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
-      // Find next 5 workout days (skip today, include external)
+      // Find next 5 days with something planned (DATE_WORKOUTS, DATE_ACTIVITIES, travel, or EXTERNAL_ACTIVITIES)
       let checkDate = new Date(today);
       checkDate.setDate(checkDate.getDate() + 1); // Start from tomorrow
+      const upcomingDayNames = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
 
       while (upcoming.length < 5) {
         const dayOfWeek = checkDate.getDay();
-        const schedule = SCHEDULE[dayOfWeek];
         const dateKey = formatDateKey(checkDate);
         const specialDate = SPECIAL_DATES[dateKey];
+        const hasDW = hasDateWorkout(dateKey);
+        const hasDA = DATE_ACTIVITIES[dateKey] && DATE_ACTIVITIES[dateKey].length > 0;
+        const isTravel = specialDate && specialDate.type === 'travel';
+        const hasExternal = EXTERNAL_ACTIVITIES[upcomingDayNames[dayOfWeek]] && EXTERNAL_ACTIVITIES[upcomingDayNames[dayOfWeek]].length > 0;
 
-        if (schedule.type !== 'rest' || hasDateWorkout(dateKey)) {
+        if (hasDW || hasDA || isTravel || hasExternal) {
           upcoming.push({
             date: new Date(checkDate),
             dayOfWeek,
-            schedule,
             specialDate,
-            isTravel: specialDate && specialDate.type === 'travel'
+            isTravel
           });
         }
 
@@ -7260,43 +7123,57 @@
       let html = '';
       upcoming.forEach(item => {
         const dateStr = `${dayNames[item.date.getDay()]}, ${months[item.date.getMonth()]} ${item.date.getDate()}`;
-        const schedule = item.schedule;
         const dateKey = formatDateKey(item.date);
+        const dayName = upcomingDayNames[item.dayOfWeek];
 
-        // Determine display name and extra info
-        let displayName = schedule.name;
+        // Determine display info from available sources
+        let displayName = '';
         let extraInfo = '';
-        let badgeText = schedule.type === 'external' ? 'External' : schedule.type;
-        let previewText = schedule.preview || '';
+        let badgeText = '';
+        let previewText = '';
+        let displayDuration = '';
+        let displayLocation = '';
 
-        // Handle travel days - different types based on facilities
-        // Skip travel display if DATE_WORKOUTS exists (it takes priority)
-        if (item.isTravel && !hasDateWorkout(dateKey)) {
+        // 1. DATE_WORKOUTS (highest priority)
+        const dateWorkout = getDateWorkout(dateKey);
+        if (dateWorkout) {
+          const dwArr = Array.isArray(DATE_WORKOUTS[dateKey]) ? DATE_WORKOUTS[dateKey] : [dateWorkout];
+          displayName = dwArr.map(w => w.name).join(' + ');
+          previewText = dateWorkout.circuits.map(c => c.name).join(', ');
+          badgeText = dwArr.length > 1 ? dwArr.map(w => w.type).join(' + ') : dateWorkout.type;
+          if (dateWorkout.duration) displayDuration = dateWorkout.duration;
+          if (dateWorkout.location) displayLocation = dateWorkout.location;
+        }
+
+        // 2. DATE_ACTIVITIES
+        const dateActivities = DATE_ACTIVITIES[dateKey];
+        if (!displayName && dateActivities && dateActivities.length > 0) {
+          displayName = dateActivities.map(a => a.name).join(' + ');
+          previewText = dateActivities.map(a => `${a.time} · ${a.location}${a.description ? ' - ' + a.description : ''}`).join(' | ');
+          badgeText = dateActivities[0].type;
+        }
+
+        // 3. Travel days (only if no DATE_WORKOUTS)
+        if (!displayName && item.isTravel) {
           const facilities = item.specialDate.facilities;
           const isHandballTraining = item.specialDate.isTraining;
 
           if (isHandballTraining) {
-            // NC Handball Trip - check for specific tournament games
-            const dateKey = formatDateKey(item.date);
-            const dateActivities = DATE_ACTIVITIES[dateKey];
+            const travelDateActivities = DATE_ACTIVITIES[dateKey];
             badgeText = 'HANDBALL';
             displayName = item.specialDate.note;
-            if (dateActivities && dateActivities.length > 0) {
-              const gameNames = dateActivities.map(a => `${a.name} (${a.time})`).join(' · ');
+            if (travelDateActivities && travelDateActivities.length > 0) {
+              const gameNames = travelDateActivities.map(a => `${a.name} (${a.time})`).join(' · ');
               previewText = gameNames;
-              extraInfo = `<div class="game-time-note">${dateActivities.length} activities - tap to see details</div>`;
+              extraInfo = `<div class="game-time-note">${travelDateActivities.length} activities - tap to see details</div>`;
             } else {
               previewText = `${item.specialDate.location} - Handball training counts as workout!`;
-              extraInfo = '';
             }
           } else if (facilities === 'minimal') {
-            // Fort Davis - minimal facilities, flex day
             badgeText = 'FLEX';
             displayName = 'Flex Day';
             previewText = `${item.specialDate.location} - ${item.specialDate.note}`;
-            extraInfo = '';
           } else if (facilities === 'gym' || facilities === 'gym+wall') {
-            // Kyle - gym access available
             badgeText = 'FLEX';
             displayName = facilities === 'gym+wall' ? 'Handball Skills (Find Wall)' : 'Gym Workout Available';
             previewText = `${item.specialDate.location} - ${item.specialDate.note}`;
@@ -7307,75 +7184,38 @@
           }
         }
 
-        // Check for date-specific workout overrides (one-offs loaded via CLI)
-        const dateWorkout = getDateWorkout(dateKey);
-        if (dateWorkout) {
-          const dwArr = Array.isArray(DATE_WORKOUTS[dateKey]) ? DATE_WORKOUTS[dateKey] : [dateWorkout];
-          displayName = dwArr.map(w => w.name).join(' + ');
-          previewText = dateWorkout.circuits.map(c => c.name).join(', ');
-          badgeText = dwArr.length > 1 ? dwArr.map(w => w.type).join(' + ') : dateWorkout.type;
-        }
-
-        // Check for date-specific activities that override normal schedule
-        const dateActivities = DATE_ACTIVITIES[dateKey];
-        if (dateActivities && dateActivities.length > 0 && !item.isTravel) {
-          displayName = dateActivities.map(a => a.name).join(' + ');
-          previewText = dateActivities.map(a => `${a.time} · ${a.location}${a.description ? ' - ' + a.description : ''}`).join(' | ');
-          badgeText = dateActivities[0].type;
-        }
-
-        // Handle Monday with soccer game times
-        if (item.dayOfWeek === 1 && item.specialDate && item.specialDate.type === 'soccer') {
-          const game = item.specialDate;
-          displayName = `Personal Training (4pm) + Soccer (${game.start})`;
-          if (game.isLate) {
-            extraInfo += `<div class="late-game-warning">Late game (ends ${game.end}) - Tomorrow should be Recovery day</div>`;
-          } else {
-            extraInfo += `<div class="game-time-note">Early game ends ${game.end} - Tomorrow Upper Body OK if rested</div>`;
+        // 4. EXTERNAL_ACTIVITIES fallback
+        if (!displayName) {
+          const extActs = EXTERNAL_ACTIVITIES[dayName] || [];
+          if (extActs.length > 0) {
+            displayName = extActs.map(a => a.name).join(' + ');
+            badgeText = 'External';
+            previewText = extActs.map(a => `${a.time || ''} · ${a.location || ''}`).join(' | ');
           }
         }
 
-        // Handle Tuesday - show appropriate workout based on Monday (skip if date override exists)
-        if (item.dayOfWeek === 2 && !dateWorkout && !dateActivities?.length) {
-          const workoutType = getTuesdayWorkoutType(item.date);
-          const mondayGame = getPreviousMondayGameInfo(item.date);
-
-          if (workoutType === 'recovery') {
-            displayName = 'Shoulder Mobility & Stability';
-            previewText = 'Gentle warm-up, Shoulder mobility, Light stability work';
-            badgeText = 'Recovery';
-            if (mondayGame) {
-              extraInfo = `<div class="late-game-warning">Monday game ended at ${mondayGame.end} - Recovery recommended</div>`;
-            }
-          } else {
-            displayName = 'Upper Body Focus';
-            previewText = 'Rows, Chest Press, Shoulder Work, Core';
-            if (mondayGame && !mondayGame.isLate) {
-              extraInfo = `<div class="game-time-note">Monday game ended ${mondayGame.end} - Upper Body OK if readiness 75+</div>`;
-            }
-          }
-        }
+        if (!displayName) return; // Nothing to show
 
         // Determine badge styling based on travel type
         let badgeStyle = '';
         let travelClass = '';
-        if (item.isTravel) {
+        if (item.isTravel && !dateWorkout) {
           const isHandballTraining = item.specialDate.isTraining;
           const facilities = item.specialDate.facilities;
           if (isHandballTraining) {
-            badgeStyle = 'style="background: rgba(76, 175, 80, 0.3); color: #81c784;"'; // Green for training
+            badgeStyle = 'style="background: rgba(76, 175, 80, 0.3); color: #81c784;"';
             travelClass = 'handball-training';
           } else if (facilities === 'minimal') {
-            badgeStyle = 'style="background: rgba(158, 158, 158, 0.3); color: #bdbdbd;"'; // Gray for rest
+            badgeStyle = 'style="background: rgba(158, 158, 158, 0.3); color: #bdbdbd;"';
             travelClass = 'travel-day minimal';
           } else {
-            badgeStyle = 'style="background: rgba(149, 117, 205, 0.3); color: #b39ddb;"'; // Purple for gym travel
+            badgeStyle = 'style="background: rgba(149, 117, 205, 0.3); color: #b39ddb;"';
             travelClass = 'travel-day gym-access';
           }
         }
 
         html += `
-          <div class="upcoming-workout ${item.isTravel ? travelClass : ''}" onclick="showDayPreview(${item.date.getTime()}, ${item.dayOfWeek})">
+          <div class="upcoming-workout ${item.isTravel && !dateWorkout ? travelClass : ''}" onclick="showDayPreview(${item.date.getTime()}, ${item.dayOfWeek})">
             <div class="upcoming-header">
               <div>
                 <div class="upcoming-day">${dateStr}</div>
@@ -7384,41 +7224,14 @@
               <span class="upcoming-badge" ${badgeStyle}>${badgeText}</span>
             </div>
             <div class="upcoming-meta">
-              ${schedule.duration && !item.isTravel ? `<span>⏱ ${schedule.duration}</span>` : ''}
-              ${schedule.location && !item.isTravel ? `<span>📍 ${schedule.location}</span>` : ''}
-              ${item.isTravel ? `<span>📍 ${item.specialDate.location}</span>` : ''}
+              ${displayDuration ? `<span>⏱ ${displayDuration}</span>` : ''}
+              ${displayLocation ? `<span>📍 ${displayLocation}</span>` : ''}
+              ${item.isTravel && !displayLocation ? `<span>📍 ${item.specialDate.location}</span>` : ''}
             </div>
             ${previewText ? `<div class="upcoming-preview">${previewText}</div>` : ''}
             ${extraInfo}
           </div>
         `;
-
-        // Add recurring workout items for this day (e.g. Wednesday warm-up and cooldown)
-        if (!item.isTravel) {
-          const recurringKeys = RECURRING_DAY_WORKOUTS[item.dayOfWeek];
-          if (recurringKeys && recurringKeys.length > 0) {
-            recurringKeys.forEach(workoutKey => {
-              const recurringWorkout = WORKOUTS[workoutKey];
-              if (!recurringWorkout) return;
-              html += `
-                <div class="upcoming-workout" onclick="showDayPreview(${item.date.getTime()}, ${item.dayOfWeek})" style="border-left: 3px solid var(--accent); margin-left: 12px;">
-                  <div class="upcoming-header">
-                    <div>
-                      <div class="upcoming-day">${dateStr}</div>
-                      <div class="upcoming-name">${recurringWorkout.name}</div>
-                    </div>
-                    <span class="upcoming-badge" style="background: rgba(233,69,96,0.2); color: var(--accent-light);">${recurringWorkout.type}</span>
-                  </div>
-                  <div class="upcoming-meta">
-                    <span>⏱ ${recurringWorkout.duration}</span>
-                    <span>📍 ${recurringWorkout.location}</span>
-                  </div>
-                  ${recurringWorkout.condition ? `<div class="upcoming-preview">${recurringWorkout.condition}</div>` : ''}
-                </div>
-              `;
-            });
-          }
-        }
       });
 
       container.innerHTML = html;
@@ -7442,22 +7255,19 @@
         const dayDate = new Date(currentWeek.start);
         dayDate.setDate(currentWeek.start.getDate() + i);
         const dayOfWeek = dayDate.getDay();
-        const schedule = SCHEDULE[dayOfWeek];
         const dateKey = formatDateKey(dayDate);
         const specialDate = SPECIAL_DATES[dateKey];
         const isTravel = specialDate && specialDate.type === 'travel';
         const dayName = dayNames[dayOfWeek];
 
-        if (schedule.type === 'rest' && !hasDateWorkout(dateKey)) continue;
-
         if (isTravel) {
           if (specialDate.facilities === 'minimal' && !hasDateWorkout(dateKey)) continue;
-          // Check for date-specific activities (tournament games, etc.)
           const dateActivities = DATE_ACTIVITIES[dateKey];
           if (dateActivities && dateActivities.length > 0) {
             plannedCount += dateActivities.length;
+          } else if (hasDateWorkout(dateKey)) {
+            plannedCount += Array.isArray(DATE_WORKOUTS[dateKey]) ? DATE_WORKOUTS[dateKey].length : 1;
           } else {
-            // Generic gym/training day counts as 1
             plannedCount++;
           }
           continue;
@@ -7469,24 +7279,12 @@
         const hasDW = hasDateWorkout(dateKey);
 
         if (hasDateOverride || hasDW) {
-          // Date-specific activities/workouts replace normal schedule
           if (hasDateOverride) plannedCount += dateActivities.length;
           if (hasDW) plannedCount += Array.isArray(DATE_WORKOUTS[dateKey]) ? DATE_WORKOUTS[dateKey].length : 1;
         } else {
-          // Count external activities for this day
+          // Only count EXTERNAL_ACTIVITIES as planned
           const externalActivities = EXTERNAL_ACTIVITIES[dayName] || [];
           plannedCount += externalActivities.length;
-
-          // Count in-app workout if this day has one
-          if (schedule.workout) {
-            plannedCount++;
-          }
-
-          // Count recurring workouts (e.g. Wednesday warm-up and cooldown)
-          const recurringKeys = RECURRING_DAY_WORKOUTS[dayOfWeek];
-          if (recurringKeys && recurringKeys.length > 0) {
-            plannedCount += recurringKeys.length;
-          }
         }
       }
 
@@ -7523,11 +7321,10 @@
 
       const specialDate = SPECIAL_DATES[dateKey];
       const isTravel = specialDate && specialDate.type === 'travel';
-      const schedule = SCHEDULE[dayOfWeek];
       const dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
       const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
-      let previewTitle = schedule.name;
+      let previewTitle = 'No Workout Planned';
       let metaHtml = '';
       let contentHtml = '';
 
@@ -7655,231 +7452,32 @@
         return;
       }
 
-      // Handle Monday with soccer game info
-      if (dayOfWeek === 1 && specialDate && specialDate.type === 'soccer') {
-        previewTitle = `Personal Training (4pm) + Soccer`;
-        document.getElementById('previewTitle').textContent = previewTitle;
-        document.getElementById('previewDate').textContent = `${dayNames[date.getDay()]}, ${months[date.getMonth()]} ${date.getDate()}, 2026`;
-
-        metaHtml = `<span>⏱ PT: 1hr + Soccer: 90min</span><span>📍 Gym + Field</span>`;
-        document.getElementById('previewMeta').innerHTML = metaHtml;
-
-        const game = specialDate;
-        const gameTimeClass = game.isLate ? 'style="color: var(--accent);"' : 'style="color: var(--success);"';
-
+      // Check for EXTERNAL_ACTIVITIES on this day
+      const previewDayNames = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
+      const extActs = EXTERNAL_ACTIVITIES[previewDayNames[dayOfWeek]];
+      if (extActs && extActs.length > 0) {
+        previewTitle = extActs.map(a => a.name).join(' + ');
         contentHtml = `
-          <div style="padding: 16px; background: var(--bg-card); border-radius: 8px; margin-bottom: 12px;">
-            <div style="color: var(--warning); font-size: 12px; text-transform: uppercase; margin-bottom: 8px;">Today's Schedule</div>
-            <div style="color: var(--text-primary); font-size: 14px; margin-bottom: 8px;">
-              <strong>4:00pm</strong> - Personal Training (Gym)<br>
-              <strong ${gameTimeClass}>${game.start}</strong> - Soccer Game
-            </div>
-            <div style="color: var(--text-secondary); font-size: 12px;">
-              Game ends: <span ${gameTimeClass}>${game.end}</span>
-              ${game.isLate ? ' (Late game)' : ' (Early game)'}
-            </div>
-          </div>
-          <div style="padding: 12px; background: ${game.isLate ? 'rgba(233,69,96,0.15)' : 'rgba(78,205,196,0.15)'}; border-radius: 8px; border: 1px solid ${game.isLate ? 'var(--accent)' : 'var(--success)'};">
-            <div style="color: ${game.isLate ? 'var(--accent-light)' : 'var(--success)'}; font-size: 11px; text-transform: uppercase; margin-bottom: 6px;">Tomorrow's Recommendation</div>
-            <p style="color: var(--text-secondary); font-size: 13px;">
-              ${game.isLate
-                ? 'Late game - Tomorrow should be <strong>Recovery workout</strong> (shoulder mobility, light stability)'
-                : 'Early game - Tomorrow can be <strong>Upper Body</strong> workout if readiness 75+'}
-            </p>
-          </div>
-        `;
-
-        document.getElementById('previewContent').innerHTML = contentHtml;
-        document.getElementById('previewModal').classList.add('active');
-        return;
-      }
-
-      // Handle Tuesday - check Monday's game
-      if (dayOfWeek === 2) {
-        const workoutType = getTuesdayWorkoutType(date);
-        const mondayGame = getPreviousMondayGameInfo(date);
-
-        if (workoutType === 'recovery') {
-          const recoveryWorkout = WORKOUTS.activeRecovery.poolRecovery;
-          previewTitle = recoveryWorkout.name;
-          document.getElementById('previewTitle').textContent = previewTitle;
-          document.getElementById('previewDate').textContent = `${dayNames[date.getDay()]}, ${months[date.getMonth()]} ${date.getDate()}, 2026`;
-
-          metaHtml = `<span>⏱ ${recoveryWorkout.duration}</span><span>📍 ${recoveryWorkout.location}</span>`;
-          document.getElementById('previewMeta').innerHTML = metaHtml;
-
-          contentHtml = '';
-          if (mondayGame) {
-            contentHtml += `
-              <div style="padding: 12px; background: rgba(233,69,96,0.15); border-radius: 8px; border: 1px solid var(--accent); margin-bottom: 12px;">
-                <div style="color: var(--accent-light); font-size: 11px; text-transform: uppercase; margin-bottom: 4px;">Why Recovery?</div>
-                <p style="color: var(--text-secondary); font-size: 12px;">Monday's game ended at ${mondayGame.end} - late games require recovery focus</p>
-              </div>
-            `;
-          }
-
-          // Show recovery workout details
-          const workoutData = WORKOUTS.activeRecovery.poolRecovery;
-          workoutData.circuits.forEach(circuit => {
-            contentHtml += `
-              <div class="preview-circuit">
-                <div class="preview-circuit-name">${circuit.name}</div>
-                <div class="preview-exercises">
-            `;
-            circuit.exercises.forEach(ex => {
-              const repsText = ex.isHold ? `${ex.holdTime}s hold` :
-                              ex.isCardio ? 'Complete' :
-                              `${ex.reps} reps`;
-              contentHtml += `${ex.name} (${ex.sets}x${repsText})<br>`;
-            });
-            contentHtml += `
-                </div>
-              </div>
-            `;
-          });
-
-          document.getElementById('previewContent').innerHTML = contentHtml;
-          document.getElementById('previewModal').classList.add('active');
-          return;
-        } else {
-          // Upper body - show note about Monday if applicable
-          previewTitle = 'Upper Body Focus';
-          if (mondayGame && !mondayGame.isLate) {
-            contentHtml = `
-              <div style="padding: 12px; background: rgba(78,205,196,0.15); border-radius: 8px; border: 1px solid var(--success); margin-bottom: 12px;">
-                <div style="color: var(--success); font-size: 11px; text-transform: uppercase; margin-bottom: 4px;">Good to Go</div>
-                <p style="color: var(--text-secondary); font-size: 12px;">Monday's early game (ended ${mondayGame.end}) allows for Upper Body - check readiness 75+</p>
-              </div>
-            `;
-          }
-        }
-      }
-
-      document.getElementById('previewTitle').textContent = previewTitle;
-      document.getElementById('previewDate').textContent = `${dayNames[date.getDay()]}, ${months[date.getMonth()]} ${date.getDate()}, 2026`;
-
-      if (!metaHtml) {
-        if (schedule.duration) metaHtml += `<span>⏱ ${schedule.duration}</span>`;
-        if (schedule.location) metaHtml += `<span>📍 ${schedule.location}</span>`;
-      }
-      document.getElementById('previewMeta').innerHTML = metaHtml;
-
-      if (schedule.type === 'rest') {
-        contentHtml = `
-          <div style="text-align: center; padding: 20px; color: var(--text-secondary);">
-            <div style="font-size: 32px; margin-bottom: 12px;">😴</div>
-            <p>Recovery day - rest and recharge for the week ahead!</p>
-          </div>
-        `;
-        if (schedule.optional && schedule.workout && WORKOUTS[schedule.workout]) {
-          const optWorkout = WORKOUTS[schedule.workout];
-          contentHtml += `
-            <div style="margin-top: 4px; padding: 14px; background: var(--bg-card); border-radius: 8px; border-left: 3px solid var(--teal);">
-              <div style="color: var(--teal); font-size: 11px; text-transform: uppercase; margin-bottom: 4px;">Optional Recovery</div>
-              <div style="color: var(--text-primary); font-size: 14px; font-weight: 600; margin-bottom: 4px;">${optWorkout.name}</div>
-              <div style="color: var(--text-secondary); font-size: 12px; margin-bottom: 8px;">⏱ ${optWorkout.duration} · 📍 ${optWorkout.location}</div>
-          `;
-          optWorkout.circuits.forEach(circuit => {
-            contentHtml += `
-              <div class="preview-circuit">
-                <div class="preview-circuit-name">${circuit.name}</div>
-                <div class="preview-exercises">
-            `;
-            circuit.exercises.forEach(ex => {
-              const repsText = ex.isHold ? `${ex.holdTime}s hold` :
-                              ex.isCardio ? 'Complete' :
-                              `${ex.reps} reps`;
-              contentHtml += `${ex.name} (${ex.sets}x${repsText})<br>`;
-            });
-            contentHtml += `
-                </div>
-              </div>
-            `;
-          });
-          contentHtml += `</div>`;
-        }
-      } else if (schedule.external) {
-        contentHtml += `
           <div style="padding: 16px; background: var(--bg-card); border-radius: 8px;">
             <div style="color: var(--warning); font-size: 12px; text-transform: uppercase; margin-bottom: 8px;">External Activity</div>
             <p style="color: var(--text-secondary); font-size: 13px;">This workout is scheduled externally (team practice, personal training, etc.). Just show up and give it your best!</p>
           </div>
         `;
-
-        // Show recurring workout sections for this day (e.g. Wednesday warm-up + cooldown)
-        const recurringKeys = RECURRING_DAY_WORKOUTS[dayOfWeek];
-        if (recurringKeys && recurringKeys.length > 0) {
-          recurringKeys.forEach(workoutKey => {
-            const recurringWorkout = WORKOUTS[workoutKey];
-            if (!recurringWorkout) return;
-            contentHtml += `
-              <div style="margin-top: 12px; padding: 14px; background: var(--bg-card); border-radius: 8px; border-left: 3px solid var(--accent);">
-                <div style="color: var(--accent); font-size: 11px; text-transform: uppercase; margin-bottom: 4px;">${recurringWorkout.type}</div>
-                <div style="color: var(--text-primary); font-size: 14px; font-weight: 600; margin-bottom: 4px;">${recurringWorkout.name}</div>
-                <div style="color: var(--text-secondary); font-size: 12px; margin-bottom: 8px;">⏱ ${recurringWorkout.duration} · 📍 ${recurringWorkout.location}</div>
-                ${recurringWorkout.condition ? `<div style="color: var(--text-secondary); font-size: 12px; margin-bottom: 8px; font-style: italic;">${recurringWorkout.condition}</div>` : ''}
-            `;
-            recurringWorkout.circuits.forEach(circuit => {
-              contentHtml += `
-                <div class="preview-circuit">
-                  <div class="preview-circuit-name">${circuit.name}</div>
-                  <div class="preview-exercises">
-              `;
-              circuit.exercises.forEach(ex => {
-                const repsText = ex.isHold ? `${ex.holdTime}s hold` :
-                                ex.isCardio ? 'Complete' :
-                                `${ex.reps} reps`;
-                contentHtml += `${ex.name} (${ex.sets}x${repsText})<br>`;
-              });
-              contentHtml += `
-                  </div>
-                </div>
-              `;
-            });
-            contentHtml += `</div>`;
-          });
-        }
-      } else if (schedule.workout) {
-        // Get detailed workout info
-        const workoutData = getWorkoutForDay(schedule.workout, date);
-        if (workoutData) {
-          workoutData.circuits.forEach(circuit => {
-            contentHtml += `
-              <div class="preview-circuit">
-                <div class="preview-circuit-name">${circuit.name}</div>
-                <div class="preview-exercises">
-            `;
-            circuit.exercises.forEach(ex => {
-              const repsText = ex.isHold ? `${ex.holdTime}s hold` :
-                              ex.isCardio ? 'Complete' :
-                              `${ex.reps} reps`;
-              contentHtml += `${ex.name} (${ex.sets}x${repsText})<br>`;
-            });
-            contentHtml += `
-                </div>
-              </div>
-            `;
-          });
-        }
+      } else {
+        contentHtml = `
+          <div style="text-align: center; padding: 20px; color: var(--text-secondary);">
+            <div style="font-size: 32px; margin-bottom: 12px;">😴</div>
+            <p>No workout planned for this day. Rest and recharge!</p>
+          </div>
+        `;
       }
+
+      document.getElementById('previewTitle').textContent = previewTitle;
+      document.getElementById('previewDate').textContent = `${dayNames[date.getDay()]}, ${months[date.getMonth()]} ${date.getDate()}, 2026`;
+      document.getElementById('previewMeta').innerHTML = metaHtml;
 
       document.getElementById('previewContent').innerHTML = contentHtml;
       document.getElementById('previewModal').classList.add('active');
-    }
-
-    function getWorkoutForDay(dayKey, date) {
-      switch(dayKey) {
-        case 'tuesday':
-          if (date) {
-            const workoutType = getTuesdayWorkoutType(date);
-            return workoutType === 'recovery' ? WORKOUTS.activeRecovery.poolRecovery : WORKOUTS.tuesday.upperBody;
-          }
-          return WORKOUTS.tuesday.upperBody;
-        case 'thursday': return WORKOUTS.thursday.bike;
-        case 'friday': return WORKOUTS.friday.lowerBody;
-        case 'saturday': return WORKOUTS.saturday.handball;
-        default: return null;
-      }
     }
 
     function closePreviewModal() {
@@ -8541,7 +8139,7 @@ OVERTRAINING SIGNALS & GUARDRAILS
       const dayOfWeek = today.getDay();
       const specialDate = SPECIAL_DATES[dateKey];
 
-      // Get today's actual workout (DATE_WORKOUTS is the source of truth, not SCHEDULE)
+      // Get today's actual workout from DATE_WORKOUTS
       let todaySchedule = `Today: ${dayNames[dayOfWeek]}, ${dateKey}.`;
       const dateWorkout = DATE_WORKOUTS[dateKey];
       if (dateWorkout) {
@@ -8550,9 +8148,7 @@ OVERTRAINING SIGNALS & GUARDRAILS
         if (dw[0].duration) todaySchedule += ` (${dw[0].duration})`;
         if (dw[0].condition) todaySchedule += `\nCondition: ${dw[0].condition}`;
       } else {
-        // No specific workout loaded -- fall back to SCHEDULE as default template
-        const schedule = SCHEDULE[dayOfWeek];
-        todaySchedule += ` Default template: ${schedule.name} (no specific workout loaded for today)`;
+        todaySchedule += ' No specific workout loaded for today.';
       }
       if (specialDate) {
         todaySchedule += `\nSpecial: ${specialDate.note || ''}`;
@@ -8579,7 +8175,7 @@ OVERTRAINING SIGNALS & GUARDRAILS
 KEY RULES:
 - Always consider readiness score before recommending intensity
 - Err on the side of caution - Sophie tends to push through when she should rest
-- Sunday is always rest. Never suggest training on Sunday.
+- If no workout is planned for today, suggest rest or light movement.
 - If readiness < 70, strongly recommend rest or very light movement
 - Watching handball games/film counts as valid training
 - When suggesting workouts, use her actual exercises and weights from the plan
@@ -8808,9 +8404,6 @@ ${recentHistory}`;
       } else if (state.activeWorkout) {
         type = state.activeWorkout.type || 'gym';
         label = state.activeWorkout.name || '';
-      } else {
-        const schedule = SCHEDULE[dayIndex];
-        if (schedule) type = schedule.type;
       }
 
       // Normalize type (DATE_WORKOUTS uses capitalized types like "Strength", "Recovery")
