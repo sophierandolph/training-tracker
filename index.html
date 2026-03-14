@@ -3161,482 +3161,52 @@
     }
 
     // ==================== DATA ====================
-    // LEGACY: WORKOUTS kept for Sunday pool recovery option (showNoWorkout) and adaptation system recovery fallback.
-    // All weekly programming now comes from DATE_WORKOUTS via /plan-workouts.
-    const WORKOUTS = {
-      tuesday: {
-        upperBody: {
-          name: "Upper Body Focus",
-          type: "Strength",
-          duration: "45-50 min",
-          location: "Gym",
-          condition: "Readiness 75+ and Monday game ended early",
-          circuits: [
-            {
-              name: "Circuit A",
-              instructions: "Do A1-A2-A3, rest 90 sec, repeat 3x",
-              restTime: 90,
-              exercises: [
-                { id: "a1", name: "Single Arm DB Row", sets: 3, reps: 10, weight: 15, notes: "Each arm. Keep core tight, pull elbow back", perSide: true },
-                { id: "a2", name: "Chest Press Machine", sets: 3, reps: 10, weight: 70, notes: "Full range of motion" },
-                { id: "a3", name: "Russian Twists w/ Weight", sets: 3, reps: 20, weight: 20, notes: "Tap weight to floor each side" }
-              ]
-            },
-            {
-              name: "Circuit B",
-              instructions: "Do B1-B2-B3, rest 90 sec, repeat 3x",
-              restTime: 90,
-              exercises: [
-                { id: "b1", name: "Lateral Shoulder Raise", sets: 3, reps: 10, weight: 5, notes: "Raise to shoulder height, controlled" },
-                { id: "b2", name: "Lat Pulldown Machine", sets: 3, reps: 10, weight: 55, notes: "Pull to upper chest, squeeze" },
-                { id: "b3", name: "Weighted Sit-ups", sets: 3, reps: 12, weight: 5, notes: "Hold weight at chest" }
-              ]
-            },
-            {
-              name: "Circuit C",
-              instructions: "Do C1-C2, rest 90 sec, repeat 3x",
-              restTime: 90,
-              exercises: [
-                { id: "c1", name: "Bicep Curls", sets: 3, reps: 10, weight: 7.5, notes: "No swinging, control down" },
-                { id: "c2", name: "Cable Tricep Extension", sets: 3, reps: 10, weight: 25, notes: "Elbows stay pinned to sides" }
-              ]
-            }
+    // Pool recovery workout: used for Sunday rest-day tile and adaptation system recovery fallback.
+    const POOL_RECOVERY = {
+      name: "Active Recovery: Pool + Mobility",
+      type: "Recovery",
+      duration: "45-50 min",
+      location: "Rice Rec Center",
+      condition: "Post back-to-back intensity days. Focus on flushing legs and shoulder maintenance.",
+      circuits: [
+        {
+          name: "A. Pool: Easy Swim + Mobility",
+          instructions: "20 minutes - Low effort, focus on movement quality",
+          exercises: [
+            { id: "ar1", name: "Easy Freestyle", sets: 1, reps: 1, notes: "5 min, long strokes, low effort", isCardio: true, duration: 300, noWeight: true },
+            { id: "ar2", name: "Backstroke / Breaststroke Laps", sets: 4, reps: 1, notes: "4 x 25m, alternate strokes, 30 sec rest between", isCardio: true, noWeight: true },
+            { id: "ar3", name: "Easy Kicking with Board", sets: 1, reps: 1, notes: "5 min, light flutter kick", isCardio: true, duration: 300, noWeight: true },
+            { id: "ar4", name: "Pool Walking", sets: 1, reps: 1, notes: "5 min, gentle movement, decompresses joints", isCardio: true, duration: 300, noWeight: true }
           ]
         },
-        recovery: {
-          name: "Shoulder Mobility & Stability",
-          type: "Recovery",
-          duration: "20-25 min",
-          location: "Home",
-          condition: "Late Monday game (after 9pm) OR readiness 70-75",
-          circuits: [
-            {
-              name: "A. Gentle Warm-Up",
-              instructions: "3-4 minutes",
-              exercises: [
-                { id: "r1", name: "Arm Circles", sets: 1, reps: 20, notes: "10 forward, 10 backward", noWeight: true },
-                { id: "r2", name: "Shoulder Shrugs", sets: 1, reps: 15, noWeight: true },
-                { id: "r3", name: "Neck Rolls", sets: 1, reps: 10, notes: "5 each direction", noWeight: true },
-                { id: "r4", name: "Cross-body Arm Swings", sets: 1, reps: 20, noWeight: true }
-              ]
-            },
-            {
-              name: "B. Shoulder Mobility Flow",
-              instructions: "5-6 minutes",
-              exercises: [
-                { id: "r5", name: "Wall Angels", sets: 2, reps: 10, notes: "Back against wall, arms in W position. Slide arms up overhead keeping contact with wall. Feel chest open, shoulder blades stay down.", noWeight: true },
-                { id: "r6", name: "Thread the Needle", sets: 2, reps: 8, notes: "Each side. Hands and knees, thread one arm under body rotating torso. Return and reach arm up toward ceiling.", perSide: true, noWeight: true },
-                { id: "r7", name: "Child's Pose Shoulder Stretch", sets: 1, reps: 1, notes: "Hold 60 sec. Knees wide, sit back on heels, walk hands forward, drop chest toward floor. Feel stretch through lats and shoulders.", isHold: true, holdTime: 60, noWeight: true }
-              ]
-            },
-            {
-              name: "C. Shoulder, Shin + Hip Prehab",
-              instructions: "18-20 minutes - Shoulder stability with band, shin/ankle prehab, then hip prehab",
-              exercises: [
-                { id: "r8", name: "Band External Rotation", sets: 2, reps: 12, notes: "Each arm. Loop or long band anchored at a door handle. Stand sideways. Elbow tucked tight to your ribs, bent 90 deg. Rotate forearm outward against band, keeping elbow glued to side. Slow: 2 sec out, 2 sec back. Feel the back of the shoulder working.", perSide: true, noWeight: true },
-                { id: "r9", name: "Band Pull-Aparts", sets: 2, reps: 15, notes: "Hold band in front of you at chest height, arms straight, hands shoulder-width. Pull hands apart stretching the band until it touches your chest. Squeeze shoulder blades together at the end. Slow return. Feel between the shoulder blades and back of shoulders.", noWeight: true },
-                { id: "r10", name: "Scapular Wall Slides", sets: 2, reps: 10, notes: "Stand with back flat against wall. Arms up in goal post position (elbows and wrists touching wall). Slide arms up overhead keeping contact with the wall the whole time. As you slide up, actively pull shoulder blades DOWN. If wrists lose wall contact, that's your current range -- work within it.", noWeight: true },
-                { id: "r11", name: "Band Y-T-W Series", sets: 1, reps: 8, notes: "Each position, 8 reps. Light band or no band. Hinge forward 45 deg. Y: arms overhead in Y, thumbs up -- feel lower traps. T: arms straight to sides -- feel mid-back squeeze. W: elbows bent, squeeze shoulder blades -- feel rhomboids. Hold each rep 2 sec at the top.", noWeight: true },
-                { id: "r12", name: "Toe Raises (Shin Prehab)", sets: 2, reps: 15, notes: "Stand feet shoulder-width apart. Lift toes off ground keeping heels down. Hold 2 sec at top. Strengthens tibialis anterior.", noWeight: true },
-                { id: "r13", name: "Eccentric Calf Raises", sets: 2, reps: 15, notes: "Rise up on toes (2 sec), lower slowly (3 sec). The slow lowering is what matters. Use wall for balance.", noWeight: true },
-                { id: "r14", name: "Ankle Alphabet", sets: 1, reps: 2, notes: "Trace A-Z with each foot. Builds ankle stability and mobility. 1 rep = 1 foot.", perSide: true, noWeight: true },
-                { id: "r15", name: "Single-Leg Balance", sets: 1, reps: 2, notes: "30 sec each foot. Eyes open. Feel ankle stabilizers working. Close eyes to make harder.", perSide: true, isHold: true, holdTime: 30, noWeight: true },
-                { id: "r16", name: "90/90 Hip Stretch", sets: 1, reps: 1, notes: "Hold 60 sec each side. Sit with both legs at 90 degrees. Hinge forward over the front leg. Priority for hip tightness.", isHold: true, holdTime: 60, perSide: true, noWeight: true },
-                { id: "r17", name: "Elevated Pigeon Lift Off", sets: 2, reps: 8, notes: "Each side. Pigeon position on a bench or step. Hands on hips, squeeze glute of front leg and lift chest. Feel the glute fire.", perSide: true, noWeight: true },
-                { id: "r18", name: "Hip Flexor Lunge Stretch", sets: 1, reps: 1, notes: "Hold 45 sec each side. Low lunge, back knee down. Squeeze back glute and tilt pelvis under.", isHold: true, holdTime: 45, perSide: true, noWeight: true }
-              ]
-            }
+        {
+          name: "B. Foam Rolling + Stretching",
+          instructions: "15 minutes - Target soccer and handball soreness",
+          exercises: [
+            { id: "ar5", name: "Foam Roll Quads / Hip Flexors", sets: 1, reps: 1, notes: "90 sec each side", isHold: true, holdTime: 90, perSide: true, noWeight: true },
+            { id: "ar6", name: "Foam Roll Hamstrings / Glutes", sets: 1, reps: 1, notes: "90 sec each side", isHold: true, holdTime: 90, perSide: true, noWeight: true },
+            { id: "ar7", name: "Foam Roll Upper Back / T-Spine", sets: 1, reps: 1, notes: "90 sec", isHold: true, holdTime: 90, noWeight: true },
+            { id: "ar8", name: "Foam Roll Calves", sets: 1, reps: 1, notes: "60 sec each side", isHold: true, holdTime: 60, perSide: true, noWeight: true },
+            { id: "ar9", name: "Pigeon Pose", sets: 1, reps: 1, notes: "60 sec each side", isHold: true, holdTime: 60, perSide: true, noWeight: true },
+            { id: "ar10", name: "Hip 90/90 Switches", sets: 1, reps: 16, notes: "8 each direction", noWeight: true },
+            { id: "ar11", name: "Seated Spinal Twist", sets: 1, reps: 1, notes: "30 sec each side", isHold: true, holdTime: 30, perSide: true, noWeight: true }
+          ]
+        },
+        {
+          name: "C. Shoulder + Shin Prehab",
+          instructions: "12-15 minutes - Shoulder maintenance then shin/ankle prehab",
+          exercises: [
+            { id: "ar12", name: "Scapular Squeezes", sets: 2, reps: 12, noWeight: true },
+            { id: "ar13", name: "Band Pull-Aparts (Light)", sets: 2, reps: 12, noWeight: true },
+            { id: "ar14", name: "90/90 External Rotation (Light Band)", sets: 2, reps: 10, notes: "Each arm", perSide: true, noWeight: true },
+            { id: "ar15", name: "Wall Angels", sets: 2, reps: 8, noWeight: true },
+            { id: "ar16", name: "Overhead Hold + Ball Squeeze", sets: 1, reps: 1, notes: "20 sec each arm", isHold: true, holdTime: 20, perSide: true, noWeight: true },
+            { id: "ar17", name: "Toe Raises (Shin Prehab)", sets: 2, reps: 15, notes: "Lift toes off ground keeping heels down. Hold 2 sec at top. Strengthens tibialis anterior.", noWeight: true },
+            { id: "ar18", name: "Eccentric Calf Raises", sets: 2, reps: 15, notes: "Rise up on toes (2 sec), lower slowly (3 sec). The slow lowering is what matters.", noWeight: true },
+            { id: "ar19", name: "Single-Leg Balance", sets: 1, reps: 2, notes: "30 sec each foot. Feel ankle stabilizers working.", perSide: true, isHold: true, holdTime: 30, noWeight: true }
           ]
         }
-      },
-      thursday: {
-        bike: {
-          name: "Bike Training Week 1",
-          type: "Cardio",
-          duration: "45 min",
-          location: "Outdoor Track",
-          circuits: [
-            {
-              name: "Warm-Up",
-              instructions: "15 minutes total",
-              exercises: [
-                { id: "bw1", name: "Easy Spinning", sets: 1, reps: 1, notes: "5 min easy", isCardio: true, duration: 300 },
-                { id: "bw2", name: "Moderate Pace", sets: 1, reps: 1, notes: "5 min moderate", isCardio: true, duration: 300 },
-                { id: "bw3", name: "High Cadence Intervals", sets: 2, reps: 1, notes: "1 min at 100+ RPM, 2 min recovery", isCardio: true },
-                { id: "bw4", name: "Easy Recovery", sets: 1, reps: 1, notes: "3 min easy", isCardio: true, duration: 180 }
-              ]
-            },
-            {
-              name: "Main Set",
-              instructions: "20 minutes - Focus on 85-95 RPM",
-              exercises: [
-                { id: "bm1", name: "Tempo Intervals", sets: 4, reps: 1, notes: "3 min at tempo (comfortably hard), 2 min recovery between. Mental cue: Quick feet, light pressure", isCardio: true, hasRPM: true }
-              ]
-            },
-            {
-              name: "Cool-Down",
-              instructions: "10 minutes",
-              exercises: [
-                { id: "bc1", name: "Easy Spinning", sets: 1, reps: 1, notes: "Gradually decrease effort", isCardio: true, duration: 600 }
-              ]
-            },
-            {
-              name: "Clipping Practice",
-              instructions: "During warm-up and cool-down",
-              exercises: [
-                { id: "bp1", name: "Clip-in Practice", sets: 1, reps: 20, notes: "Practice smooth clip-ins/outs while rolling", noWeight: true }
-              ]
-            }
-          ]
-        }
-      },
-      activeRecovery: {
-        poolRecovery: {
-          name: "Active Recovery: Pool + Mobility",
-          type: "Recovery",
-          duration: "45-50 min",
-          location: "Rice Rec Center",
-          condition: "Post back-to-back intensity days. Focus on flushing legs and shoulder maintenance before NC trip.",
-          circuits: [
-            {
-              name: "A. Pool: Easy Swim + Mobility",
-              instructions: "20 minutes - Low effort, focus on movement quality",
-              exercises: [
-                { id: "ar1", name: "Easy Freestyle", sets: 1, reps: 1, notes: "5 min, long strokes, low effort", isCardio: true, duration: 300, noWeight: true },
-                { id: "ar2", name: "Backstroke / Breaststroke Laps", sets: 4, reps: 1, notes: "4 x 25m, alternate strokes, 30 sec rest between", isCardio: true, noWeight: true },
-                { id: "ar3", name: "Easy Kicking with Board", sets: 1, reps: 1, notes: "5 min, light flutter kick", isCardio: true, duration: 300, noWeight: true },
-                { id: "ar4", name: "Pool Walking", sets: 1, reps: 1, notes: "5 min, gentle movement, decompresses joints", isCardio: true, duration: 300, noWeight: true }
-              ]
-            },
-            {
-              name: "B. Foam Rolling + Stretching",
-              instructions: "15 minutes - Target soccer and handball soreness",
-              exercises: [
-                { id: "ar5", name: "Foam Roll Quads / Hip Flexors", sets: 1, reps: 1, notes: "90 sec each side", isHold: true, holdTime: 90, perSide: true, noWeight: true },
-                { id: "ar6", name: "Foam Roll Hamstrings / Glutes", sets: 1, reps: 1, notes: "90 sec each side", isHold: true, holdTime: 90, perSide: true, noWeight: true },
-                { id: "ar7", name: "Foam Roll Upper Back / T-Spine", sets: 1, reps: 1, notes: "90 sec", isHold: true, holdTime: 90, noWeight: true },
-                { id: "ar8", name: "Foam Roll Calves", sets: 1, reps: 1, notes: "60 sec each side", isHold: true, holdTime: 60, perSide: true, noWeight: true },
-                { id: "ar9", name: "Pigeon Pose", sets: 1, reps: 1, notes: "60 sec each side", isHold: true, holdTime: 60, perSide: true, noWeight: true },
-                { id: "ar10", name: "Hip 90/90 Switches", sets: 1, reps: 16, notes: "8 each direction", noWeight: true },
-                { id: "ar11", name: "Seated Spinal Twist", sets: 1, reps: 1, notes: "30 sec each side", isHold: true, holdTime: 30, perSide: true, noWeight: true }
-              ]
-            },
-            {
-              name: "C. Shoulder + Shin Prehab",
-              instructions: "12-15 minutes - Shoulder maintenance then shin/ankle prehab",
-              exercises: [
-                { id: "ar12", name: "Scapular Squeezes", sets: 2, reps: 12, noWeight: true },
-                { id: "ar13", name: "Band Pull-Aparts (Light)", sets: 2, reps: 12, noWeight: true },
-                { id: "ar14", name: "90/90 External Rotation (Light Band)", sets: 2, reps: 10, notes: "Each arm", perSide: true, noWeight: true },
-                { id: "ar15", name: "Wall Angels", sets: 2, reps: 8, noWeight: true },
-                { id: "ar16", name: "Overhead Hold + Ball Squeeze", sets: 1, reps: 1, notes: "20 sec each arm", isHold: true, holdTime: 20, perSide: true, noWeight: true },
-                { id: "ar17", name: "Toe Raises (Shin Prehab)", sets: 2, reps: 15, notes: "Lift toes off ground keeping heels down. Hold 2 sec at top. Strengthens tibialis anterior.", noWeight: true },
-                { id: "ar18", name: "Eccentric Calf Raises", sets: 2, reps: 15, notes: "Rise up on toes (2 sec), lower slowly (3 sec). The slow lowering is what matters.", noWeight: true },
-                { id: "ar19", name: "Single-Leg Balance", sets: 1, reps: 2, notes: "30 sec each foot. Feel ankle stabilizers working.", perSide: true, isHold: true, holdTime: 30, noWeight: true }
-              ]
-            }
-          ]
-        }
-      },
-      friday: {
-        lowerBody: {
-          name: "Lower Body Focus",
-          type: "Strength",
-          duration: "45 min",
-          location: "Gym",
-          condition: "Readiness 80+ and legs feel good",
-          circuits: [
-            {
-              name: "Warm-Up",
-              instructions: "5-7 minutes",
-              exercises: [
-                { id: "fw1", name: "Dynamic Stretches", sets: 1, reps: 1, notes: "BW squats, glute bridges, 30s plank", noWeight: true }
-              ]
-            },
-            {
-              name: "Circuit A",
-              instructions: "Do A1-A2-A3, rest 90 sec, repeat 3x",
-              restTime: 90,
-              exercises: [
-                { id: "fa1", name: "DB Goblet Squat", sets: 3, reps: 12, weight: 25, notes: "Full depth, chest up" },
-                { id: "fa2", name: "Jump Squats", sets: 3, reps: 10, notes: "Explosive, land softly", noWeight: true },
-                { id: "fa3", name: "Front Low Plank Hold", sets: 3, reps: 1, notes: "Hold 30 sec, straight line", isHold: true, holdTime: 30, noWeight: true }
-              ]
-            },
-            {
-              name: "Circuit B",
-              instructions: "Do B1-B2-B3, rest 90 sec, repeat 3x",
-              restTime: 90,
-              exercises: [
-                { id: "fb1", name: "DB Reverse Lunges", sets: 3, reps: 8, weight: 15, notes: "Each leg, knee nearly to floor", perSide: true },
-                { id: "fb2", name: "DB RDLs", sets: 3, reps: 10, weight: 15, notes: "Hinge at hips, feel hamstrings" },
-                { id: "fb3", name: "Side Plank Hold L+R", sets: 3, reps: 1, notes: "25 sec each side", isHold: true, holdTime: 25, perSide: true, noWeight: true }
-              ]
-            },
-            {
-              name: "Circuit C",
-              instructions: "Do C1-C2, rest 90 sec, repeat 3x",
-              restTime: 90,
-              exercises: [
-                { id: "fc1", name: "Leg Press Machine", sets: 3, reps: 10, weight: 100, notes: "Full range, control weight" },
-                { id: "fc2", name: "Hamstring Curl Machine", sets: 3, reps: 10, weight: 50, notes: "Squeeze at top, slow release" }
-              ]
-            }
-          ]
-        }
-      },
-      saturday: {
-        handball: {
-          name: "Handball Skill Session",
-          type: "Sport-Specific",
-          duration: "55-65 min",
-          location: "Squash Court / Wall",
-          condition: "Throw cap: ~65 total (2 technique blocks ~15 each + 30 finisher + warm-up). Pick 2 from A/B/C/D, rotate weekly. Say cue word before each throw.\nBring: handball, loop band",
-          circuits: [
-            {
-              name: "Warm-Up (18 min)",
-              simple: true,
-              instructions: "Full activation sequence. Don't skip the throwing arm warm-up.",
-              exercises: [
-                { id: "hw1", name: "Jog + High Knees + Butt Kicks", sets: 1, reps: 1, notes: "3 min: jog 30 sec, high knees 20 each, butt kicks 20 each, lateral shuffles 10 each way", noWeight: true, isCardio: true },
-                { id: "hw2", name: "Standing Hip Abduction (Band)", sets: 1, reps: 15, notes: "Each side. Loop band above knees. Feel outer glute.", perSide: true, noWeight: true },
-                { id: "hw3", name: "Calf Raises + Tibialis Raises", sets: 1, reps: 20, notes: "20 calf raises slow, then 20 tibialis raises. Shin prehab.", noWeight: true },
-                { id: "hw4", name: "Arm Circles + Scapular Squeezes", sets: 1, reps: 15, notes: "10 arm circles each direction, then 15 scapular squeezes hold 2 sec.", noWeight: true },
-                { id: "hw5", name: "Wall Passes Both Hands", sets: 1, reps: 20, notes: "10 each hand. Easy effort.", noWeight: true },
-                { id: "hw6", name: "Wrist Flicks with Ball", sets: 1, reps: 20, notes: "Snap wrist, feel fingers release.", noWeight: true },
-                { id: "hw7", name: "3-Step Rhythm (No Ball)", sets: 1, reps: 5, notes: "Step, OPEN, launch. Feel chest rotate open on step 2.", noWeight: true }
-              ]
-            },
-            {
-              name: "A. Jump Shot Technique (10 min)",
-              instructions: "Pick this OR another technique block. ~20 throws. Cues: step, OPEN, launch. Release at peak of jump.",
-              exercises: [
-                { id: "hj1", name: "Kneeling Throws", sets: 2, reps: 6, notes: "Throwing-side knee down. Isolates torso rotation. Say cue before each throw.", noWeight: true },
-                { id: "hj2", name: "Wall Target Throws (3-step)", sets: 2, reps: 8, notes: "Alternate 2R 2L. 3-step approach. LEFT HAND: lower targets, technique over power.", noWeight: true },
-                { id: "hj3", name: "Approach from Angle", sets: 2, reps: 6, notes: "3 each side. 45-deg angle. Feel chest rotate open.", noWeight: true }
-              ]
-            },
-            {
-              name: "B. Pivot Shots (10 min)",
-              instructions: "Pick this OR another technique block. ~15 throws. Cue: turn-PULL-throw.",
-              exercises: [
-                { id: "hp1", name: "Pivot Footwork (No Ball)", sets: 1, reps: 5, notes: "Dry run. Arm separation starts DURING the turn. Feel it before adding ball.", noWeight: true },
-                { id: "hp2", name: "Pivot Shot (R)", sets: 2, reps: 5, notes: "Turn-PULL-throw. Ball starts separating during the turn, not after.", noWeight: true },
-                { id: "hp3", name: "Pivot Shot (L)", sets: 2, reps: 5, notes: "Left hand. Same rhythm. Slower, technique focus.", noWeight: true }
-              ]
-            },
-            {
-              name: "C. Left Hand Development (10 min)",
-              instructions: "Pick this OR another technique block. ~15 throws. Quality over speed.",
-              exercises: [
-                { id: "hl1", name: "Distance Progression (Left)", sets: 1, reps: 9, notes: "3 at 2m, 3 at 4m, 3 at 6m. Wrist snap and follow-through at each distance.", noWeight: true },
-                { id: "hl2", name: "Target Practice (Left)", sets: 1, reps: 8, notes: "Mark 4 targets. Hit each 2 times. No rushing.", noWeight: true },
-                { id: "hl3", name: "One-Step + Jump (Left)", sets: 2, reps: 4, notes: "Very controlled. Feel the rhythm.", noWeight: true }
-              ]
-            },
-            {
-              name: "D. Feinting + Shooting (10 min)",
-              instructions: "Pick this OR another technique block. ~15 throws. Sell the fake.",
-              exercises: [
-                { id: "hfe1", name: "Step Feint + Shot", sets: 2, reps: 5, notes: "Step one way, explode opposite, jump shot. Alternate directions.", noWeight: true },
-                { id: "hfe2", name: "Shot Fake + Drive", sets: 2, reps: 5, notes: "Begin shooting motion, pull back, 2 lateral steps, shot from new angle.", noWeight: true }
-              ]
-            },
-            {
-              name: "Passing + Defense (8 min)",
-              instructions: "Non-throwing skills. Needed for tryouts.",
-              exercises: [
-                { id: "hpa1", name: "Short Passing Accuracy (L)", sets: 2, reps: 10, notes: "Left hand only. Mark a target at chest height. 3m distance. Quick catch-and-release rhythm.", noWeight: true },
-                { id: "hpa2", name: "Defensive Slides", sets: 3, reps: 1, notes: "30 sec each set. Lateral shuffle, stay low, quick feet. React to imaginary attacker.", noWeight: true, isCardio: true },
-                { id: "hpa3", name: "Drop Steps", sets: 2, reps: 8, notes: "Each side. Defensive stance, drop-step 45 deg backward, recover to ready position.", noWeight: true }
-              ]
-            },
-            {
-              name: "Conditioning (5 min)",
-              instructions: "Non-throwing conditioning. Moved after technique blocks so form isn't degraded by fatigue.",
-              exercises: [
-                { id: "hc1", name: "Defensive Hold + Burst", sets: 3, reps: 1, notes: "45 sec: hold defensive stance. Every 10 sec explode into a sprint (no throwing). Simulates game transitions.", noWeight: true, isCardio: true },
-                { id: "hc2", name: "Round Rest", sets: 3, reps: 1, notes: "30 sec rest between rounds", noWeight: true }
-              ]
-            },
-            {
-              name: "30 in 3 Finisher",
-              instructions: "Say one cue word before each throw. Track your score.",
-              exercises: [
-                { id: "hf1", name: "30 in 3", sets: 1, reps: 30, notes: "30 successful throws in 3 min. Mix shot types and both hands. SAY YOUR CUE before each throw (e.g. 'OPEN' or 'PULL'). Track makes.", noWeight: true, isCardio: true, trackScore: true }
-              ]
-            },
-            {
-              name: "Cool-Down (5 min)",
-              simple: true,
-              instructions: "Quick stretch on court before heading out.",
-              exercises: [
-                { id: "hcd1", name: "Calf Stretch Against Wall", sets: 1, reps: 1, notes: "30 sec each side", isHold: true, holdTime: 30, perSide: true, noWeight: true },
-                { id: "hcd2", name: "Standing Hip Flexor Stretch", sets: 1, reps: 1, notes: "30 sec each side. Feel front of hip open.", isHold: true, holdTime: 30, perSide: true, noWeight: true },
-                { id: "hcd3", name: "Cross-Body Shoulder Stretch", sets: 1, reps: 1, notes: "30 sec each side", isHold: true, holdTime: 30, perSide: true, noWeight: true },
-                { id: "hcd4", name: "Chest Opener", sets: 1, reps: 1, notes: "Arms clasped behind back, 30 sec", isHold: true, holdTime: 30, noWeight: true }
-              ]
-            }
-          ]
-        }
-      },
-
-      wednesdayWarmup: {
-        name: "Pre-Practice Warm-Up",
-        type: "Warmup",
-        duration: "18 min",
-        location: "Court corner (~4x4 ft space)",
-        condition: "Arrive 20 min early. Complete before practice starts.",
-        circuits: [
-          {
-            name: "A. Get Moving (4 min)",
-            instructions: "All in place — no travel needed. Get heart rate up and body temp rising.",
-            exercises: [
-              { id: "ww_a1", name: "Jog in Place", sets: 1, reps: 1, notes: "30 sec", isCardio: true, duration: 30, noWeight: true },
-              { id: "ww_a2", name: "High Knees", sets: 1, reps: 20, notes: "Each leg, in place", noWeight: true },
-              { id: "ww_a3", name: "Butt Kicks", sets: 1, reps: 20, notes: "Each leg — feel heel tap glute", noWeight: true },
-              { id: "ww_a4", name: "Step-Touch Side to Side", sets: 1, reps: 20, notes: "Total — small lateral weight shift, no travel", noWeight: true },
-              { id: "ww_a5", name: "Hip Circles", sets: 1, reps: 10, notes: "Each direction — hands on hips, feel the rotation", noWeight: true }
-            ]
-          },
-          {
-            name: "B. Lower Body + Shin Activation — Loop Band (5 min)",
-            instructions: "Band above knees for abduction/kickback. Hold wall for balance. Shin work is prehab insurance.",
-            exercises: [
-              { id: "ww_b1", name: "Standing Hip Abduction", sets: 1, reps: 15, notes: "Each side — band above knees, hold wall, feel outer glute fire", perSide: true, noWeight: true },
-              { id: "ww_b2", name: "Standing Glute Kickback", sets: 1, reps: 12, notes: "Each side — band above knees, hold wall, feel glute squeeze at top", perSide: true, noWeight: true },
-              { id: "ww_b3", name: "Calf Raises", sets: 1, reps: 20, notes: "Slow — feel full rise, controlled lower", noWeight: true },
-              { id: "ww_b4", name: "Tibialis Raises", sets: 1, reps: 20, notes: "Heels against wall, lift toes — feel front of shin work", noWeight: true }
-            ]
-          },
-          {
-            name: "C. Shoulder Activation — Bodyweight (4 min)",
-            instructions: "Shoulder prep before throwing. Feel each movement, don't rush.",
-            exercises: [
-              { id: "ww_c1", name: "Arm Circles", sets: 1, reps: 20, notes: "10 forward, 10 backward each arm — small to large", noWeight: true },
-              { id: "ww_c2", name: "Scapular Squeezes", sets: 1, reps: 15, notes: "Hold 2 sec — feel shoulder blades pinch together", noWeight: true },
-              { id: "ww_c3", name: "Pendulum Swings", sets: 1, reps: 10, notes: "Each arm — loose arm, small circles", perSide: true, noWeight: true },
-              { id: "ww_c4", name: "Wall Angels", sets: 2, reps: 8, notes: "Back and arms against wall, slide arms up", noWeight: true }
-            ]
-          },
-          {
-            name: "D. Throwing Arm Warm-Up (4 min)",
-            instructions: "Progressive arm warm-up. Start easy, build intensity. Get the rhythm into your body before practice.",
-            exercises: [
-              { id: "ww_d1", name: "Wrist Flicks with Ball", sets: 1, reps: 20, notes: "Snap wrist, feel fingers release", noWeight: true },
-              { id: "ww_d2", name: "Short Wall Passes — Both Hands", sets: 1, reps: 10, notes: "Each hand, easy effort, close to wall", perSide: true, noWeight: true },
-              { id: "ww_d3", name: "3-Step Rhythm — No Ball", sets: 1, reps: 5, notes: "In place — compress the steps, focus on chest OPEN on step 2, not the travel. Cue: step, OPEN, launch.", noWeight: true },
-              { id: "ww_d4", name: "3-Step Throw — Easy Effort", sets: 1, reps: 5, notes: "Right hand, wall target. Easy pace — feel the rhythm.", noWeight: true }
-            ]
-          },
-          {
-            name: "E. Ready Position (1 min)",
-            instructions: "Prime your nervous system for game speed.",
-            exercises: [
-              { id: "ww_e1", name: "Quick Feet in Place", sets: 1, reps: 1, notes: "15 sec — fast, light on balls of feet", isCardio: true, duration: 15, noWeight: true },
-              { id: "ww_e2", name: "Ready Position Hold", sets: 1, reps: 1, notes: "10 sec — knees bent, weight forward, feel the spring in your legs", isHold: true, holdTime: 10, noWeight: true }
-            ]
-          }
-        ]
-      },
-
-      wednesdayCooldown: {
-        name: "Post-Practice Cooldown",
-        type: "Recovery",
-        duration: "20 min",
-        location: "Court → Home",
-        condition: "Start at the court immediately after practice. Finish at home.",
-        circuits: [
-          {
-            name: "A. Court — Before You Drive (5 min)",
-            instructions: "Do this immediately after practice ends, before you sit in the car. 5 minutes now prevents 2 days of stiffness.",
-            exercises: [
-              { id: "wc_a1", name: "Easy Walk + Shake Out Arms", sets: 1, reps: 1, notes: "1 min — heart rate down, shake everything loose", isCardio: true, duration: 60, noWeight: true },
-              { id: "wc_a2", name: "Calf Stretch Against Wall", sets: 1, reps: 1, notes: "30 sec each side — feel pull in lower calf and Achilles", isHold: true, holdTime: 30, perSide: true, noWeight: true },
-              { id: "wc_a3", name: "Standing Hip Flexor Stretch", sets: 1, reps: 1, notes: "30 sec each side — feel front of hip open", isHold: true, holdTime: 30, perSide: true, noWeight: true },
-              { id: "wc_a4", name: "Cross-Body Shoulder Stretch", sets: 1, reps: 1, notes: "30 sec each side — feel back of shoulder", isHold: true, holdTime: 30, perSide: true, noWeight: true },
-              { id: "wc_a5", name: "Chest Opener — Arms Clasped Behind Back", sets: 1, reps: 1, notes: "30 sec — feel chest open", isHold: true, holdTime: 30, noWeight: true }
-            ]
-          },
-          {
-            name: "B. Home — Foam Roll + Tools (5-6 min)",
-            instructions: "Use foam roller, Chirp wheel, or massage gun. Do while muscles are still warm.",
-            exercises: [
-              { id: "wc_b1", name: "Calves — Foam Roll or Massage Gun", sets: 1, reps: 1, notes: "60 sec each leg", isHold: true, holdTime: 60, perSide: true, noWeight: true },
-              { id: "wc_b2", name: "Shins — Massage Gun", sets: 1, reps: 1, notes: "60 sec each leg — tibialis anterior, front of lower leg", isHold: true, holdTime: 60, perSide: true, noWeight: true },
-              { id: "wc_b3", name: "Quads / IT Band — Foam Roll", sets: 1, reps: 1, notes: "60 sec each side", isHold: true, holdTime: 60, perSide: true, noWeight: true },
-              { id: "wc_b4", name: "Upper Back — Chirp Wheel", sets: 1, reps: 1, notes: "90 sec — let each segment release, feel the spine open", isHold: true, holdTime: 90, noWeight: true }
-            ]
-          },
-          {
-            name: "C. Home — Shin Prehab (2 min)",
-            instructions: "Don't skip — this is the insurance policy against shin splints.",
-            exercises: [
-              { id: "wc_c1", name: "Tibialis Raises", sets: 3, reps: 15, notes: "Heels against wall — feel front of shin work", noWeight: true },
-              { id: "wc_c2", name: "Slow Calf Raises", sets: 2, reps: 15, notes: "Controlled all the way up and down", noWeight: true }
-            ]
-          },
-          {
-            name: "D. Home — Full Body Release (7-8 min)",
-            instructions: "Take your time here. This is where your body does the real recovery work.",
-            exercises: [
-              { id: "wc_d1", name: "Figure-4 Hip Stretch", sets: 1, reps: 1, notes: "60 sec each side — feel deep glute and hip rotator release", isHold: true, holdTime: 60, perSide: true, noWeight: true },
-              { id: "wc_d2", name: "Kneeling Hip Flexor Stretch", sets: 1, reps: 1, notes: "45 sec each side — feel front of hip open", isHold: true, holdTime: 45, perSide: true, noWeight: true },
-              { id: "wc_d3", name: "Seated Hamstring Stretch", sets: 1, reps: 1, notes: "45 sec each side", isHold: true, holdTime: 45, perSide: true, noWeight: true },
-              { id: "wc_d4", name: "Thread the Needle", sets: 1, reps: 1, notes: "30 sec each side — feel thoracic rotation through shoulder", isHold: true, holdTime: 30, perSide: true, noWeight: true },
-              { id: "wc_d5", name: "Overhead Tricep Stretch", sets: 1, reps: 1, notes: "30 sec each side", isHold: true, holdTime: 30, perSide: true, noWeight: true },
-              { id: "wc_d6", name: "Cross-Body Shoulder Stretch", sets: 1, reps: 1, notes: "30 sec each side — deeper than court version", isHold: true, holdTime: 30, perSide: true, noWeight: true },
-              { id: "wc_d7", name: "Child's Pose", sets: 1, reps: 1, notes: "60 sec — full release, breathe deeply", isHold: true, holdTime: 60, noWeight: true }
-            ]
-          }
-        ]
-      },
-      poolRecovery: {
-        name: "Active Recovery: Pool + Mobility",
-        type: "Recovery",
-        duration: "45-50 min",
-        location: "Rice Rec Center",
-        condition: "Post back-to-back intensity days. Focus on flushing legs and shoulder maintenance.",
-        circuits: [
-          {
-            name: "A. Pool: Easy Swim + Mobility",
-            instructions: "20 minutes - Low effort, focus on movement quality",
-            exercises: [
-              { id: "ar1", name: "Easy Freestyle", sets: 1, reps: 1, notes: "5 min, long strokes, low effort", isCardio: true, duration: 300, noWeight: true },
-              { id: "ar2", name: "Backstroke / Breaststroke Laps", sets: 4, reps: 1, notes: "4 x 25m, alternate strokes, 30 sec rest between", isCardio: true, noWeight: true },
-              { id: "ar3", name: "Easy Kicking with Board", sets: 1, reps: 1, notes: "5 min, light flutter kick", isCardio: true, duration: 300, noWeight: true },
-              { id: "ar4", name: "Pool Walking", sets: 1, reps: 1, notes: "5 min, gentle movement, decompresses joints", isCardio: true, duration: 300, noWeight: true }
-            ]
-          },
-          {
-            name: "B. Foam Rolling + Stretching",
-            instructions: "15 minutes - Target soccer and handball soreness",
-            exercises: [
-              { id: "ar5", name: "Foam Roll Quads / Hip Flexors", sets: 1, reps: 1, notes: "90 sec each side", isHold: true, holdTime: 90, perSide: true, noWeight: true },
-              { id: "ar6", name: "Foam Roll Hamstrings / Glutes", sets: 1, reps: 1, notes: "90 sec each side", isHold: true, holdTime: 90, perSide: true, noWeight: true },
-              { id: "ar7", name: "Foam Roll Upper Back / T-Spine", sets: 1, reps: 1, notes: "90 sec", isHold: true, holdTime: 90, noWeight: true },
-              { id: "ar8", name: "Foam Roll Calves", sets: 1, reps: 1, notes: "60 sec each side", isHold: true, holdTime: 60, perSide: true, noWeight: true },
-              { id: "ar9", name: "Pigeon Pose", sets: 1, reps: 1, notes: "60 sec each side", isHold: true, holdTime: 60, perSide: true, noWeight: true },
-              { id: "ar10", name: "Hip 90/90 Switches", sets: 1, reps: 16, notes: "8 each direction", noWeight: true },
-              { id: "ar11", name: "Seated Spinal Twist", sets: 1, reps: 1, notes: "30 sec each side", isHold: true, holdTime: 30, perSide: true, noWeight: true }
-            ]
-          },
-          {
-            name: "C. Shoulder + Shin Prehab",
-            instructions: "12-15 minutes - Shoulder maintenance then shin/ankle prehab",
-            exercises: [
-              { id: "ar12", name: "Scapular Squeezes", sets: 2, reps: 12, noWeight: true },
-              { id: "ar13", name: "Band Pull-Aparts (Light)", sets: 2, reps: 12, noWeight: true },
-              { id: "ar14", name: "90/90 External Rotation (Light Band)", sets: 2, reps: 10, notes: "Each arm", perSide: true, noWeight: true },
-              { id: "ar15", name: "Wall Angels", sets: 2, reps: 8, noWeight: true },
-              { id: "ar16", name: "Overhead Hold + Ball Squeeze", sets: 1, reps: 1, notes: "20 sec each arm", isHold: true, holdTime: 20, perSide: true, noWeight: true },
-              { id: "ar17", name: "Toe Raises (Shin Prehab)", sets: 2, reps: 15, notes: "Lift toes off ground keeping heels down. Hold 2 sec at top. Strengthens tibialis anterior.", noWeight: true },
-              { id: "ar18", name: "Eccentric Calf Raises", sets: 2, reps: 15, notes: "Rise up on toes (2 sec), lower slowly (3 sec). The slow lowering is what matters.", noWeight: true },
-              { id: "ar19", name: "Single-Leg Balance", sets: 1, reps: 2, notes: "30 sec each foot. Feel ankle stabilizers working.", perSide: true, isHold: true, holdTime: 30, noWeight: true }
-            ]
-          }
-        ]
-      }
+      ]
     };
 
     // ==================== STATE ====================
@@ -4223,7 +3793,7 @@
 
       if (dayName === 'sunday') {
         document.getElementById('dayName').textContent = 'Rest Day';
-        const poolWorkout = WORKOUTS.activeRecovery.poolRecovery;
+        const poolWorkout = POOL_RECOVERY;
         content.innerHTML = `
           <div class="workout-header">
             <div class="workout-type">SUNDAY</div>
@@ -4236,7 +3806,7 @@
             <div style="background: var(--bg-secondary); border-radius: var(--radius); padding: 16px; margin-bottom: 16px; text-align: center;">
               <p style="color: var(--text-secondary); font-size: 13px;">Today is a rest day. Listen to your body — if you're feeling good, pool recovery is a great optional add.</p>
             </div>
-            <div class="activity-tile" onclick="startRecurringWorkout('poolRecovery')" style="border-color: var(--teal);">
+            <div class="activity-tile" onclick="startPoolRecovery()" style="border-color: var(--teal);">
               <div class="activity-tile-header">
                 <div>
                   <div class="activity-tile-type" style="color: var(--teal);">OPTIONAL · ${poolWorkout.type}</div>
@@ -4536,24 +4106,16 @@
       }
     }
 
-    function startRecurringWorkout(workoutKey) {
-      // Support dotted paths like 'activeRecovery.poolRecovery'
-      const workout = workoutKey.includes('.')
-        ? workoutKey.split('.').reduce((obj, key) => obj && obj[key], WORKOUTS)
-        : WORKOUTS[workoutKey] || (WORKOUTS.activeRecovery && WORKOUTS.activeRecovery[workoutKey]);
-      if (workout) {
-        const dateKey = formatDateKey(state.currentDate);
-        const history = getWorkoutHistory();
-        const saved = history.find(h => h.date === dateKey && h.workout === workout.name);
-        if (saved) {
-          showWorkoutComplete(saved);
-          return;
-        }
-        resetWorkoutState();
-        state.activeWorkout = workout;
-        renderWorkout(workout);
-        restoreProgressIfAvailable();
-      }
+    function startPoolRecovery() {
+      const workout = POOL_RECOVERY;
+      const dateKey = formatDateKey(state.currentDate);
+      const history = getWorkoutHistory();
+      const saved = history.find(h => h.date === dateKey && h.workout === workout.name);
+      if (saved) { showWorkoutComplete(saved); return; }
+      resetWorkoutState();
+      state.activeWorkout = workout;
+      renderWorkout(workout);
+      restoreProgressIfAvailable();
     }
 
     function renderWorkout(workout, adaptationRule) {
@@ -5260,7 +4822,7 @@
         } else if (mainRule.action === 'switch_to_recovery') {
           // Switch to recovery workout
           adaptationApplied = mainRule;
-          renderWorkout(WORKOUTS.activeRecovery.poolRecovery, mainRule);
+          renderWorkout(POOL_RECOVERY, mainRule);
         } else {
           // Just warnings - reload normally but show banner
           loadTodaysWorkout();
@@ -5721,8 +5283,8 @@
           }
         ]
       },
-      '2026-02-26': WORKOUTS.activeRecovery.poolRecovery,
-      '2026-02-18': WORKOUTS.activeRecovery.poolRecovery,
+      '2026-02-26': POOL_RECOVERY,
+      '2026-02-18': POOL_RECOVERY,
       '2026-02-19': {
         name: "Modified Thursday: Stationary Bike + Form Throwing",
         type: "Mixed",
