@@ -62,16 +62,16 @@ Collected from sessions through Mar 15, 2026. Includes holistic review from 7 ag
 - [x] **Red flag banner system** -- auto-triggered alerts at top of dashboard: readiness <70 for 2+ days, protein under target 3+ days, same body area discomfort 2+ times in 7 days, no prehab in 5+ days. (Coach)
 - [ ] **Weight progression tooltips with reps/sets/feel** -- current tooltip only shows weight. Add set count, reps at that weight, and feel rating. PR marker (star) on highest data point. (Athlete, Data Viz)
 - [x] **Quick-preset date range buttons** -- "7 days", "4 weeks", "8 weeks", "All time" buttons next to date pickers. Reduces friction especially on mobile. (Athlete, Data Viz)
-- [ ] **Protein adherence summary stat** -- "Hit target 5/7 days (71%)" above the chart. Rolling 7-day average line overlaid on daily bars for chronic underfueling visibility. (Coach, Athlete, Data Viz)
-- [ ] **Training load vs readiness overlay** -- overlay daily training load (minutes or sets) on the readiness chart so you can see which sessions tank recovery. (Coach, Athlete)
+- [x] **Protein adherence summary stat** -- "Hit target 5/7 days (71%)" above the chart. Rolling 7-day average line overlaid on daily bars for chronic underfueling visibility. (Coach, Athlete, Data Viz)
+- [x] **Training load vs readiness overlay** -- tried it, made readiness chart too busy. Removed per coach/athlete/data viz review. Training load visible in volume chart instead. (Coach, Athlete)
 - [ ] **Discomfort frequency summary** -- "Groin: 4 mentions in 28 days" counts above the timeline. Flag recurring body areas. (Coach, Athlete, Data Viz)
 - [ ] **Firestore query caching** -- cache full dataset on first load, filter client-side on date range change. Only re-fetch if range extends beyond cache. Prevents quota burn and slowness as data grows. (Data Viz)
 
 ### Medium Priority
 
 - [ ] **Feel trends exercise selector** -- replace auto-top-5 with multi-select or clickable legend. Coach wants to watch specific exercises (hip-adjacent, shoulder). (Athlete, Coach)
-- [ ] **Readiness zone visibility** -- bump zone shading opacity from 6-8% to 12-15%, or add dashed reference lines at 65 and 75 with labels. (Athlete, Data Viz)
-- [ ] **Workout day tooltip on readiness chart** -- click/hover workout marker to see workout name and duration. (Data Viz)
+- [x] **Readiness zone visibility** -- tuned to 4-6% opacity after testing higher values (12-15% competed with data). Subtle hints work better on dark theme. (Data Viz)
+- ~~**Workout day tooltip on readiness chart**~~ -- removed workout markers from readiness chart per review. Training data lives in volume chart. (Data Viz)
 - [ ] **Volume summary stat** -- total sets or hours above the volume chart without hovering. (Data Viz)
 - [ ] **Week-over-week ghost bars on volume chart** -- thin outline showing previous period's volume behind current bars. (Data Viz)
 - [ ] **Session RPE tracking** -- post-session RPE (1-10) at workout level, separate from per-set feel. RPE x duration = session load score. (Coach)
