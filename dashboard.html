@@ -1,0 +1,1826 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0f0a1a">
+  <title>Training Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Firebase SDK -->
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns"></script>
+
+  <script>
+    // Firebase configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyAyK68HpCXZEojCG3rM6T51mynd6DfnaVY",
+      authDomain: "training-tracker-74124.firebaseapp.com",
+      databaseURL: "https://training-tracker-74124-default-rtdb.firebaseio.com",
+      projectId: "training-tracker-74124",
+      storageBucket: "training-tracker-74124.firebasestorage.app",
+      messagingSenderId: "1018516149801",
+      appId: "1:1018516149801:web:8afcdc10aaa272e4bf6e38"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+    const auth = firebase.auth();
+
+    const ALLOWED_EMAIL = 'randolph.sophia@gmail.com';
+
+    // Process redirect result on page load
+    auth.getRedirectResult().then((result) => {
+      if (result && result.user) {
+        console.log('Redirect sign-in completed for:', result.user.email);
+      }
+    }).catch((error) => {
+      console.error('Redirect sign-in error:', error.code, error.message);
+      const errEl = document.getElementById('authError');
+      if (errEl) errEl.textContent = 'Sign-in error: ' + error.message;
+    });
+
+    const authPromise = new Promise((resolve) => {
+      auth.onAuthStateChanged((user) => {
+        if (user && user.email === ALLOWED_EMAIL) {
+          console.log('Auth ready:', user.uid);
+          document.getElementById('authGate')?.remove();
+          document.getElementById('app').style.display = 'block';
+          resolve(true);
+        } else if (user && user.email !== ALLOWED_EMAIL) {
+          console.warn('Wrong account:', user.email);
+          const errEl = document.getElementById('authError');
+          if (errEl) errEl.textContent = 'Wrong account: ' + user.email + '. Use randolph.sophia@gmail.com';
+          auth.signOut();
+        } else {
+          showAuthGate();
+          resolve(false);
+        }
+      });
+    });
+
+    function showAuthGate() {
+      if (document.getElementById('authGate')) return;
+      function appendGate() {
+        if (document.getElementById('authGate')) return;
+        const gate = document.createElement('div');
+        gate.id = 'authGate';
+        gate.style.cssText = 'position:fixed;inset:0;z-index:10000;background:#0f0a1a;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;';
+        gate.innerHTML = `
+          <div style="font-size:48px;">📊</div>
+          <h1 style="color:#e2d9f3;font-family:Figtree,sans-serif;font-size:24px;margin:0;">Training Dashboard</h1>
+          <button onclick="googleSignIn()" style="background:#251a38;color:#e2d9f3;border:1px solid #a855f7;padding:12px 24px;border-radius:8px;font-size:16px;font-family:Figtree,sans-serif;cursor:pointer;display:flex;align-items:center;gap:8px;">
+            <svg width="18" height="18" viewBox="0 0 48 48"><path fill="#4285F4" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#34A853" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#EA4335" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
+            Sign in with Google
+          </button>
+          <div id="authError" style="color:#f87171;font-family:Figtree,sans-serif;font-size:14px;max-width:300px;text-align:center;"></div>
+        `;
+        document.body.appendChild(gate);
+      }
+      if (document.body) appendGate();
+      else document.addEventListener('DOMContentLoaded', appendGate);
+    }
+
+    function googleSignIn() {
+      const provider = new firebase.auth.GoogleAuthProvider();
+      provider.setCustomParameters({ prompt: 'select_account' });
+      auth.signInWithPopup(provider).catch((error) => {
+        if (error.code === 'auth/popup-blocked' || error.code === 'auth/popup-closed-by-browser') {
+          auth.signInWithRedirect(provider);
+        } else {
+          const errEl = document.getElementById('authError');
+          if (errEl) errEl.textContent = 'Sign-in error: ' + error.message;
+        }
+      });
+    }
+  </script>
+
+  <style>
+    :root {
+      --bg-primary: #0f0a1a;
+      --bg-secondary: #1a1228;
+      --bg-card: #251a38;
+      --bg-elevated: #2f2245;
+      --accent: #a855f7;
+      --accent-light: #c084fc;
+      --accent-glow: rgba(168, 85, 247, 0.3);
+      --emerald: #10b981;
+      --emerald-glow: rgba(16, 185, 129, 0.25);
+      --gold: #f59e0b;
+      --gold-glow: rgba(245, 158, 11, 0.2);
+      --rose: #f43f5e;
+      --teal: #14b8a6;
+      --text-primary: #f5f3ff;
+      --text-secondary: #a8a3b8;
+      --text-muted: #8b82a0;
+      --success: #10b981;
+      --warning: #f59e0b;
+      --border: #3d2a5c;
+      --border-light: #4a3768;
+      --radius: 18px;
+      --radius-sm: 12px;
+      --shadow-soft: 0 4px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Figtree', sans-serif;
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      min-height: 100vh;
+    }
+
+    #app { display: none; }
+
+    .header {
+      background: var(--bg-secondary);
+      border-bottom: 1px solid var(--border);
+      padding: 16px 24px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .header-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .header h1 {
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+    .back-link {
+      color: var(--accent-light);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 500;
+      opacity: 0.8;
+      transition: opacity 0.2s;
+    }
+    .back-link:hover { opacity: 1; }
+
+    .date-range {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .date-range label {
+      font-size: 13px;
+      color: var(--text-secondary);
+      font-weight: 500;
+    }
+    .date-range input[type="date"] {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      color: var(--text-primary);
+      padding: 6px 10px;
+      border-radius: var(--radius-sm);
+      font-family: 'Figtree', sans-serif;
+      font-size: 13px;
+      outline: none;
+    }
+    .date-range input[type="date"]:focus {
+      border-color: var(--accent);
+    }
+    /* Style the date input calendar icon */
+    .date-range input[type="date"]::-webkit-calendar-picker-indicator {
+      filter: invert(0.7);
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+    @media (max-width: 768px) {
+      .grid { grid-template-columns: 1fr; }
+      .header-inner { flex-direction: column; align-items: flex-start; }
+    }
+
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px;
+      box-shadow: var(--shadow-soft);
+    }
+    .card-full { grid-column: 1 / -1; }
+
+    .card h2 {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: 16px;
+    }
+
+    .card-controls {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+    }
+    .card-controls h2 { margin-bottom: 0; }
+
+    .toggle-group {
+      display: flex;
+      gap: 0;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+    }
+    .toggle-btn {
+      background: var(--bg-elevated);
+      border: none;
+      color: var(--text-muted);
+      padding: 5px 12px;
+      font-family: 'Figtree', sans-serif;
+      font-size: 12px;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    .toggle-btn.active {
+      background: var(--accent);
+      color: var(--text-primary);
+    }
+    .toggle-btn:not(:last-child) {
+      border-right: 1px solid var(--border);
+    }
+
+    .card-controls select {
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      color: var(--text-primary);
+      padding: 6px 10px;
+      border-radius: var(--radius-sm);
+      font-family: 'Figtree', sans-serif;
+      font-size: 13px;
+      outline: none;
+      max-width: 200px;
+    }
+
+    .loading-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 200;
+      background: rgba(15, 10, 26, 0.85);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      color: var(--text-secondary);
+    }
+    .loading-overlay.hidden { display: none; }
+
+    .chart-container {
+      position: relative;
+      width: 100%;
+      min-height: 280px;
+    }
+
+    /* Supplement heatmaps */
+    .supplement-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+    @media (max-width: 600px) {
+      .supplement-grid { grid-template-columns: 1fr; }
+    }
+    .supplement-item h3 {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text-secondary);
+      margin-bottom: 8px;
+      text-transform: capitalize;
+    }
+    .cal-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 3px;
+    }
+    .cal-header {
+      font-size: 10px;
+      color: var(--text-muted);
+      text-align: center;
+      padding: 2px;
+    }
+    .cal-cell {
+      aspect-ratio: 1;
+      border-radius: 4px;
+      background: var(--bg-elevated);
+      max-width: 28px;
+    }
+    .cal-cell.taken { background: var(--emerald); }
+    .cal-cell.missed { background: #3d2a5c; }
+    .cal-cell.empty { background: transparent; }
+    .streak-count {
+      font-size: 13px;
+      color: var(--emerald);
+      font-weight: 600;
+      margin-top: 6px;
+    }
+
+    /* Discomfort timeline */
+    .timeline {
+      position: relative;
+      padding-left: 20px;
+    }
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 6px;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: var(--border);
+    }
+    .timeline-item {
+      position: relative;
+      padding: 0 0 20px 16px;
+    }
+    .timeline-item:last-child { padding-bottom: 0; }
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: -18px;
+      top: 6px;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--accent);
+      border: 2px solid var(--bg-card);
+    }
+    .timeline-date {
+      font-size: 12px;
+      color: var(--text-muted);
+      font-weight: 500;
+      margin-bottom: 4px;
+    }
+    .timeline-tag {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 600;
+      margin-right: 6px;
+      margin-bottom: 4px;
+    }
+    .timeline-desc {
+      font-size: 13px;
+      color: var(--text-secondary);
+      line-height: 1.4;
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 40px 20px;
+      color: var(--text-muted);
+      font-size: 14px;
+    }
+
+    /* Summary strip */
+    .summary-strip {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+    .stat-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 14px 16px;
+      text-align: center;
+    }
+    .stat-value {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+    .stat-label {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-top: 2px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .stat-delta {
+      font-size: 11px;
+      font-weight: 600;
+      margin-top: 4px;
+    }
+    .stat-delta.up { color: var(--emerald); }
+    .stat-delta.down { color: var(--rose); }
+    .stat-delta.flat { color: var(--text-muted); }
+
+    /* Red flag banner */
+    .red-flags {
+      margin-bottom: 20px;
+    }
+    .red-flag {
+      background: rgba(244, 63, 94, 0.1);
+      border: 1px solid rgba(244, 63, 94, 0.3);
+      border-radius: var(--radius-sm);
+      padding: 10px 16px;
+      margin-bottom: 8px;
+      font-size: 13px;
+      color: #fca5a5;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .red-flag-icon { font-size: 16px; flex-shrink: 0; }
+
+    /* Date range presets */
+    .date-presets {
+      display: flex;
+      gap: 6px;
+      margin-right: 8px;
+    }
+    .preset-btn {
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      padding: 4px 10px;
+      border-radius: var(--radius-sm);
+      font-family: 'Figtree', sans-serif;
+      font-size: 11px;
+      cursor: pointer;
+      transition: var(--transition);
+      white-space: nowrap;
+    }
+    .preset-btn:hover, .preset-btn.active {
+      background: var(--accent);
+      color: var(--text-primary);
+      border-color: var(--accent);
+    }
+  </style>
+</head>
+<body>
+
+<div id="app">
+  <!-- Loading overlay -->
+  <div id="loadingOverlay" class="loading-overlay hidden">Loading data...</div>
+
+  <!-- Header -->
+  <div class="header">
+    <div class="header-inner">
+      <div class="header-left">
+        <h1>Training Dashboard</h1>
+        <a href="index.html" class="back-link">Back to Tracker</a>
+      </div>
+      <div class="date-range">
+        <div class="date-presets">
+          <button class="preset-btn" onclick="setPreset(7)">7d</button>
+          <button class="preset-btn active" onclick="setPreset(28)">4w</button>
+          <button class="preset-btn" onclick="setPreset(56)">8w</button>
+          <button class="preset-btn" onclick="setPreset(0)">All</button>
+        </div>
+        <label>From</label>
+        <input type="date" id="dateFrom">
+        <label>To</label>
+        <input type="date" id="dateTo">
+      </div>
+    </div>
+  </div>
+
+  <!-- Summary + Alerts -->
+  <div class="container">
+    <div id="redFlags" class="red-flags"></div>
+    <div id="summaryStrip" class="summary-strip"></div>
+  </div>
+
+  <!-- Charts grid -->
+  <div class="container">
+    <div class="grid">
+
+      <!-- 1. Training Volume -->
+      <div class="card">
+        <div class="card-controls">
+          <h2>Training Volume</h2>
+          <div class="toggle-group">
+            <button class="toggle-btn active" id="volSetsBtn" onclick="setVolumeMode('sets')">Sets</button>
+            <button class="toggle-btn" id="volMinsBtn" onclick="setVolumeMode('minutes')">Minutes</button>
+          </div>
+        </div>
+        <div class="chart-container">
+          <canvas id="volumeChart"></canvas>
+        </div>
+      </div>
+
+      <!-- 2. Weight Progression -->
+      <div class="card">
+        <div class="card-controls">
+          <h2>Weight Progression</h2>
+          <select id="exerciseSelect"><option>Loading...</option></select>
+        </div>
+        <div class="chart-container">
+          <canvas id="weightChart"></canvas>
+        </div>
+      </div>
+
+      <!-- 3. Readiness + HRV + Sleep -->
+      <div class="card card-full">
+        <h2>Readiness + HRV</h2>
+        <div class="chart-container">
+          <canvas id="readinessChart"></canvas>
+        </div>
+      </div>
+
+      <!-- 4. Protein Adherence -->
+      <div class="card">
+        <h2>Protein Adherence</h2>
+        <div class="chart-container">
+          <canvas id="proteinChart"></canvas>
+        </div>
+      </div>
+
+      <!-- 5. Supplement Streak -->
+      <div class="card">
+        <h2>Supplement Streak</h2>
+        <div id="supplementContainer" class="supplement-grid"></div>
+      </div>
+
+      <!-- 6. Feel Trends -->
+      <div class="card">
+        <h2>Feel Trends</h2>
+        <div class="chart-container">
+          <canvas id="feelChart"></canvas>
+        </div>
+      </div>
+
+      <!-- 7. Discomfort Timeline -->
+      <div class="card">
+        <h2>Discomfort Timeline</h2>
+        <div id="discomfortTimeline"></div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<script>
+// ============================================================
+// DATA & STATE
+// ============================================================
+let rawWorkouts = [];
+let rawFuelLogs = [];
+let rawOura = [];
+
+// Chart instances (for destroy/redraw)
+let charts = {};
+
+// ============================================================
+// DATE RANGE SETUP
+// ============================================================
+function initDateRange() {
+  const today = new Date();
+  const from = new Date(today);
+  from.setDate(from.getDate() - 28);
+
+  const dateFrom = document.getElementById('dateFrom');
+  const dateTo = document.getElementById('dateTo');
+  dateFrom.value = formatDate(from);
+  dateTo.value = formatDate(today);
+
+  dateFrom.addEventListener('change', onDateRangeChange);
+  dateTo.addEventListener('change', onDateRangeChange);
+}
+
+function formatDate(d) {
+  return d.getFullYear() + '-' +
+    String(d.getMonth() + 1).padStart(2, '0') + '-' +
+    String(d.getDate()).padStart(2, '0');
+}
+
+function getDateRange() {
+  return {
+    from: document.getElementById('dateFrom').value,
+    to: document.getElementById('dateTo').value
+  };
+}
+
+function onDateRangeChange() {
+  // Clear active preset since user manually changed dates
+  document.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('active'));
+  const { from, to } = getDateRange();
+  if (from && to && from <= to) {
+    fetchAllData();
+  }
+}
+
+function setPreset(days) {
+  const to = new Date();
+  const toStr = formatDate(to);
+  let fromStr;
+  if (days === 0) {
+    fromStr = '2026-01-01'; // "All time" -- earliest reasonable date
+  } else {
+    const from = new Date();
+    from.setDate(from.getDate() - days);
+    fromStr = formatDate(from);
+  }
+  document.getElementById('dateFrom').value = fromStr;
+  document.getElementById('dateTo').value = toStr;
+  document.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('active'));
+  event.target.classList.add('active');
+  fetchAllData();
+}
+
+// ============================================================
+// EXERCISE NAME NORMALIZATION
+// ============================================================
+/*
+ * normalizeExerciseName() maps common exercise name variants to
+ * canonical names. This prevents the same exercise from appearing
+ * as multiple entries in dropdowns and charts due to inconsistent
+ * naming (e.g., "DB Row" vs "Single Arm DB Row").
+ *
+ * HOW TO ADD NEW MAPPINGS:
+ * When a new exercise variant is discovered in the data, add it
+ * to the EXERCISE_ALIASES map below. The key is the lowercase
+ * variant, and the value is the canonical name (properly cased).
+ *
+ * The function first checks for an exact match (case-insensitive),
+ * then falls back to the original name with consistent casing.
+ */
+const EXERCISE_ALIASES = {
+  'db row': 'DB Row',
+  'single arm db row': 'DB Row',
+  'sa db row': 'DB Row',
+  'dumbbell row': 'DB Row',
+
+  'bench press': 'DB Bench Press',
+  'db bench': 'DB Bench Press',
+  'dumbbell bench press': 'DB Bench Press',
+
+  'shoulder press': 'DB Shoulder Press',
+  'db shoulder press': 'DB Shoulder Press',
+  'db press': 'DB Shoulder Press',
+
+  'cable row': 'Cable Row',
+  'seated cable row': 'Cable Row',
+  'sa cable row': 'Cable Row',
+
+  'rdl': 'RDL',
+  'romanian deadlift': 'RDL',
+  'db rdl': 'RDL',
+
+  'goblet squat': 'Goblet Squat',
+  'db goblet squat': 'Goblet Squat',
+
+  'lat pulldown': 'Lat Pulldown',
+  'lat pull down': 'Lat Pulldown',
+  'lat pull-down': 'Lat Pulldown',
+  'lat pulldown machine': 'Lat Pulldown',
+  'lateral pulldown': 'Lat Pulldown',
+
+  'rear delt fly': 'Rear Delt Fly (Machine)',
+  'rear delt fly machine': 'Rear Delt Fly (Machine)',
+
+  'rear fly': 'Rear Fly (DB)',
+  'reverse fly': 'Rear Fly (DB)',
+  'db rear fly': 'Rear Fly (DB)',
+
+  'db rdls': 'RDL',
+  'db rdl': 'RDL',
+
+  'cable tricep extension': 'Tricep Extension',
+  'tricep extension': 'Tricep Extension',
+  'tricep pushdown': 'Tricep Pulldown',
+  'tricep pull down': 'Tricep Pulldown',
+
+  'single arm db row': 'DB Row',
+
+  'bicep curls': 'Bicep Curls',
+  'bicep curl': 'Bicep Curls',
+  'db bicep curls': 'Bicep Curls',
+
+  'db reverse lunges': 'Reverse Lunges',
+  'reverse lunges': 'Reverse Lunges',
+
+  'walking lunges': 'Walking Lunges',
+  'db walking lunges': 'Walking Lunges',
+
+  'step back lunge with press': 'Lunge with Press',
+  'step back lunge with oh press': 'Lunge with Press',
+  'back step lunge with overhead press': 'Lunge with Press',
+  'step back lunge with overhead press': 'Lunge with Press',
+
+  'med ball slams': 'Med Ball Slams',
+  'medicine ball slams': 'Med Ball Slams',
+  'med ball slam + rotational wall throw': 'Med Ball Slams',
+
+  'oh tricep extension (incline)': 'OH Tricep Extension',
+  'overhead tricep extension': 'OH Tricep Extension',
+
+  'seated cable row': 'Cable Row',
+
+  'kb sumo squat': 'KB Sumo Squat',
+  'kettlebell sumo squat': 'KB Sumo Squat',
+
+  'chest press machine': 'Chest Press',
+  'chest press': 'Chest Press',
+
+  'hamstring curl machine': 'Hamstring Curl',
+  'hamstring curl': 'Hamstring Curl',
+  'leg curl machine': 'Hamstring Curl',
+
+  'leg press machine': 'Leg Press',
+  'leg press': 'Leg Press',
+};
+
+function normalizeExerciseName(name) {
+  if (!name) return '';
+  const lower = name.trim().toLowerCase();
+  return EXERCISE_ALIASES[lower] || name.trim();
+}
+
+// ============================================================
+// MUSCLE GROUP CLASSIFICATION
+// ============================================================
+const MUSCLE_GROUPS = {
+  Push:   { keywords: ['press', 'push-up', 'push up', 'pushup', 'fly', 'dip', 'chest'], color: '#a855f7' },
+  Pull:   { keywords: ['row', 'pull', 'lat', 'curl', 'bicep'], color: '#14b8a6' },
+  Legs:   { keywords: ['squat', 'lunge', 'deadlift', 'leg', 'rdl', 'step-up', 'step up', 'calf', 'hip thrust'], color: '#f59e0b' },
+  Core:   { keywords: ['plank', 'pallof', 'ab', 'crunch', 'carry', 'dead bug', 'bird dog'], color: '#10b981' },
+  Prehab: { keywords: ['copenhagen', 'tibialis', 'shoulder', 'band', 'face pull', "t's", "y's", "w's"], color: '#c084fc' },
+  Sport:  { keywords: ['throw', 'handball', 'sprint', 'agility'], color: '#f43f5e' },
+};
+
+function classifyExercise(name) {
+  const lower = name.toLowerCase();
+  for (const [group, cfg] of Object.entries(MUSCLE_GROUPS)) {
+    if (cfg.keywords.some(kw => lower.includes(kw))) return group;
+  }
+  return 'Push'; // default fallback
+}
+
+// ============================================================
+// FEEL MAPPING
+// ============================================================
+const FEEL_MAP = {
+  'very easy': 1,
+  'easy': 2,
+  'moderate': 3,
+  'hard': 4,
+  'very hard': 5,
+};
+
+// ============================================================
+// FIRESTORE DATA FETCHING
+// ============================================================
+async function fetchAllData() {
+  const overlay = document.getElementById('loadingOverlay');
+  overlay.classList.remove('hidden');
+
+  const { from, to } = getDateRange();
+
+  // Fetch each collection independently so one failure doesn't block the rest
+  // (e.g., oura collection won't exist until Firestore rules are deployed)
+  const results = await Promise.allSettled([
+    db.collection('workouts')
+      .where('date', '>=', from)
+      .where('date', '<=', to)
+      .orderBy('date')
+      .get(),
+    db.collection('fuelLogs')
+      .where('date', '>=', from)
+      .where('date', '<=', to)
+      .orderBy('date')
+      .get(),
+    db.collection('oura')
+      .where('date', '>=', from)
+      .where('date', '<=', to)
+      .orderBy('date')
+      .get(),
+  ]);
+
+  rawWorkouts = [];
+  if (results[0].status === 'fulfilled') {
+    results[0].value.forEach(doc => rawWorkouts.push(doc.data()));
+  } else {
+    console.warn('Failed to fetch workouts:', results[0].reason);
+  }
+
+  rawFuelLogs = [];
+  if (results[1].status === 'fulfilled') {
+    results[1].value.forEach(doc => rawFuelLogs.push(doc.data()));
+  } else {
+    console.warn('Failed to fetch fuelLogs:', results[1].reason);
+  }
+
+  rawOura = [];
+  if (results[2].status === 'fulfilled') {
+    results[2].value.forEach(doc => rawOura.push(doc.data()));
+  } else {
+    console.warn('Failed to fetch oura:', results[2].reason);
+  }
+
+  renderAll();
+  overlay.classList.add('hidden');
+}
+
+// ============================================================
+// RENDER ALL CHARTS
+// ============================================================
+function renderAll() {
+  renderSummaryStrip();
+  renderRedFlags();
+  renderVolumeChart();
+  renderWeightChart();
+  renderReadinessChart();
+  renderProteinChart();
+  renderSupplementStreak();
+  renderFeelChart();
+  renderDiscomfortTimeline();
+}
+
+// ============================================================
+// SUMMARY STRIP
+// ============================================================
+function renderSummaryStrip() {
+  const container = document.getElementById('summaryStrip');
+  const { from, to } = getDateRange();
+
+  // Current period data
+  const periodDays = Math.round((new Date(to + 'T12:00:00') - new Date(from + 'T12:00:00')) / 86400000);
+  const midpoint = new Date(from + 'T12:00:00');
+  midpoint.setDate(midpoint.getDate() - periodDays);
+  const prevFrom = formatDate(midpoint);
+
+  // Current period stats -- count strength, sport, cycling, and recovery >15min
+  const sessions = rawWorkouts.filter(w => {
+    const cat = classifyWorkoutType(w);
+    if (cat === 'Strength' || cat === 'Sport' || cat === 'Conditioning') return true;
+    if (cat === 'Recovery' && (w.duration || 0) > 15) return true;
+    return false;
+  }).length;
+  const totalSets = rawWorkouts.reduce((sum, w) => sum + (w.exercises || []).reduce((s, ex) => s + (ex.sets ? ex.sets.length : 0), 0), 0);
+  const totalMins = rawWorkouts.reduce((sum, w) => sum + (w.duration || 0), 0);
+  const totalHrs = (totalMins / 60).toFixed(1);
+
+  // Readiness avg
+  const readinessVals = rawOura.map(o => o.readiness).filter(v => v != null);
+  const avgReadiness = readinessVals.length ? Math.round(readinessVals.reduce((a, b) => a + b, 0) / readinessVals.length) : '--';
+
+  // Protein adherence (exclude today -- day isn't over yet)
+  const today = formatDate(new Date());
+  const fuelByDate = {};
+  rawFuelLogs.forEach(f => fuelByDate[f.date] = f);
+  const completedFuelLogs = rawFuelLogs.filter(f => f.date !== today);
+  const proteinDays = completedFuelLogs.filter(f => {
+    const protein = f.totalProtein || f.total || 0;
+    const target = f.target || 130;
+    return protein >= target;
+  }).length;
+  const totalFuelDays = completedFuelLogs.length;
+
+  // Previous period comparison (rough -- check if we have enough data)
+  // We'll compute prev stats from rawWorkouts/rawOura that fall before the current range
+  // Since we only have current range data from Firestore, show deltas as "--" for now
+  // unless we can infer from the data (e.g., week splits)
+
+  // Weekly comparison: split current data into halves
+  const halfDate = formatDate(new Date(new Date(from + 'T12:00:00').getTime() + (new Date(to + 'T12:00:00') - new Date(from + 'T12:00:00')) / 2));
+  const firstHalf = rawWorkouts.filter(w => w.date < halfDate);
+  const secondHalf = rawWorkouts.filter(w => w.date >= halfDate);
+  const firstSets = firstHalf.reduce((sum, w) => sum + (w.exercises || []).reduce((s, ex) => s + (ex.sets ? ex.sets.length : 0), 0), 0);
+  const secondSets = secondHalf.reduce((sum, w) => sum + (w.exercises || []).reduce((s, ex) => s + (ex.sets ? ex.sets.length : 0), 0), 0);
+  const setsDelta = secondSets - firstSets;
+
+  const firstMins = firstHalf.reduce((sum, w) => sum + (w.duration || 0), 0);
+  const secondMins = secondHalf.reduce((sum, w) => sum + (w.duration || 0), 0);
+  const minsDelta = secondMins - firstMins;
+
+  function deltaHtml(val, unit, invert) {
+    if (val === 0) return '<div class="stat-delta flat">--</div>';
+    const cls = (invert ? val < 0 : val > 0) ? 'up' : 'down';
+    const sign = val > 0 ? '+' : '';
+    return `<div class="stat-delta ${cls}">${sign}${val}${unit} vs prev</div>`;
+  }
+
+  container.innerHTML = `
+    <div class="stat-card">
+      <div class="stat-value">${sessions}</div>
+      <div class="stat-label">Sessions</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value">${totalHrs}h</div>
+      <div class="stat-label">Total Time</div>
+      ${deltaHtml(Math.round((secondMins - firstMins) / 60 * 10) / 10, 'h')}
+    </div>
+    <div class="stat-card">
+      <div class="stat-value">${totalSets}</div>
+      <div class="stat-label">Total Sets</div>
+      ${deltaHtml(setsDelta, '')}
+    </div>
+    <div class="stat-card">
+      <div class="stat-value">${avgReadiness}</div>
+      <div class="stat-label">Avg Readiness</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-value">${proteinDays}/${totalFuelDays}</div>
+      <div class="stat-label">Protein on Target</div>
+    </div>
+  `;
+}
+
+// ============================================================
+// RED FLAGS
+// ============================================================
+function renderRedFlags() {
+  const container = document.getElementById('redFlags');
+  const flags = [];
+
+  // 1. Readiness below 70 for 2+ consecutive days
+  const ouraByDate = {};
+  rawOura.forEach(o => ouraByDate[o.date] = o);
+  const ouraDates = rawOura.map(o => o.date).sort();
+  let lowReadinessStreak = 0;
+  let maxLowStreak = 0;
+  for (const d of ouraDates) {
+    if (ouraByDate[d].readiness != null && ouraByDate[d].readiness < 70) {
+      lowReadinessStreak++;
+      maxLowStreak = Math.max(maxLowStreak, lowReadinessStreak);
+    } else {
+      lowReadinessStreak = 0;
+    }
+  }
+  if (lowReadinessStreak >= 2) {
+    flags.push(`Readiness below 70 for ${lowReadinessStreak} consecutive days. Consider a rest day.`);
+  }
+
+  // 2. Protein under target for 3+ consecutive days
+  const fuelDates = rawFuelLogs.map(f => f.date).sort();
+  let lowProteinStreak = 0;
+  for (const d of fuelDates) {
+    const f = rawFuelLogs.find(fl => fl.date === d);
+    const protein = f.totalProtein || f.total || 0;
+    const target = f.target || 130;
+    if (protein < target * 0.9) {
+      lowProteinStreak++;
+    } else {
+      lowProteinStreak = 0;
+    }
+  }
+  if (lowProteinStreak >= 3) {
+    flags.push(`Protein more than 10% below target for ${lowProteinStreak} consecutive days. Prioritize fuel.`);
+  }
+
+  // 3. Same body area discomfort 2+ times in last 7 days
+  const recentCutoff = formatDate(new Date(new Date().getTime() - 7 * 86400000));
+  const areaCount = {};
+  rawWorkouts.filter(w => w.date >= recentCutoff && w.discomfort && w.discomfort.trim() && w.discomfort.trim().toLowerCase() !== 'no' && w.discomfort.trim().toLowerCase() !== 'no.' && w.discomfort.trim().toLowerCase() !== 'none').forEach(w => {
+    const text = w.discomfort.toLowerCase();
+    const areas = ['groin', 'hip', 'shoulder', 'shin', 'knee', 'back', 'psoas', 'ankle', 'calf', 'wrist'];
+    areas.forEach(area => {
+      if (text.includes(area)) {
+        areaCount[area] = (areaCount[area] || 0) + 1;
+      }
+    });
+  });
+  for (const [area, count] of Object.entries(areaCount)) {
+    if (count >= 2) {
+      flags.push(`${area.charAt(0).toUpperCase() + area.slice(1)} discomfort logged ${count} times in the last 7 days. Monitor closely.`);
+    }
+  }
+
+  // 4. No sleep data for 3+ days (stale Oura export)
+  const threeDaysAgo = formatDate(new Date(new Date().getTime() - 3 * 86400000));
+  const recentOura = rawOura.filter(o => o.date >= threeDaysAgo);
+  if (recentOura.length === 0 && rawOura.length > 0) {
+    flags.push('No Oura data in the last 3 days. Export a fresh CSV and run /weekly-review.');
+  }
+
+  if (flags.length === 0) {
+    container.innerHTML = '';
+    return;
+  }
+
+  container.innerHTML = flags.map(f =>
+    `<div class="red-flag"><span class="red-flag-icon">!</span>${f}</div>`
+  ).join('');
+}
+
+// Helper: destroy a chart before re-creating
+function resetChart(id) {
+  if (charts[id]) {
+    charts[id].destroy();
+    delete charts[id];
+  }
+}
+
+// ============================================================
+// 1. TRAINING VOLUME (stacked bar, weekly -- toggles between sets and minutes)
+// ============================================================
+let volumeMode = 'sets'; // 'sets' or 'minutes'
+
+function setVolumeMode(mode) {
+  volumeMode = mode;
+  document.getElementById('volSetsBtn').classList.toggle('active', mode === 'sets');
+  document.getElementById('volMinsBtn').classList.toggle('active', mode === 'minutes');
+  renderVolumeChart();
+}
+
+// Workout type to category mapping for minutes view
+const TYPE_CATEGORIES = {
+  Strength:  { keywords: ['upper', 'lower', 'full body', 'strength', 'pt'], color: '#a855f7' },
+  Sport:     { keywords: ['handball', 'soccer', 'sport', 'scrimmage', 'practice', 'tournament', 'game'], color: '#f43f5e' },
+  Conditioning: { keywords: ['conditioning', 'cardio', 'bike', 'beer bike', 'run', 'sprint', 'beep'], color: '#f59e0b' },
+  Recovery:  { keywords: ['recovery', 'pool', 'mobility', 'stretch', 'yoga', 'rest'], color: '#14b8a6' },
+  Prehab:    { keywords: ['prehab', 'pt session', 'physical therapy'], color: '#c084fc' },
+};
+
+function classifyWorkoutType(workout) {
+  const name = (workout.workout || workout.type || '').toLowerCase();
+  for (const [cat, def] of Object.entries(TYPE_CATEGORIES)) {
+    if (def.keywords.some(kw => name.includes(kw))) return cat;
+  }
+  return 'Strength'; // default
+}
+
+function renderVolumeChart() {
+  resetChart('volume');
+  const ctx = document.getElementById('volumeChart').getContext('2d');
+
+  // Use daily buckets for short ranges (<=14 days), weekly for longer
+  const { from, to } = getDateRange();
+  const rangeDays = Math.round((new Date(to + 'T12:00:00') - new Date(from + 'T12:00:00')) / 86400000);
+  const useDaily = rangeDays <= 14;
+
+  function getBucketLabel(d) {
+    if (useDaily) {
+      const m = String(d.getMonth() + 1).padStart(2, '0');
+      const dd = String(d.getDate()).padStart(2, '0');
+      const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+      return m + '/' + dd + ' ' + days[d.getDay()];
+    }
+    return getWeekLabel(d);
+  }
+
+  // Pre-populate all buckets so empty days/weeks show as gaps
+  function getAllBuckets() {
+    if (!useDaily) return null; // weekly buckets populated from data
+    const buckets = [];
+    const start = new Date(from + 'T12:00:00');
+    const end = new Date(to + 'T12:00:00');
+    for (let d = new Date(start); d <= end; d.setDate(d.getDate() + 1)) {
+      buckets.push(getBucketLabel(new Date(d)));
+    }
+    return buckets;
+  }
+
+  if (volumeMode === 'minutes') {
+    // Minutes view: stacked by workout type category
+    const bucketMap = {};
+    const categories = Object.keys(TYPE_CATEGORIES);
+    const allBuckets = getAllBuckets();
+    if (allBuckets) allBuckets.forEach(b => { bucketMap[b] = {}; categories.forEach(c => bucketMap[b][c] = 0); });
+
+    rawWorkouts.forEach(w => {
+      const d = new Date(w.date + 'T12:00:00');
+      const label = getBucketLabel(d);
+      if (!bucketMap[label]) {
+        bucketMap[label] = {};
+        categories.forEach(c => bucketMap[label][c] = 0);
+      }
+      const cat = classifyWorkoutType(w);
+      const mins = w.duration || 0;
+      bucketMap[label][cat] += mins;
+    });
+
+    const labels = Object.keys(bucketMap).sort();
+    const datasets = categories.map(cat => ({
+      label: cat,
+      data: labels.map(l => bucketMap[l][cat] || 0),
+      backgroundColor: TYPE_CATEGORIES[cat].color,
+      borderRadius: 4,
+    }));
+
+    charts.volume = new Chart(ctx, {
+      type: 'bar',
+      data: { labels, datasets },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { labels: { color: '#a8a3b8', font: { family: 'Figtree', size: 11 } } },
+        },
+        scales: {
+          x: {
+            stacked: true,
+            ticks: { color: '#8b82a0', font: { family: 'Figtree', size: 11 } },
+            grid: { color: 'rgba(61,42,92,0.4)' },
+          },
+          y: {
+            stacked: true,
+            title: { display: true, text: 'Minutes', color: '#a8a3b8', font: { family: 'Figtree' } },
+            ticks: { color: '#8b82a0', font: { family: 'Figtree', size: 11 } },
+            grid: { color: 'rgba(61,42,92,0.4)' },
+          }
+        }
+      }
+    });
+  } else {
+    // Sets view: stacked by muscle group
+    const bucketMap = {};
+    const allBuckets = getAllBuckets();
+    if (allBuckets) allBuckets.forEach(b => { bucketMap[b] = { Push: 0, Pull: 0, Legs: 0, Core: 0, Prehab: 0, Sport: 0 }; });
+
+    rawWorkouts.forEach(w => {
+      if (!w.exercises) return;
+      const d = new Date(w.date + 'T12:00:00');
+      const label = getBucketLabel(d);
+      if (!bucketMap[label]) {
+        bucketMap[label] = { Push: 0, Pull: 0, Legs: 0, Core: 0, Prehab: 0, Sport: 0 };
+      }
+      w.exercises.forEach(ex => {
+        const group = classifyExercise(ex.name || '');
+        const setCount = ex.sets ? ex.sets.length : 0;
+        bucketMap[label][group] += setCount;
+      });
+    });
+
+    const labels = Object.keys(bucketMap).sort();
+    const groups = ['Push', 'Pull', 'Legs', 'Core'];
+
+    const datasets = groups.map(g => ({
+      label: g,
+      data: labels.map(l => bucketMap[l][g] || 0),
+      backgroundColor: g === 'Core' ? '#f43f5e' : MUSCLE_GROUPS[g].color,
+      borderRadius: 4,
+    }));
+
+    charts.volume = new Chart(ctx, {
+      type: 'bar',
+      data: { labels, datasets },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: { labels: { color: '#a8a3b8', font: { family: 'Figtree', size: 11 } } },
+        },
+        scales: {
+          x: {
+            stacked: true,
+            ticks: { color: '#8b82a0', font: { family: 'Figtree', size: 11 } },
+            grid: { color: 'rgba(61,42,92,0.4)' },
+          },
+          y: {
+            stacked: true,
+            title: { display: true, text: 'Sets', color: '#a8a3b8', font: { family: 'Figtree' } },
+            ticks: { color: '#8b82a0', font: { family: 'Figtree', size: 11 } },
+            grid: { color: 'rgba(61,42,92,0.4)' },
+          }
+        }
+      }
+    });
+  }
+}
+
+function getWeekLabel(d) {
+  // Get Monday of the week, return sortable key with display label
+  const day = d.getDay();
+  const diff = d.getDate() - day + (day === 0 ? -6 : 1);
+  const monday = new Date(d);
+  monday.setDate(diff);
+  // Zero-pad for correct string sorting: "02/09" sorts before "02/16"
+  const m = String(monday.getMonth() + 1).padStart(2, '0');
+  const dd = String(monday.getDate()).padStart(2, '0');
+  return m + '/' + dd;
+}
+
+// ============================================================
+// 2. WEIGHT PROGRESSION (line chart with exercise dropdown)
+// ============================================================
+function renderWeightChart() {
+  // Build exercise -> [{date, maxWeight}] map
+  const exerciseData = {};
+
+  rawWorkouts.forEach(w => {
+    if (!w.exercises) return;
+    w.exercises.forEach(ex => {
+      const name = normalizeExerciseName(ex.name);
+      if (!name || !ex.sets) return;
+
+      let maxWeight = 0;
+      ex.sets.forEach(s => {
+        const wt = parseFloat(s.weight);
+        if (!isNaN(wt) && wt > maxWeight) maxWeight = wt;
+      });
+
+      if (maxWeight > 0) {
+        if (!exerciseData[name]) exerciseData[name] = [];
+        exerciseData[name].push({ date: w.date, weight: maxWeight });
+      }
+    });
+  });
+
+  // Populate dropdown
+  const select = document.getElementById('exerciseSelect');
+  const currentVal = select.value;
+  select.innerHTML = '';
+
+  // Only show exercises with 2+ data points (need multiple sessions for progression)
+  const exerciseNames = Object.keys(exerciseData)
+    .filter(name => {
+      const dates = new Set(exerciseData[name].map(d => d.date));
+      return dates.size >= 2;
+    })
+    .sort();
+  if (exerciseNames.length === 0) {
+    select.innerHTML = '<option>No progression data yet</option>';
+    resetChart('weight');
+    return;
+  }
+
+  exerciseNames.forEach(name => {
+    const opt = document.createElement('option');
+    opt.value = name;
+    opt.textContent = name;
+    select.appendChild(opt);
+  });
+
+  // Restore previous selection if it still exists
+  if (exerciseNames.includes(currentVal)) {
+    select.value = currentVal;
+  }
+
+  select.onchange = () => drawWeightLine(exerciseData);
+  drawWeightLine(exerciseData);
+}
+
+function drawWeightLine(exerciseData) {
+  resetChart('weight');
+  const ctx = document.getElementById('weightChart').getContext('2d');
+  const selected = document.getElementById('exerciseSelect').value;
+  const points = exerciseData[selected] || [];
+
+  // Sort by date and deduplicate (keep max per date)
+  const byDate = {};
+  points.forEach(p => {
+    if (!byDate[p.date] || p.weight > byDate[p.date]) byDate[p.date] = p.weight;
+  });
+  const dates = Object.keys(byDate).sort();
+
+  charts.weight = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: dates,
+      datasets: [{
+        label: selected,
+        data: dates.map(d => byDate[d]),
+        borderColor: '#a855f7',
+        backgroundColor: 'rgba(168, 85, 247, 0.1)',
+        fill: true,
+        tension: 0.3,
+        pointBackgroundColor: '#a855f7',
+        pointRadius: 5,
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: { display: false },
+      },
+      scales: {
+        x: {
+          ticks: { color: '#8b82a0', font: { family: 'Figtree', size: 11 }, maxRotation: 45 },
+          grid: { color: 'rgba(61,42,92,0.4)' },
+        },
+        y: {
+          title: { display: true, text: 'Weight (lbs)', color: '#a8a3b8', font: { family: 'Figtree' } },
+          ticks: { color: '#8b82a0', font: { family: 'Figtree', size: 11 } },
+          grid: { color: 'rgba(61,42,92,0.4)' },
+        }
+      }
+    }
+  });
+}
+
+// ============================================================
+// 3. READINESS + HRV (dual-axis line chart with workout markers)
+// ============================================================
+function renderReadinessChart() {
+  resetChart('readiness');
+  const ctx = document.getElementById('readinessChart').getContext('2d');
+
+  if (rawOura.length === 0) {
+    charts.readiness = new Chart(ctx, {
+      type: 'line',
+      data: { labels: [], datasets: [] },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        plugins: { title: { display: true, text: 'No Oura data in range', color: '#8b82a0', font: { family: 'Figtree' } } }
+      }
+    });
+    return;
+  }
+
+  const dates = rawOura.map(o => o.date).sort();
+  const readinessMap = {};
+  const hrvMap = {};
+  const sleepMap = {};
+  rawOura.forEach(o => {
+    readinessMap[o.date] = o.readiness ?? o.readinessScore ?? null;
+    hrvMap[o.date] = o.hrv ?? o.averageHrv ?? null;
+    sleepMap[o.date] = o.sleepDuration ?? null;
+  });
+
+  // Workout day markers
+  const workoutDates = new Set(rawWorkouts.map(w => w.date));
+
+  // Zone shading via plugin
+  const zonePlugin = {
+    id: 'readinessZones',
+    beforeDraw(chart) {
+      const { ctx: c, chartArea: { left, right, top, bottom }, scales: { y } } = chart;
+      if (!y) return;
+
+      // Green zone (75-100)
+      const y75 = y.getPixelForValue(75);
+      const yTop = y.getPixelForValue(100);
+      c.fillStyle = 'rgba(16, 185, 129, 0.08)';
+      c.fillRect(left, Math.min(yTop, top), right - left, Math.max(0, y75 - Math.min(yTop, top)));
+
+      // Yellow zone (65-75)
+      const y65 = y.getPixelForValue(65);
+      c.fillStyle = 'rgba(245, 158, 11, 0.08)';
+      c.fillRect(left, y75, right - left, y65 - y75);
+
+      // Red zone (0-65)
+      c.fillStyle = 'rgba(244, 63, 94, 0.06)';
+      c.fillRect(left, y65, right - left, bottom - y65);
+    }
+  };
+
+  // Workout markers dataset (dots at bottom of chart)
+  const markerData = dates.map(d => workoutDates.has(d) ? 0 : null);
+
+  charts.readiness = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: dates,
+      datasets: [
+        {
+          label: 'Readiness',
+          data: dates.map(d => readinessMap[d]),
+          borderColor: '#a855f7',
+          backgroundColor: 'rgba(168, 85, 247, 0.1)',
+          yAxisID: 'y',
+          tension: 0.3,
+          pointRadius: 3,
+          pointBackgroundColor: '#a855f7',
+        },
+        {
+          label: 'HRV',
+          data: dates.map(d => hrvMap[d]),
+          borderColor: '#14b8a6',
+          backgroundColor: 'rgba(20, 184, 166, 0.1)',
+          yAxisID: 'y1',
+          tension: 0.3,
+          pointRadius: 3,
+          pointBackgroundColor: '#14b8a6',
+        },
+        {
+          label: 'Sleep (hrs)',
+          data: dates.map(d => sleepMap[d]),
+          type: 'bar',
+          yAxisID: 'y2',
+          backgroundColor: 'rgba(168, 85, 247, 0.12)',
+          borderRadius: 3,
+          order: 3, // render behind lines
+        },
+        {
+          label: 'Workout Day',
+          data: markerData,
+          type: 'scatter',
+          yAxisID: 'y',
+          pointRadius: 6,
+          pointBackgroundColor: '#f59e0b',
+          pointBorderColor: '#f59e0b',
+          showLine: false,
+        }
+      ]
+    },
+    plugins: [zonePlugin],
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      interaction: { mode: 'index', intersect: false },
+      plugins: {
+        legend: { labels: { color: '#a8a3b8', font: { family: 'Figtree', size: 11 } } },
+      },
+      scales: {
+        x: {
+          ticks: { color: '#8b82a0', font: { family: 'Figtree', size: 11 }, maxRotation: 45 },
+          grid: { color: 'rgba(61,42,92,0.3)' },
+        },
+        y: {
+          type: 'linear',
+          position: 'left',
+          min: 0,
+          max: 100,
+          title: { display: true, text: 'Readiness', color: '#a855f7', font: { family: 'Figtree' } },
+          ticks: { color: '#a855f7', font: { family: 'Figtree', size: 11 } },
+          grid: { color: 'rgba(61,42,92,0.3)' },
+        },
+        y1: {
+          type: 'linear',
+          position: 'right',
+          title: { display: true, text: 'HRV', color: '#14b8a6', font: { family: 'Figtree' } },
+          ticks: { color: '#14b8a6', font: { family: 'Figtree', size: 11 } },
+          grid: { drawOnChartArea: false },
+        },
+        y2: {
+          type: 'linear',
+          display: false, // hidden axis -- sleep bars scale to readiness axis visually
+          min: 0,
+          max: 12,
+        }
+      }
+    }
+  });
+}
+
+// ============================================================
+// 4. PROTEIN ADHERENCE (bar chart, daily)
+// ============================================================
+function renderProteinChart() {
+  resetChart('protein');
+  const ctx = document.getElementById('proteinChart').getContext('2d');
+
+  const dates = rawFuelLogs.map(f => f.date).sort();
+  const fuelByDate = {};
+  rawFuelLogs.forEach(f => fuelByDate[f.date] = f);
+
+  const totals = dates.map(d => {
+    const log = fuelByDate[d];
+    return log ? (log.totalProtein || log.total || 0) : 0;
+  });
+
+  // Use the target field from fuelLogs (130 rest day, 150 training day)
+  // Green = hit target, Gold = within 10% below, Red = more than 10% below
+  const targets = dates.map(d => fuelByDate[d]?.target || 130);
+  const colors = dates.map((d, i) => {
+    const protein = totals[i];
+    const target = targets[i];
+    if (protein >= target) return '#10b981';           // hit goal
+    if (protein >= target * 0.9) return '#f59e0b';     // within 10%
+    return '#f43f5e';                                   // under
+  });
+
+  // Reference line plugin
+  const refLinePlugin = {
+    id: 'proteinRefLines',
+    afterDraw(chart) {
+      const { ctx: c, chartArea: { left, right }, scales: { y } } = chart;
+      if (!y) return;
+
+      [130, 150].forEach(val => {
+        const yPos = y.getPixelForValue(val);
+        c.save();
+        c.strokeStyle = val === 150 ? 'rgba(16,185,129,0.5)' : 'rgba(245,158,11,0.5)';
+        c.lineWidth = 1;
+        c.setLineDash([6, 4]);
+        c.beginPath();
+        c.moveTo(left, yPos);
+        c.lineTo(right, yPos);
+        c.stroke();
+
+        c.fillStyle = val === 150 ? '#10b981' : '#f59e0b';
+        c.font = '10px Figtree';
+        c.fillText(val + 'g', right + 4, yPos + 3);
+        c.restore();
+      });
+    }
+  };
+
+  charts.protein = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: dates,
+      datasets: [{
+        label: 'Protein (g)',
+        data: totals,
+        backgroundColor: colors,
+        borderRadius: 4,
+      }]
+    },
+    plugins: [refLinePlugin],
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          callbacks: {
+            afterLabel(ctx) {
+              const target = targets[ctx.dataIndex];
+              const label = target >= 150 ? 'Training day' : 'Rest day';
+              return `Target: ${target}g (${label})`;
+            }
+          }
+        }
+      },
+      scales: {
+        x: {
+          ticks: { color: '#8b82a0', font: { family: 'Figtree', size: 11 }, maxRotation: 45 },
+          grid: { color: 'rgba(61,42,92,0.4)' },
+        },
+        y: {
+          title: { display: true, text: 'Protein (g)', color: '#a8a3b8', font: { family: 'Figtree' } },
+          ticks: { color: '#8b82a0', font: { family: 'Figtree', size: 11 } },
+          grid: { color: 'rgba(61,42,92,0.4)' },
+          suggestedMax: 180,
+        }
+      }
+    }
+  });
+}
+
+// ============================================================
+// 5. SUPPLEMENT STREAK (3 mini calendar heatmaps)
+// ============================================================
+function renderSupplementStreak() {
+  const container = document.getElementById('supplementContainer');
+  container.innerHTML = '';
+
+  const supplements = ['creatine', 'omega3', 'magnesium'];
+  const { from, to } = getDateRange();
+
+  supplements.forEach(supp => {
+    // Build date -> taken map
+    const takenMap = {};
+    rawFuelLogs.forEach(f => {
+      // Check both supplements.X and top-level X
+      const fromSupplements = f.supplements && f.supplements[supp];
+      const fromTopLevel = f[supp];
+      takenMap[f.date] = !!(fromSupplements || fromTopLevel);
+    });
+
+    // Generate all dates in range
+    const dates = [];
+    const start = new Date(from + 'T12:00:00');
+    const end = new Date(to + 'T12:00:00');
+    for (let d = new Date(start); d <= end; d.setDate(d.getDate() + 1)) {
+      dates.push(formatDate(d));
+    }
+
+    // Calculate current streak (counting backwards from most recent)
+    // Exclude today -- day isn't over yet, so missing log doesn't break streak
+    const today = formatDate(new Date());
+    let streak = 0;
+    for (let i = dates.length - 1; i >= 0; i--) {
+      if (dates[i] === today) {
+        if (takenMap[dates[i]]) streak++; // count today if already logged
+        continue; // but don't break streak if not logged yet
+      }
+      if (takenMap[dates[i]]) streak++;
+      else break;
+    }
+
+    // Build calendar grid
+    const item = document.createElement('div');
+    item.className = 'supplement-item';
+
+    const displayName = supp === 'omega3' ? 'Omega-3' : supp.charAt(0).toUpperCase() + supp.slice(1);
+    let html = `<h3>${displayName}</h3>`;
+    html += '<div class="cal-grid">';
+
+    // Day headers
+    const dayHeaders = ['M', 'T', 'W', 'T', 'F', 'S', 'S'];
+    dayHeaders.forEach(d => { html += `<div class="cal-header">${d}</div>`; });
+
+    // Pad start to align with day of week (Monday = 0)
+    const startDay = (start.getDay() + 6) % 7; // Convert Sun=0 to Mon=0
+    for (let i = 0; i < startDay; i++) {
+      html += '<div class="cal-cell empty"></div>';
+    }
+
+    dates.forEach(date => {
+      const hasFuelLog = rawFuelLogs.some(f => f.date === date);
+      let cls = 'cal-cell';
+      if (takenMap[date]) cls += ' taken';
+      else if (date === today) cls += ' empty'; // today isn't over yet
+      else if (hasFuelLog) cls += ' missed';
+      else cls += ' empty';
+      html += `<div class="${cls}" title="${date}"></div>`;
+    });
+
+    html += '</div>';
+    html += `<div class="streak-count">Current streak: ${streak} day${streak !== 1 ? 's' : ''}</div>`;
+
+    item.innerHTML = html;
+    container.appendChild(item);
+  });
+}
+
+// ============================================================
+// 6. FEEL TRENDS (line chart per exercise, top 5 most logged)
+// ============================================================
+function renderFeelChart() {
+  resetChart('feel');
+  const ctx = document.getElementById('feelChart').getContext('2d');
+
+  // Collect feel data by normalized exercise name
+  const exerciseFeel = {}; // { name: [{date, feelVal}] }
+
+  rawWorkouts.forEach(w => {
+    if (!w.exercises) return;
+    w.exercises.forEach(ex => {
+      const name = normalizeExerciseName(ex.name);
+      if (!name || !ex.sets) return;
+
+      ex.sets.forEach(s => {
+        if (!s.feel && s.feel !== 0) return;
+        // Feel is stored as number (1-5) in Firestore, or as string label
+        const val = typeof s.feel === 'number' ? s.feel : FEEL_MAP[(s.feel || '').toLowerCase()];
+        if (val === undefined || val === null) return;
+
+        if (!exerciseFeel[name]) exerciseFeel[name] = [];
+        exerciseFeel[name].push({ date: w.date, val });
+      });
+    });
+  });
+
+  // Top 5 by number of data points
+  const sorted = Object.entries(exerciseFeel)
+    .sort((a, b) => b[1].length - a[1].length)
+    .slice(0, 5);
+
+  if (sorted.length === 0) {
+    charts.feel = new Chart(ctx, {
+      type: 'line',
+      data: { labels: [], datasets: [] },
+      options: {
+        responsive: true, maintainAspectRatio: false,
+        plugins: { title: { display: true, text: 'No feel data in range', color: '#8b82a0', font: { family: 'Figtree' } } }
+      }
+    });
+    return;
+  }
+
+  // Collect all unique dates
+  const allDates = new Set();
+  sorted.forEach(([, pts]) => pts.forEach(p => allDates.add(p.date)));
+  const dates = [...allDates].sort();
+
+  const lineColors = ['#a855f7', '#14b8a6', '#f59e0b', '#f43f5e', '#c084fc'];
+
+  const datasets = sorted.map(([name, pts], i) => {
+    // Average feel per date for this exercise
+    const byDate = {};
+    pts.forEach(p => {
+      if (!byDate[p.date]) byDate[p.date] = [];
+      byDate[p.date].push(p.val);
+    });
+
+    return {
+      label: name,
+      data: dates.map(d => {
+        if (!byDate[d]) return null;
+        const avg = byDate[d].reduce((a, b) => a + b, 0) / byDate[d].length;
+        return Math.round(avg * 10) / 10;
+      }),
+      borderColor: lineColors[i],
+      backgroundColor: 'transparent',
+      tension: 0.3,
+      pointRadius: 3,
+      spanGaps: true,
+    };
+  });
+
+  charts.feel = new Chart(ctx, {
+    type: 'line',
+    data: { labels: dates, datasets },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: { labels: { color: '#a8a3b8', font: { family: 'Figtree', size: 11 } } },
+      },
+      scales: {
+        x: {
+          ticks: { color: '#8b82a0', font: { family: 'Figtree', size: 11 }, maxRotation: 45 },
+          grid: { color: 'rgba(61,42,92,0.4)' },
+        },
+        y: {
+          min: 1,
+          max: 5,
+          title: { display: true, text: 'Feel', color: '#a8a3b8', font: { family: 'Figtree' } },
+          ticks: {
+            color: '#8b82a0',
+            font: { family: 'Figtree', size: 11 },
+            stepSize: 1,
+            callback: v => ['', 'Very Easy', 'Easy', 'Moderate', 'Hard', 'Very Hard'][v] || v,
+          },
+          grid: { color: 'rgba(61,42,92,0.4)' },
+        }
+      }
+    }
+  });
+}
+
+// ============================================================
+// 7. DISCOMFORT TIMELINE (HTML, not a chart)
+// ============================================================
+function renderDiscomfortTimeline() {
+  const container = document.getElementById('discomfortTimeline');
+
+  // Collect workouts with discomfort notes
+  const items = rawWorkouts
+    .filter(w => w.discomfort && w.discomfort.trim())
+    .sort((a, b) => b.date.localeCompare(a.date)); // newest first
+
+  if (items.length === 0) {
+    container.innerHTML = '<div class="empty-state">No discomfort entries in this date range</div>';
+    return;
+  }
+
+  // Color-coded tags by body area keyword
+  const AREA_COLORS = {
+    groin: '#f43f5e',
+    shoulder: '#f59e0b',
+    hip: '#14b8a6',
+    knee: '#a855f7',
+    back: '#c084fc',
+    ankle: '#10b981',
+    wrist: '#f59e0b',
+    elbow: '#14b8a6',
+    neck: '#c084fc',
+  };
+
+  let html = '<div class="timeline">';
+
+  items.forEach(w => {
+    const text = w.discomfort.trim();
+    const lower = text.toLowerCase();
+
+    // Detect body area tags
+    const tags = [];
+    for (const [area, color] of Object.entries(AREA_COLORS)) {
+      if (lower.includes(area)) {
+        tags.push({ area: area.charAt(0).toUpperCase() + area.slice(1), color });
+      }
+    }
+    // If no recognized area, add a generic tag
+    if (tags.length === 0) {
+      tags.push({ area: 'General', color: '#8b82a0' });
+    }
+
+    html += `<div class="timeline-item">
+      <div class="timeline-date">${w.date}${w.workout ? ' - ' + w.workout : ''}</div>
+      <div>${tags.map(t => `<span class="timeline-tag" style="background:${t.color}33;color:${t.color}">${t.area}</span>`).join('')}</div>
+      <div class="timeline-desc">${escapeHtml(text)}</div>
+    </div>`;
+  });
+
+  html += '</div>';
+  container.innerHTML = html;
+}
+
+function escapeHtml(str) {
+  const div = document.createElement('div');
+  div.textContent = str;
+  return div.innerHTML;
+}
+
+// ============================================================
+// INIT
+// ============================================================
+document.addEventListener('DOMContentLoaded', () => {
+  initDateRange();
+  authPromise.then(authed => {
+    if (authed) fetchAllData();
+  });
+});
+</script>
+</body>
+</html>

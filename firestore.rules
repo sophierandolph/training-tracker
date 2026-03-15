@@ -31,6 +31,10 @@ service cloud.firestore {
       allow read, write: if isOwner();
     }
 
+    match /oura/{docId} {
+      allow read, write: if isOwner();
+    }
+
     // Deny everything else by default
     match /{document=**} {
       allow read, write: if false;

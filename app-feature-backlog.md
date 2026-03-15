@@ -1,6 +1,6 @@
 # Training Tracker App -- Feature Backlog
 
-Collected from sessions through Mar 14, 2026. Includes holistic review from 7 agents (PM, Backend, Frontend, QA, UX, Coach, Athlete).
+Collected from sessions through Mar 15, 2026. Includes holistic review from 7 agents (PM, Backend, Frontend, QA, UX, Coach, Athlete) + 3 dashboard review agents (Coach, Athlete, Data Viz).
 
 ---
 
@@ -27,14 +27,7 @@ Collected from sessions through Mar 14, 2026. Includes holistic review from 7 ag
 
 ## Data & Insights
 
-- [ ] **`/weekly-review` skill** -- CLI skill that pulls Firestore workout history + latest Oura export + fuel logs, cross-references all three, and produces a weekly report. Analysis: recovery patterns (HRV vs training load), sleep-performance correlation, protein adherence vs training days, injury/discomfort trends, training volume by type, weight progression per exercise. Replaces the ad hoc coach report workflow. Outputs a markdown report to `/Users/sophie/Workout Planning/`. Pairs with the Training Dashboard below (skill generates analysis, dashboard visualizes it).
-- [ ] **Oura + workout cross-analysis** -- coach agent reviewing 60 days of Oura data (HRV, sleep, readiness) mapped against workout history. Report pending.
-- [ ] **Surface per-set feel trends** -- feel ratings logged but never analyzed. Show which exercises are getting easier over time. (PM)
-- [ ] **Session load score** -- RPE x duration = load. Display weekly total. Minimal effort, real insight. (Coach)
-- [ ] **Acute:chronic workload ratio** -- rolling 7-day vs 28-day load. Color-coded injury risk indicator. (Coach)
-- [ ] **Connect fuel to workout data** -- "trained hard, only hit 80g protein" insight. Both datasets exist. (PM)
 - [ ] **Performance baselines in-app** -- T-test, 20m sprint, beep test targets. Currently only in markdown file. (Coach)
-- [ ] **Body-side tracking for bilateral exercises** -- left vs right performance for injury monitoring. (Coach)
 - [ ] **Effort type (physical/technical) analysis** -- captured but never surfaced. Training balance insight. (PM)
 
 ## UX Reviews (need to go through the whole app)
@@ -61,9 +54,43 @@ Collected from sessions through Mar 14, 2026. Includes holistic review from 7 ag
 - [ ] **Gym high-contrast mode** -- bump text brightness for workout view in bright lighting. (UX)
 - [ ] **Condition field not surfaced in UI** -- readiness thresholds exist in data but not shown to user. (Athlete)
 
-## Explore / Separate Project
+## Dashboard (dashboard.html)
 
-- [ ] **Training Dashboard (companion web app)** -- separate single HTML file for data analysis and visualization. Same Firestore + Google auth. Read-heavy counterpart to the write-heavy mobile app. Potential views: training volume over time, weight progression per exercise, feel trends, readiness/Oura correlation, fuel/protein consistency, workout type distribution, coach report summaries. Used at a laptop for weekly review and planning, not mid-workout. Hosted alongside tracker on GitHub Pages. Could inform `/plan-workouts` skill with visual context.
+### High Priority
+
+- [x] **"This Week at a Glance" summary strip** -- row of stat cards at top: total sessions, total volume, protein hit rate (e.g. "5/7 days on target"), supplement streak, readiness trend arrow. Week-over-week deltas for motivation ("42 sets, +6 from last week"). (Athlete, Coach)
+- [x] **Red flag banner system** -- auto-triggered alerts at top of dashboard: readiness <70 for 2+ days, protein under target 3+ days, same body area discomfort 2+ times in 7 days, no prehab in 5+ days. (Coach)
+- [ ] **Weight progression tooltips with reps/sets/feel** -- current tooltip only shows weight. Add set count, reps at that weight, and feel rating. PR marker (star) on highest data point. (Athlete, Data Viz)
+- [x] **Quick-preset date range buttons** -- "7 days", "4 weeks", "8 weeks", "All time" buttons next to date pickers. Reduces friction especially on mobile. (Athlete, Data Viz)
+- [ ] **Protein adherence summary stat** -- "Hit target 5/7 days (71%)" above the chart. Rolling 7-day average line overlaid on daily bars for chronic underfueling visibility. (Coach, Athlete, Data Viz)
+- [ ] **Training load vs readiness overlay** -- overlay daily training load (minutes or sets) on the readiness chart so you can see which sessions tank recovery. (Coach, Athlete)
+- [ ] **Discomfort frequency summary** -- "Groin: 4 mentions in 28 days" counts above the timeline. Flag recurring body areas. (Coach, Athlete, Data Viz)
+- [ ] **Firestore query caching** -- cache full dataset on first load, filter client-side on date range change. Only re-fetch if range extends beyond cache. Prevents quota burn and slowness as data grows. (Data Viz)
+
+### Medium Priority
+
+- [ ] **Feel trends exercise selector** -- replace auto-top-5 with multi-select or clickable legend. Coach wants to watch specific exercises (hip-adjacent, shoulder). (Athlete, Coach)
+- [ ] **Readiness zone visibility** -- bump zone shading opacity from 6-8% to 12-15%, or add dashed reference lines at 65 and 75 with labels. (Athlete, Data Viz)
+- [ ] **Workout day tooltip on readiness chart** -- click/hover workout marker to see workout name and duration. (Data Viz)
+- [ ] **Volume summary stat** -- total sets or hours above the volume chart without hovering. (Data Viz)
+- [ ] **Week-over-week ghost bars on volume chart** -- thin outline showing previous period's volume behind current bars. (Data Viz)
+- [ ] **Session RPE tracking** -- post-session RPE (1-10) at workout level, separate from per-set feel. RPE x duration = session load score. (Coach)
+- [ ] **Bilateral balance view** -- left vs right weight/feel for unilateral exercises (DB row, single leg RDL, lunges). Flag asymmetries. (Coach)
+- [ ] **Planned vs actual volume line** -- reference line on volume chart showing prescribed volume so you can distinguish deload from missed sessions. (Coach)
+- [ ] **Supplement adherence rate** -- show "22/28 days" next to streak count. Streak can break and restart, hiding good consistency. (Data Viz)
+- [ ] **Consecutive training day indicator** -- flag streaks of training days without rest, or days between same muscle group sessions. (Athlete)
+- [ ] **Chart.js update() instead of destroy/recreate** -- use `chart.update()` with new data for smoother transitions and better performance. (Data Viz)
+- [ ] **Export/share** -- download button per card (CSV) or "Copy Weekly Summary" for sharing with trainer. (Athlete, Data Viz)
+
+### Low Priority
+
+- [ ] **Feel trends as small multiples** -- sparklines stacked vertically instead of overlapping lines. Cleaner as exercise count grows. (Data Viz)
+- [ ] **Tryout countdown and phase indicator** -- "X weeks to tryouts" + current training phase (base, sport-specific, peaking). (Coach)
+- [ ] **Supplement streak day labels** -- date number inside calendar cells, or label first of each month. Currently unlabeled on mobile. (Athlete)
+- [ ] **classifyExercise() default to "Other"** -- currently defaults unrecognized exercises to "Push". Use neutral "Other" category so miscategorizations are visible. (Data Viz)
+- [ ] **Duplicate EXERCISE_ALIASES entries** -- clean up `single arm db row` and `seated cable row` appearing twice. (Data Viz)
+- [ ] **Align default date range to full training weeks** -- Monday to Sunday instead of raw 28-day lookback. (Athlete)
+- [ ] **Feel trends color palette** -- currently reuses colors from other charts. Use distinct palette or dashed/dotted line styles. (Data Viz)
 
 ## Structural / Planning
 
@@ -73,6 +100,16 @@ Collected from sessions through Mar 14, 2026. Includes holistic review from 7 ag
 - [ ] **Planned deload weeks in future blocks** -- systematic, not accidental from travel. (Coach)
 
 ---
+
+## Done (Mar 15)
+
+- [x] **Training Dashboard built** -- `dashboard.html` with 7 charts: Training Volume (sets/minutes toggle), Weight Progression, Readiness + HRV + Sleep, Protein Adherence, Supplement Streak, Feel Trends, Discomfort Timeline. Same Firebase/auth as tracker.
+- [x] **`/weekly-review` skill** -- fetches workouts + fuel + Oura, syncs Oura to Firestore, runs 3 parallel analysis agents, saves markdown report. Recency flag for extended data ranges.
+- [x] **Oura Firestore sync** -- `oura/{YYYY-MM-DD}` collection with readiness, HRV, RHR, sleep duration, temp deviation. Rules deployed.
+- [x] **Exercise name normalization** -- `EXERCISE_ALIASES` map in dashboard for consistent weight progression tracking. ~40 mappings.
+- [x] **PT session backfill** -- Feb 9 and Mar 2 PT sessions backfilled from notes/photos into structured exercise arrays.
+- [x] **Creatine backfill** -- all fuel log days updated to creatine=true.
+- [x] **Protein adherence context-aware coloring** -- uses fuel log `target` field (130/150), green=hit, gold=within 10%, red=under.
 
 ## Done (Mar 14)
 
