@@ -67,7 +67,7 @@ export default {
           'anthropic-version': '2023-06-01',
         },
         body: JSON.stringify({
-          model: env.MODEL_VERSION || 'claude-sonnet-4-5-20250929',
+          model: env.MODEL_VERSION || 'claude-sonnet-4-6',
           max_tokens: 1024,
           system,
           messages: cappedMessages,

@@ -4,10 +4,6 @@ Collected from sessions through Mar 14, 2026. Includes holistic review from 7 ag
 
 ---
 
-## Security (important)
-
-- [ ] **Deploy updated worker.js** -- worker.js updated locally (removed file://, changed no-origin to deny) but not deployed. Needs `npx wrangler deploy` which isn't available on this machine. Find alternative deploy method or install wrangler.
-
 ## Features
 
 - [ ] **History view** -- week-over-week calendar layout with checkboxes for completed workouts per day
@@ -24,14 +20,6 @@ Collected from sessions through Mar 14, 2026. Includes holistic review from 7 ag
 - [ ] **Electrolyte tracking** -- especially important as Houston heats up + creatine increases water needs. Add LMNT/Liquid IV as loggable item. (Nutritionist)
 - ~~ **Meal combo quick-log** ~~ -- skipped, Sophie doesn't use the combo suggestions much
 - ~~ **Add hydration counter** ~~ -- skipped, too much overhead. Using gentle nudges instead.
-
-**Nutritionist notes for Sophie (not app features):**
-- [x] Testing ferritin + vitamin D levels -- appointment booked Wed Mar 11. Also requesting iron panel + CBC.
-- [x] Magnesium glycinate 200-400mg before bed -- ORDERED (Sports Research 160mg, arriving Mar 20-27)
-- [x] Omega-3 EPA/DHA 2-3g/day -- ORDERED (Sports Research Fish Oil 1250mg from Wild Alaska Pollock, arriving Mar 10). **Note:** if GI discomfort, split dose AM/PM and take with food. Fish oil is the most likely cause of stomach upset.
-- Protein target of 150g is appropriate (0.86g/lb). 130g is a realistic daily minimum, 150g is a stretch target.
-- Protein distribution matters: 30-40g across 4-5 eating occasions > 80g at dinner.
-- Full supplement stack + bloodwork notes at `/Users/sophie/Workout Planning/nutrition_notes.md`
 
 ## Data & Insights
 
@@ -52,6 +40,7 @@ Collected from sessions through Mar 14, 2026. Includes holistic review from 7 ag
 
 ## Technical Debt (Frontend/Backend)
 
+- [ ] **`/deploy` skill** -- replace the 4-step QA process in CLAUDE.md with a single invocable skill. Runs: QA agent on diff, commit (with pre-commit hook), local preview, push to GitHub Pages, backlog cleanup.
 - [ ] **showDayPreview() is 350 lines** -- refactor into type-specific renderers. (Frontend)
 - [ ] **Inconsistent persistence strategies** -- readiness=Firestore-first, fuel=localStorage-first, history=Firestore-first. Standardize. (Frontend, Backend)
 - [ ] **dailyState single-doc pattern** -- no historical readiness record. Once day resets, previous readiness gone. (Backend)
@@ -98,6 +87,7 @@ Collected from sessions through Mar 14, 2026. Includes holistic review from 7 ag
 - [x] **CLEANUP: Remove dead WORKOUTS object** -- deleted ~475 lines of unused workout definitions. Extracted pool recovery as standalone `POOL_RECOVERY` constant. `startRecurringWorkout()` → `startPoolRecovery()`.
 - [x] **CLEANUP: Remove SCHEDULE** -- DATE_WORKOUTS is sole source of truth. SCHEDULE fully removed.
 - [x] **CLEANUP: Deprecate SCHEDULE for coach/agent context** -- coach system prompt pulls from DATE_WORKOUTS first. Added rule: "never assume what she did based on day of week."
+- [x] **SECURITY: Deploy updated worker.js** -- installed Node via Homebrew, deployed with wrangler. CORS restricted, anonymous requests denied, model default updated to claude-sonnet-4-6.
 
 ## Done (Mar 12)
 
