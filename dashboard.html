@@ -118,8 +118,8 @@
       --rose: #f43f5e;
       --teal: #14b8a6;
       --text-primary: #f5f3ff;
-      --text-secondary: #a8a3b8;
-      --text-muted: #8b82a0;
+      --text-secondary: #c4bbd6;
+      --text-muted: #b5adc8;
       --success: #10b981;
       --warning: #f59e0b;
       --border: #3d2a5c;
@@ -269,6 +269,10 @@
     .toggle-btn:not(:last-child) {
       border-right: 1px solid var(--border);
     }
+    .toggle-btn:focus-visible {
+      outline: 2px solid var(--accent-light);
+      outline-offset: 2px;
+    }
 
     .card-controls select {
       background: var(--bg-elevated);
@@ -280,6 +284,10 @@
       font-size: 13px;
       outline: none;
       max-width: 200px;
+    }
+    .card-controls select:focus-visible {
+      outline: 2px solid var(--accent-light);
+      outline-offset: 2px;
     }
 
     .loading-overlay {
@@ -333,9 +341,14 @@
       border-radius: 4px;
       background: var(--bg-elevated);
       max-width: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: 600;
     }
-    .cal-cell.taken { background: var(--emerald); }
-    .cal-cell.missed { background: #3d2a5c; }
+    .cal-cell.taken { background: var(--emerald); color: #064e3b; }
+    .cal-cell.missed { background: #3d2a5c; color: #6b5b80; }
     .cal-cell.empty { background: transparent; }
     .streak-count {
       font-size: 13px;
@@ -473,6 +486,10 @@
       transition: var(--transition);
       white-space: nowrap;
     }
+    .preset-btn:focus-visible {
+      outline: 2px solid var(--accent-light);
+      outline-offset: 2px;
+    }
     .preset-btn:hover, .preset-btn.active {
       background: var(--accent);
       color: var(--text-primary);
@@ -500,9 +517,9 @@
           <button class="preset-btn" onclick="setPreset(56)">8w</button>
           <button class="preset-btn" onclick="setPreset(0)">All</button>
         </div>
-        <label>From</label>
+        <label for="dateFrom">From</label>
         <input type="date" id="dateFrom">
-        <label>To</label>
+        <label for="dateTo">To</label>
         <input type="date" id="dateTo">
       </div>
     </div>
@@ -518,62 +535,71 @@
   <div class="container">
     <div class="grid">
 
-      <!-- 1. Training Volume -->
+      <!-- 1. Daily Readiness (primary decision chart) -->
+      <div class="card card-full">
+        <h2>Daily Readiness</h2>
+        <div class="chart-container">
+          <canvas id="readinessChart" role="img" aria-label="Daily readiness score with sleep duration bars and recovery zone shading"></canvas>
+        </div>
+      </div>
+
+      <!-- 2. HRV Trend -->
+      <div class="card">
+        <h2>HRV Trend</h2>
+        <div class="chart-container">
+          <canvas id="hrvChart" role="img" aria-label="Heart rate variability trend over time"></canvas>
+        </div>
+      </div>
+
+      <!-- 3. Training Volume -->
       <div class="card">
         <div class="card-controls">
           <h2>Training Volume</h2>
           <div class="toggle-group">
-            <button class="toggle-btn active" id="volSetsBtn" onclick="setVolumeMode('sets')">Sets</button>
+            <button class="toggle-btn active" id="volSetsBtn" onclick="setVolumeMode('sets')">Muscle Groups</button>
             <button class="toggle-btn" id="volMinsBtn" onclick="setVolumeMode('minutes')">Minutes</button>
           </div>
         </div>
         <div class="chart-container">
-          <canvas id="volumeChart"></canvas>
+          <canvas id="volumeChart" role="img" aria-label="Training volume by muscle group or workout type"></canvas>
         </div>
       </div>
 
-      <!-- 2. Weight Progression -->
+      <!-- 4. Weight Progression -->
       <div class="card">
         <div class="card-controls">
           <h2>Weight Progression</h2>
-          <select id="exerciseSelect"><option>Loading...</option></select>
+          <select id="exerciseSelect" aria-label="Select exercise"><option>Loading...</option></select>
         </div>
         <div class="chart-container">
-          <canvas id="weightChart"></canvas>
+          <canvas id="weightChart" role="img" aria-label="Weight progression over time for selected exercise"></canvas>
         </div>
       </div>
 
-      <!-- 3. Readiness + HRV + Sleep -->
-      <div class="card card-full">
-        <h2>Readiness + HRV</h2>
-        <div class="chart-container">
-          <canvas id="readinessChart"></canvas>
-        </div>
-      </div>
-
-      <!-- 4. Protein Adherence -->
+      <!-- 5. Protein Adherence -->
       <div class="card">
         <h2>Protein Adherence</h2>
+        <div id="proteinSummary" style="color: var(--text-secondary); font-size: 13px; margin-bottom: 8px; font-family: Figtree;"></div>
         <div class="chart-container">
-          <canvas id="proteinChart"></canvas>
+          <canvas id="proteinChart" role="img" aria-label="Daily protein intake vs target with 7-day rolling average"></canvas>
         </div>
-      </div>
-
-      <!-- 5. Supplement Streak -->
-      <div class="card">
-        <h2>Supplement Streak</h2>
-        <div id="supplementContainer" class="supplement-grid"></div>
       </div>
 
       <!-- 6. Feel Trends -->
       <div class="card">
         <h2>Feel Trends</h2>
         <div class="chart-container">
-          <canvas id="feelChart"></canvas>
+          <canvas id="feelChart" role="img" aria-label="Exercise feel rating trends over time"></canvas>
         </div>
       </div>
 
-      <!-- 7. Discomfort Timeline -->
+      <!-- 7. Supplement Streak -->
+      <div class="card">
+        <h2>Supplement Streak</h2>
+        <div id="supplementContainer" class="supplement-grid"></div>
+      </div>
+
+      <!-- 8. Discomfort Timeline -->
       <div class="card">
         <h2>Discomfort Timeline</h2>
         <div id="discomfortTimeline"></div>
@@ -851,9 +877,10 @@ async function fetchAllData() {
 function renderAll() {
   renderSummaryStrip();
   renderRedFlags();
+  renderReadinessChart();
+  renderHrvChart();
   renderVolumeChart();
   renderWeightChart();
-  renderReadinessChart();
   renderProteinChart();
   renderSupplementStreak();
   renderFeelChart();
@@ -1129,19 +1156,19 @@ function renderVolumeChart() {
         responsive: true,
         maintainAspectRatio: false,
         plugins: {
-          legend: { labels: { color: '#a8a3b8', font: { family: 'Figtree', size: 11 } } },
+          legend: { labels: { color: '#c4bbd6', font: { family: 'Figtree', size: 11 } } },
         },
         scales: {
           x: {
             stacked: true,
-            ticks: { color: '#8b82a0', font: { family: 'Figtree', size: 11 } },
-            grid: { color: 'rgba(61,42,92,0.4)' },
+            ticks: { color: '#b5adc8', font: { family: 'Figtree', size: 11 } },
+            grid: { color: 'rgba(100,80,140,0.2)' },
           },
           y: {
             stacked: true,
-            title: { display: true, text: 'Minutes', color: '#a8a3b8', font: { family: 'Figtree' } },
-            ticks: { color: '#8b82a0', font: { family: 'Figtree', size: 11 } },
-            grid: { color: 'rgba(61,42,92,0.4)' },
+            title: { display: true, text: 'Minutes', color: '#c4bbd6', font: { family: 'Figtree' } },
+            ticks: { color: '#b5adc8', font: { family: 'Figtree', size: 11 } },
+            grid: { color: 'rgba(100,80,140,0.2)' },
           }
         }
       }
@@ -1183,19 +1210,19 @@ function renderVolumeChart() {
         responsive: true,
         maintainAspectRatio: false,
         plugins: {
-          legend: { labels: { color: '#a8a3b8', font: { family: 'Figtree', size: 11 } } },
+          legend: { labels: { color: '#c4bbd6', font: { family: 'Figtree', size: 11 } } },
         },
         scales: {
           x: {
             stacked: true,
-            ticks: { color: '#8b82a0', font: { family: 'Figtree', size: 11 } },
-            grid: { color: 'rgba(61,42,92,0.4)' },
+            ticks: { color: '#b5adc8', font: { family: 'Figtree', size: 11 } },
+            grid: { color: 'rgba(100,80,140,0.2)' },
           },
           y: {
             stacked: true,
-            title: { display: true, text: 'Sets', color: '#a8a3b8', font: { family: 'Figtree' } },
-            ticks: { color: '#8b82a0', font: { family: 'Figtree', size: 11 } },
-            grid: { color: 'rgba(61,42,92,0.4)' },
+            title: { display: true, text: 'Sets', color: '#c4bbd6', font: { family: 'Figtree' } },
+            ticks: { color: '#b5adc8', font: { family: 'Figtree', size: 11 } },
+            grid: { color: 'rgba(100,80,140,0.2)' },
           }
         }
       }
@@ -1311,13 +1338,13 @@ function drawWeightLine(exerciseData) {
       },
       scales: {
         x: {
-          ticks: { color: '#8b82a0', font: { family: 'Figtree', size: 11 }, maxRotation: 45 },
-          grid: { color: 'rgba(61,42,92,0.4)' },
+          ticks: { color: '#b5adc8', font: { family: 'Figtree', size: 11 }, maxRotation: 45 },
+          grid: { color: 'rgba(100,80,140,0.2)' },
         },
         y: {
-          title: { display: true, text: 'Weight (lbs)', color: '#a8a3b8', font: { family: 'Figtree' } },
-          ticks: { color: '#8b82a0', font: { family: 'Figtree', size: 11 } },
-          grid: { color: 'rgba(61,42,92,0.4)' },
+          title: { display: true, text: 'Weight (lbs)', color: '#c4bbd6', font: { family: 'Figtree' } },
+          ticks: { color: '#b5adc8', font: { family: 'Figtree', size: 11 } },
+          grid: { color: 'rgba(100,80,140,0.2)' },
         }
       }
     }
@@ -1325,7 +1352,7 @@ function drawWeightLine(exerciseData) {
 }
 
 // ============================================================
-// 3. READINESS + HRV (dual-axis line chart with workout markers)
+// 3. DAILY READINESS (readiness line + sleep bars + zone shading)
 // ============================================================
 function renderReadinessChart() {
   resetChart('readiness');
@@ -1337,7 +1364,7 @@ function renderReadinessChart() {
       data: { labels: [], datasets: [] },
       options: {
         responsive: true, maintainAspectRatio: false,
-        plugins: { title: { display: true, text: 'No Oura data in range', color: '#8b82a0', font: { family: 'Figtree' } } }
+        plugins: { title: { display: true, text: 'No Oura data in range', color: 'var(--text-muted)', font: { family: 'Figtree' } } }
       }
     });
     return;
@@ -1345,43 +1372,39 @@ function renderReadinessChart() {
 
   const dates = rawOura.map(o => o.date).sort();
   const readinessMap = {};
-  const hrvMap = {};
   const sleepMap = {};
   rawOura.forEach(o => {
     readinessMap[o.date] = o.readiness ?? o.readinessScore ?? null;
-    hrvMap[o.date] = o.hrv ?? o.averageHrv ?? null;
     sleepMap[o.date] = o.sleepDuration ?? null;
   });
 
-  // Workout day markers
-  const workoutDates = new Set(rawWorkouts.map(w => w.date));
+  // 7-day rolling average for readiness
+  const readinessVals = dates.map(d => readinessMap[d]);
+  const readinessAvg = readinessVals.map((_, i) => {
+    const window = readinessVals.slice(Math.max(0, i - 6), i + 1).filter(v => v != null);
+    return window.length ? Math.round(window.reduce((a, b) => a + b, 0) / window.length) : null;
+  });
 
-  // Zone shading via plugin
+  // Zone shading plugin
   const zonePlugin = {
     id: 'readinessZones',
     beforeDraw(chart) {
       const { ctx: c, chartArea: { left, right, top, bottom }, scales: { y } } = chart;
       if (!y) return;
 
-      // Green zone (75-100)
       const y75 = y.getPixelForValue(75);
       const yTop = y.getPixelForValue(100);
-      c.fillStyle = 'rgba(16, 185, 129, 0.08)';
+      c.fillStyle = 'rgba(16, 185, 129, 0.06)';
       c.fillRect(left, Math.min(yTop, top), right - left, Math.max(0, y75 - Math.min(yTop, top)));
 
-      // Yellow zone (65-75)
       const y65 = y.getPixelForValue(65);
-      c.fillStyle = 'rgba(245, 158, 11, 0.08)';
+      c.fillStyle = 'rgba(245, 158, 11, 0.06)';
       c.fillRect(left, y75, right - left, y65 - y75);
 
-      // Red zone (0-65)
-      c.fillStyle = 'rgba(244, 63, 94, 0.06)';
+      c.fillStyle = 'rgba(244, 63, 94, 0.04)';
       c.fillRect(left, y65, right - left, bottom - y65);
     }
   };
-
-  // Workout markers dataset (dots at bottom of chart)
-  const markerData = dates.map(d => workoutDates.has(d) ? 0 : null);
 
   charts.readiness = new Chart(ctx, {
     type: 'line',
@@ -1390,43 +1413,35 @@ function renderReadinessChart() {
       datasets: [
         {
           label: 'Readiness',
-          data: dates.map(d => readinessMap[d]),
+          data: readinessVals,
           borderColor: '#a855f7',
           backgroundColor: 'rgba(168, 85, 247, 0.1)',
           yAxisID: 'y',
           tension: 0.3,
-          pointRadius: 3,
+          pointRadius: 4,
           pointBackgroundColor: '#a855f7',
+          borderWidth: 2.5,
         },
         {
-          label: 'HRV',
-          data: dates.map(d => hrvMap[d]),
-          borderColor: '#14b8a6',
-          backgroundColor: 'rgba(20, 184, 166, 0.1)',
-          yAxisID: 'y1',
-          tension: 0.3,
-          pointRadius: 3,
-          pointBackgroundColor: '#14b8a6',
+          label: '7-day avg',
+          data: readinessAvg,
+          borderColor: 'rgba(168, 85, 247, 0.4)',
+          borderWidth: 1.5,
+          borderDash: [5, 4],
+          yAxisID: 'y',
+          tension: 0.4,
+          pointRadius: 0,
+          fill: false,
         },
         {
           label: 'Sleep (hrs)',
           data: dates.map(d => sleepMap[d]),
           type: 'bar',
-          yAxisID: 'y2',
-          backgroundColor: 'rgba(168, 85, 247, 0.12)',
+          yAxisID: 'y1',
+          backgroundColor: 'rgba(20, 184, 166, 0.45)',
           borderRadius: 3,
-          order: 3, // render behind lines
+          order: 3,
         },
-        {
-          label: 'Workout Day',
-          data: markerData,
-          type: 'scatter',
-          yAxisID: 'y',
-          pointRadius: 6,
-          pointBackgroundColor: '#f59e0b',
-          pointBorderColor: '#f59e0b',
-          showLine: false,
-        }
       ]
     },
     plugins: [zonePlugin],
@@ -1435,12 +1450,21 @@ function renderReadinessChart() {
       maintainAspectRatio: false,
       interaction: { mode: 'index', intersect: false },
       plugins: {
-        legend: { labels: { color: '#a8a3b8', font: { family: 'Figtree', size: 11 } } },
+        legend: { labels: { color: '#b5adc8', font: { family: 'Figtree', size: 11 } } },
+        tooltip: {
+          callbacks: {
+            label(ctx) {
+              if (ctx.dataset.label === 'Sleep (hrs)') return `Sleep: ${ctx.raw}h`;
+              if (ctx.dataset.label === '7-day avg') return `7-day avg: ${ctx.raw}`;
+              return `Readiness: ${ctx.raw}`;
+            }
+          }
+        },
       },
       scales: {
         x: {
-          ticks: { color: '#8b82a0', font: { family: 'Figtree', size: 11 }, maxRotation: 45 },
-          grid: { color: 'rgba(61,42,92,0.3)' },
+          ticks: { color: '#b5adc8', font: { family: 'Figtree', size: 11 }, maxRotation: 45 },
+          grid: { color: 'rgba(100,80,140,0.2)' },
         },
         y: {
           type: 'linear',
@@ -1449,20 +1473,94 @@ function renderReadinessChart() {
           max: 100,
           title: { display: true, text: 'Readiness', color: '#a855f7', font: { family: 'Figtree' } },
           ticks: { color: '#a855f7', font: { family: 'Figtree', size: 11 } },
-          grid: { color: 'rgba(61,42,92,0.3)' },
+          grid: { color: 'rgba(100,80,140,0.2)' },
         },
         y1: {
           type: 'linear',
           position: 'right',
-          title: { display: true, text: 'HRV', color: '#14b8a6', font: { family: 'Figtree' } },
+          min: 0,
+          max: 12,
+          title: { display: true, text: 'Sleep (hrs)', color: '#14b8a6', font: { family: 'Figtree' } },
           ticks: { color: '#14b8a6', font: { family: 'Figtree', size: 11 } },
           grid: { drawOnChartArea: false },
         },
-        y2: {
-          type: 'linear',
-          display: false, // hidden axis -- sleep bars scale to readiness axis visually
-          min: 0,
-          max: 12,
+      }
+    }
+  });
+}
+
+// ============================================================
+// 3b. HRV TREND (standalone line chart)
+// ============================================================
+function renderHrvChart() {
+  resetChart('hrv');
+  const ctx = document.getElementById('hrvChart').getContext('2d');
+
+  if (rawOura.length === 0) {
+    charts.hrv = new Chart(ctx, {
+      type: 'line',
+      data: { labels: [], datasets: [] },
+      options: { responsive: true, maintainAspectRatio: false }
+    });
+    return;
+  }
+
+  const dates = rawOura.map(o => o.date).sort();
+  const hrvVals = dates.map(d => {
+    const o = rawOura.find(r => r.date === d);
+    return o ? (o.hrv ?? o.averageHrv ?? null) : null;
+  });
+
+  // 7-day rolling average
+  const hrvAvg = hrvVals.map((_, i) => {
+    const window = hrvVals.slice(Math.max(0, i - 6), i + 1).filter(v => v != null);
+    return window.length ? Math.round(window.reduce((a, b) => a + b, 0) / window.length) : null;
+  });
+
+  charts.hrv = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: dates,
+      datasets: [
+        {
+          label: 'HRV',
+          data: hrvVals,
+          borderColor: '#14b8a6',
+          backgroundColor: 'rgba(20, 184, 166, 0.1)',
+          tension: 0.3,
+          pointRadius: 3,
+          pointBackgroundColor: '#14b8a6',
+          borderWidth: 2,
+          fill: true,
+        },
+        {
+          label: '7-day avg',
+          data: hrvAvg,
+          borderColor: 'rgba(20, 184, 166, 0.4)',
+          borderWidth: 1.5,
+          borderDash: [5, 4],
+          tension: 0.4,
+          pointRadius: 0,
+          fill: false,
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      interaction: { mode: 'index', intersect: false },
+      plugins: {
+        legend: { labels: { color: '#b5adc8', font: { family: 'Figtree', size: 11 } } },
+      },
+      scales: {
+        x: {
+          ticks: { color: '#b5adc8', font: { family: 'Figtree', size: 11 }, maxRotation: 45 },
+          grid: { color: 'rgba(100,80,140,0.2)' },
+        },
+        y: {
+          title: { display: true, text: 'HRV (ms)', color: '#14b8a6', font: { family: 'Figtree' } },
+          ticks: { color: '#14b8a6', font: { family: 'Figtree', size: 11 } },
+          grid: { color: 'rgba(100,80,140,0.2)' },
         }
       }
     }
@@ -1476,6 +1574,7 @@ function renderProteinChart() {
   resetChart('protein');
   const ctx = document.getElementById('proteinChart').getContext('2d');
 
+  const today = formatDate(new Date());
   const dates = rawFuelLogs.map(f => f.date).sort();
   const fuelByDate = {};
   rawFuelLogs.forEach(f => fuelByDate[f.date] = f);
@@ -1494,6 +1593,26 @@ function renderProteinChart() {
     if (protein >= target) return '#10b981';           // hit goal
     if (protein >= target * 0.9) return '#f59e0b';     // within 10%
     return '#f43f5e';                                   // under
+  });
+
+  // Summary stat (exclude today)
+  const completedDates = dates.filter(d => d !== today);
+  const hitDays = completedDates.filter(d => {
+    const log = fuelByDate[d];
+    const protein = log ? (log.totalProtein || log.total || 0) : 0;
+    const target = log?.target || 130;
+    return protein >= target;
+  }).length;
+  const totalDays = completedDates.length;
+  const pct = totalDays > 0 ? Math.round(hitDays / totalDays * 100) : 0;
+  document.getElementById('proteinSummary').textContent = totalDays > 0
+    ? `Hit target ${hitDays}/${totalDays} days (${pct}%)`
+    : '';
+
+  // 7-day rolling average
+  const rollingAvg = totals.map((_, i) => {
+    const window = totals.slice(Math.max(0, i - 6), i + 1);
+    return Math.round(window.reduce((a, b) => a + b, 0) / window.length);
   });
 
   // Reference line plugin
@@ -1526,22 +1645,44 @@ function renderProteinChart() {
     type: 'bar',
     data: {
       labels: dates,
-      datasets: [{
-        label: 'Protein (g)',
-        data: totals,
-        backgroundColor: colors,
-        borderRadius: 4,
-      }]
+      datasets: [
+        {
+          label: 'Protein (g)',
+          data: totals,
+          backgroundColor: colors,
+          borderRadius: 4,
+          order: 2,
+        },
+        {
+          label: '7-day avg',
+          data: rollingAvg,
+          type: 'line',
+          borderColor: '#a8a3b8',
+          borderWidth: 2,
+          borderDash: [4, 3],
+          pointRadius: 0,
+          tension: 0.3,
+          fill: false,
+          order: 1,
+        }
+      ]
     },
     plugins: [refLinePlugin],
     options: {
       responsive: true,
       maintainAspectRatio: false,
       plugins: {
-        legend: { display: false },
+        legend: {
+          labels: {
+            color: '#c4bbd6',
+            font: { family: 'Figtree', size: 11 },
+            filter: (item) => item.text === '7-day avg', // only show rolling avg in legend
+          }
+        },
         tooltip: {
           callbacks: {
             afterLabel(ctx) {
+              if (ctx.dataset.label === '7-day avg') return null;
               const target = targets[ctx.dataIndex];
               const label = target >= 150 ? 'Training day' : 'Rest day';
               return `Target: ${target}g (${label})`;
@@ -1551,13 +1692,13 @@ function renderProteinChart() {
       },
       scales: {
         x: {
-          ticks: { color: '#8b82a0', font: { family: 'Figtree', size: 11 }, maxRotation: 45 },
-          grid: { color: 'rgba(61,42,92,0.4)' },
+          ticks: { color: '#b5adc8', font: { family: 'Figtree', size: 11 }, maxRotation: 45 },
+          grid: { color: 'rgba(100,80,140,0.2)' },
         },
         y: {
-          title: { display: true, text: 'Protein (g)', color: '#a8a3b8', font: { family: 'Figtree' } },
-          ticks: { color: '#8b82a0', font: { family: 'Figtree', size: 11 } },
-          grid: { color: 'rgba(61,42,92,0.4)' },
+          title: { display: true, text: 'Protein (g)', color: '#c4bbd6', font: { family: 'Figtree' } },
+          ticks: { color: '#b5adc8', font: { family: 'Figtree', size: 11 } },
+          grid: { color: 'rgba(100,80,140,0.2)' },
           suggestedMax: 180,
         }
       }
@@ -1627,11 +1768,12 @@ function renderSupplementStreak() {
     dates.forEach(date => {
       const hasFuelLog = rawFuelLogs.some(f => f.date === date);
       let cls = 'cal-cell';
-      if (takenMap[date]) cls += ' taken';
-      else if (date === today) cls += ' empty'; // today isn't over yet
-      else if (hasFuelLog) cls += ' missed';
-      else cls += ' empty';
-      html += `<div class="${cls}" title="${date}"></div>`;
+      let symbol = '';
+      if (takenMap[date]) { cls += ' taken'; symbol = '\u2713'; }
+      else if (date === today) { cls += ' empty'; }
+      else if (hasFuelLog) { cls += ' missed'; symbol = '\u2717'; }
+      else { cls += ' empty'; }
+      html += `<div class="${cls}" title="${date}">${symbol}</div>`;
     });
 
     html += '</div>';
@@ -1681,7 +1823,7 @@ function renderFeelChart() {
       data: { labels: [], datasets: [] },
       options: {
         responsive: true, maintainAspectRatio: false,
-        plugins: { title: { display: true, text: 'No feel data in range', color: '#8b82a0', font: { family: 'Figtree' } } }
+        plugins: { title: { display: true, text: 'No feel data in range', color: '#b5adc8', font: { family: 'Figtree' } } }
       }
     });
     return;
@@ -1724,24 +1866,24 @@ function renderFeelChart() {
       responsive: true,
       maintainAspectRatio: false,
       plugins: {
-        legend: { labels: { color: '#a8a3b8', font: { family: 'Figtree', size: 11 } } },
+        legend: { labels: { color: '#c4bbd6', font: { family: 'Figtree', size: 11 } } },
       },
       scales: {
         x: {
-          ticks: { color: '#8b82a0', font: { family: 'Figtree', size: 11 }, maxRotation: 45 },
-          grid: { color: 'rgba(61,42,92,0.4)' },
+          ticks: { color: '#b5adc8', font: { family: 'Figtree', size: 11 }, maxRotation: 45 },
+          grid: { color: 'rgba(100,80,140,0.2)' },
         },
         y: {
           min: 1,
           max: 5,
-          title: { display: true, text: 'Feel', color: '#a8a3b8', font: { family: 'Figtree' } },
+          title: { display: true, text: 'Feel', color: '#c4bbd6', font: { family: 'Figtree' } },
           ticks: {
-            color: '#8b82a0',
+            color: '#b5adc8',
             font: { family: 'Figtree', size: 11 },
             stepSize: 1,
             callback: v => ['', 'Very Easy', 'Easy', 'Moderate', 'Hard', 'Very Hard'][v] || v,
           },
-          grid: { color: 'rgba(61,42,92,0.4)' },
+          grid: { color: 'rgba(100,80,140,0.2)' },
         }
       }
     }
@@ -1792,7 +1934,7 @@ function renderDiscomfortTimeline() {
     }
     // If no recognized area, add a generic tag
     if (tags.length === 0) {
-      tags.push({ area: 'General', color: '#8b82a0' });
+      tags.push({ area: 'General', color: '#b5adc8' });
     }
 
     html += `<div class="timeline-item">
