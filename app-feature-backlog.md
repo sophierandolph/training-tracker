@@ -4,6 +4,10 @@ Collected from sessions through Mar 14, 2026. Includes holistic review from 7 ag
 
 ---
 
+## Bugs (fix these)
+
+- [ ] **Multi-workout progress lost when switching** -- on a multi-workout day, starting a second workout (e.g., Movement Snack) clears in-progress data from the first (e.g., Hip Prehab). Logged sets are wiped. Repro: start workout A, log some sets, tap workout B, complete it, return to A -- progress gone. (Mar 14)
+
 ## Features
 
 - [ ] **History view** -- week-over-week calendar layout with checkboxes for completed workouts per day
@@ -23,6 +27,7 @@ Collected from sessions through Mar 14, 2026. Includes holistic review from 7 ag
 
 ## Data & Insights
 
+- [ ] **`/weekly-review` skill** -- CLI skill that pulls Firestore workout history + latest Oura export + fuel logs, cross-references all three, and produces a weekly report. Analysis: recovery patterns (HRV vs training load), sleep-performance correlation, protein adherence vs training days, injury/discomfort trends, training volume by type, weight progression per exercise. Replaces the ad hoc coach report workflow. Outputs a markdown report to `/Users/sophie/Workout Planning/`. Pairs with the Training Dashboard below (skill generates analysis, dashboard visualizes it).
 - [ ] **Oura + workout cross-analysis** -- coach agent reviewing 60 days of Oura data (HRV, sleep, readiness) mapped against workout history. Report pending.
 - [ ] **Surface per-set feel trends** -- feel ratings logged but never analyzed. Show which exercises are getting easier over time. (PM)
 - [ ] **Session load score** -- RPE x duration = load. Display weekly total. Minimal effort, real insight. (Coach)
@@ -40,7 +45,6 @@ Collected from sessions through Mar 14, 2026. Includes holistic review from 7 ag
 
 ## Technical Debt (Frontend/Backend)
 
-- [ ] **`/deploy` skill** -- replace the 4-step QA process in CLAUDE.md with a single invocable skill. Runs: QA agent on diff, commit (with pre-commit hook), local preview, push to GitHub Pages, backlog cleanup.
 - [ ] **showDayPreview() is 350 lines** -- refactor into type-specific renderers. (Frontend)
 - [ ] **Inconsistent persistence strategies** -- readiness=Firestore-first, fuel=localStorage-first, history=Firestore-first. Standardize. (Frontend, Backend)
 - [ ] **dailyState single-doc pattern** -- no historical readiness record. Once day resets, previous readiness gone. (Backend)
@@ -88,6 +92,7 @@ Collected from sessions through Mar 14, 2026. Includes holistic review from 7 ag
 - [x] **CLEANUP: Remove SCHEDULE** -- DATE_WORKOUTS is sole source of truth. SCHEDULE fully removed.
 - [x] **CLEANUP: Deprecate SCHEDULE for coach/agent context** -- coach system prompt pulls from DATE_WORKOUTS first. Added rule: "never assume what she did based on day of week."
 - [x] **SECURITY: Deploy updated worker.js** -- installed Node via Homebrew, deployed with wrangler. CORS restricted, anonymous requests denied, model default updated to claude-sonnet-4-6.
+- [x] **INFRA: `/deploy` skill** -- 3 parallel QA agents (code quality, view consistency, data flow) + commit + preview + push + backlog cleanup. Replaced manual 4-step QA process in CLAUDE.md.
 
 ## Done (Mar 12)
 
