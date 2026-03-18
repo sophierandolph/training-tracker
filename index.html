@@ -4694,9 +4694,12 @@
                 name: ex.name,
                 circuit: circuit.name,
                 sets: sets.filter(s => s).map(s => ({
-                  weight: s.weight || null,
+                  weight: s.weight !== undefined && s.weight !== 0 ? s.weight : null,
                   reps: s.reps || null,
-                  feel: s.feel || null
+                  feel: s.feel || null,
+                  ...(s.note && { note: s.note }),
+                  ...(s.effortType && { effortType: s.effortType }),
+                  ...(s.filmed && { filmed: true })
                 }))
               });
             }
@@ -4914,6 +4917,7 @@
       const pastBanner = document.getElementById('pastDateBanner');
       if (viewName === 'today') {
         dateNav.style.display = 'flex';
+        state.currentDate = new Date(); // Reset to actual today when switching to Today tab
         loadTodaysWorkout(); // This sets the appropriate title
       } else {
         dateNav.style.display = 'none';
