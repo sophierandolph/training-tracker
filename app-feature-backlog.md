@@ -6,10 +6,12 @@ Collected from sessions through Mar 15, 2026. Includes holistic review from 7 ag
 
 ## Bugs (fix these)
 
+- [ ] **noWeight exercises suppress note field in set modal** -- exercises with `noWeight: true` hide the note input, not just the weight input. Sophie couldn't log plate counts or modifications during the ParaBody session (Mar 16). Notes should always be available regardless of noWeight flag.
 - [ ] **Multi-workout progress lost when switching** -- on a multi-workout day, starting a second workout (e.g., Movement Snack) clears in-progress data from the first (e.g., Hip Prehab). Logged sets are wiped. Repro: start workout A, log some sets, tap workout B, complete it, return to A -- progress gone. (Mar 14)
 
 ## Features
 
+- [ ] **Composable workout blocks** -- break POOL_RECOVERY and other compound workouts into standalone building blocks (pool swimming, shoulder protocol, psoas protocol, hip prehab) that can be mixed and matched in DATE_WORKOUTS. Currently POOL_RECOVERY loads everything as one monolith -- Sophie sometimes just wants the pool part, or just the shoulder work. These blocks become reusable primitives for `/plan-workouts`.
 - [ ] **History view** -- week-over-week calendar layout with checkboxes for completed workouts per day
 - [ ] **Streak/consistency tracking** -- running streak, weekly completion rate. Cheapest motivation lever. (Athlete)
 - [ ] **Offline sync indicator** -- show "saved locally, will sync" when no connection. Currently silent. (Athlete, Backend)
