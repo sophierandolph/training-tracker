@@ -83,7 +83,7 @@ Collected from sessions through Mar 15, 2026. Includes holistic review from 7 ag
 - [ ] **Planned vs actual volume line** -- reference line on volume chart showing prescribed volume so you can distinguish deload from missed sessions. (Coach)
 - [ ] **Supplement adherence rate** -- show "22/28 days" next to streak count. Streak can break and restart, hiding good consistency. (Data Viz)
 - [ ] **Rethink supplement streak framing** -- current streak/heatmap can encourage lying to keep a streak alive. Reframe to be encouraging, not punitive. Show consistency rate instead of streak length. Avoid harsh "missed" language. (Sophie)
-- [ ] **Protein target nuance** -- 145g on a 150g day is still a win. Consider a "close enough" tier or softer language for near-misses. Don't want to slide on the goal, but also don't want to feel bad about getting close. Think about how to balance accountability with encouragement. (Sophie)
+- [ ] **Dashboard: 90/90 protein adherence** -- app fuel bar now uses 90% threshold (yellow en route, green at 90%+). Dashboard protein adherence chart + summary stat should match: "hit" = 90%+ of daily target, not 100%. Update bar coloring, adherence rate calc, and summary text. Do alongside next weekly review. (Sophie)
 - [ ] **Consecutive training day indicator** -- flag streaks of training days without rest, or days between same muscle group sessions. (Athlete)
 - [ ] **Chart.js update() instead of destroy/recreate** -- use `chart.update()` with new data for smoother transitions and better performance. (Data Viz)
 - [ ] **Export/share** -- download button per card (CSV) or "Copy Weekly Summary" for sharing with trainer. (Athlete, Data Viz)
