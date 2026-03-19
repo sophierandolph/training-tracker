@@ -2326,9 +2326,12 @@
     }
     .fuel-progress-bar-fill {
       height: 100%;
-      background: linear-gradient(90deg, var(--emerald), var(--teal));
+      background: linear-gradient(90deg, var(--gold), #e0a830);
       border-radius: var(--radius-full);
       transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .fuel-progress-bar-fill.hit-target {
+      background: linear-gradient(90deg, var(--emerald), var(--teal));
     }
     .fuel-progress-bar-fill.over-target {
       background: linear-gradient(90deg, var(--emerald), var(--gold));
@@ -2336,8 +2339,11 @@
     .fuel-total {
       font-size: 36px;
       font-weight: 800;
-      color: var(--emerald);
+      color: var(--gold);
       line-height: 1;
+    }
+    .fuel-total.hit-target {
+      color: var(--emerald);
     }
     .fuel-total.over-target {
       color: var(--gold);
@@ -8135,11 +8141,12 @@ ${recentHistory}`;
       const { context } = getTodayFuelContext();
       const pct = Math.min((log.total / target) * 100, 100);
       const over = log.total >= target;
+      const hit90 = log.total >= target * 0.9;
 
       totalEl.textContent = log.total + 'g';
-      totalEl.className = 'fuel-total' + (over ? ' over-target' : '');
+      totalEl.className = 'fuel-total' + (over ? ' over-target' : hit90 ? ' hit-target' : '');
       fillEl.style.width = pct + '%';
-      fillEl.className = 'fuel-progress-bar-fill' + (over ? ' over-target' : '');
+      fillEl.className = 'fuel-progress-bar-fill' + (over ? ' over-target' : hit90 ? ' hit-target' : '');
       if (targetLabel) targetLabel.textContent = `of ${target}g protein target`;
       if (contextEl) contextEl.textContent = context;
 
