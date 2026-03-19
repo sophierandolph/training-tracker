@@ -3610,10 +3610,21 @@
       // Check if this day's workout was already saved (skip for multi-workout days — they handle it per-tile)
       const isMultiWorkout = DATE_WORKOUTS[dateKey] && Array.isArray(DATE_WORKOUTS[dateKey]);
       let inProgressForThisDay = false;
-      const inProgressRaw = localStorage.getItem('workoutInProgress');
-      if (inProgressRaw) {
-        try { inProgressForThisDay = JSON.parse(inProgressRaw).date === dateKey; }
-        catch(e) { localStorage.removeItem('workoutInProgress'); }
+      // Check per-workout keys for in-progress state
+      for (let i = 0; i < localStorage.length; i++) {
+        const k = localStorage.key(i);
+        if (!k.startsWith('workoutInProgress_')) continue;
+        try {
+          if (JSON.parse(localStorage.getItem(k)).date === dateKey) { inProgressForThisDay = true; break; }
+        } catch(e) { localStorage.removeItem(k); }
+      }
+      // Legacy fallback
+      if (!inProgressForThisDay) {
+        const inProgressRaw = localStorage.getItem('workoutInProgress');
+        if (inProgressRaw) {
+          try { inProgressForThisDay = JSON.parse(inProgressRaw).date === dateKey; }
+          catch(e) { localStorage.removeItem('workoutInProgress'); }
+        }
       }
       if (!isMultiWorkout && !inProgressForThisDay) {
         const history = getWorkoutHistory();
@@ -4013,11 +4024,23 @@
     let multiWorkoutList = null;
 
     function getInProgressWorkoutName() {
+      // Check all per-workout autosave keys for today
+      const today = formatDateKey(state.currentDate);
+      for (let i = 0; i < localStorage.length; i++) {
+        const key = localStorage.key(i);
+        if (!key.startsWith('workoutInProgress_')) continue;
+        try {
+          const saved = JSON.parse(localStorage.getItem(key));
+          if (saved.date === today && saved.workoutLog && Object.keys(saved.workoutLog).length > 0) {
+            return saved.workoutName;
+          }
+        } catch(e) { localStorage.removeItem(key); }
+      }
+      // Legacy fallback
       try {
         const raw = localStorage.getItem('workoutInProgress');
         if (!raw) return null;
         const saved = JSON.parse(raw);
-        const today = formatDateKey(state.currentDate);
         if (saved.date === today && saved.workoutLog && Object.keys(saved.workoutLog).length > 0) {
           return saved.workoutName;
         }
@@ -4025,11 +4048,39 @@
       return null;
     }
 
+    function getInProgressWorkoutNames() {
+      const today = formatDateKey(state.currentDate);
+      const names = [];
+      for (let i = 0; i < localStorage.length; i++) {
+        const key = localStorage.key(i);
+        if (!key.startsWith('workoutInProgress_')) continue;
+        try {
+          const saved = JSON.parse(localStorage.getItem(key));
+          if (saved.date === today && saved.workoutLog && Object.keys(saved.workoutLog).length > 0) {
+            names.push(saved.workoutName);
+          } else if (saved.date !== today) {
+            localStorage.removeItem(key);
+          }
+        } catch(e) { localStorage.removeItem(key); }
+      }
+      // Legacy fallback
+      try {
+        const raw = localStorage.getItem('workoutInProgress');
+        if (raw) {
+          const saved = JSON.parse(raw);
+          if (saved.date === today && saved.workoutLog && Object.keys(saved.workoutLog).length > 0 && !names.includes(saved.workoutName)) {
+            names.push(saved.workoutName);
+          }
+        }
+      } catch(e) {}
+      return names;
+    }
+
     function renderMultiWorkoutDay(workouts, dateKey) {
       multiWorkoutList = workouts;
       const content = document.getElementById('workoutContent');
       const history = getWorkoutHistory();
-      const inProgressName = getInProgressWorkoutName();
+      const inProgressNames = getInProgressWorkoutNames();
 
       // Show the highest-intensity workout as the day title, not just the first one
       const typePriority = { 'strength': 5, 'sport-specific': 4, 'sport': 4, 'handball': 4, 'clinic': 4, 'mixed': 4, 'conditioning': 3, 'cardio': 3, 'warmup': 2, 'recovery': 1, 'prehab': 1, 'rest': 0 };
@@ -4041,7 +4092,7 @@
         const workoutLogged = history.find(h =>
           h.date === dateKey && h.workout === w.name
         );
-        const isInProgress = !workoutLogged && inProgressName === w.name;
+        const isInProgress = !workoutLogged && inProgressNames.includes(w.name);
 
         const loggedInfo = workoutLogged ? `
           <div class="activity-tile-logged-info">
@@ -4276,45 +4327,64 @@
         workoutLog: state.workoutLog,
         startTime: state.workoutStartTime ? state.workoutStartTime.toISOString() : null
       };
-      localStorage.setItem('workoutInProgress', JSON.stringify(data));
+      const key = 'workoutInProgress_' + state.activeWorkout.name;
+      localStorage.setItem(key, JSON.stringify(data));
     }
 
     function restoreProgressIfAvailable() {
+      if (!state.activeWorkout) return;
+      const key = 'workoutInProgress_' + state.activeWorkout.name;
       try {
-        const raw = localStorage.getItem('workoutInProgress');
-        if (!raw) return;
+        const raw = localStorage.getItem(key);
+        if (!raw) {
+          // Legacy fallback: check old single-key format
+          const legacyRaw = localStorage.getItem('workoutInProgress');
+          if (!legacyRaw) return;
+          const legacy = JSON.parse(legacyRaw);
+          const today = formatDateKey(state.currentDate);
+          if (legacy.date !== today || legacy.workoutName !== state.activeWorkout.name) return;
+          if (!legacy.workoutLog || Object.keys(legacy.workoutLog).length === 0) return;
+          // Migrate to new key
+          localStorage.setItem(key, legacyRaw);
+          localStorage.removeItem('workoutInProgress');
+          restoreFromSavedData(legacy);
+          return;
+        }
         const saved = JSON.parse(raw);
         const today = formatDateKey(state.currentDate);
-        if (saved.date !== today || !state.activeWorkout || saved.workoutName !== state.activeWorkout.name) return;
+        if (saved.date !== today || saved.workoutName !== state.activeWorkout.name) return;
         if (!saved.workoutLog || Object.keys(saved.workoutLog).length === 0) return;
-
-        state.workoutLog = saved.workoutLog;
-        if (saved.startTime) state.workoutStartTime = new Date(saved.startTime);
-
-        // Mark pills as complete/skipped in the DOM
-        Object.entries(state.workoutLog).forEach(([exerciseId, sets]) => {
-          if (!Array.isArray(sets)) return;
-          sets.forEach((set, setIndex) => {
-            if (!set) return;
-            const setId = `${exerciseId}-${setIndex}`;
-            const pill = document.getElementById(`set-${setId}`);
-            if (!pill) return;
-            const valueEl = document.getElementById(`set-value-${setId}`);
-            if (set.skipped) {
-              pill.classList.add('skipped');
-              if (valueEl) valueEl.textContent = 'Skip';
-            } else {
-              pill.classList.add('complete');
-              if (set.filmed) pill.classList.add('filmed');
-              if (valueEl) valueEl.textContent = set.weight ? `${set.weight}×${set.reps}` : `${set.reps || '✓'}`;
-            }
-          });
-        });
-
-        updateProgress();
+        restoreFromSavedData(saved);
       } catch(e) {
-        localStorage.removeItem('workoutInProgress');
+        localStorage.removeItem(key);
       }
+    }
+
+    function restoreFromSavedData(saved) {
+      state.workoutLog = saved.workoutLog;
+      if (saved.startTime) state.workoutStartTime = new Date(saved.startTime);
+
+      // Mark pills as complete/skipped in the DOM
+      Object.entries(state.workoutLog).forEach(([exerciseId, sets]) => {
+        if (!Array.isArray(sets)) return;
+        sets.forEach((set, setIndex) => {
+          if (!set) return;
+          const setId = `${exerciseId}-${setIndex}`;
+          const pill = document.getElementById(`set-${setId}`);
+          if (!pill) return;
+          const valueEl = document.getElementById(`set-value-${setId}`);
+          if (set.skipped) {
+            pill.classList.add('skipped');
+            if (valueEl) valueEl.textContent = 'Skip';
+          } else {
+            pill.classList.add('complete');
+            if (set.filmed) pill.classList.add('filmed');
+            if (valueEl) valueEl.textContent = set.weight ? `${set.weight}×${set.reps}` : `${set.reps || '✓'}`;
+          }
+        });
+      });
+
+      updateProgress();
     }
 
     // ==================== SET LOGGING ====================
@@ -4470,6 +4540,7 @@
 
       // Update UI
       const pill = document.getElementById(`set-${setId}`);
+      pill.classList.remove('skipped');
       pill.classList.add('complete');
       if (filmed) pill.classList.add('filmed');
 
@@ -4752,6 +4823,9 @@
       }
 
       // Clear autosave now that workout is fully saved
+      if (state.activeWorkout) {
+        localStorage.removeItem('workoutInProgress_' + state.activeWorkout.name);
+      }
       localStorage.removeItem('workoutInProgress');
 
       document.getElementById('completeModal').classList.remove('active');
@@ -6235,7 +6309,7 @@
         type: "Recovery",
         duration: "7 min",
         location: "Fort Davis (porch or indoors)",
-        condition: "Daily psoas management. Do this BEFORE the hike.\nSitting rule: break every 30 min (especially on the train tonight).",
+        condition: "Daily psoas management. Yoga this morning covered mobility.\nAmtrak cancelled — staying in Fort Davis through Sunday.",
         circuits: [
           {
             name: "Psoas Release",
@@ -6248,141 +6322,92 @@
           }
         ]
       },
-      {
-        name: "Davis Mountains Hike",
-        type: "Cardio",
-        duration: "60-90 min",
-        location: "Davis Mountains State Park",
-        condition: "Train departs 9pm. Moderate effort.\nPSOAS RULES: Stop every 30-45 min for standing hip flexor stretch. Shorten stride on uphills. If hip hits 3/10, shorten the route. Do post-hike stretches BEFORE sitting down.\nBring: water, snack, trekking poles if available",
-        circuits: [
-          {
-            name: "A. Hike (60-90 min)",
-            instructions: "Skyline Drive Trail (~5 mi) or shorter loop. Break every 30-45 min for a standing hip flexor stretch (30 sec each side). Shorten stride on steep uphills.",
-            exercises: [
-              { id: "fd19_a1", name: "Hike", sets: 1, reps: 1, notes: "Moderate pace. Shorten stride on uphills. Use trekking poles if available (reduces hip flexor demand). Bring water — altitude makes you thirstier.", isCardio: true, duration: 3600, noWeight: true }
-            ]
-          },
-          {
-            name: "B. Post-Hike: Psoas Recovery (8 min)",
-            instructions: "Do this BEFORE sitting down for a meal or in the car. This is the most important post-hike step given the psoas pattern.",
-            exercises: [
-              { id: "fd19_b0", name: "Prone Lying + Belly Breathing", sets: 1, reps: 1, notes: "3-5 min. Lie face down on the grass. Passive psoas lengthening before you sit.", isHold: true, holdTime: 240, noWeight: true },
-              { id: "fd19_b1", name: "Hip Flexor Lunge Stretch", sets: 1, reps: 1, notes: "Hold 60 sec each side. Extra time on right.", isHold: true, holdTime: 60, perSide: true, noWeight: true },
-              { id: "fd19_b2", name: "Standing Quad Stretch", sets: 1, reps: 1, notes: "Hold 30 sec each side.", isHold: true, holdTime: 30, perSide: true, noWeight: true },
-              { id: "fd19_b3", name: "Cross-Body Shoulder Stretch", sets: 1, reps: 1, notes: "30 sec each side.", isHold: true, holdTime: 30, perSide: true, noWeight: true }
-            ]
-          }
-        ]
-      }
     ],
-    '2026-03-20': {
-      name: "Return Day: Pool or Rest",
-      type: "Recovery",
-      duration: "30 min",
-      location: "Rec Center",
-      condition: "Train arrives 11am. Pool if you feel like moving, full rest if not. Save energy for lower body tomorrow.\nEquipment: none",
-      circuits: [
-        {
-          name: "A. Pool Recovery (optional, 20-25 min)",
-          instructions: "Only if it sounds good after the train. Skip entirely if tired.",
-          exercises: [
-            { id: "ret20_a1", name: "Easy Swim Laps", sets: 1, reps: 1, notes: "15 min easy freestyle or backstroke. Recovery pace.", isCardio: true, duration: 900, noWeight: true },
-            { id: "ret20_a2", name: "Water Walking", sets: 1, reps: 1, notes: "10 min. Forward, backward, lateral.", isCardio: true, duration: 600, noWeight: true }
-          ]
-        },
-        {
-          name: "B. Stretch (5 min)",
-          instructions: "Quick hip release if you're moving at all today.",
-          exercises: [
-            { id: "ret20_b1", name: "90/90 Hip Stretch", sets: 1, reps: 1, notes: "Hold 60 sec each side", isHold: true, holdTime: 60, perSide: true, noWeight: true },
-            { id: "ret20_b2", name: "Elevated Pigeon Lift Off", sets: 1, reps: 8, notes: "Each side", perSide: true, noWeight: true }
-          ]
-        }
-      ]
-    },
-    '2026-03-21': [
+    '2026-03-20': [
       {
-        name: "Lower Body Strength",
-        type: "Strength",
-        duration: "55-60 min",
-        location: "Gym",
-        condition: "First full gym day back from Fort Davis deload. Hip prehab IS the warm-up. Copenhagen adductors for groin monitoring.\nBring: loop band",
+        name: "Morning Psoas Protocol",
+        type: "Recovery",
+        duration: "7 min",
+        location: "Fort Davis",
+        condition: "Do before heading to friend's house for workout.",
         circuits: [
           {
-            name: "A. Hip Prehab Warm-Up (12-15 min)",
-            instructions: "From workout bases. Slow and controlled. This activates everything you need for lower body work.",
+            name: "Psoas Release",
+            instructions: "Standard morning psoas sequence.",
             exercises: [
-              { id: "lb21_a1", name: "Standing Hip Hydrants", sets: 2, reps: 12, notes: "Each side. Loop band above knees, wall for balance. Feel standing hip stay level.", perSide: true, noWeight: true },
-              { id: "lb21_a2", name: "Weighted Hip Airplanes", sets: 2, reps: 8, notes: "Each side. Light DB. Single-leg hinge, rotate pelvis up/down. Feel hip IR/ER.", perSide: true },
-              { id: "lb21_a3", name: "Kickstand RDLs", sets: 2, reps: 10, notes: "Each side. Band above knees, light DB. 90% weight on working leg. Feel hamstring.", perSide: true },
-              { id: "lb21_a4", name: "Copenhagen Adductor Hold", sets: 2, reps: 1, notes: "20 sec each side. Side plank, top foot on bench. Bottom leg hangs. Groin check.", isHold: true, holdTime: 20, perSide: true, noWeight: true },
-              { id: "lb21_a5", name: "Elevated Pigeon Lift Off", sets: 1, reps: 8, notes: "Each side. Bench, pigeon position, small knee press + release.", perSide: true, noWeight: true }
-            ]
-          },
-          {
-            name: "B. Squat + Power + Core (12 min)",
-            instructions: "Do B1-B2-B3, rest 90 sec, repeat 3x. First heavy session back — start conservative.",
-            restTime: 90,
-            exercises: [
-              { id: "lb21_b1", name: "DB Goblet Squat", sets: 3, reps: 12, weight: 25, notes: "Full depth, chest up. Wider stance for long levers." },
-              { id: "lb21_b2", name: "Jump Squats", sets: 3, reps: 8, notes: "Explosive up, land soft. Slightly fewer reps coming back from deload.", noWeight: true },
-              { id: "lb21_b3", name: "Front Low Plank Hold", sets: 3, reps: 1, notes: "Hold 30 sec. Straight line.", isHold: true, holdTime: 30, noWeight: true }
-            ]
-          },
-          {
-            name: "C. Lunge + Hinge + Core (12 min)",
-            instructions: "Do C1-C2-C3, rest 90 sec, repeat 3x",
-            restTime: 90,
-            exercises: [
-              { id: "lb21_c1", name: "DB Reverse Lunges", sets: 3, reps: 8, weight: 15, notes: "Each leg. Knee nearly to floor.", perSide: true },
-              { id: "lb21_c2", name: "DB RDLs", sets: 3, reps: 10, weight: 15, notes: "Hinge at hips. Long femurs = more forward lean, that's normal." },
-              { id: "lb21_c3", name: "Side Plank Hold L+R", sets: 3, reps: 1, notes: "25 sec each side", isHold: true, holdTime: 25, perSide: true, noWeight: true }
-            ]
-          },
-          {
-            name: "D. Machine Work (8 min)",
-            instructions: "Do D1-D2, rest 60 sec, repeat 3x",
-            restTime: 60,
-            exercises: [
-              { id: "lb21_d1", name: "Leg Press Machine", sets: 3, reps: 10, weight: 100, notes: "Full range, control weight" },
-              { id: "lb21_d2", name: "Hamstring Curl Machine", sets: 3, reps: 10, weight: 50, notes: "Squeeze at top, slow release" }
-            ]
-          },
-          {
-            name: "E. Cool-Down (8-10 min)",
-            instructions: "Hip release. Longer cool-down after first heavy session back.",
-            exercises: [
-              { id: "lb21_e1", name: "Figure-4 Hip Stretch", sets: 1, reps: 1, notes: "60 sec each side. Deep glute release.", isHold: true, holdTime: 60, perSide: true, noWeight: true },
-              { id: "lb21_e2", name: "Kneeling Hip Flexor Stretch", sets: 1, reps: 1, notes: "45 sec each side", isHold: true, holdTime: 45, perSide: true, noWeight: true },
-              { id: "lb21_e3", name: "Seated Hamstring Stretch", sets: 1, reps: 1, notes: "45 sec each side", isHold: true, holdTime: 45, perSide: true, noWeight: true },
-              { id: "lb21_e4", name: "Single Leg Glute Bridge (Bench)", sets: 2, reps: 12, notes: "Each side. Doubles as cool-down activation. Squeeze at top.", perSide: true, noWeight: true },
-              { id: "lb21_e5", name: "90/90 Hip Stretch", sets: 1, reps: 1, notes: "60 sec each side", isHold: true, holdTime: 60, perSide: true, noWeight: true }
+              { id: "psoas20_a1", name: "Prone Lying + Belly Breathing", sets: 1, reps: 1, notes: "3 min. Lie face down, breathe into belly against the floor.", isHold: true, holdTime: 180, noWeight: true },
+              { id: "psoas20_a2", name: "Supine Psoas March (Supported)", sets: 2, reps: 8, notes: "Each side. Feet flat, lift one foot 2 inches.", perSide: true, noWeight: true },
+              { id: "psoas20_a3", name: "Half-Kneeling Hip Flexor Stretch", sets: 1, reps: 1, notes: "60 sec each side. Squeeze back glute, tilt pelvis under.", isHold: true, holdTime: 60, perSide: true, noWeight: true },
+              { id: "psoas20_a4", name: "Foam Roller Thoracic Extension", sets: 1, reps: 1, notes: "2 min. Hands behind head, extend over roller at mid-back.", isHold: true, holdTime: 120, noWeight: true }
             ]
           }
         ]
       },
       {
-        name: "Movement Snack: Handball Form",
-        type: "Sport-Specific",
-        duration: "15 min",
-        location: "Squash Court or any wall",
-        condition: "First throws in over a week. Start easy. Interleaved practice.\nBring: handball",
+        name: "Strength: Friend's Gym (TBD)",
+        type: "Strength",
+        duration: "45-60 min",
+        location: "Friend's house, Fort Davis",
+        condition: "PLACEHOLDER — will design live based on available equipment. Priority: lower body strength (biggest gap this deload week). Full body if equipment allows.\nBackup: neighbor's ParaBody if needed.",
         circuits: [
           {
-            name: "Handball Movement Snack",
-            instructions: "Back to a wall after deload. Start easy, rebuild the patterns. Say your cue word before each throw.",
+            name: "Placeholder",
+            instructions: "Workout will be designed live when Sophie shares a photo of available equipment.",
             exercises: [
-              { id: "ms21_a1", name: "Wrist Flicks with Ball", sets: 1, reps: 20, notes: "Snap wrist, feel fingers release. Wake up the throwing hand.", noWeight: true },
-              { id: "ms21_a2", name: "Short Wall Passes Both Hands", sets: 1, reps: 10, notes: "10 each hand. Easy effort, close to wall.", perSide: true, noWeight: true },
-              { id: "ms21_a3", name: "Kneeling Throws (R)", sets: 2, reps: 6, notes: "Throwing-side knee down. Isolates torso rotation. Cue before each throw.", noWeight: true },
-              { id: "ms21_a4", name: "Standing Jump Shot (R)", sets: 2, reps: 5, notes: "3-step approach. Release at peak. Step, OPEN, launch.", noWeight: true },
-              { id: "ms21_a5", name: "Standing Throws (L)", sets: 2, reps: 6, notes: "Left hand. Low target, technique over power.", noWeight: true },
-              { id: "ms21_a6", name: "Pivot Footwork with Ball", sets: 2, reps: 5, notes: "Turn-PULL-throw. Arm starts separating DURING the turn.", noWeight: true }
+              { id: "fd20_ph1", name: "TBD — waiting on equipment photo", sets: 1, reps: 1, notes: "Will be replaced with real workout tomorrow.", noWeight: true }
             ]
           }
         ]
       }
-    ]
+    ],
+    '2026-03-21': {
+      name: "Pre-Drive Mobility + Movement Snack",
+      type: "Recovery",
+      duration: "20-25 min",
+      location: "Fort Davis",
+      condition: "Light session before 7+ hour drive to Houston. Priority: open hips for the car ride. No heavy loading.\nSitting rule on drive: stop every 60-90 min for standing hip flexor stretch.",
+      circuits: [
+        {
+          name: "A. Psoas + Hip Mobility (12 min)",
+          instructions: "Extended version of morning protocol. Set yourself up for the drive.",
+          exercises: [
+            { id: "pre21_a1", name: "Prone Lying + Belly Breathing", sets: 1, reps: 1, notes: "3 min. Lie face down, breathe into belly against the floor.", isHold: true, holdTime: 180, noWeight: true },
+            { id: "pre21_a2", name: "Supine Psoas March (Supported)", sets: 2, reps: 8, notes: "Each side. Feet flat, lift one foot 2 inches.", perSide: true, noWeight: true },
+            { id: "pre21_a3", name: "Half-Kneeling Hip Flexor Stretch", sets: 1, reps: 1, notes: "90 sec each side. Extra time today since you'll be sitting.", isHold: true, holdTime: 90, perSide: true, noWeight: true },
+            { id: "pre21_a4", name: "90/90 Hip Stretch", sets: 1, reps: 1, notes: "60 sec each side.", isHold: true, holdTime: 60, perSide: true, noWeight: true },
+            { id: "pre21_a5", name: "Foam Roller Thoracic Extension", sets: 1, reps: 1, notes: "2 min. Hands behind head, extend over roller at mid-back.", isHold: true, holdTime: 120, noWeight: true }
+          ]
+        },
+        {
+          name: "B. Movement Snack (8 min)",
+          instructions: "Light footwork to stay sharp. No high intensity.",
+          exercises: [
+            { id: "pre21_b1", name: "Defensive Slides + Drop Steps", sets: 3, reps: 1, notes: "20 sec each set. Lateral shuffle, slightly taller stance.", isHold: true, holdTime: 20, noWeight: true },
+            { id: "pre21_b2", name: "3-Step Rhythm (walkthrough)", sets: 2, reps: 5, notes: "Walkthrough speed only. Step, OPEN, launch.", noWeight: true }
+          ]
+        }
+      ]
+    },
+    '2026-03-22': {
+      name: "Drive Day: Post-Drive Stretch",
+      type: "Recovery",
+      duration: "15 min",
+      location: "Houston (home)",
+      condition: "7+ hour drive from Fort Davis. Stretch on arrival. Full rest otherwise.\nFirst full gym session: Monday Mar 23.",
+      circuits: [
+        {
+          name: "Post-Drive Recovery",
+          instructions: "Do this BEFORE sitting down at home. Same logic as post-hike protocol.",
+          exercises: [
+            { id: "drive22_a1", name: "Prone Lying + Belly Breathing", sets: 1, reps: 1, notes: "3-5 min. Passive psoas lengthening after hours of sitting.", isHold: true, holdTime: 240, noWeight: true },
+            { id: "drive22_a2", name: "Hip Flexor Lunge Stretch", sets: 1, reps: 1, notes: "60 sec each side. Extra time on right.", isHold: true, holdTime: 60, perSide: true, noWeight: true },
+            { id: "drive22_a3", name: "Standing Quad Stretch", sets: 1, reps: 1, notes: "30 sec each side.", isHold: true, holdTime: 30, perSide: true, noWeight: true },
+            { id: "drive22_a4", name: "90/90 Hip Stretch", sets: 1, reps: 1, notes: "60 sec each side.", isHold: true, holdTime: 60, perSide: true, noWeight: true },
+            { id: "drive22_a5", name: "Foam Roller Thoracic Extension", sets: 1, reps: 1, notes: "2 min. Undo the driving posture.", isHold: true, holdTime: 120, noWeight: true }
+          ]
+        }
+      ]
+    }
     };
 
     // Special dates with specific schedule info
@@ -6417,8 +6442,10 @@
       '2026-03-16': { type: 'travel', location: 'Fort Davis, TX', note: 'Rest + hip mobility. Balmorhea pool available.', facilities: 'pool' },
       '2026-03-17': { type: 'travel', location: 'Fort Davis, TX', note: 'Rest day -- skoolie work', facilities: 'minimal' },
       '2026-03-18': { type: 'travel', location: 'Fort Davis, TX', note: 'Band lower body + movement snack. Balmorhea pool if time.', facilities: 'bands' },
-      '2026-03-19': { type: 'travel', location: 'Fort Davis, TX', note: 'Hike + train departs 9pm to Houston', facilities: 'minimal' },
-      '2026-03-20': { type: 'travel', location: 'Houston (return)', note: 'Train arrives 11am. Recovery day — pool or light bike only.', facilities: 'gym+wall' }
+      '2026-03-19': { type: 'travel', location: 'Fort Davis, TX', note: 'Amtrak cancelled. Yoga class done. Rest day.', facilities: 'minimal' },
+      '2026-03-20': { type: 'travel', location: 'Fort Davis, TX', note: 'Strength at friend\'s gym (free weights). Backup: neighbor ParaBody.', facilities: 'gym' },
+      '2026-03-21': { type: 'travel', location: 'Fort Davis, TX', note: 'Pre-drive mobility. Driving to Houston.', facilities: 'minimal' },
+      '2026-03-22': { type: 'travel', location: 'Houston (return)', note: 'Drive arrives. Post-drive stretch. Full rest.', facilities: 'minimal' }
     };
 
     // Helper to check if a date is a travel day

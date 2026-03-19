@@ -6,8 +6,10 @@ Collected from sessions through Mar 15, 2026. Includes holistic review from 7 ag
 
 ## Bugs (fix these)
 
-- [ ] **noWeight exercises suppress note field in set modal** -- exercises with `noWeight: true` hide the note input, not just the weight input. Sophie couldn't log plate counts or modifications during the ParaBody session (Mar 16). Notes should always be available regardless of noWeight flag.
-- [ ] **Multi-workout progress lost when switching** -- on a multi-workout day, starting a second workout (e.g., Movement Snack) clears in-progress data from the first (e.g., Hip Prehab). Logged sets are wiped. Repro: start workout A, log some sets, tap workout B, complete it, return to A -- progress gone. (Mar 14)
+- [x] **~~noWeight exercises suppress note field in set modal~~** -- RESOLVED: The real bug was in saveWorkout() -- it only persisted weight/reps/feel per set, dropping note, effortType, and filmed fields entirely. The note input was accessible in the modal for non-simple circuits, but the data was lost on save. Fixed Mar 17.
+- [x] **~~Today tab doesn't reset to actual today~~** -- Fixed: showView('today') now resets state.currentDate to new Date(). Mar 17.
+- [x] **Multi-workout progress lost when switching** -- on a multi-workout day, starting a second workout (e.g., Movement Snack) clears in-progress data from the first (e.g., Hip Prehab). Logged sets are wiped. Fixed: autosave now uses per-workout localStorage keys (`workoutInProgress_<name>`) so each workout's progress is independent. Mar 19.
+- [x] **Skipped set pill stays grayed out after re-logging** -- logging real data over a skipped set added `complete` class but didn't remove `skipped` class, keeping the pill at 50% opacity. Fixed: `logSet()` now removes `skipped` class before adding `complete`. Mar 19.
 
 ## Features
 
