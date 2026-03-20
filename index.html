@@ -476,8 +476,8 @@
     }
 
     .exercise-notes {
-      font-size: 12px;
-      color: var(--text-muted);
+      font-size: 13px;
+      color: var(--text-secondary);
       margin-top: 6px;
       line-height: 1.4;
       display: -webkit-box;
@@ -631,8 +631,8 @@
       cursor: pointer;
       padding: 8px;
       border-radius: var(--radius-full);
-      width: 36px;
-      height: 36px;
+      width: 44px;
+      height: 44px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -713,7 +713,7 @@
       background: var(--bg-card);
       border: 2px solid var(--border);
       border-radius: var(--radius-sm);
-      padding: 14px 4px;
+      padding: 14px 8px;
       cursor: pointer;
       transition: var(--transition);
     }
@@ -843,6 +843,50 @@
 
     .set-note-expand.expanded, .set-more-options.expanded {
       display: block;
+    }
+
+    .set-adjustment-inline {
+      display: none;
+      margin-top: 12px;
+      padding: 12px;
+      background: rgba(234, 179, 8, 0.05);
+      border: 1px solid rgba(234, 179, 8, 0.2);
+      border-radius: var(--radius-sm);
+    }
+
+    .set-adjustment-inline.expanded {
+      display: block;
+    }
+
+    /* Toast notification */
+    .toast {
+      position: fixed;
+      bottom: 80px;
+      left: 50%;
+      transform: translateX(-50%) translateY(20px);
+      padding: 10px 20px;
+      border-radius: var(--radius-sm);
+      font-size: 13px;
+      font-weight: 600;
+      z-index: 10000;
+      opacity: 0;
+      transition: opacity 0.3s, transform 0.3s;
+      pointer-events: none;
+    }
+
+    .toast.visible {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    .toast.success {
+      background: var(--success);
+      color: white;
+    }
+
+    .toast.error {
+      background: var(--danger);
+      color: white;
     }
 
     /* Modal Buttons */
@@ -2708,9 +2752,34 @@
           </div>
         </div>
 
-        <div class="adjustment-toggle" id="adjustmentToggle" onclick="showAdjustmentModal()">
+        <div class="adjustment-toggle" id="adjustmentToggle" onclick="toggleAdjustmentInline()">
           <span>Adjusted from plan?</span>
           <span style="font-size: 11px;">(reduced weight, modified, etc.)</span>
+        </div>
+
+        <div class="set-adjustment-inline" id="adjustmentInline">
+          <div class="input-group" style="margin-bottom: 12px;">
+            <label class="input-label">What did you adjust?</label>
+            <div class="adjustment-reason-chips" id="inlineAdjustmentTypeChips">
+              <button class="reason-chip" data-value="reduced_weight" onclick="this.classList.toggle('selected')">Reduced weight</button>
+              <button class="reason-chip" data-value="fewer_reps" onclick="this.classList.toggle('selected')">Fewer reps</button>
+              <button class="reason-chip" data-value="skipped_exercise" onclick="this.classList.toggle('selected')">Skipped exercise</button>
+              <button class="reason-chip" data-value="modified_movement" onclick="this.classList.toggle('selected')">Modified movement</button>
+            </div>
+          </div>
+          <div class="input-group" style="margin-bottom: 12px;">
+            <label class="input-label">Why? (optional)</label>
+            <div class="adjustment-reason-chips" id="inlineAdjustmentReasonChips">
+              <button class="reason-chip" data-value="fatigue" onclick="this.classList.toggle('selected')">Fatigue</button>
+              <button class="reason-chip" data-value="discomfort" onclick="this.classList.toggle('selected')">Discomfort</button>
+              <button class="reason-chip" data-value="time" onclick="this.classList.toggle('selected')">Time</button>
+              <button class="reason-chip" data-value="form" onclick="this.classList.toggle('selected')">Form issues</button>
+            </div>
+          </div>
+          <div class="input-group" style="margin-bottom: 0;">
+            <label class="input-label">Notes (optional)</label>
+            <textarea class="notes-input" id="inlineAdjustmentNotes" placeholder="e.g., Left shoulder felt tight from handball yesterday" style="min-height: 48px;"></textarea>
+          </div>
         </div>
       </div>
 
@@ -2757,9 +2826,12 @@
   </div>
 
   <!-- Workout Complete Modal -->
-  <div class="modal-overlay" id="completeModal">
-    <div class="modal-content complete-modal">
-      <h2>Workout Complete!</h2>
+  <div class="modal-overlay" id="completeModal" onclick="closeCompleteModal()">
+    <div class="modal-content complete-modal" onclick="event.stopPropagation()">
+      <div class="modal-header">
+        <h2 style="margin: 0;">Workout Complete!</h2>
+        <button class="modal-close" onclick="closeCompleteModal()">&times;</button>
+      </div>
       <p id="workoutDuration">45 minutes</p>
 
       <div class="stats-grid">
@@ -2959,45 +3031,8 @@
     </div>
   </div>
 
-  <!-- Adjustment Modal -->
-  <div class="modal-overlay" id="adjustmentModal" onclick="closeAdjustmentModal()">
-    <div class="modal-content" onclick="event.stopPropagation()">
-      <div class="modal-header">
-        <div class="modal-title">Log Adjustment</div>
-        <button class="modal-close" onclick="closeAdjustmentModal()">&times;</button>
-      </div>
-
-      <div class="input-group">
-        <label class="input-label">What did you adjust?</label>
-        <div class="adjustment-reason-chips" id="adjustmentTypeChips">
-          <button class="reason-chip" data-value="reduced_weight">Reduced weight</button>
-          <button class="reason-chip" data-value="fewer_reps">Fewer reps</button>
-          <button class="reason-chip" data-value="skipped_exercise">Skipped exercise</button>
-          <button class="reason-chip" data-value="modified_movement">Modified movement</button>
-        </div>
-      </div>
-
-      <div class="input-group">
-        <label class="input-label">Why? (optional)</label>
-        <div class="adjustment-reason-chips" id="adjustmentReasonChips">
-          <button class="reason-chip" data-value="fatigue">Fatigue</button>
-          <button class="reason-chip" data-value="discomfort">Discomfort</button>
-          <button class="reason-chip" data-value="time">Time</button>
-          <button class="reason-chip" data-value="form">Form issues</button>
-        </div>
-      </div>
-
-      <div class="input-group">
-        <label class="input-label">Notes (optional)</label>
-        <textarea class="notes-input" id="adjustmentNotes" placeholder="e.g., Left shoulder felt tight from handball yesterday"></textarea>
-      </div>
-
-      <div class="modal-actions">
-        <button class="btn btn-secondary" onclick="closeAdjustmentModal()">Cancel</button>
-        <button class="btn btn-primary" style="background: var(--warning);" onclick="saveAdjustment()">Save Adjustment</button>
-      </div>
-    </div>
-  </div>
+  <!-- Toast notification -->
+  <div class="toast" id="toast"></div>
 
   <!-- Custom Protein Modal -->
   <div class="modal-overlay" id="customProteinModal" onclick="closeCustomProteinModal()">
@@ -3122,8 +3157,8 @@
       const docId = `${workoutData.date}_${(workoutData.workout || workoutData.activityId || 'workout').replace(/[^a-zA-Z0-9]/g, '_')}`;
       workoutData.docId = docId;
       db.collection('workouts').doc(docId).set(workoutData)
-        .then(() => console.log('Workout saved to cloud'))
-        .catch((error) => console.log('Error saving workout:', error));
+        .then(() => { console.log('Workout saved to cloud'); showToast('Saved to cloud'); })
+        .catch((error) => { console.log('Error saving workout:', error); showToast('Save failed - check connection', 'error'); });
     }
 
     // Listen for workout history changes from Firestore (realtime)
@@ -4463,6 +4498,15 @@
       document.getElementById('setMoreOptions').classList.remove('expanded');
 
       document.getElementById('setModal').classList.add('active');
+
+      // Autofocus appropriate input
+      setTimeout(() => {
+        if (exercise.noWeight) {
+          document.getElementById('repsInput').focus();
+        } else {
+          document.getElementById('weightInput').focus();
+        }
+      }, 100);
     }
 
     function quickLogSet(exerciseId, setIndex, exercise) {
@@ -4523,9 +4567,13 @@
       document.getElementById('setMoreOptions').classList.remove('expanded');
       document.getElementById('noteToggle').classList.remove('active');
       document.getElementById('moreToggle').classList.remove('active');
+      document.getElementById('adjustmentInline').classList.remove('expanded');
+      document.getElementById('adjustmentToggle').classList.remove('active');
     }
 
     function logSet() {
+      collectInlineAdjustment();
+
       const weight = parseFloat(document.getElementById('weightInput').value) || 0;
       const reps = parseInt(document.getElementById('repsInput').value) || state.currentExercise.data.reps;
       const feelBtn = document.querySelector('#feelSlider .feel-btn.selected');
@@ -4619,6 +4667,16 @@
       // Remove legacy floating finish banner if it exists (sticky button handles this now)
       let banner = document.getElementById('finishBanner');
       if (banner) banner.remove();
+
+      // Auto-scroll to first incomplete circuit
+      if (firstIncomplete >= 0) {
+        const currentSection = document.getElementById(`circuit-${firstIncomplete}`);
+        if (currentSection) {
+          setTimeout(() => {
+            currentSection.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+          }, 200);
+        }
+      }
     }
 
     // ==================== WORKOUT COMPARISON ====================
@@ -4702,7 +4760,30 @@
     }
 
     // ==================== WORKOUT COMPLETION ====================
+    function closeCompleteModal() {
+      document.getElementById('completeModal').classList.remove('active');
+    }
+
     function finishWorkout() {
+      // Count sets for confirmation
+      let totalSets = 0;
+      let completedSets = 0;
+      if (state.activeWorkout && state.activeWorkout.circuits) {
+        state.activeWorkout.circuits.forEach((circuit, ci) => {
+          circuit.exercises.forEach((ex, ei) => {
+            totalSets += ex.sets;
+            const id = `${ci}-${ei}`;
+            if (state.workoutLog[id]) {
+              completedSets += state.workoutLog[id].filter(s => s && !s.skipped).length;
+            }
+          });
+        });
+      }
+
+      if (!confirm(`Finish workout? ${completedSets} of ${totalSets} sets completed.`)) {
+        return;
+      }
+
       const duration = state.workoutStartTime ?
         Math.round((new Date() - state.workoutStartTime) / 60000) : 0;
 
@@ -4973,6 +5054,13 @@
     let currentView = 'today';
 
     function showView(viewName) {
+      // Guard against leaving Today with active workout
+      if (currentView === 'today' && viewName !== 'today' && state.workoutStartTime && state.activeWorkout) {
+        if (!confirm('Leave workout in progress? Your sets are auto-saved.')) {
+          return;
+        }
+      }
+
       // Save scroll position of current view
       viewScrollPositions[currentView] = window.scrollY;
 
@@ -6776,6 +6864,18 @@
     // Helper to format date as YYYY-MM-DD
     function escHtml(s) { return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
 
+    function showToast(msg, type = 'success') {
+      const toast = document.getElementById('toast');
+      toast.textContent = msg;
+      toast.className = `toast ${type}`;
+      requestAnimationFrame(() => {
+        toast.classList.add('visible');
+      });
+      setTimeout(() => {
+        toast.classList.remove('visible');
+      }, 2000);
+    }
+
     function formatDateKey(date) {
       const year = date.getFullYear();
       const month = String(date.getMonth() + 1).padStart(2, '0');
@@ -7651,38 +7751,31 @@
     // ==================== ADJUSTMENT CAPTURE ====================
     let currentAdjustment = null;
 
-    function showAdjustmentModal() {
-      // Reset
-      document.querySelectorAll('#adjustmentTypeChips .reason-chip').forEach(b => b.classList.remove('selected'));
-      document.querySelectorAll('#adjustmentReasonChips .reason-chip').forEach(b => b.classList.remove('selected'));
-      document.getElementById('adjustmentNotes').value = '';
+    function toggleAdjustmentInline() {
+      const section = document.getElementById('adjustmentInline');
+      const toggle = document.getElementById('adjustmentToggle');
+      const isExpanded = section.classList.toggle('expanded');
+      toggle.classList.toggle('active', isExpanded);
 
-      // Set up click handlers for multi-select
-      document.querySelectorAll('#adjustmentTypeChips .reason-chip').forEach(btn => {
-        btn.onclick = () => btn.classList.toggle('selected');
-      });
-      document.querySelectorAll('#adjustmentReasonChips .reason-chip').forEach(btn => {
-        btn.onclick = () => btn.classList.toggle('selected');
-      });
-
-      document.getElementById('adjustmentModal').classList.add('active');
-    }
-
-    function closeAdjustmentModal() {
-      document.getElementById('adjustmentModal').classList.remove('active');
-    }
-
-    function saveAdjustment() {
-      const types = Array.from(document.querySelectorAll('#adjustmentTypeChips .reason-chip.selected'))
-        .map(b => b.dataset.value);
-      const reasons = Array.from(document.querySelectorAll('#adjustmentReasonChips .reason-chip.selected'))
-        .map(b => b.dataset.value);
-      const notes = document.getElementById('adjustmentNotes').value;
-
-      if (types.length === 0) {
-        closeAdjustmentModal();
-        return;
+      if (isExpanded) {
+        // Reset
+        document.querySelectorAll('#inlineAdjustmentTypeChips .reason-chip').forEach(b => b.classList.remove('selected'));
+        document.querySelectorAll('#inlineAdjustmentReasonChips .reason-chip').forEach(b => b.classList.remove('selected'));
+        document.getElementById('inlineAdjustmentNotes').value = '';
       }
+    }
+
+    function collectInlineAdjustment() {
+      const section = document.getElementById('adjustmentInline');
+      if (!section.classList.contains('expanded')) return;
+
+      const types = Array.from(document.querySelectorAll('#inlineAdjustmentTypeChips .reason-chip.selected'))
+        .map(b => b.dataset.value);
+      const reasons = Array.from(document.querySelectorAll('#inlineAdjustmentReasonChips .reason-chip.selected'))
+        .map(b => b.dataset.value);
+      const notes = document.getElementById('inlineAdjustmentNotes').value;
+
+      if (types.length === 0) return;
 
       currentAdjustment = {
         exercise: state.currentExercise.data.name,
@@ -7694,13 +7787,10 @@
         timestamp: new Date().toISOString()
       };
 
-      // Add to workout log adjustments
       if (!state.workoutAdjustments) {
         state.workoutAdjustments = [];
       }
       state.workoutAdjustments.push(currentAdjustment);
-
-      closeAdjustmentModal();
     }
 
     // ==================== INSIGHTS & PATTERNS ====================
