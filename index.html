@@ -6365,17 +6365,59 @@
         ]
       },
       {
-        name: "Strength: Friend's Gym (TBD)",
+        name: "Lower Body + Pull: Friend's Garage",
         type: "Strength",
-        duration: "45-60 min",
-        location: "Friend's house, Fort Davis",
-        condition: "PLACEHOLDER — will design live based on available equipment. Priority: lower body strength (biggest gap this deload week). Full body if equipment allows.\nBackup: neighbor's ParaBody if needed.",
+        duration: "50-55 min",
+        location: "Friend's garage, Fort Davis",
+        condition: "First real lower body session since Mar 7. Full DB rack (15-75 lb), multi-station cable gym, Total Gym. Plus your bands.\nHold weights steady from last session — first session back from deload.\nEquipment: DBs, cable station, loop bands",
         circuits: [
           {
-            name: "Placeholder",
-            instructions: "Workout will be designed live when Sophie shares a photo of available equipment.",
+            name: "A. Hip Prehab Warm-Up (10 min)",
+            instructions: "Your bands. Activate glutes and hips before loading. Slow and controlled.",
             exercises: [
-              { id: "fd20_ph1", name: "TBD — waiting on equipment photo", sets: 1, reps: 1, notes: "Will be replaced with real workout tomorrow.", noWeight: true }
+              { id: "fd20_a1", name: "Standing Hip Hydrants", sets: 2, reps: 12, notes: "Each side. Loop band above knees, wall for balance.", perSide: true, noWeight: true },
+              { id: "fd20_a2", name: "Glute Bridge (Banded)", sets: 2, reps: 15, notes: "Band above knees. Squeeze at top, 2 sec hold.", noWeight: true },
+              { id: "fd20_a3", name: "Kickstand RDL (Bodyweight)", sets: 2, reps: 10, notes: "Each side. Band above knees. 90% weight on working leg. Feel hamstring.", perSide: true, noWeight: true },
+              { id: "fd20_a4", name: "Copenhagen Adductor Hold", sets: 2, reps: 1, notes: "15 sec each side. Use a bench or the Total Gym seat. Groin check — how does it feel?", isHold: true, holdTime: 15, perSide: true, noWeight: true }
+            ]
+          },
+          {
+            name: "B. DB Lower Body (15 min)",
+            instructions: "B1-B2-B3, rest 90 sec, repeat 3x. Same weights as Mar 7 — hold steady coming back from deload.",
+            restTime: 90,
+            exercises: [
+              { id: "fd20_b1", name: "DB Goblet Squat", sets: 3, reps: 12, weight: 25, notes: "Full depth, chest up. Wider stance for long levers." },
+              { id: "fd20_b2", name: "DB Reverse Lunges", sets: 3, reps: 8, weight: 15, notes: "Each leg. Knee nearly to floor. Shortened step back for psoas.", perSide: true },
+              { id: "fd20_b3", name: "DB RDLs", sets: 3, reps: 10, weight: 15, notes: "Hinge at hips. Long femurs = more forward lean, that's normal." }
+            ]
+          },
+          {
+            name: "C. Power + Core (10 min)",
+            instructions: "C1-C2-C3, rest 60 sec, repeat 3x. Bodyweight power work.",
+            restTime: 60,
+            exercises: [
+              { id: "fd20_c1", name: "Jump Squats", sets: 3, reps: 8, notes: "Explosive up, land soft. Bodyweight only.", noWeight: true },
+              { id: "fd20_c2", name: "Single Leg Glute Bridge", sets: 3, reps: 10, notes: "Each side. Lie on floor, foot on bench or Total Gym seat.", perSide: true, noWeight: true },
+              { id: "fd20_c3", name: "Side Plank Hold", sets: 3, reps: 1, notes: "25 sec each side.", isHold: true, holdTime: 25, perSide: true, noWeight: true }
+            ]
+          },
+          {
+            name: "D. Upper Body Pull (8 min)",
+            instructions: "D1-D2, rest 60 sec, repeat 3x. Pull volume was down 50% this week — quick top-up.",
+            restTime: 60,
+            exercises: [
+              { id: "fd20_d1", name: "Single Arm DB Row", sets: 3, reps: 10, weight: 20, notes: "Bench or Total Gym for support. Same weight as Mar 10." },
+              { id: "fd20_d2", name: "DB Bicep Curls", sets: 3, reps: 10, weight: 15, notes: "Same weight as Mar 10. Calibration check at this gym." }
+            ]
+          },
+          {
+            name: "E. Cool-Down (8 min)",
+            instructions: "Hip release. Extra attention to hip flexors after first heavy lower body in 2 weeks.",
+            exercises: [
+              { id: "fd20_e1", name: "Hip Flexor Lunge Stretch", sets: 1, reps: 1, notes: "60 sec each side. Extra time on right.", isHold: true, holdTime: 60, perSide: true, noWeight: true },
+              { id: "fd20_e2", name: "90/90 Hip Stretch", sets: 1, reps: 1, notes: "60 sec each side.", isHold: true, holdTime: 60, perSide: true, noWeight: true },
+              { id: "fd20_e3", name: "Figure-4 Hip Stretch", sets: 1, reps: 1, notes: "60 sec each side. Deep glute release.", isHold: true, holdTime: 60, perSide: true, noWeight: true },
+              { id: "fd20_e4", name: "Prone Lying + Belly Breathing", sets: 1, reps: 1, notes: "2-3 min. Passive psoas lengthening before sitting down.", isHold: true, holdTime: 150, noWeight: true }
             ]
           }
         ]
