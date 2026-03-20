@@ -1,15 +1,12 @@
 # Training Tracker App -- Feature Backlog
 
-Collected from sessions through Mar 15, 2026. Includes holistic review from 7 agents (PM, Backend, Frontend, QA, UX, Coach, Athlete) + 3 dashboard review agents (Coach, Athlete, Data Viz).
+Collected from sessions through Mar 20, 2026. Includes holistic review from 7 agents (PM, Backend, Frontend, QA, UX, Coach, Athlete) + 3 dashboard review agents (Coach, Athlete, Data Viz).
 
 ---
 
 ## Bugs (fix these)
 
-- [x] **~~noWeight exercises suppress note field in set modal~~** -- RESOLVED: The real bug was in saveWorkout() -- it only persisted weight/reps/feel per set, dropping note, effortType, and filmed fields entirely. The note input was accessible in the modal for non-simple circuits, but the data was lost on save. Fixed Mar 17.
-- [x] **~~Today tab doesn't reset to actual today~~** -- Fixed: showView('today') now resets state.currentDate to new Date(). Mar 17.
-- [x] **Multi-workout progress lost when switching** -- on a multi-workout day, starting a second workout (e.g., Movement Snack) clears in-progress data from the first (e.g., Hip Prehab). Logged sets are wiped. Fixed: autosave now uses per-workout localStorage keys (`workoutInProgress_<name>`) so each workout's progress is independent. Mar 19.
-- [x] **Skipped set pill stays grayed out after re-logging** -- logging real data over a skipped set added `complete` class but didn't remove `skipped` class, keeping the pill at 50% opacity. Fixed: `logSet()` now removes `skipped` class before adding `complete`. Mar 19.
+(none open)
 
 ## Features
 
@@ -62,20 +59,13 @@ Collected from sessions through Mar 15, 2026. Includes holistic review from 7 ag
 
 ### High Priority
 
-- [x] **"This Week at a Glance" summary strip** -- row of stat cards at top: total sessions, total volume, protein hit rate (e.g. "5/7 days on target"), supplement streak, readiness trend arrow. Week-over-week deltas for motivation ("42 sets, +6 from last week"). (Athlete, Coach)
-- [x] **Red flag banner system** -- auto-triggered alerts at top of dashboard: readiness <70 for 2+ days, protein under target 3+ days, same body area discomfort 2+ times in 7 days, no prehab in 5+ days. (Coach)
 - [ ] **Weight progression tooltips with reps/sets/feel** -- current tooltip only shows weight. Add set count, reps at that weight, and feel rating. PR marker (star) on highest data point. (Athlete, Data Viz)
-- [x] **Quick-preset date range buttons** -- "7 days", "4 weeks", "8 weeks", "All time" buttons next to date pickers. Reduces friction especially on mobile. (Athlete, Data Viz)
-- [x] **Protein adherence summary stat** -- "Hit target 5/7 days (71%)" above the chart. Rolling 7-day average line overlaid on daily bars for chronic underfueling visibility. (Coach, Athlete, Data Viz)
-- [x] **Training load vs readiness overlay** -- tried it, made readiness chart too busy. Removed per coach/athlete/data viz review. Training load visible in volume chart instead. (Coach, Athlete)
 - [ ] **Discomfort frequency summary** -- "Groin: 4 mentions in 28 days" counts above the timeline. Flag recurring body areas. (Coach, Athlete, Data Viz)
 - [ ] **Firestore query caching** -- cache full dataset on first load, filter client-side on date range change. Only re-fetch if range extends beyond cache. Prevents quota burn and slowness as data grows. (Data Viz)
 
 ### Medium Priority
 
 - [ ] **Feel trends exercise selector** -- replace auto-top-5 with multi-select or clickable legend. Coach wants to watch specific exercises (hip-adjacent, shoulder). (Athlete, Coach)
-- [x] **Readiness zone visibility** -- tuned to 4-6% opacity after testing higher values (12-15% competed with data). Subtle hints work better on dark theme. (Data Viz)
-- ~~**Workout day tooltip on readiness chart**~~ -- removed workout markers from readiness chart per review. Training data lives in volume chart. (Data Viz)
 - [ ] **Volume summary stat** -- total sets or hours above the volume chart without hovering. (Data Viz)
 - [ ] **Week-over-week ghost bars on volume chart** -- thin outline showing previous period's volume behind current bars. (Data Viz)
 - [ ] **Session RPE tracking** -- post-session RPE (1-10) at workout level, separate from per-set feel. RPE x duration = session load score. (Coach)
@@ -107,6 +97,20 @@ Collected from sessions through Mar 15, 2026. Includes holistic review from 7 ag
 
 ---
 
+## Done (Mar 19-20)
+
+- [x] **BUG: Multi-workout progress lost when switching** -- autosave now uses per-workout localStorage keys (`workoutInProgress_<name>`) so each workout's progress is independent. Stale keys from previous dates cleaned up automatically. Mar 19.
+- [x] **BUG: Skipped set pill stays grayed out after re-logging** -- `logSet()` now removes `skipped` class before adding `complete`. Mar 19.
+- [x] **FUEL: 90/90 protein bar** -- yellow en route, green at 90% of target, green-gold gradient over 100%. Mar 19.
+- [x] **SCHEDULE: Extended Fort Davis stay** -- Amtrak cancelled. Updated Mar 19-22 (yoga, friend's gym placeholder, pre-drive mobility, drive day stretch). Mar 19.
+- [x] **SCHEDULE: Week 7 workouts (Mar 23-29)** -- first full week back from deload. ACWR ~1.19. Coach reviewed. Mar 20.
+- [x] **INFRA: PT time updated** -- 5pm / 50 min (was 4pm / 60 min). Mar 20.
+
+## Done (Mar 17)
+
+- [x] **BUG: noWeight exercises suppress note field in set modal** -- RESOLVED: The real bug was in saveWorkout() -- it only persisted weight/reps/feel per set, dropping note, effortType, and filmed fields entirely. Fixed Mar 17.
+- [x] **BUG: Today tab doesn't reset to actual today** -- showView('today') now resets state.currentDate to new Date(). Mar 17.
+
 ## Done (Mar 15)
 
 - [x] **Training Dashboard built** -- `dashboard.html` with 7 charts: Training Volume (sets/minutes toggle), Weight Progression, Readiness + HRV + Sleep, Protein Adherence, Supplement Streak, Feel Trends, Discomfort Timeline. Same Firebase/auth as tracker.
@@ -116,6 +120,12 @@ Collected from sessions through Mar 15, 2026. Includes holistic review from 7 ag
 - [x] **PT session backfill** -- Feb 9 and Mar 2 PT sessions backfilled from notes/photos into structured exercise arrays.
 - [x] **Creatine backfill** -- all fuel log days updated to creatine=true.
 - [x] **Protein adherence context-aware coloring** -- uses fuel log `target` field (130/150), green=hit, gold=within 10%, red=under.
+- [x] **"This Week at a Glance" summary strip** -- row of stat cards at top of dashboard. (Athlete, Coach)
+- [x] **Red flag banner system** -- auto-triggered alerts at top of dashboard. (Coach)
+- [x] **Quick-preset date range buttons** -- "7 days", "4 weeks", "8 weeks", "All time". (Athlete, Data Viz)
+- [x] **Protein adherence summary stat** -- "Hit target 5/7 days (71%)" above chart + rolling 7-day average line. (Coach, Athlete, Data Viz)
+- [x] **Training load vs readiness overlay** -- tried it, too busy. Removed. (Coach, Athlete)
+- [x] **Readiness zone visibility** -- tuned to 4-6% opacity. (Data Viz)
 
 ## Done (Mar 14)
 
@@ -131,11 +141,11 @@ Collected from sessions through Mar 15, 2026. Includes holistic review from 7 ag
 - [x] **INFRA: Firebase service account for CLI** -- firebase-admin Python SDK, service account at ~/.config/training-tracker/
 - [x] **INFRA: /log-pt skill** -- PT session intake from photos/notes to Firestore
 - [x] **SECURITY: Google Sign-in auth gate** -- popup + redirect fallback, visible error messages
-- [x] **CLEANUP: Remove dead WORKOUTS object** -- deleted ~475 lines of unused workout definitions. Extracted pool recovery as standalone `POOL_RECOVERY` constant. `startRecurringWorkout()` → `startPoolRecovery()`.
-- [x] **CLEANUP: Remove SCHEDULE** -- DATE_WORKOUTS is sole source of truth. SCHEDULE fully removed.
-- [x] **CLEANUP: Deprecate SCHEDULE for coach/agent context** -- coach system prompt pulls from DATE_WORKOUTS first. Added rule: "never assume what she did based on day of week."
-- [x] **SECURITY: Deploy updated worker.js** -- installed Node via Homebrew, deployed with wrangler. CORS restricted, anonymous requests denied, model default updated to claude-sonnet-4-6.
-- [x] **INFRA: `/deploy` skill** -- 3 parallel QA agents (code quality, view consistency, data flow) + commit + preview + push + backlog cleanup. Replaced manual 4-step QA process in CLAUDE.md.
+- [x] **CLEANUP: Remove dead WORKOUTS object** -- deleted ~475 lines. Extracted POOL_RECOVERY.
+- [x] **CLEANUP: Remove SCHEDULE** -- DATE_WORKOUTS is sole source of truth.
+- [x] **CLEANUP: Deprecate SCHEDULE for coach/agent context** -- coach pulls from DATE_WORKOUTS first.
+- [x] **SECURITY: Deploy updated worker.js** -- CORS restricted, anonymous requests denied, model updated.
+- [x] **INFRA: `/deploy` skill** -- 3 parallel QA agents + commit + preview + push + backlog cleanup.
 
 ## Done (Mar 12)
 

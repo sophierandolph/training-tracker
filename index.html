@@ -5187,8 +5187,8 @@
         {
           id: 'personal_training',
           name: 'Personal Training',
-          time: '4:00pm',
-          duration: 60,
+          time: '5:00pm',
+          duration: 50,
           location: 'Gym',
           type: 'Strength',
           description: 'Trainer-led session'
@@ -6490,7 +6490,242 @@
           ]
         }
       ]
-    }
+    },
+    '2026-03-24': [
+      {
+        name: "Active Recovery: Pool + Mobility",
+        type: "Recovery",
+        duration: "20 min",
+        location: "Rec Center",
+        condition: "Day after PT + soccer double. Easy movement only.\nPool if available, otherwise mobility flow on mat.",
+        circuits: [
+          {
+            name: "Pool or Mobility (20 min)",
+            instructions: "Pick one: pool recovery OR floor mobility. Don't force it.",
+            exercises: [
+              { id: "w7tue_a1", name: "Easy Swim Laps", sets: 1, reps: 1, notes: "10 min easy freestyle or backstroke. Recovery pace. Skip if no pool access — do floor mobility instead.", isCardio: true, duration: 600, noWeight: true },
+              { id: "w7tue_a2", name: "Water Walking", sets: 1, reps: 1, notes: "5 min. Forward, backward, lateral.", isCardio: true, duration: 300, noWeight: true },
+              { id: "w7tue_a3", name: "90/90 Hip Stretch", sets: 1, reps: 1, notes: "60 sec each side.", isHold: true, holdTime: 60, perSide: true, noWeight: true },
+              { id: "w7tue_a4", name: "Hip Flexor Lunge Stretch", sets: 1, reps: 1, notes: "45 sec each side. Extra time on right.", isHold: true, holdTime: 45, perSide: true, noWeight: true }
+            ]
+          }
+        ]
+      },
+      {
+        name: "Movement Snack: Throwing Phase 1",
+        type: "Sport-Specific",
+        duration: "15 min",
+        location: "Squash court or any wall",
+        condition: "Phase 1: stationary only, 50-60% effort. ~40 throws.\nSay your cue word before each throw.",
+        circuits: [
+          {
+            name: "Wall Throwing (Phase 1)",
+            instructions: "All stationary. 50-60% effort. Back at a wall after Fort Davis field work.",
+            exercises: [
+              { id: "w7tue_b1", name: "Wrist Flicks with Ball", sets: 1, reps: 20, notes: "Snap wrist, feel fingers release.", noWeight: true },
+              { id: "w7tue_b2", name: "Short Wall Passes Both Hands", sets: 1, reps: 10, notes: "10 each hand. Easy effort, close to wall.", perSide: true, noWeight: true },
+              { id: "w7tue_b3", name: "Kneeling Throws (R)", sets: 2, reps: 6, notes: "Throwing-side knee down. 50-60%. Cue: 'OPEN'.", noWeight: true },
+              { id: "w7tue_b4", name: "Standing Throws (R)", sets: 2, reps: 6, notes: "Stationary. Step, OPEN, launch.", noWeight: true },
+              { id: "w7tue_b5", name: "Standing Throws (L)", sets: 2, reps: 5, notes: "Left hand. Low effort, technique only.", noWeight: true }
+            ]
+          }
+        ]
+      }
+    ],
+    '2026-03-26': [
+      {
+        name: "Beer Bike: Conditioning",
+        type: "Cardio",
+        duration: "30 min",
+        location: "Bike (outdoor or stationary)",
+        condition: "Week 7 Beer Bike training. Trimmed from 45 to 30 min this week to manage ACWR on first week back from deload.",
+        circuits: [
+          {
+            name: "Bike Intervals (30 min)",
+            instructions: "Moderate effort. Not a peak week — just maintaining the base.",
+            exercises: [
+              { id: "w7thu_a1", name: "Easy Spin Warm-Up", sets: 1, reps: 1, notes: "5 min at conversational pace.", isCardio: true, duration: 300, noWeight: true },
+              { id: "w7thu_a2", name: "Moderate Build", sets: 1, reps: 1, notes: "5 min at 70% effort.", isCardio: true, duration: 300, noWeight: true },
+              { id: "w7thu_a3", name: "Tempo Intervals", sets: 4, reps: 1, notes: "2 min at 80% / 1 min easy. 4 rounds.", isCardio: true, duration: 120, noWeight: true },
+              { id: "w7thu_a4", name: "Easy Cool-Down Spin", sets: 1, reps: 1, notes: "5 min easy.", isCardio: true, duration: 300, noWeight: true }
+            ]
+          }
+        ]
+      },
+      {
+        name: "Shoulder Protocol",
+        type: "Prehab",
+        duration: "20 min",
+        location: "Home or gym",
+        condition: "Full shoulder protocol from workout bases. Critical for handball longevity.\nEquipment: long resistance band, light DBs (3-5 lb) or substitute band.",
+        circuits: [
+          {
+            name: "A. Warm-Up (3 min)",
+            exercises: [
+              { id: "w7thu_b1", name: "Scapular Squeezes", sets: 1, reps: 15, notes: "Hold 3 sec each. Stand tall, pinch shoulder blades together.", noWeight: true },
+              { id: "w7thu_b2", name: "Arm Circles Palms Up", sets: 1, reps: 20, notes: "10 forward, 10 backward. Arms straight, palms up. Shoulders down.", noWeight: true }
+            ]
+          },
+          {
+            name: "B. Rotator Cuff (12 min)",
+            instructions: "30 sec rest between sets.",
+            exercises: [
+              { id: "w7thu_b3", name: "External Rotation 90/90", sets: 3, reps: 12, notes: "Both arms. Band at shoulder height. Goal post position, rotate hands up. Quick pace, blades squeezed back.", noWeight: true },
+              { id: "w7thu_b4", name: "Internal Rotation 90/90", sets: 3, reps: 12, notes: "Both arms. Turn around, same band. Rotate hands down/forward. Lighter tension.", noWeight: true },
+              { id: "w7thu_b5", name: "Prone T's", sets: 2, reps: 10, notes: "Face down on bench or floor. Thumbs up, raise arms to T. Squeeze blades at top.", noWeight: true },
+              { id: "w7thu_b6", name: "Band Throws", sets: 2, reps: 10, notes: "Each arm. Band behind at shoulder height. Pull-into-release pattern. Feel chest and lat, NOT tricep.", perSide: true, noWeight: true }
+            ]
+          },
+          {
+            name: "C. Scapular Stability (4 min)",
+            exercises: [
+              { id: "w7thu_b7", name: "Scapular Push-Ups", sets: 2, reps: 10, notes: "Plank or knees. Arms straight. Sink chest (blades pinch), push away (blades spread).", noWeight: true },
+              { id: "w7thu_b8", name: "Cross-Body Shoulder Stretch", sets: 1, reps: 1, notes: "30 sec each side.", isHold: true, holdTime: 30, perSide: true, noWeight: true }
+            ]
+          }
+        ]
+      }
+    ],
+    '2026-03-27': [
+      {
+        name: "Lower Body Strength (Week 7)",
+        type: "Strength",
+        duration: "40 min",
+        location: "Rec Center",
+        condition: "First full Rec Center lower body since Mar 7. Trimmed session (no machine circuit) to manage ACWR. Hold RDL weight, progress goblet squat.\nBring: loop band",
+        circuits: [
+          {
+            name: "A. Hip Prehab Warm-Up (12 min)",
+            instructions: "Slow and controlled. Activate glutes and hips before loading.",
+            exercises: [
+              { id: "w7fri_a1", name: "Standing Hip Hydrants", sets: 2, reps: 12, notes: "Each side. Loop band above knees. Right side: reduce ROM if any deep pain.", perSide: true, noWeight: true },
+              { id: "w7fri_a2", name: "Weighted Hip Airplanes", sets: 2, reps: 8, notes: "Each side. Light DB. Single-leg hinge, rotate pelvis up/down.", perSide: true },
+              { id: "w7fri_a3", name: "Kickstand RDLs", sets: 2, reps: 10, notes: "Each side. Band above knees, light DB. 90% weight on working leg.", perSide: true },
+              { id: "w7fri_a4", name: "Copenhagen Adductor Hold", sets: 2, reps: 1, notes: "20 sec each side. Side plank, top foot on bench. Groin check.", isHold: true, holdTime: 20, perSide: true, noWeight: true },
+              { id: "w7fri_a5", name: "Tibialis Raises", sets: 2, reps: 15, notes: "Heels on edge of step, toes up. Shin prehab for court work.", noWeight: true }
+            ]
+          },
+          {
+            name: "B. Squat + Power + Core (12 min)",
+            instructions: "B1-B2-B3, rest 90 sec, repeat 3x.",
+            restTime: 90,
+            exercises: [
+              { id: "w7fri_b1", name: "DB Goblet Squat", sets: 3, reps: 12, weight: 27.5, notes: "Progressed from 25. Full depth, chest up. Wider stance." },
+              { id: "w7fri_b2", name: "Jump Squats", sets: 3, reps: 8, notes: "Explosive up, land soft. Bodyweight.", noWeight: true },
+              { id: "w7fri_b3", name: "Front Low Plank Hold", sets: 3, reps: 1, notes: "30 sec. Straight line.", isHold: true, holdTime: 30, noWeight: true }
+            ]
+          },
+          {
+            name: "C. Lunge + Hinge + Core (12 min)",
+            instructions: "C1-C2-C3, rest 90 sec, repeat 3x.",
+            restTime: 90,
+            exercises: [
+              { id: "w7fri_c1", name: "DB Reverse Lunges", sets: 3, reps: 8, weight: 15, notes: "Each leg. Hold weight — first full session back.", perSide: true },
+              { id: "w7fri_c2", name: "DB RDLs", sets: 3, reps: 10, weight: 15, notes: "Hold at 15 this week. Progress to 17.5 next week if feel stays 3.", },
+              { id: "w7fri_c3", name: "Side Plank Hold", sets: 3, reps: 1, notes: "25 sec each side.", isHold: true, holdTime: 25, perSide: true, noWeight: true }
+            ]
+          },
+          {
+            name: "D. Cool-Down (8 min)",
+            instructions: "Hip release after first heavy lower body in 3 weeks.",
+            exercises: [
+              { id: "w7fri_d1", name: "Figure-4 Hip Stretch", sets: 1, reps: 1, notes: "60 sec each side.", isHold: true, holdTime: 60, perSide: true, noWeight: true },
+              { id: "w7fri_d2", name: "Kneeling Hip Flexor Stretch", sets: 1, reps: 1, notes: "45 sec each side.", isHold: true, holdTime: 45, perSide: true, noWeight: true },
+              { id: "w7fri_d3", name: "90/90 Hip Stretch", sets: 1, reps: 1, notes: "60 sec each side.", isHold: true, holdTime: 60, perSide: true, noWeight: true }
+            ]
+          }
+        ]
+      },
+      {
+        name: "Movement Snack: Throwing Phase 1",
+        type: "Sport-Specific",
+        duration: "15 min",
+        location: "Squash court or any wall",
+        condition: "Phase 1: stationary only, 50-60% effort. ~40 throws.\nDo this BEFORE lower body, not after (fresh arms for technique).",
+        circuits: [
+          {
+            name: "Wall Throwing (Phase 1)",
+            instructions: "All stationary. 50-60% effort. Cue word before each throw.",
+            exercises: [
+              { id: "w7fri_ms1", name: "Wrist Flicks with Ball", sets: 1, reps: 20, notes: "Snap wrist, feel fingers release.", noWeight: true },
+              { id: "w7fri_ms2", name: "Short Wall Passes Both Hands", sets: 1, reps: 10, notes: "10 each hand. Easy effort.", perSide: true, noWeight: true },
+              { id: "w7fri_ms3", name: "Kneeling Throws (R)", sets: 2, reps: 6, notes: "Throwing-side knee down. 50-60%. Cue: 'OPEN'.", noWeight: true },
+              { id: "w7fri_ms4", name: "Standing Throws (R)", sets: 2, reps: 6, notes: "Stationary. Step, OPEN, launch.", noWeight: true },
+              { id: "w7fri_ms5", name: "Standing Throws (L)", sets: 2, reps: 5, notes: "Left hand. Technique only.", noWeight: true }
+            ]
+          }
+        ]
+      }
+    ],
+    '2026-03-28': [
+      {
+        name: "Upper Body Strength (Week 7)",
+        type: "Strength",
+        duration: "40 min",
+        location: "Rec Center",
+        condition: "First Rec Center upper body since Mar 10. Trimmed session (compounds + anti-rotation, cut arm isolation circuit). Hold all weights.\nEquipment: DBs, cable machine, loop band",
+        circuits: [
+          {
+            name: "A. Warm-Up (8 min)",
+            instructions: "Activate shoulders and upper back.",
+            exercises: [
+              { id: "w7sat_a1", name: "Loop Band Pull-Aparts", sets: 1, reps: 15, notes: "Band at chest height, squeeze shoulder blades.", noWeight: true },
+              { id: "w7sat_a2", name: "Bodyweight Y-T-W", sets: 1, reps: 10, notes: "Each position. Hinge forward 45 deg.", noWeight: true },
+              { id: "w7sat_a3", name: "Arm Circles", sets: 1, reps: 20, notes: "10 forward, 10 backward.", noWeight: true },
+              { id: "w7sat_a4", name: "Wall Angels", sets: 1, reps: 10, notes: "Back flat against wall, slide arms up.", noWeight: true }
+            ]
+          },
+          {
+            name: "B. Pull + Press + Core (12 min)",
+            instructions: "B1-B2-B3, rest 90 sec, repeat 3x.",
+            restTime: 90,
+            exercises: [
+              { id: "w7sat_b1", name: "Single Arm DB Row", sets: 3, reps: 10, weight: 20, notes: "Hold at 20. Ready for 22.5 next week if feel stays 3." },
+              { id: "w7sat_b2", name: "Chest Press Machine", sets: 3, reps: 10, weight: 50, notes: "Hold at 50. Last session: 45→45→50, progressed well." },
+              { id: "w7sat_b3", name: "Front Low Plank Hold", sets: 3, reps: 1, notes: "30 sec.", isHold: true, holdTime: 30, noWeight: true }
+            ]
+          },
+          {
+            name: "C. Vertical Pull + Shoulder + Anti-Rotation (12 min)",
+            instructions: "C1-C2-C3, rest 90 sec, repeat 3x.",
+            restTime: 90,
+            exercises: [
+              { id: "w7sat_c1", name: "Lat Pulldown Machine", sets: 3, reps: 10, weight: 72, notes: "Hold at 72. Feel was 4 on set 3 last time — if still 4, it's the right weight." },
+              { id: "w7sat_c2", name: "Rear Delt Fly Machine", sets: 3, reps: 12, weight: 40, notes: "Hold at 40. Progressed past calibration." },
+              { id: "w7sat_c3", name: "Tall-Kneeling Band Hold", sets: 2, reps: 1, notes: "15 sec each side. Band anchored at chest height. Anti-rotation replacement for Pallof (psoas mod).", isHold: true, holdTime: 15, perSide: true, noWeight: true }
+            ]
+          },
+          {
+            name: "D. Cool-Down (5 min)",
+            exercises: [
+              { id: "w7sat_d1", name: "Cross-Body Shoulder Stretch", sets: 1, reps: 1, notes: "30 sec each side.", isHold: true, holdTime: 30, perSide: true, noWeight: true },
+              { id: "w7sat_d2", name: "Chest Opener", sets: 1, reps: 1, notes: "Arms clasped behind back, 30 sec.", isHold: true, holdTime: 30, noWeight: true },
+              { id: "w7sat_d3", name: "Thread the Needle", sets: 1, reps: 1, notes: "30 sec each side. Thoracic rotation.", isHold: true, holdTime: 30, perSide: true, noWeight: true }
+            ]
+          }
+        ]
+      },
+      {
+        name: "Movement Snack: Throwing Phase 2",
+        type: "Sport-Specific",
+        duration: "15 min",
+        location: "Squash court or any wall",
+        condition: "Phase 2 starts today: 1-step approach, 60-70% effort. ~40 throws.\nFirst time adding approach steps back. Keep it controlled.",
+        circuits: [
+          {
+            name: "Wall Throwing (Phase 2)",
+            instructions: "1-step approach for standing throws. 60-70% effort. Cue word before each throw.",
+            exercises: [
+              { id: "w7sat_ms1", name: "Wrist Flicks with Ball", sets: 1, reps: 20, notes: "Snap wrist, feel fingers release.", noWeight: true },
+              { id: "w7sat_ms2", name: "Short Wall Passes Both Hands", sets: 1, reps: 10, notes: "10 each hand.", perSide: true, noWeight: true },
+              { id: "w7sat_ms3", name: "Kneeling Throws (R)", sets: 2, reps: 6, notes: "Stationary. 60-70%. Cue: 'OPEN'.", noWeight: true },
+              { id: "w7sat_ms4", name: "1-Step Standing Throws (R)", sets: 2, reps: 6, notes: "One step into throw. 60-70%. Step, OPEN, launch. First time with approach step — keep it smooth.", noWeight: true },
+              { id: "w7sat_ms5", name: "1-Step Standing Throws (L)", sets: 2, reps: 5, notes: "Left hand. Low effort, technique focus.", noWeight: true }
+            ]
+          }
+        ]
+      }
+    ]
     };
 
     // Special dates with specific schedule info
