@@ -35,7 +35,7 @@ Collected from sessions through Mar 20, 2026. Includes holistic review from 7 ag
 
 - [ ] **Review all exercises: tap vs detail** -- full UX sweep deciding which exercises are simple tap-to-log vs full set modal. Make it consistent or at least intentional across all workout types.
 - [ ] **Review all workouts: break into multiple entries?** -- check all days like Wed warmup/cooldown split
-- [ ] **Adjustment modal stacking** -- "Adjusted from plan?" opens modal-on-modal. Inline instead. (UX, Athlete)
+- [x] **Adjustment modal stacking** -- "Adjusted from plan?" opens modal-on-modal. Inline instead. (UX, Athlete) -- DONE Mar 20.
 
 ## Technical Debt (Frontend/Backend)
 
