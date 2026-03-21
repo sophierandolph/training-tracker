@@ -10,7 +10,7 @@ Collected from sessions through Mar 20, 2026. Includes holistic review from 7 ag
 
 ## Features
 
-- [ ] **Composable workout blocks** -- break POOL_RECOVERY and other compound workouts into standalone building blocks (pool swimming, shoulder protocol, psoas protocol, hip prehab) that can be mixed and matched in DATE_WORKOUTS. Currently POOL_RECOVERY loads everything as one monolith -- Sophie sometimes just wants the pool part, or just the shoulder work. These blocks become reusable primitives for `/plan-workouts`.
+- [x] **Composable workout blocks** -- POOL_RECOVERY broken into BLOCK_POOL_SWIMMING, BLOCK_FOAM_ROLL_STRETCH, BLOCK_SHOULDER_SHIN_PREHAB. POOL_RECOVERY composed from them. Ready for mix-and-match in DATE_WORKOUTS and `/plan-workouts`. -- DONE Mar 20.
 - [ ] **History view** -- week-over-week calendar layout with checkboxes for completed workouts per day
 - [ ] **Streak/consistency tracking** -- running streak, weekly completion rate. Cheapest motivation lever. (Athlete)
 - [ ] **Offline sync indicator** -- show "saved locally, will sync" when no connection. Currently silent. (Athlete, Backend)
@@ -33,8 +33,8 @@ Collected from sessions through Mar 20, 2026. Includes holistic review from 7 ag
 
 ## UX Reviews (need to go through the whole app)
 
-- [ ] **Review all exercises: tap vs detail** -- full UX sweep deciding which exercises are simple tap-to-log vs full set modal. Make it consistent or at least intentional across all workout types.
-- [ ] **Review all workouts: break into multiple entries?** -- check all days like Wed warmup/cooldown split
+- [x] **Review all exercises: tap vs detail** -- added `simple: true` to 64 circuits where all exercises are noWeight/isCardio/isHold. Fixed Mar 27 warm-up bug (weighted exercises in simple circuit). -- DONE Mar 20.
+- [x] **Review all workouts: break into multiple entries?** -- Split Feb 19 (bike + throwing) and Mar 7 (lower body + handball) into separate tiles. Audited all other days, no further splits needed. -- DONE Mar 20.
 - [x] **Adjustment modal stacking** -- "Adjusted from plan?" opens modal-on-modal. Inline instead. (UX, Athlete) -- DONE Mar 20.
 
 ## Technical Debt (Frontend/Backend)
@@ -90,7 +90,8 @@ Collected from sessions through Mar 20, 2026. Includes holistic review from 7 ag
 
 ## Structural / Planning
 
-- [ ] **Split handball from leg workouts** -- separate forms, not combined
+- [x] **Split handball from leg workouts** -- Mar 7 split into Lower Body Strength + Handball: Jump Shot + Left Hand. -- DONE Mar 20.
+- [ ] **Warm-up/cool-down block coverage audit** -- ensure every workout type has a BLOCK_ warm-up and cool-down wired in. Current gaps: Mar 1 upper body uses different cool-down (Doorway Pec + Tricep vs Chest Opener + Thread the Needle) -- decide on one canonical UB cool-down. Lower body warm-ups/cool-downs vary per instance (different exercises, progressing hold times) -- decide if a canonical block works or if variation is intentional. Throwing/handball warm-ups and cool-downs not yet blocked. `/plan-workouts` should auto-include blocks for every workout it generates.
 - [ ] **Handball drill cue pass** -- shorter, clearer, feel-based and rhythmic cues (aphantasia)
 - [ ] **Menstrual cycle integration** -- revisit early April once cycle stabilizes. Follicular=peak training, late luteal=back off. (Coach)
 - [ ] **Planned deload weeks in future blocks** -- systematic, not accidental from travel. (Coach)

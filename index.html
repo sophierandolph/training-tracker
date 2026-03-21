@@ -3246,6 +3246,61 @@
       ]
     };
 
+    // Upper body warm-up: band pull-aparts, Y-T-W, arm circles, wall angels
+    const BLOCK_UB_WARMUP = {
+      name: "Upper Body Warm-Up (8 min)",
+      instructions: "Activate the shoulders before loading them.",
+      exercises: [
+        { id: "ubw1", name: "Loop Band Pull-Aparts", sets: 1, reps: 15, notes: "Band at chest height, arms straight. Squeeze shoulder blades together.", noWeight: true },
+        { id: "ubw2", name: "Bodyweight Y-T-W", sets: 1, reps: 10, notes: "Hinge forward 45 deg. Y: arms overhead. T: arms out to sides. W: elbows bent. 10 reps each position.", noWeight: true },
+        { id: "ubw3", name: "Arm Circles", sets: 1, reps: 20, notes: "10 forward, 10 backward. Big slow circles.", noWeight: true },
+        { id: "ubw4", name: "Wall Angels", sets: 1, reps: 10, notes: "Back flat against wall, slide arms up keeping contact. Feel chest open, shoulder blades stay down.", noWeight: true }
+      ]
+    };
+
+    // Upper body cool-down: cross-body stretch, chest opener, thread the needle
+    const BLOCK_UB_COOLDOWN = {
+      name: "Upper Body Cool-Down (5 min)",
+      instructions: "Let the shoulders decompress. Don't skip this.",
+      exercises: [
+        { id: "ubc1", name: "Cross-Body Shoulder Stretch", sets: 1, reps: 1, notes: "30 sec each side. Pull arm across chest, hold at elbow.", isHold: true, holdTime: 30, perSide: true, noWeight: true },
+        { id: "ubc2", name: "Chest Opener", sets: 1, reps: 1, notes: "Arms clasped behind back, 30 sec. Feel chest and front shoulders open.", isHold: true, holdTime: 30, noWeight: true },
+        { id: "ubc3", name: "Thread the Needle", sets: 1, reps: 1, notes: "30 sec each side. Thoracic rotation stretch.", isHold: true, holdTime: 30, perSide: true, noWeight: true }
+      ]
+    };
+
+    // Shoulder protocol warm-up: scapular squeezes + arm circles
+    const BLOCK_SHOULDER_WARMUP = {
+      name: "Shoulder Warm-Up (3 min)",
+      instructions: "Wake up the shoulders before loading them.",
+      exercises: [
+        { id: "shw1", name: "Scapular Squeezes", sets: 1, reps: 15, notes: "Hold 3 sec each. Stand tall, pinch shoulder blades together.", noWeight: true },
+        { id: "shw2", name: "Arm Circles Palms Up", sets: 1, reps: 20, notes: "10 forward, 10 backward. Arms straight, palms up. Shoulders down.", noWeight: true }
+      ]
+    };
+
+    // Bike cool-down: easy spin
+    const BLOCK_BIKE_COOLDOWN = {
+      name: "Cool-Down (10 min)",
+      instructions: "Gradually decrease effort.",
+      exercises: [
+        { id: "bkc1", name: "Easy Cool-Down Spin", sets: 1, reps: 1, notes: "10 min, gradually decreasing effort", isCardio: true, duration: 600, noWeight: true }
+      ]
+    };
+
+    // Psoas protocol: daily psoas management routine
+    const BLOCK_PSOAS_PROTOCOL = {
+      name: "Psoas Release",
+      instructions: "Calm the psoas down. Breathing is part of the exercise.",
+      simple: true,
+      exercises: [
+        { id: "pso1", name: "Prone Lying + Belly Breathing", sets: 1, reps: 1, notes: "3 min. Lie face down, breathe into belly against the floor. Feel front of hip lengthen passively.", isHold: true, holdTime: 180, noWeight: true },
+        { id: "pso2", name: "Supine Psoas March (Supported)", sets: 2, reps: 8, notes: "Each side. Lie on back, feet flat, neutral spine. Slowly lift one foot 2 inches off ground. If right side hurts, just press foot into floor without lifting.", perSide: true, noWeight: true },
+        { id: "pso3", name: "Half-Kneeling Hip Flexor Stretch", sets: 1, reps: 1, notes: "60 sec each side. Squeeze back glute, tilt pelvis under.", isHold: true, holdTime: 60, perSide: true, noWeight: true },
+        { id: "pso4", name: "Foam Roller Thoracic Extension", sets: 1, reps: 1, notes: "2 min. T-spine mobility reduces psoas demand. Use Chirp wheel if preferred.", isHold: true, holdTime: 120, noWeight: true }
+      ]
+    };
+
     // Pool recovery workout: composed from blocks. Used for Sunday rest-day tile and adaptation recovery fallback.
     const POOL_RECOVERY = {
       name: "Active Recovery: Pool + Mobility",
@@ -5394,16 +5449,7 @@
         location: "Crunch Fitness, Kyle TX",
         condition: "Coming back after groin strain + rest days. Moderate effort -- not a PR day. No lower body load anywhere. If anything pulls in the groin, stop.",
         circuits: [
-          {
-            name: "A. Warm-Up (8 min)",
-            instructions: "Activate the shoulders before loading them. Take your time here.",
-            exercises: [
-              { id: "ub301_a1", name: "Loop Band Pull-Aparts", sets: 1, reps: 15, notes: "Band across palms at chest height, arms straight. Pull apart squeezing shoulder blades together.", noWeight: true },
-              { id: "ub301_a2", name: "Bodyweight Y-T-W", sets: 1, reps: 10, notes: "Hinge forward ~45°. Y: arms overhead in Y shape. T: arms straight out to sides. W: arms in W, elbows bent. 10 reps each position. Squeeze shoulder blades on every rep.", noWeight: true },
-              { id: "ub301_a3", name: "Arm Circles", sets: 1, reps: 20, notes: "10 forward, 10 backward. Big slow circles.", noWeight: true },
-              { id: "ub301_a4", name: "Wall Angels", sets: 1, reps: 10, notes: "Back flat against wall, arms in W position. Slide arms up overhead keeping contact with wall. Feel chest open, shoulder blades stay down.", noWeight: true }
-            ]
-          },
+          BLOCK_UB_WARMUP,
           {
             name: "B. Horizontal Pull Superset (15 min)",
             instructions: "3 rounds, 90 sec rest between rounds. These are the most handball-relevant moves -- focus on pulling through the elbow, not the hand.",
@@ -5489,13 +5535,7 @@
                 { id: "thu219_b5", name: "Cadence Interval", sets: 6, reps: 1, notes: "2 min at 95-105 RPM, moderate effort. 2 min easy between. Smooth circles, light pressure.", isCardio: true, duration: 120, noWeight: true }
               ]
             },
-            {
-              name: "C. Cool-Down (10 min)",
-              instructions: "Gradually decrease effort. Hydrate before heading to squash court.",
-              exercises: [
-                { id: "thu219_b6", name: "Easy Cool-Down Spin", sets: 1, reps: 1, notes: "10 min, gradual decrease in effort", isCardio: true, duration: 600, noWeight: true }
-              ]
-            }
+            BLOCK_BIKE_COOLDOWN
           ]
         },
         {
@@ -5637,13 +5677,7 @@
               { id: "bb5_d2", name: "Finish Sprint", sets: 2, reps: 1, notes: "20 sec ALL-OUT. Full 2 min rest between. Practice your race finish.", isCardio: true, duration: 20, noWeight: true }
             ]
           },
-          {
-            name: "E. Cool-Down (10 min)",
-            instructions: "Easy spinning. Gradual decrease.",
-            exercises: [
-              { id: "bb5_e1", name: "Easy Cool-Down Spin", sets: 1, reps: 1, notes: "10 min, gradually decreasing effort", isCardio: true, duration: 600, noWeight: true }
-            ]
-          }
+          BLOCK_BIKE_COOLDOWN
         ]
       },
       {
@@ -5653,14 +5687,7 @@
         location: "Home / Gym",
         condition: "Shoulder stability and mobility. Do anytime today -- doesn't need to follow biking.",
         circuits: [
-          {
-            name: "A. Warm-Up (3 min)",
-            instructions: "Wake up the shoulders before loading them. No band needed yet.",
-            exercises: [
-              { id: "bb5_f1", name: "Scapular Squeezes", sets: 1, reps: 15, notes: "Stand tall, arms at sides. Pinch shoulder blades together and hold 3 sec, then release. Feel the squeeze between your shoulder blades.", noWeight: true },
-              { id: "bb5_f2", name: "Arm Circles Palms Up", sets: 1, reps: 20, notes: "Arms straight out to sides, palms facing ceiling. 10 small circles forward, 10 backward. Keep shoulders down away from ears.", noWeight: true }
-            ]
-          },
+          BLOCK_SHOULDER_WARMUP,
           {
             name: "B. Rotator Cuff (10-12 min)",
             instructions: "The core of the protocol. Use a long resistance band anchored at a door handle or pole. These protect your throwing shoulder. 30 sec rest between sets.",
@@ -5890,16 +5917,7 @@
         location: "Gym",
         condition: "9 days since last upper body (Mar 1). Last strength session before Fort Davis deload.\nBring: nothing extra (gym day)",
         circuits: [
-          {
-            name: "A. Upper Body Warm-Up (8 min)",
-            instructions: "Activate shoulders and upper back before loading. Take your time.",
-            exercises: [
-              { id: "ub10_a1", name: "Loop Band Pull-Aparts", sets: 1, reps: 15, notes: "Band at chest height, arms straight. Squeeze shoulder blades together.", noWeight: true },
-              { id: "ub10_a2", name: "Bodyweight Y-T-W", sets: 1, reps: 10, notes: "Hinge forward 45 deg. Y: arms overhead. T: arms out to sides. W: elbows bent. 10 reps each position.", noWeight: true },
-              { id: "ub10_a3", name: "Arm Circles", sets: 1, reps: 20, notes: "10 forward, 10 backward. Big slow circles.", noWeight: true },
-              { id: "ub10_a4", name: "Wall Angels", sets: 1, reps: 10, notes: "Back flat against wall, slide arms up keeping contact. Feel chest open, shoulder blades stay down.", noWeight: true }
-            ]
-          },
+          BLOCK_UB_WARMUP,
           {
             name: "B. Pull + Press + Core (12 min)",
             instructions: "Do B1-B2-B3, rest 90 sec, repeat 3x",
@@ -5929,15 +5947,7 @@
               { id: "ub10_d2", name: "Cable Tricep Extension", sets: 3, reps: 10, weight: 22, notes: "Elbows stay pinned to sides." }
             ]
           },
-          {
-            name: "E. Cool-Down (5 min)",
-            instructions: "Shoulder and upper back release.",
-            exercises: [
-              { id: "ub10_e1", name: "Cross-Body Shoulder Stretch", sets: 1, reps: 1, notes: "30 sec each side", isHold: true, holdTime: 30, perSide: true, noWeight: true },
-              { id: "ub10_e2", name: "Chest Opener", sets: 1, reps: 1, notes: "Arms clasped behind back, 30 sec", isHold: true, holdTime: 30, noWeight: true },
-              { id: "ub10_e3", name: "Thread the Needle", sets: 1, reps: 1, notes: "30 sec each side. Thoracic rotation.", isHold: true, holdTime: 30, perSide: true, noWeight: true }
-            ]
-          }
+          BLOCK_UB_COOLDOWN
         ]
       }
     ],
@@ -6083,17 +6093,7 @@
         location: "Home",
         condition: "Daily psoas management. Do this morning and/or evening.\nSitting rule: break every 30 min, stand + brief hip flexor stretch.",
         circuits: [
-          {
-            name: "Psoas Release",
-            instructions: "Calm the psoas down. Breathing is part of the exercise.",
-            simple: true,
-            exercises: [
-              { id: "psoas12_a1", name: "Prone Lying + Belly Breathing", sets: 1, reps: 1, notes: "3 min. Lie face down, breathe into belly against the floor. Feel front of hip lengthen passively.", isHold: true, holdTime: 180, noWeight: true },
-              { id: "psoas12_a2", name: "Supine Psoas March (Supported)", sets: 2, reps: 8, notes: "Each side. Lie on back, feet flat, neutral spine. Slowly lift one foot 2 inches off ground. If right side hurts, just press foot into floor without lifting.", perSide: true, noWeight: true },
-              { id: "psoas12_a3", name: "Half-Kneeling Hip Flexor Stretch", sets: 1, reps: 1, notes: "60 sec each side. Squeeze back glute, tilt pelvis under. Extra focus on right.", isHold: true, holdTime: 60, perSide: true, noWeight: true },
-              { id: "psoas12_a4", name: "Foam Roller Thoracic Extension", sets: 1, reps: 1, notes: "2 min. T-spine mobility reduces psoas demand. Use Chirp wheel if preferred.", isHold: true, holdTime: 120, noWeight: true }
-            ]
-          }
+          BLOCK_PSOAS_PROTOCOL
         ]
       },
       {
@@ -6205,17 +6205,7 @@
         location: "Fort Davis (porch or indoors)",
         condition: "Daily psoas management. Do morning and/or evening.\nSitting rule: break every 30 min, stand + brief hip flexor stretch.",
         circuits: [
-          {
-            name: "Psoas Release",
-            instructions: "Calm the psoas down. Breathing is part of the exercise.",
-            simple: true,
-            exercises: [
-              { id: "psoas14_a1", name: "Prone Lying + Belly Breathing", sets: 1, reps: 1, notes: "3 min. Lie face down, breathe into belly against the floor.", isHold: true, holdTime: 180, noWeight: true },
-              { id: "psoas14_a2", name: "Supine Psoas March (Supported)", sets: 2, reps: 8, notes: "Each side. Feet flat, lift one foot 2 inches. Press into floor if right side hurts.", perSide: true, noWeight: true },
-              { id: "psoas14_a3", name: "Half-Kneeling Hip Flexor Stretch", sets: 1, reps: 1, notes: "60 sec each side. Squeeze back glute, tilt pelvis under.", isHold: true, holdTime: 60, perSide: true, noWeight: true },
-              { id: "psoas14_a4", name: "Foam Roller Thoracic Extension", sets: 1, reps: 1, notes: "2 min. T-spine mobility reduces psoas demand.", isHold: true, holdTime: 120, noWeight: true }
-            ]
-          }
+          BLOCK_PSOAS_PROTOCOL
         ]
       },
       {
@@ -6244,17 +6234,7 @@
         location: "Fort Davis (porch or indoors)",
         condition: "Daily psoas management. Even on rest day, this helps.\nSitting rule: break every 30 min.",
         circuits: [
-          {
-            name: "Psoas Release",
-            instructions: "Calm the psoas down. Breathing is part of the exercise.",
-            simple: true,
-            exercises: [
-              { id: "psoas15_a1", name: "Prone Lying + Belly Breathing", sets: 1, reps: 1, notes: "3-5 min. Lie face down, breathe into belly against the floor.", isHold: true, holdTime: 240, noWeight: true },
-              { id: "psoas15_a2", name: "Supine Psoas March (Supported)", sets: 2, reps: 8, notes: "Each side. Feet flat, lift one foot 2 inches. Press into floor if right side hurts.", perSide: true, noWeight: true },
-              { id: "psoas15_a3", name: "Half-Kneeling Hip Flexor Stretch", sets: 1, reps: 1, notes: "60 sec each side. Squeeze back glute, tilt pelvis under.", isHold: true, holdTime: 60, perSide: true, noWeight: true },
-              { id: "psoas15_a4", name: "Foam Roller Thoracic Extension", sets: 1, reps: 1, notes: "2 min. Use Chirp wheel if preferred.", isHold: true, holdTime: 120, noWeight: true }
-            ]
-          }
+          BLOCK_PSOAS_PROTOCOL
         ]
       },
       POOL_RECOVERY
@@ -6267,17 +6247,7 @@
         location: "Fort Davis (porch or indoors)",
         condition: "Daily psoas management.\nSitting rule: break every 30 min.",
         circuits: [
-          {
-            name: "Psoas Release",
-            instructions: "Calm the psoas down. Breathing is part of the exercise.",
-            simple: true,
-            exercises: [
-              { id: "psoas16_a1", name: "Prone Lying + Belly Breathing", sets: 1, reps: 1, notes: "3 min. Lie face down, breathe into belly against the floor.", isHold: true, holdTime: 180, noWeight: true },
-              { id: "psoas16_a2", name: "Supine Psoas March (Supported)", sets: 2, reps: 8, notes: "Each side. Feet flat, lift one foot 2 inches. Press into floor if right side hurts.", perSide: true, noWeight: true },
-              { id: "psoas16_a3", name: "Half-Kneeling Hip Flexor Stretch", sets: 1, reps: 1, notes: "60 sec each side. Squeeze back glute, tilt pelvis under.", isHold: true, holdTime: 60, perSide: true, noWeight: true },
-              { id: "psoas16_a4", name: "Foam Roller Thoracic Extension", sets: 1, reps: 1, notes: "2 min. T-spine mobility reduces psoas demand.", isHold: true, holdTime: 120, noWeight: true }
-            ]
-          }
+          BLOCK_PSOAS_PROTOCOL
         ]
       },
       {
@@ -6350,17 +6320,7 @@
         location: "Fort Davis (porch or indoors)",
         condition: "Rest day -- skoolie manual labor counts as activity.\nSitting rule: break every 30 min.",
         circuits: [
-          {
-            name: "Psoas Release",
-            instructions: "Calm the psoas down. Breathing is part of the exercise.",
-            simple: true,
-            exercises: [
-              { id: "psoas17_a1", name: "Prone Lying + Belly Breathing", sets: 1, reps: 1, notes: "3 min. Lie face down, breathe into belly against the floor.", isHold: true, holdTime: 180, noWeight: true },
-              { id: "psoas17_a2", name: "Supine Psoas March (Supported)", sets: 2, reps: 8, notes: "Each side. Feet flat, lift one foot 2 inches. Press into floor if right side hurts.", perSide: true, noWeight: true },
-              { id: "psoas17_a3", name: "Half-Kneeling Hip Flexor Stretch", sets: 1, reps: 1, notes: "60 sec each side. Squeeze back glute, tilt pelvis under.", isHold: true, holdTime: 60, perSide: true, noWeight: true },
-              { id: "psoas17_a4", name: "Foam Roller Thoracic Extension", sets: 1, reps: 1, notes: "2 min. T-spine mobility reduces psoas demand.", isHold: true, holdTime: 120, noWeight: true }
-            ]
-          }
+          BLOCK_PSOAS_PROTOCOL
         ]
       }
     ],
@@ -6372,17 +6332,7 @@
         location: "Fort Davis (porch or indoors)",
         condition: "Daily psoas management. This is the heaviest hip day of the week -- psoas protocol is especially important today.\nSitting rule: break every 30 min.",
         circuits: [
-          {
-            name: "Psoas Release",
-            instructions: "Calm the psoas down. Breathing is part of the exercise.",
-            simple: true,
-            exercises: [
-              { id: "psoas18_a1", name: "Prone Lying + Belly Breathing", sets: 1, reps: 1, notes: "3 min. Lie face down, breathe into belly against the floor.", isHold: true, holdTime: 180, noWeight: true },
-              { id: "psoas18_a2", name: "Supine Psoas March (Supported)", sets: 2, reps: 8, notes: "Each side. Feet flat, lift one foot 2 inches. Press into floor if right side hurts.", perSide: true, noWeight: true },
-              { id: "psoas18_a3", name: "Half-Kneeling Hip Flexor Stretch", sets: 1, reps: 1, notes: "60 sec each side. Squeeze back glute, tilt pelvis under.", isHold: true, holdTime: 60, perSide: true, noWeight: true },
-              { id: "psoas18_a4", name: "Foam Roller Thoracic Extension", sets: 1, reps: 1, notes: "2 min. T-spine mobility reduces psoas demand.", isHold: true, holdTime: 120, noWeight: true }
-            ]
-          }
+          BLOCK_PSOAS_PROTOCOL
         ]
       },
       {
@@ -6517,17 +6467,7 @@
         location: "Fort Davis",
         condition: "Do before heading to friend's house for workout.",
         circuits: [
-          {
-            name: "Psoas Release",
-            instructions: "Standard morning psoas sequence.",
-            simple: true,
-            exercises: [
-              { id: "psoas20_a1", name: "Prone Lying + Belly Breathing", sets: 1, reps: 1, notes: "3 min. Lie face down, breathe into belly against the floor.", isHold: true, holdTime: 180, noWeight: true },
-              { id: "psoas20_a2", name: "Supine Psoas March (Supported)", sets: 2, reps: 8, notes: "Each side. Feet flat, lift one foot 2 inches.", perSide: true, noWeight: true },
-              { id: "psoas20_a3", name: "Half-Kneeling Hip Flexor Stretch", sets: 1, reps: 1, notes: "60 sec each side. Squeeze back glute, tilt pelvis under.", isHold: true, holdTime: 60, perSide: true, noWeight: true },
-              { id: "psoas20_a4", name: "Foam Roller Thoracic Extension", sets: 1, reps: 1, notes: "2 min. Hands behind head, extend over roller at mid-back.", isHold: true, holdTime: 120, noWeight: true }
-            ]
-          }
+          BLOCK_PSOAS_PROTOCOL
         ]
       },
       {
@@ -6733,13 +6673,7 @@
         location: "Home or gym",
         condition: "Full shoulder protocol from workout bases. Critical for handball longevity.\nEquipment: long resistance band, light DBs (3-5 lb) or substitute band.",
         circuits: [
-          {
-            name: "A. Warm-Up (3 min)",
-            exercises: [
-              { id: "w7thu_b1", name: "Scapular Squeezes", sets: 1, reps: 15, notes: "Hold 3 sec each. Stand tall, pinch shoulder blades together.", noWeight: true },
-              { id: "w7thu_b2", name: "Arm Circles Palms Up", sets: 1, reps: 20, notes: "10 forward, 10 backward. Arms straight, palms up. Shoulders down.", noWeight: true }
-            ]
-          },
+          BLOCK_SHOULDER_WARMUP,
           {
             name: "B. Rotator Cuff (12 min)",
             instructions: "30 sec rest between sets.",
@@ -6842,16 +6776,7 @@
         location: "Rec Center",
         condition: "First Rec Center upper body since Mar 10. Trimmed session (compounds + anti-rotation, cut arm isolation circuit). Hold all weights.\nEquipment: DBs, cable machine, loop band",
         circuits: [
-          {
-            name: "A. Warm-Up (8 min)",
-            instructions: "Activate shoulders and upper back.",
-            exercises: [
-              { id: "w7sat_a1", name: "Loop Band Pull-Aparts", sets: 1, reps: 15, notes: "Band at chest height, squeeze shoulder blades.", noWeight: true },
-              { id: "w7sat_a2", name: "Bodyweight Y-T-W", sets: 1, reps: 10, notes: "Each position. Hinge forward 45 deg.", noWeight: true },
-              { id: "w7sat_a3", name: "Arm Circles", sets: 1, reps: 20, notes: "10 forward, 10 backward.", noWeight: true },
-              { id: "w7sat_a4", name: "Wall Angels", sets: 1, reps: 10, notes: "Back flat against wall, slide arms up.", noWeight: true }
-            ]
-          },
+          BLOCK_UB_WARMUP,
           {
             name: "B. Pull + Press + Core (12 min)",
             instructions: "B1-B2-B3, rest 90 sec, repeat 3x.",
@@ -6872,14 +6797,7 @@
               { id: "w7sat_c3", name: "Tall-Kneeling Band Hold", sets: 2, reps: 1, notes: "15 sec each side. Band anchored at chest height. Anti-rotation replacement for Pallof (psoas mod).", isHold: true, holdTime: 15, perSide: true, noWeight: true }
             ]
           },
-          {
-            name: "D. Cool-Down (5 min)",
-            exercises: [
-              { id: "w7sat_d1", name: "Cross-Body Shoulder Stretch", sets: 1, reps: 1, notes: "30 sec each side.", isHold: true, holdTime: 30, perSide: true, noWeight: true },
-              { id: "w7sat_d2", name: "Chest Opener", sets: 1, reps: 1, notes: "Arms clasped behind back, 30 sec.", isHold: true, holdTime: 30, noWeight: true },
-              { id: "w7sat_d3", name: "Thread the Needle", sets: 1, reps: 1, notes: "30 sec each side. Thoracic rotation.", isHold: true, holdTime: 30, perSide: true, noWeight: true }
-            ]
-          }
+          BLOCK_UB_COOLDOWN
         ]
       },
       {
