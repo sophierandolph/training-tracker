@@ -8387,7 +8387,21 @@ ${recentHistory}`;
         }
       } else if (specialDate && specialDate.type === 'travel' && specialDate.facilities === 'minimal') {
         type = 'rest';
-      } else if (state.activeWorkout) {
+      } else {
+        // Check EXTERNAL_ACTIVITIES for recurring day-of-week activities (PT, soccer, handball)
+        const dayNames = ['sunday','monday','tuesday','wednesday','thursday','friday','saturday'];
+        const extActs = EXTERNAL_ACTIVITIES[dayNames[dayIndex]] || [];
+        // Also check DATE_ACTIVITIES for one-off events
+        const dateActs = DATE_ACTIVITIES[dateKey] || [];
+        const allActs = [...extActs, ...dateActs];
+        if (allActs.length > 0) {
+          const typePri = { 'strength': 5, 'sport-specific': 4, 'sport': 4, 'handball': 4, 'conditioning': 3, 'cardio': 3, 'recovery': 1, 'rest': 0 };
+          const primary = [...allActs].sort((a, b) => (typePri[(b.type || '').toLowerCase()] || 0) - (typePri[(a.type || '').toLowerCase()] || 0))[0];
+          type = primary.type || 'external';
+          label = primary.name || '';
+        }
+      }
+      if (type === 'rest' && state.activeWorkout) {
         type = state.activeWorkout.type || 'gym';
         label = state.activeWorkout.name || '';
       }
