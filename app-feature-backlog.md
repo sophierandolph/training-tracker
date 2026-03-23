@@ -31,12 +31,6 @@ Collected from sessions through Mar 20, 2026. Includes holistic review from 7 ag
 - [ ] **Performance baselines in-app** -- T-test, 20m sprint, beep test targets. Currently only in markdown file. (Coach)
 - [ ] **Effort type (physical/technical) analysis** -- captured but never surfaced. Training balance insight. (PM)
 
-## UX Reviews (need to go through the whole app)
-
-- [x] **Review all exercises: tap vs detail** -- added `simple: true` to 64 circuits where all exercises are noWeight/isCardio/isHold. Fixed Mar 27 warm-up bug (weighted exercises in simple circuit). -- DONE Mar 20.
-- [x] **Review all workouts: break into multiple entries?** -- Split Feb 19 (bike + throwing) and Mar 7 (lower body + handball) into separate tiles. Audited all other days, no further splits needed. -- DONE Mar 20.
-- [x] **Adjustment modal stacking** -- "Adjusted from plan?" opens modal-on-modal. Inline instead. (UX, Athlete) -- DONE Mar 20.
-
 ## Technical Debt (Frontend/Backend)
 
 - [ ] **showDayPreview() is 350 lines** -- refactor into type-specific renderers. (Frontend)
@@ -100,6 +94,22 @@ Collected from sessions through Mar 20, 2026. Includes holistic review from 7 ag
 
 ## Done (Mar 19-20)
 
+- [x] **UX: Inline adjustment UI** -- replaced stacked modal with inline expandable section inside set modal. Mar 20.
+- [x] **UX: Autofocus weight input** -- set modal autofocuses weight (or reps for noWeight). Mar 20.
+- [x] **UX: 44px modal close buttons** -- touch target from 36px to 44px. Mar 20.
+- [x] **UX: Dismissable completion modal** -- backdrop click + close button. Mar 20.
+- [x] **UX: Finish workout confirmation** -- confirm() showing sets completed count. Mar 20.
+- [x] **UX: Exercise notes readability** -- 13px, secondary color (was 12px, muted). Mar 20.
+- [x] **UX: Feel button padding** -- 8px horizontal (was 4px). Mar 20.
+- [x] **UX: Auto-scroll to current circuit** -- after logging a set. Mar 20.
+- [x] **UX: Save feedback toast** -- showToast() on Firestore writes. Mar 20.
+- [x] **UX: Tab switch guard** -- confirm() when leaving Today with active workout. Mar 20.
+- [x] **UX: Review all exercises: tap vs detail** -- `simple: true` on 64 circuits. Fixed Mar 27 warm-up bug. Mar 20.
+- [x] **UX: Review all workouts: break into multiple entries** -- Split Feb 19 and Mar 7. Mar 20.
+- [x] **UX: Adjustment modal stacking** -- inline instead of modal-on-modal. Mar 20.
+- [x] **FEATURE: Composable workout blocks** -- POOL_RECOVERY broken into 3 BLOCK_ constants. Mar 20.
+- [x] **FEATURE: Warm-up/cool-down blocks** -- BLOCK_UB_WARMUP, BLOCK_UB_COOLDOWN, BLOCK_SHOULDER_WARMUP, BLOCK_BIKE_COOLDOWN, BLOCK_PSOAS_PROTOCOL. Wired into 16 workouts. Mar 20.
+- [x] **STRUCTURAL: Split handball from leg workouts** -- Mar 7 split into Lower Body + Handball tiles. Mar 20.
 - [x] **BUG: Multi-workout progress lost when switching** -- autosave now uses per-workout localStorage keys (`workoutInProgress_<name>`) so each workout's progress is independent. Stale keys from previous dates cleaned up automatically. Mar 19.
 - [x] **BUG: Skipped set pill stays grayed out after re-logging** -- `logSet()` now removes `skipped` class before adding `complete`. Mar 19.
 - [x] **FUEL: 90/90 protein bar** -- yellow en route, green at 90% of target, green-gold gradient over 100%. Mar 19.
