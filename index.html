@@ -3728,7 +3728,10 @@
           catch(e) { localStorage.removeItem('workoutInProgress'); }
         }
       }
-      if (!isMultiWorkout && !inProgressForThisDay) {
+      // Also check if day has external activities (some may still need logging)
+      const hasExternalActivities = (EXTERNAL_ACTIVITIES[dayName] && EXTERNAL_ACTIVITIES[dayName].length > 0) ||
+        (DATE_ACTIVITIES[dateKey] && DATE_ACTIVITIES[dateKey].length > 0);
+      if (!isMultiWorkout && !inProgressForThisDay && !hasExternalActivities) {
         const history = getWorkoutHistory();
         const todaySaved = history.filter(h => h.date === dateKey);
         if (todaySaved.length > 0) {
