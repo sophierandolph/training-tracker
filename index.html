@@ -3389,6 +3389,8 @@
             }
           }
           updateReadinessDisplay();
+          // Re-apply adaptations now that readiness is loaded
+          applyAdaptationsAndReload();
         })
         .catch((error) => {
           console.log('Error loading state:', error);
@@ -3407,6 +3409,8 @@
             }
           }
           updateReadinessDisplay();
+          // Re-apply adaptations now that readiness is loaded
+          applyAdaptationsAndReload();
         });
     }
 
@@ -7648,9 +7652,9 @@
     const ADAPTATION_RULES = [
       {
         id: 'low_readiness_rest',
-        condition: (metrics) => metrics.readiness && metrics.readiness < 70,
+        condition: (metrics) => metrics.readiness && metrics.readiness < 60,
         action: 'switch_to_rest',
-        message: 'Readiness is {readiness} (below 70) — full rest day, no exceptions'
+        message: 'Readiness is {readiness} (below 60) — full rest day, no exceptions'
       },
       {
         id: 'mod_readiness_recovery',
@@ -7830,7 +7834,7 @@
         if (workout.readiness) {
           readinessSum += workout.readiness;
           readinessCount++;
-          if (workout.readiness < 70) patterns.lowReadinessDays++;
+          if (workout.readiness < 60) patterns.lowReadinessDays++;
         }
 
         // Count travel activities
@@ -7889,7 +7893,7 @@
               <span class="insight-value">${patterns.avgReadiness}</span>
             </div>
             <div class="insight-item">
-              <span>Days below 70</span>
+              <span>Days below 60</span>
               <span class="insight-value">${patterns.lowReadinessDays}</span>
             </div>
             ${patterns.adaptedWorkouts > 0 ? `
@@ -7984,7 +7988,7 @@ TRAINING APPROACH (updated Mar 2026)
 
 READINESS RULES (HARD RULES -- enforce these)
 - Below 75: recovery only (pool, mobility, walk). No strength, no conditioning.
-- Below 70: full rest, no exceptions.
+- Below 60: full rest, no exceptions.
 - Post-event 180+ min: 48 hours recovery-only.
 - Cap double-session days at 2/week.
 - Copenhagen adductors 2x/week minimum (groin monitoring).
@@ -8107,7 +8111,7 @@ OVERTRAINING SIGNALS & GUARDRAILS
       if (patterns.totalWorkouts >= 2) {
         summary += `\n\n3-WEEK PATTERNS: ${patterns.totalWorkouts} workouts`;
         if (patterns.avgReadiness) summary += `, avg readiness ${patterns.avgReadiness}`;
-        if (patterns.lowReadinessDays > 0) summary += `, ${patterns.lowReadinessDays} days below 70`;
+        if (patterns.lowReadinessDays > 0) summary += `, ${patterns.lowReadinessDays} days below 60`;
         if (patterns.adaptedWorkouts > 0) summary += `, ${patterns.adaptedWorkouts} auto-adapted`;
 
         const topAdj = Object.entries(patterns.adjustedExercises).sort((a,b) => b[1]-a[1]).slice(0,3);
@@ -8164,7 +8168,7 @@ KEY RULES:
 - Always consider readiness score before recommending intensity
 - Err on the side of caution - Sophie tends to push through when she should rest
 - If no workout is planned for today, suggest rest or light movement.
-- If readiness < 70, strongly recommend rest or very light movement
+- If readiness < 60, strongly recommend full rest. Between 60-74, recovery only (pool, mobility, walk)
 - Watching handball games/film counts as valid training
 - When suggesting workouts, use her actual exercises and weights from the plan
 - Keep responses concise and actionable. Use bullet points for workout plans.
