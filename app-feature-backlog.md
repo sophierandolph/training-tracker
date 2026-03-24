@@ -8,6 +8,12 @@ Collected from sessions through Mar 20, 2026. Includes holistic review from 7 ag
 
 (none open)
 
+### Fixed
+
+- [x] **Adaptation not persisting on reload** -- entering readiness showed "rest day, no exceptions" but closing and reopening showed original workouts. Root cause: `loadState()` is async but `loadTodaysWorkout()` ran before readiness loaded. Fix: re-apply adaptation rules in `loadState()` callback after state is populated. -- Fixed Mar 24.
+- [x] **Adaptation replaced planned recovery with generic POOL_RECOVERY** -- low readiness swapped in the bundled 45-min POOL_RECOVERY constant even when a lighter, tailored recovery was already scheduled. Fix: adaptation now checks workout type first. All-recovery days pass through. Mixed arrays (e.g. pool + movement snack) filter to recovery-only and show what was dropped. POOL_RECOVERY only used as last resort. -- Fixed Mar 24.
+- [x] **Readiness threshold too aggressive** -- full rest triggered at <70, blocking pool recovery on days like 68. Lowered to <60 per coach rationale: pool is therapeutic not taxing, and Prozac taper artificially suppresses Oura scores through ~April. New tiers: <60 full rest, 60-74 recovery only, 75+ normal. -- Fixed Mar 24.
+
 ## Features
 
 - [x] **Composable workout blocks** -- POOL_RECOVERY broken into BLOCK_POOL_SWIMMING, BLOCK_FOAM_ROLL_STRETCH, BLOCK_SHOULDER_SHIN_PREHAB. POOL_RECOVERY composed from them. Ready for mix-and-match in DATE_WORKOUTS and `/plan-workouts`. -- DONE Mar 20.
@@ -18,6 +24,7 @@ Collected from sessions through Mar 20, 2026. Includes holistic review from 7 ag
 - [ ] **Score history for trackScore exercises** -- show last score on finisher/scored drills. (Athlete)
 - [ ] **Coach conversation restore on refresh** -- sessions saved to Firestore but never loaded back. (Backend)
 - [ ] **Swipe-to-dismiss on modals** -- feels more native on iPhone. (UX)
+- [ ] **Exercise video references** -- exercises can carry a `videoRef` URL (e.g. Instagram reel link). AI coach surfaces the link when Sophie asks "show me how" for an unfamiliar exercise. Could also show a small video icon on exercises that have a reference. Needs: Sophie to save Instagram post URLs alongside downloaded reels. (Coach, Athlete)
 
 ## Nutrition / Fuel Tab
 
