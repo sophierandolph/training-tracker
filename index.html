@@ -5044,6 +5044,17 @@
         const hasDateWorkout = DATE_WORKOUTS && DATE_WORKOUTS[dateKey];
         if (!hasDateWorkout) return;
 
+        // Check if scheduled workout(s) are already recovery-type
+        const dw = hasDateWorkout;
+        const scheduledWorkouts = Array.isArray(dw) ? dw : [dw];
+        const recoveryTypes = ['recovery', 'prehab', 'rest'];
+        const allRecovery = scheduledWorkouts.every(w =>
+          recoveryTypes.includes((w.type || '').toLowerCase())
+        );
+        const hasRecovery = scheduledWorkouts.some(w =>
+          recoveryTypes.includes((w.type || '').toLowerCase())
+        );
+
         // Store original workout
         originalScheduledWorkout = state.activeWorkout;
 
@@ -5052,7 +5063,50 @@
           adaptationApplied = mainRule;
           showAdaptedRestDay(mainRule);
         } else if (mainRule.action === 'switch_to_recovery') {
-          // Switch to recovery workout
+          // If already all recovery-type, keep the planned workout(s) but show the banner
+          if (allRecovery) {
+            loadTodaysWorkout();
+            setTimeout(() => {
+              const header = document.querySelector('.workout-header');
+              if (header) {
+                const banner = document.createElement('div');
+                banner.className = 'adaptation-banner';
+                banner.style.margin = '16px';
+                banner.innerHTML = `
+                  <div class="adaptation-banner-header"><span>Recovery day</span></div>
+                  <div class="adaptation-banner-message">${mainRule.message}<br>Today's plan is already recovery — you're good.</div>
+                `;
+                header.after(banner);
+              }
+            }, 0);
+            return;
+          }
+          // Mixed array (some recovery, some not): filter to recovery-only workouts
+          if (Array.isArray(dw) && hasRecovery) {
+            const recoveryOnly = dw.filter(w => recoveryTypes.includes((w.type || '').toLowerCase()));
+            // Temporarily override DATE_WORKOUTS for this render
+            const original = DATE_WORKOUTS[dateKey];
+            DATE_WORKOUTS[dateKey] = recoveryOnly.length === 1 ? recoveryOnly[0] : recoveryOnly;
+            adaptationApplied = mainRule;
+            loadTodaysWorkout();
+            DATE_WORKOUTS[dateKey] = original; // restore
+            setTimeout(() => {
+              const header = document.querySelector('.workout-header');
+              if (header) {
+                const dropped = scheduledWorkouts.filter(w => !recoveryTypes.includes((w.type || '').toLowerCase())).map(w => w.name);
+                const banner = document.createElement('div');
+                banner.className = 'adaptation-banner';
+                banner.style.margin = '16px';
+                banner.innerHTML = `
+                  <div class="adaptation-banner-header"><span>Recovery day</span></div>
+                  <div class="adaptation-banner-message">${mainRule.message}<br>Dropped: ${dropped.join(', ')}</div>
+                `;
+                header.after(banner);
+              }
+            }, 0);
+            return;
+          }
+          // Non-recovery workout with no recovery option: swap to pool recovery
           adaptationApplied = mainRule;
           renderWorkout(POOL_RECOVERY, mainRule);
         } else {
