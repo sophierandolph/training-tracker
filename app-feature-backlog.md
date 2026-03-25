@@ -7,6 +7,7 @@ Collected from sessions through Mar 20, 2026. Includes holistic review from 7 ag
 ## Bugs (fix these)
 
 - [ ] **Calendar/preview views don't reflect readiness adaptation** -- `getDateWorkout()` doesn't apply readiness filtering, so calendar grid, upcoming workouts list, and day preview modal still show dropped workouts (e.g. Movement Snack) even when readiness < 75 has filtered them from the Today view. Cosmetic only -- Today view is correct.
+- [ ] **Flash of unfiltered workouts on Today tab switch** -- when readiness < 75 filters a multi-workout day down to a single workout, clicking the Today tab briefly flashes both tiles before the filter runs and shows the correct view. Likely needs the readiness filter applied before any DOM render, or a loading state.
 
 ### Fixed
 

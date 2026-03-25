@@ -3713,37 +3713,6 @@
       const dateKey = formatDateKey(state.currentDate);
       const specialDate = SPECIAL_DATES[dateKey];
 
-      // Check if this day's workout was already saved (skip for multi-workout days — they handle it per-tile)
-      const isMultiWorkout = DATE_WORKOUTS[dateKey] && Array.isArray(DATE_WORKOUTS[dateKey]);
-      let inProgressForThisDay = false;
-      // Check per-workout keys for in-progress state
-      for (let i = 0; i < localStorage.length; i++) {
-        const k = localStorage.key(i);
-        if (!k.startsWith('workoutInProgress_')) continue;
-        try {
-          if (JSON.parse(localStorage.getItem(k)).date === dateKey) { inProgressForThisDay = true; break; }
-        } catch(e) { localStorage.removeItem(k); }
-      }
-      // Legacy fallback
-      if (!inProgressForThisDay) {
-        const inProgressRaw = localStorage.getItem('workoutInProgress');
-        if (inProgressRaw) {
-          try { inProgressForThisDay = JSON.parse(inProgressRaw).date === dateKey; }
-          catch(e) { localStorage.removeItem('workoutInProgress'); }
-        }
-      }
-      // Also check if day has external activities (some may still need logging)
-      const hasExternalActivities = (EXTERNAL_ACTIVITIES[dayName] && EXTERNAL_ACTIVITIES[dayName].length > 0) ||
-        (DATE_ACTIVITIES[dateKey] && DATE_ACTIVITIES[dateKey].length > 0);
-      if (!isMultiWorkout && !inProgressForThisDay && !hasExternalActivities) {
-        const history = getWorkoutHistory();
-        const todaySaved = history.filter(h => h.date === dateKey);
-        if (todaySaved.length > 0) {
-          showWorkoutComplete(todaySaved[0]);
-          return;
-        }
-      }
-
       let workout = null;
 
       // DATE_WORKOUTS takes priority over everything, including travel days
@@ -3757,6 +3726,34 @@
           const recoveryOnly = dw.filter(w => recoveryTypes.includes((w.type || '').toLowerCase()));
           if (recoveryOnly.length > 0 && recoveryOnly.length < dw.length) {
             dw = recoveryOnly.length === 1 ? recoveryOnly[0] : recoveryOnly;
+          }
+        }
+
+        // Check if already saved (after readiness filter so we know the final shape)
+        const isMultiWorkout = Array.isArray(dw);
+        let inProgressForThisDay = false;
+        for (let i = 0; i < localStorage.length; i++) {
+          const k = localStorage.key(i);
+          if (!k.startsWith('workoutInProgress_')) continue;
+          try {
+            if (JSON.parse(localStorage.getItem(k)).date === dateKey) { inProgressForThisDay = true; break; }
+          } catch(e) { localStorage.removeItem(k); }
+        }
+        if (!inProgressForThisDay) {
+          const inProgressRaw = localStorage.getItem('workoutInProgress');
+          if (inProgressRaw) {
+            try { inProgressForThisDay = JSON.parse(inProgressRaw).date === dateKey; }
+            catch(e) { localStorage.removeItem('workoutInProgress'); }
+          }
+        }
+        const hasExternalActivities = (EXTERNAL_ACTIVITIES[dayName] && EXTERNAL_ACTIVITIES[dayName].length > 0) ||
+          (DATE_ACTIVITIES[dateKey] && DATE_ACTIVITIES[dateKey].length > 0);
+        if (!isMultiWorkout && !inProgressForThisDay && !hasExternalActivities) {
+          const history = getWorkoutHistory();
+          const todaySaved = history.filter(h => h.date === dateKey);
+          if (todaySaved.length > 0) {
+            showWorkoutComplete(todaySaved[0]);
+            return;
           }
         }
 
@@ -6905,7 +6902,7 @@
       }
     ],
 
-    // Sun Mar 29: Rest — omitted, app shows rest by default
+    '2026-03-29': POOL_RECOVERY,
 
     // Mon Mar 30: PT 5pm + Soccer (LAST ONE) — external activities, not planned here
 
@@ -7214,14 +7211,41 @@
     },
 
     '2026-04-05': {
-      name: "Rest / Pool Recovery",
+      name: "Active Recovery: Pool + Mobility",
       type: "Recovery",
-      duration: "20-30 min",
+      duration: "20-25 min",
       location: "Rec Center",
-      condition: "Optional pool recovery. If feeling good, skip and take full rest. If legs or shoulder feel beat up, do the pool.",
+      condition: "Pool recovery before race week starts Monday. Water walking > laps. Prioritize hip openers and psoas work.\nDo a range-of-motion check on both hips — flag anything tighter than last week before race week load.",
       circuits: [
         BLOCK_POOL_SWIMMING,
         BLOCK_FOAM_ROLL_STRETCH
+      ]
+    },
+
+    '2026-04-06': {
+      name: "Walk + Stretch",
+      type: "Recovery",
+      duration: "20 min",
+      location: "Outdoors or home",
+      condition: "Light recovery day. Post-PT walk + stretch. Race week — manage energy, don't build stress.\nFocus on hip flexors and calves (the two zones most at risk for Beer Bike + scrimmage Saturday).",
+      circuits: [
+        {
+          name: "A. Easy Walk (10 min)",
+          simple: true,
+          exercises: [
+            { id: "w9mon_a1", name: "Easy Walk", sets: 1, reps: 1, notes: "10 min at conversation pace. Flat ground. Just move.", isCardio: true, duration: 600, noWeight: true }
+          ]
+        },
+        {
+          name: "B. Hip + Calf Stretch (10 min)",
+          simple: true,
+          exercises: [
+            { id: "w9mon_b1", name: "Half-Kneeling Hip Flexor Stretch", sets: 1, reps: 1, notes: "60 sec each side. Squeeze glute on the back leg, don't arch the low back.", isHold: true, holdTime: 60, perSide: true, noWeight: true },
+            { id: "w9mon_b2", name: "Standing Calf Stretch (Wall)", sets: 1, reps: 1, notes: "45 sec each side. Straight back leg, heel down.", isHold: true, holdTime: 45, perSide: true, noWeight: true },
+            { id: "w9mon_b3", name: "Figure-4 Hip Stretch (Supine)", sets: 1, reps: 1, notes: "60 sec each side. Gentle pull, let gravity do the work.", isHold: true, holdTime: 60, perSide: true, noWeight: true },
+            { id: "w9mon_b4", name: "Supine Psoas Release", sets: 1, reps: 1, notes: "90 sec each side. Let the leg hang off the edge of a bed or bench.", isHold: true, holdTime: 90, perSide: true, noWeight: true }
+          ]
+        }
       ]
     },
 
@@ -7475,7 +7499,7 @@
         type: "Sport-Specific",
         duration: "20 min",
         location: "Squash court or any wall",
-        condition: "Phase 3: full approach, 70-80% effort. ~40-50 throws.\nBoth feint drills included. Wrist work after.\nDo this BEFORE upper body (fresh arms).",
+        condition: "⚠️ PT flag: consider skipping today — shoulder needs to be fresh for tomorrow's double (Beer Bike + scrimmage). If you do throw, keep it to 10 min max, low intensity, wall passes only.\nPhase 3: full approach, 70-80% effort. ~40-50 throws.\nBoth feint drills included. Wrist work after.\nDo this BEFORE upper body (fresh arms).",
         circuits: [
           {
             name: "A. Wall Throwing (Phase 3)",
@@ -7510,7 +7534,9 @@
     ],
 
     // Sat Apr 11: Beer Bike (11am) + Handball Scrimmage (2-5pm) — external activities, not planned here
-    // Sun Apr 12: Rest / Recovery — omitted, app shows rest by default
+
+    '2026-04-12': POOL_RECOVERY,
+
     };
 
     // Special dates with specific schedule info
