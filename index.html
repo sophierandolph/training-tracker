@@ -3749,7 +3749,17 @@
       // DATE_WORKOUTS takes priority over everything, including travel days
       // Supports single workout object OR array of workouts (multi-session days)
       if (DATE_WORKOUTS[dateKey]) {
-        const dw = DATE_WORKOUTS[dateKey];
+        let dw = DATE_WORKOUTS[dateKey];
+
+        // Apply readiness adaptation filter on every render (not just initial readiness save)
+        if (Array.isArray(dw) && state.readiness && state.readiness < 75) {
+          const recoveryTypes = ['recovery', 'prehab', 'rest'];
+          const recoveryOnly = dw.filter(w => recoveryTypes.includes((w.type || '').toLowerCase()));
+          if (recoveryOnly.length > 0 && recoveryOnly.length < dw.length) {
+            dw = recoveryOnly.length === 1 ? recoveryOnly[0] : recoveryOnly;
+          }
+        }
+
         if (Array.isArray(dw)) {
           // Multi-workout day: render as selectable tiles
           renderMultiWorkoutDay(dw, dateKey);
