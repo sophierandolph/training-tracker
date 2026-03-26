@@ -7,13 +7,14 @@ Collected from sessions through Mar 20, 2026. Includes holistic review from 7 ag
 ## Bugs (fix these)
 
 - [ ] **Calendar/preview views don't reflect readiness adaptation** -- `getDateWorkout()` doesn't apply readiness filtering, so calendar grid, upcoming workouts list, and day preview modal still show dropped workouts (e.g. Movement Snack) even when readiness < 75 has filtered them from the Today view. Cosmetic only -- Today view is correct.
-- [ ] **Flash of unfiltered workouts on Today tab switch** -- when readiness < 75 filters a multi-workout day down to a single workout, clicking the Today tab briefly flashes both tiles before the filter runs and shows the correct view. Likely needs the readiness filter applied before any DOM render, or a loading state.
-
 ### Fixed
 
 - [x] **Adaptation not persisting on reload** -- entering readiness showed "rest day, no exceptions" but closing and reopening showed original workouts. Root cause: `loadState()` is async but `loadTodaysWorkout()` ran before readiness loaded. Fix: re-apply adaptation rules in `loadState()` callback after state is populated. -- Fixed Mar 24.
 - [x] **Adaptation replaced planned recovery with generic POOL_RECOVERY** -- low readiness swapped in the bundled 45-min POOL_RECOVERY constant even when a lighter, tailored recovery was already scheduled. Fix: adaptation now checks workout type first. All-recovery days pass through. Mixed arrays (e.g. pool + movement snack) filter to recovery-only and show what was dropped. POOL_RECOVERY only used as last resort. -- Fixed Mar 24.
 - [x] **Readiness threshold too aggressive** -- full rest triggered at <70, blocking pool recovery on days like 68. Lowered to <60 per coach rationale: pool is therapeutic not taxing, and Prozac taper artificially suppresses Oura scores through ~April. New tiers: <60 full rest, 60-74 recovery only, 75+ normal. -- Fixed Mar 24.
+- [x] **Flash of unfiltered workouts on Today tab switch** -- obsolete after removing the silent readiness filter from loadTodaysWorkout(). Both workouts now intentionally show; applyAdaptationsAndReload() handles adaptation banners on Oura save. -- Fixed Mar 26.
+- [x] **External activity difficulty shows /10 instead of /5** -- intensity stored on 1-5 scale but displayed as "/10" in 3 tile templates. -- Fixed Mar 26.
+- [x] **Workouts disappear after logging Oura data** -- duplicate silent readiness filter in loadTodaysWorkout() hid non-recovery workouts on multi-workout days without a banner. Removed; applyAdaptationsAndReload() already handles this properly. -- Fixed Mar 26.
 
 ## Features
 

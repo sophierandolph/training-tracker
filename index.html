@@ -5496,6 +5496,17 @@
           type: 'Handball',
           description: 'Placement game'
         }
+      ],
+      '2026-03-29': [
+        {
+          id: 'handball_small_group_0329',
+          name: 'Handball Practice (Small Group)',
+          time: 'TBD',
+          duration: 90,
+          location: 'Court',
+          type: 'Sport',
+          description: 'Extra small-group practice session'
+        }
       ]
     };
 
@@ -6706,21 +6717,21 @@
     ],
     '2026-03-26': [
       {
-        name: "Beer Bike: Conditioning",
-        type: "Cardio",
-        duration: "30 min",
-        location: "Bike (outdoor or stationary)",
-        condition: "Week 7 Beer Bike training. Trimmed from 45 to 30 min this week to manage ACWR on first week back from deload.",
+        name: "Beer Bike: Track Skills",
+        type: "Recovery",
+        duration: "15 min",
+        location: "Bike (outdoor, on track)",
+        condition: "Skills-only session — clip-in practice and track familiarity. Easy effort the entire time. No intervals. If you feel off, 10 min is enough.",
         circuits: [
           {
-            name: "Bike Intervals (30 min)",
-            instructions: "Moderate effort. Not a peak week — just maintaining the base.",
+            name: "Clip-In & Track Practice (15 min)",
+            instructions: "Conversational pace only. This is motor pattern work, not conditioning.",
             simple: true,
             exercises: [
-              { id: "w7thu_a1", name: "Easy Spin Warm-Up", sets: 1, reps: 1, notes: "5 min at conversational pace.", isCardio: true, duration: 300, noWeight: true },
-              { id: "w7thu_a2", name: "Moderate Build", sets: 1, reps: 1, notes: "5 min at 70% effort.", isCardio: true, duration: 300, noWeight: true },
-              { id: "w7thu_a3", name: "Tempo Intervals", sets: 4, reps: 1, notes: "2 min at 80% / 1 min easy. 4 rounds.", isCardio: true, duration: 120, noWeight: true },
-              { id: "w7thu_a4", name: "Easy Cool-Down Spin", sets: 1, reps: 1, notes: "5 min easy.", isCardio: true, duration: 300, noWeight: true }
+              { id: "w7thu_s1", name: "Clip-In/Out Practice (Stationary)", sets: 1, reps: 6, notes: "Both feet, 3 each. Practice clipping in and out while stopped/braced.", isCardio: true, noWeight: true },
+              { id: "w7thu_s2", name: "Easy Laps", sets: 1, reps: 1, notes: "5-8 min easy spin. Feel the track, get comfortable cornering.", isCardio: true, duration: 480, noWeight: true },
+              { id: "w7thu_s3", name: "Standing Starts", sets: 2, reps: 1, notes: "Clip in, push off, settle into pedal rhythm. Practice the race start motion.", isCardio: true, noWeight: true },
+              { id: "w7thu_s4", name: "Cool-Down Laps", sets: 1, reps: 1, notes: "3-5 min easy. Practice one more unclip at the end.", isCardio: true, duration: 300, noWeight: true }
             ]
           }
         ]
@@ -6822,6 +6833,26 @@
               { id: "w7fri_ms3", name: "Kneeling Throws (R)", sets: 2, reps: 6, notes: "Throwing-side knee down. 50-60%. Cue: 'OPEN'.", noWeight: true },
               { id: "w7fri_ms4", name: "Standing Throws (R)", sets: 2, reps: 6, notes: "Stationary. Step, OPEN, launch.", noWeight: true },
               { id: "w7fri_ms5", name: "Standing Throws (L)", sets: 2, reps: 5, notes: "Left hand. Technique only.", noWeight: true }
+            ]
+          }
+        ]
+      },
+      {
+        name: "Beer Bike: Conditioning (Makeup)",
+        type: "Cardio",
+        duration: "30 min",
+        location: "Bike (outdoor or stationary)",
+        condition: "Moved from Thursday — dropped by readiness adaptation. Week 7 Beer Bike training. Trimmed from 45 to 30 min to manage ACWR.",
+        circuits: [
+          {
+            name: "Bike Intervals (30 min)",
+            instructions: "Moderate effort. Not a peak week — just maintaining the base.",
+            simple: true,
+            exercises: [
+              { id: "w7fri_bike1", name: "Easy Spin Warm-Up", sets: 1, reps: 1, notes: "5 min at conversational pace.", isCardio: true, duration: 300, noWeight: true },
+              { id: "w7fri_bike2", name: "Moderate Build", sets: 1, reps: 1, notes: "5 min at 70% effort.", isCardio: true, duration: 300, noWeight: true },
+              { id: "w7fri_bike3", name: "Tempo Intervals", sets: 4, reps: 1, notes: "2 min at 80% / 1 min easy. 4 rounds.", isCardio: true, duration: 120, noWeight: true },
+              { id: "w7fri_bike4", name: "Easy Cool-Down Spin", sets: 1, reps: 1, notes: "5 min easy.", isCardio: true, duration: 300, noWeight: true }
             ]
           }
         ]
