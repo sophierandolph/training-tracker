@@ -4226,6 +4226,43 @@
         `;
       });
 
+      // Add external activities (recurring + date-specific)
+      const dayNames = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
+      const dayName = dayNames[new Date(dateKey + 'T00:00:00').getDay()];
+      const recurring = EXTERNAL_ACTIVITIES[dayName] || [];
+      const dateSpecific = DATE_ACTIVITIES[dateKey] || [];
+      const extActivities = dateSpecific.length > 0 ? dateSpecific : recurring;
+
+      extActivities.forEach(activity => {
+        const logged = history.find(w =>
+          w.date === dateKey &&
+          w.type === 'External Activity' &&
+          w.activityId === activity.id
+        );
+        const isDateSpecific = dateSpecific.length > 0 && dateSpecific.includes(activity);
+        const loggedInfo = logged ? `
+          <div class="activity-tile-logged-info">
+            <span class="rating">${logged.intensity}/5</span> intensity
+            ${logged.duration ? ` · ${logged.duration} min` : ''}
+            ${logged.effortType ? ` · ${logged.effortType}` : ''}
+          </div>
+        ` : '';
+
+        tilesHtml += `
+          <div class="activity-tile ${logged ? 'logged' : ''}" onclick="openExternalActivityModal('${activity.id}', ${isDateSpecific ? `null, '${dateKey}'` : `'${dayName}'`})">
+            <div class="activity-tile-header">
+              <div>
+                <div class="activity-tile-type">${activity.type}</div>
+                <div class="activity-tile-name">${activity.name}</div>
+                <div class="activity-tile-time">${activity.time || 'TBD'} · ${activity.location}</div>
+              </div>
+              <span class="activity-tile-status ${logged ? 'logged' : ''}">${logged ? 'Logged' : 'Log'}</span>
+            </div>
+            ${loggedInfo}
+          </div>
+        `;
+      });
+
       content.innerHTML = `<div class="activity-tiles">${tilesHtml}</div>`;
     }
 
@@ -6924,7 +6961,7 @@
       }
     ],
 
-    '2026-03-29': POOL_RECOVERY,
+    '2026-03-29': [POOL_RECOVERY],
 
     // Mon Mar 30: PT 5pm + Soccer (LAST ONE) — external activities, not planned here
 
