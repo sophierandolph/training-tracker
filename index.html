@@ -3720,16 +3720,7 @@
       if (DATE_WORKOUTS[dateKey]) {
         let dw = DATE_WORKOUTS[dateKey];
 
-        // Apply readiness adaptation filter on every render (not just initial readiness save)
-        if (Array.isArray(dw) && state.readiness && state.readiness < 75) {
-          const recoveryTypes = ['recovery', 'prehab', 'rest'];
-          const recoveryOnly = dw.filter(w => recoveryTypes.includes((w.type || '').toLowerCase()));
-          if (recoveryOnly.length > 0 && recoveryOnly.length < dw.length) {
-            dw = recoveryOnly.length === 1 ? recoveryOnly[0] : recoveryOnly;
-          }
-        }
-
-        // Check if already saved (after readiness filter so we know the final shape)
+        // Check if already saved
         const isMultiWorkout = Array.isArray(dw);
         let inProgressForThisDay = false;
         for (let i = 0; i < localStorage.length; i++) {
@@ -3871,7 +3862,7 @@
                 );
                 const loggedInfo = logged ? `
                   <div class="activity-tile-logged-info">
-                    <span class="rating">${logged.intensity}/10</span> intensity
+                    <span class="rating">${logged.intensity}/5</span> intensity
                     ${logged.duration ? ` · ${logged.duration} min` : ''}
                     ${logged.effortType ? ` · ${logged.effortType}` : ''}
                   </div>
@@ -3993,7 +3984,7 @@
 
         const loggedInfo = logged ? `
           <div class="activity-tile-logged-info">
-            <span class="rating">${logged.intensity}/10</span> intensity
+            <span class="rating">${logged.intensity}/5</span> intensity
             ${logged.duration ? ` · ${logged.duration} min` : ''}
             ${logged.effortType ? ` · ${logged.effortType}` : ''}
           </div>
@@ -4058,7 +4049,7 @@
 
         const loggedInfo = logged ? `
           <div class="activity-tile-logged-info">
-            <span class="rating">${logged.intensity}/10</span> intensity
+            <span class="rating">${logged.intensity}/5</span> intensity
             ${logged.duration ? ` · ${logged.duration} min` : ''}
           </div>
         ` : '';
