@@ -6807,10 +6807,18 @@
       {
         name: "Lower Body Strength (Week 7)",
         type: "Strength",
-        duration: "40 min",
+        duration: "55 min",
         location: "Rec Center",
-        condition: "First full Rec Center lower body since Mar 7. Trimmed session (no machine circuit) to manage ACWR. Hold RDL weight, progress goblet squat.\nBring: loop band",
+        condition: "Late luteal + Prozac taper suppressing readiness (73). Sleep is fine, feeling good. PT Monday was 5/5 effort with heavy lower body. Coach: green light, hold goblet squat at 27.5 (bump last set to 30 if easy), jump squats BW only (laxity), progress RDLs to 17.5.\nBring: loop band",
         circuits: [
+          {
+            name: "Bike Warm-Up (10 min)",
+            instructions: "Easy spin to raise core temp and get synovial fluid moving before prehab.",
+            simple: true,
+            exercises: [
+              { id: "w7fri_bike0", name: "Stationary Bike Easy Spin", sets: 1, reps: 1, notes: "10 min at conversational pace. ~120-130 bpm.", isCardio: true, duration: 600, noWeight: true }
+            ]
+          },
           {
             name: "A. Hip Prehab Warm-Up (12 min)",
             instructions: "Slow and controlled. Activate glutes and hips before loading.",
@@ -6818,7 +6826,7 @@
               { id: "w7fri_a1", name: "Standing Hip Hydrants", sets: 2, reps: 12, notes: "Each side. Loop band above knees. Right side: reduce ROM if any deep pain.", perSide: true, noWeight: true },
               { id: "w7fri_a2", name: "Weighted Hip Airplanes", sets: 2, reps: 8, notes: "Each side. Light DB. Single-leg hinge, rotate pelvis up/down.", perSide: true, noWeight: true },
               { id: "w7fri_a3", name: "Kickstand RDLs", sets: 2, reps: 10, notes: "Each side. Band above knees, light DB. 90% weight on working leg.", perSide: true, noWeight: true },
-              { id: "w7fri_a4", name: "Copenhagen Adductor Hold", sets: 2, reps: 1, notes: "20 sec each side. Side plank, top foot on bench. Groin check.", isHold: true, holdTime: 20, perSide: true, noWeight: true },
+              { id: "w7fri_a4", name: "Copenhagen Adductor Hold", sets: 2, reps: 1, notes: "20 sec each side. Side plank, top foot on bench. Bail if any sharp groin/adductor sensation -- sub side-lying adductor squeeze instead.", isHold: true, holdTime: 20, perSide: true, noWeight: true },
               { id: "w7fri_a5", name: "Tibialis Raises", sets: 2, reps: 15, notes: "Heels on edge of step, toes up. Shin prehab for court work.", noWeight: true }
             ]
           },
@@ -6827,8 +6835,8 @@
             instructions: "B1-B2-B3, rest 90 sec, repeat 3x.",
             restTime: 90,
             exercises: [
-              { id: "w7fri_b1", name: "DB Goblet Squat", sets: 3, reps: 12, weight: 27.5, notes: "Progressed from 25. Full depth, chest up. Wider stance." },
-              { id: "w7fri_b2", name: "Jump Squats", sets: 3, reps: 8, notes: "Explosive up, land soft. Bodyweight.", noWeight: true },
+              { id: "w7fri_b1", name: "DB Goblet Squat", sets: 3, reps: 12, weight: 27.5, notes: "Hold at 27.5 (hit 30 on Mar 20 but late luteal + circuit format). Bump last set to 30 if easy. Full depth, chest up, wider stance." },
+              { id: "w7fri_b2", name: "Jump Squats", sets: 3, reps: 8, notes: "BODYWEIGHT ONLY -- late luteal laxity + explosive lunges Monday. Land soft, absorb through whole foot, knees track out.", noWeight: true },
               { id: "w7fri_b3", name: "Front Low Plank Hold", sets: 3, reps: 1, notes: "30 sec. Straight line.", isHold: true, holdTime: 30, noWeight: true }
             ]
           },
@@ -6837,14 +6845,14 @@
             instructions: "C1-C2-C3, rest 90 sec, repeat 3x.",
             restTime: 90,
             exercises: [
-              { id: "w7fri_c1", name: "DB Reverse Lunges", sets: 3, reps: 8, weight: 15, notes: "Each leg. Hold weight — first full session back.", perSide: true },
-              { id: "w7fri_c2", name: "DB RDLs", sets: 3, reps: 10, weight: 15, notes: "Hold at 15 this week. Progress to 17.5 next week if feel stays 3.", },
+              { id: "w7fri_c1", name: "DB Reverse Lunges", sets: 3, reps: 8, weight: 15, notes: "Each leg. Hold at 15 (Bosu lunges at 17.5/hand Monday).", perSide: true },
+              { id: "w7fri_c2", name: "DB RDLs", sets: 3, reps: 10, weight: 17.5, notes: "Progressed from 15 (hit 20 on Mar 20). Focus on hamstring feel, not lumbar pull." },
               { id: "w7fri_c3", name: "Side Plank Hold", sets: 3, reps: 1, notes: "25 sec each side.", isHold: true, holdTime: 25, perSide: true, noWeight: true }
             ]
           },
           {
             name: "D. Cool-Down (8 min)",
-            instructions: "Hip release after first heavy lower body in 3 weeks.",
+            instructions: "Hip release post-session.",
             exercises: [
               { id: "w7fri_d1", name: "Figure-4 Hip Stretch", sets: 1, reps: 1, notes: "60 sec each side.", isHold: true, holdTime: 60, perSide: true, noWeight: true },
               { id: "w7fri_d2", name: "Kneeling Hip Flexor Stretch", sets: 1, reps: 1, notes: "45 sec each side.", isHold: true, holdTime: 45, perSide: true, noWeight: true },
@@ -6874,26 +6882,7 @@
           }
         ]
       },
-      {
-        name: "Beer Bike: Conditioning (Makeup)",
-        type: "Cardio",
-        duration: "30 min",
-        location: "Bike (outdoor or stationary)",
-        condition: "Moved from Thursday — dropped by readiness adaptation. Week 7 Beer Bike training. Trimmed from 45 to 30 min to manage ACWR.",
-        circuits: [
-          {
-            name: "Bike Intervals (30 min)",
-            instructions: "Moderate effort. Not a peak week — just maintaining the base.",
-            simple: true,
-            exercises: [
-              { id: "w7fri_bike1", name: "Easy Spin Warm-Up", sets: 1, reps: 1, notes: "5 min at conversational pace.", isCardio: true, duration: 300, noWeight: true },
-              { id: "w7fri_bike2", name: "Moderate Build", sets: 1, reps: 1, notes: "5 min at 70% effort.", isCardio: true, duration: 300, noWeight: true },
-              { id: "w7fri_bike3", name: "Tempo Intervals", sets: 4, reps: 1, notes: "2 min at 80% / 1 min easy. 4 rounds.", isCardio: true, duration: 120, noWeight: true },
-              { id: "w7fri_bike4", name: "Easy Cool-Down Spin", sets: 1, reps: 1, notes: "5 min easy.", isCardio: true, duration: 300, noWeight: true }
-            ]
-          }
-        ]
-      }
+      // Beer Bike conditioning makeup absorbed into lower body warm-up (10 min bike)
     ],
 // ============================================================
     // WEEK 8 (Mar 28 - Apr 3) + WEEK 9 (Apr 4 - Apr 12)
