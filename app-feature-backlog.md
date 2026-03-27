@@ -6,14 +6,14 @@ Collected from sessions through Mar 20, 2026. Includes holistic review from 7 ag
 
 ## Bugs (fix these)
 
-- [ ] **Calendar/preview views don't reflect readiness adaptation** -- `getDateWorkout()` doesn't apply readiness filtering, so calendar grid, upcoming workouts list, and day preview modal still show dropped workouts (e.g. Movement Snack) even when readiness < 75 has filtered them from the Today view. Cosmetic only -- Today view is correct.
+- [ ] **Calendar/preview views don't reflect readiness adaptation** -- `getDateWorkout()` doesn't apply readiness filtering, so calendar grid, upcoming workouts list, and day preview modal still show dropped workouts (e.g. Movement Snack) even when readiness < 68 has filtered them from the Today view. Cosmetic only -- Today view is correct.
 - [ ] **showMixedDay() ignores DATE_ACTIVITIES** -- only checks `EXTERNAL_ACTIVITIES[dayName]` (recurring), never `DATE_ACTIVITIES[dateKey]` (date-specific). On a single-workout day with a date-specific external activity, the activity tile won't show. `showNoWorkout()` and `renderMultiWorkoutDay()` both handle this correctly already.
 
 ### Fixed
 
 - [x] **Adaptation not persisting on reload** -- entering readiness showed "rest day, no exceptions" but closing and reopening showed original workouts. Root cause: `loadState()` is async but `loadTodaysWorkout()` ran before readiness loaded. Fix: re-apply adaptation rules in `loadState()` callback after state is populated. -- Fixed Mar 24.
 - [x] **Adaptation replaced planned recovery with generic POOL_RECOVERY** -- low readiness swapped in the bundled 45-min POOL_RECOVERY constant even when a lighter, tailored recovery was already scheduled. Fix: adaptation now checks workout type first. All-recovery days pass through. Mixed arrays (e.g. pool + movement snack) filter to recovery-only and show what was dropped. POOL_RECOVERY only used as last resort. -- Fixed Mar 24.
-- [x] **Readiness threshold too aggressive** -- full rest triggered at <70, blocking pool recovery on days like 68. Lowered to <60 per coach rationale: pool is therapeutic not taxing, and Prozac taper artificially suppresses Oura scores through ~April. New tiers: <60 full rest, 60-74 recovery only, 75+ normal. -- Fixed Mar 24.
+- [x] **Readiness threshold too aggressive** -- full rest triggered at <70, blocking pool recovery on days like 68. Lowered to <60 per coach rationale: pool is therapeutic not taxing, and Prozac taper artificially suppresses Oura scores through ~April. New tiers: <60 full rest, 60-74 recovery only, 75+ normal. -- Fixed Mar 24. Updated Mar 27: lowered recovery gate from <75 to <68 (75 was blocking trainable days during luteal phase + Prozac taper). Move to <72 after taper clears (~May).
 - [x] **Flash of unfiltered workouts on Today tab switch** -- obsolete after removing the silent readiness filter from loadTodaysWorkout(). Both workouts now intentionally show; applyAdaptationsAndReload() handles adaptation banners on Oura save. -- Fixed Mar 26.
 - [x] **External activity difficulty shows /10 instead of /5** -- intensity stored on 1-5 scale but displayed as "/10" in 3 tile templates. -- Fixed Mar 26.
 - [x] **Workouts disappear after logging Oura data** -- duplicate silent readiness filter in loadTodaysWorkout() hid non-recovery workouts on multi-workout days without a banner. Removed; applyAdaptationsAndReload() already handles this properly. -- Fixed Mar 26.
@@ -21,6 +21,11 @@ Collected from sessions through Mar 20, 2026. Includes holistic review from 7 ag
 ## Features
 
 - [x] **Composable workout blocks** -- POOL_RECOVERY broken into BLOCK_POOL_SWIMMING, BLOCK_FOAM_ROLL_STRETCH, BLOCK_SHOULDER_SHIN_PREHAB. POOL_RECOVERY composed from them. Ready for mix-and-match in DATE_WORKOUTS and `/plan-workouts`. -- DONE Mar 20.
+- [ ] **Smart readiness adaptation system** -- Replace the single-number recovery gate with a multi-signal system. Three components:
+  1. **Manual override:** When readiness is between 60 and the gate, allow athlete to override with a structured self-check (energy/soreness/motivation all 3+/5). Constraints: no back-to-back override days; override days cap intensity at ~80% / reduce volume ~20%. Log every override with reason.
+  2. **Trend modifier:** Compare 3-day vs 7-day readiness average. If trending up or flat, override is available in the 60-to-gate zone. If trending down, recovery sticks (no override). A 69 rebounding from 53 is different from a 69 falling from 83.
+  3. **Phased thresholds:** Current gate is <68 (Prozac taper period, Mar-Apr 2026). Move to <72 after taper clears. Review date: May 1 -- verify in Oura data that taper effects have actually resolved before changing. Full rest gate stays at <60 regardless.
+  - Implementation: override UI could be a "I feel good -- let me train" button on the adaptation banner, opening a 3-question check. Trend calculation uses existing `getWorkoutHistory()` readiness data. Store override log in Firestore for coach review.
 - [ ] **History view** -- week-over-week calendar layout with checkboxes for completed workouts per day
 - [ ] **Streak/consistency tracking** -- running streak, weekly completion rate. Cheapest motivation lever. (Athlete)
 - [ ] **Offline sync indicator** -- show "saved locally, will sync" when no connection. Currently silent. (Athlete, Backend)

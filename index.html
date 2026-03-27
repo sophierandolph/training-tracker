@@ -8432,9 +8432,9 @@
       },
       {
         id: 'mod_readiness_recovery',
-        condition: (metrics) => metrics.readiness && metrics.readiness < 75,
+        condition: (metrics) => metrics.readiness && metrics.readiness < 68,
         action: 'switch_to_recovery',
-        message: 'Readiness is {readiness} (below 75) — recovery only (pool, mobility, walk)'
+        message: 'Readiness is {readiness} (below 68) — recovery only (pool, mobility, walk)'
       },
       {
         id: 'post_event_recovery',
@@ -8927,9 +8927,9 @@ OVERTRAINING SIGNALS & GUARDRAILS
       if (state.readiness) {
         readinessInfo = `Readiness: ${state.readiness}`;
         if (state.readiness >= 85) readinessInfo += ' (excellent - full intensity)';
-        else if (state.readiness >= 75) readinessInfo += ' (good - proceed with plan)';
-        else if (state.readiness >= 70) readinessInfo += ' (moderate - consider reducing 25%)';
-        else readinessInfo += ' (low - rest or easy movement only)';
+        else if (state.readiness >= 68) readinessInfo += ' (good - proceed with plan)';
+        else if (state.readiness >= 60) readinessInfo += ' (moderate - recovery only)';
+        else readinessInfo += ' (low - rest day, no exceptions)';
       }
       if (state.sleepScore) readinessInfo += ` | Sleep: ${state.sleepScore}`;
       if (state.hrv) readinessInfo += ` | HRV: ${state.hrv}`;
