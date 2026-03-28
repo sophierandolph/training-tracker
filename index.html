@@ -5742,11 +5742,11 @@
         {
           id: 'handball_small_group_0329',
           name: 'Handball Practice (Small Group)',
-          time: 'TBD',
-          duration: 90,
+          time: '5:00pm',
+          duration: 60,
           location: 'Court',
           type: 'Sport',
-          description: 'Extra small-group practice session'
+          description: 'Individualized focus session. Non-recurring for now.'
         }
       ]
     };
@@ -7092,69 +7092,51 @@
     // WEEK 8 (Mar 28 - Apr 3) + WEEK 9 (Apr 4 - Apr 12)
     // ============================================================
 
-    '2026-03-28': [
-      {
-        name: "Shortened Upper Body (Week 8)",
-        type: "Strength",
-        duration: "35 min",
-        location: "Rec Center",
-        condition: "Shortened session — 7v7 soccer later today. Focus on compounds + push volume.\nProgress single arm row to 22.5. Hold everything else. Cable lateral raise replaces DB combo.\nBring: loop band",
-        circuits: [
-          BLOCK_UB_WARMUP,
-          {
-            name: "B. Pull + Push Superset (12 min)",
-            instructions: "B1-B2, rest 90 sec, repeat 3x. Real push work today — chest press is primary push movement.",
-            restTime: 90,
-            exercises: [
-              { id: "w8sat_b1", name: "Single Arm DB Row", sets: 3, reps: 10, weight: 22.5, notes: "Progressed from 20. Pull elbow back and up, keep core tight. If 22.5 isn't available, use 20 and add a 2-count pause at top.", perSide: true },
-              { id: "w8sat_b2", name: "Chest Press Machine", sets: 3, reps: 10, weight: 50, notes: "Hold at 50. Full ROM — feel the stretch at the bottom, drive through the whole press." }
-            ]
-          },
-          {
-            name: "C. Vertical Pull + Shoulder (12 min)",
-            instructions: "C1-C2-C3, rest 90 sec, repeat 3x.",
-            restTime: 90,
-            exercises: [
-              { id: "w8sat_c1", name: "Lat Pulldown Machine", sets: 3, reps: 10, weight: 72, notes: "Hold at 72. Pull to upper chest, squeeze lats at bottom." },
-              { id: "w8sat_c2", name: "Rear Delt Fly Machine", sets: 3, reps: 12, weight: 40, notes: "Hold at 40. Pinch shoulder blades together at the back." },
-              { id: "w8sat_c3", name: "Cable Lateral Raise", sets: 3, reps: 12, weight: 5, notes: "NEW: replaces DB lateral raise combo. Low cable, stand sideways. Raise to shoulder height, controlled lower. Start at 5 lb, adjust after set 1.", perSide: true }
-            ]
-          },
-          {
-            name: "D. Core + Anti-Rotation (5 min)",
-            instructions: "Quick core before soccer. Save energy for the game.",
-            exercises: [
-              { id: "w8sat_d1", name: "Tall-Kneeling Band Hold", sets: 2, reps: 1, notes: "15 sec each side. Band anchored at chest height. Anti-rotation, psoas-safe.", isHold: true, holdTime: 15, perSide: true, noWeight: true },
-              { id: "w8sat_d2", name: "Front Low Plank Hold", sets: 2, reps: 1, notes: "30 sec. Straight line head to heels.", isHold: true, holdTime: 30, noWeight: true }
-            ]
-          },
-          BLOCK_UB_COOLDOWN
-        ]
-      },
-      {
-        name: "Movement Snack: Throwing Phase 2",
-        type: "Sport-Specific",
-        duration: "15 min",
-        location: "Squash court or any wall",
-        condition: "Phase 2: 1-step approach, 60-70% effort. ~40 throws.\nDo this BEFORE upper body, not after (fresh arms for technique).",
-        circuits: [
-          {
-            name: "Wall Throwing (Phase 2)",
-            instructions: "1-step approach for standing throws. 60-70% effort. Cue word before each throw.",
-            simple: true,
-            exercises: [
-              { id: "w8sat_ms1", name: "Wrist Flicks with Ball", sets: 1, reps: 20, notes: "Snap wrist, feel fingers release.", noWeight: true },
-              { id: "w8sat_ms2", name: "Short Wall Passes Both Hands", sets: 1, reps: 10, notes: "10 each hand.", perSide: true, noWeight: true },
-              { id: "w8sat_ms3", name: "Kneeling Throws (R)", sets: 2, reps: 6, notes: "Stationary. 60-70%. Cue: 'OPEN'.", noWeight: true },
-              { id: "w8sat_ms4", name: "1-Step Standing Throws (R)", sets: 2, reps: 6, notes: "One step into throw. 60-70%. Step, OPEN, launch.", noWeight: true },
-              { id: "w8sat_ms5", name: "1-Step Standing Throws (L)", sets: 2, reps: 5, notes: "Left hand. Low effort, technique focus.", noWeight: true }
-            ]
-          }
-        ]
-      }
-    ],
+    '2026-03-28': {
+      name: "Post-Soccer Pool Recovery",
+      type: "Recovery",
+      duration: "22 min",
+      location: "Pool (straight from soccer)",
+      condition: "Lower readiness day. Soccer stays (team commitment). Upper body and throwing snack pulled.\nHandball tomorrow 5pm — this recovery bridges the gap. Hydrate with electrolytes after (luteal phase).",
+      circuits: [
+        {
+          name: "A. Flush (8 min)",
+          instructions: "All chest-depth water. Easy effort throughout.",
+          simple: true,
+          exercises: [
+            { id: "w8sat_r1", name: "Forward Water Walk", sets: 1, reps: 1, notes: "2 min. Long strides, push off toes, arms sweeping forward. Stay tall.", isCardio: true, duration: 120, noWeight: true },
+            { id: "w8sat_r2", name: "Backward Water Walk", sets: 1, reps: 1, notes: "2 min. Reach back with each step, feel quads and shins unload.", isCardio: true, duration: 120, noWeight: true },
+            { id: "w8sat_r3", name: "Lateral Shuffle", sets: 1, reps: 1, notes: "2 min. Wide stance, stay low in the water, hips square. 1 min each direction.", isCardio: true, duration: 120, noWeight: true },
+            { id: "w8sat_r4", name: "Easy Freestyle", sets: 1, reps: 1, notes: "2 min. Smooth and slow. Long glide per stroke. Not a workout — just moving blood.", isCardio: true, duration: 120, noWeight: true }
+          ]
+        },
+        {
+          name: "B. Hip Mobility (8 min)",
+          instructions: "Chest-depth water or holding pool wall. Zero exertion — all passive or slow-controlled.",
+          simple: true,
+          exercises: [
+            { id: "w8sat_r5", name: "Standing Hip Circles (wall hand)", sets: 1, reps: 10, notes: "10 each direction, each leg. Big slow circles. Let the water support the leg.", perSide: true, noWeight: true },
+            { id: "w8sat_r6", name: "Water Lunge Walk", sets: 1, reps: 1, notes: "1 min. Step forward into deep lunge, pause 2 sec at bottom. Buoyancy opens the hip flexor. Alternating legs.", isCardio: true, duration: 60, noWeight: true },
+            { id: "w8sat_r7", name: "Pool-Edge Deep Squat Hold", sets: 2, reps: 1, notes: "45 sec. Face wall, hold edge, sink into deep squat. Knees wide. Gentle side-to-side weight shift.", isHold: true, holdTime: 45, noWeight: true },
+            { id: "w8sat_r8", name: "Supine Float Hip Opener", sets: 1, reps: 1, notes: "30 sec each side. Float on back (hold wall), pull one knee to chest then let it fall open. Psoas-friendly — no forced flexion.", isHold: true, holdTime: 30, perSide: true, noWeight: true }
+          ]
+        },
+        {
+          name: "C. Cool-Down Flush (6 min)",
+          instructions: "Final flush + targeted stretches.",
+          simple: true,
+          exercises: [
+            { id: "w8sat_r9", name: "Slow Backstroke", sets: 1, reps: 1, notes: "2 min. Long arms, easy kick. Open the chest. Shoulders decompress.", isCardio: true, duration: 120, noWeight: true },
+            { id: "w8sat_r10", name: "Pool-Edge Hamstring Stretch", sets: 1, reps: 1, notes: "45 sec each leg. Foot on wall/gutter, hinge forward gently.", isHold: true, holdTime: 45, perSide: true, noWeight: true },
+            { id: "w8sat_r11", name: "Pool-Edge Calf Stretch", sets: 1, reps: 1, notes: "30 sec each leg. Toes on wall, lean in. Shin splint prehab.", isHold: true, holdTime: 30, perSide: true, noWeight: true },
+            { id: "w8sat_r12", name: "Standing Spinal Twist", sets: 1, reps: 1, notes: "30 sec each side. Arms wide on water surface, rotate slowly. Exhale into each twist.", isHold: true, holdTime: 30, perSide: true, noWeight: true },
+            { id: "w8sat_r13", name: "Quiet Float", sets: 1, reps: 1, notes: "1 min. Just be in the water. Breathe. Done.", isHold: true, holdTime: 60, noWeight: true }
+          ]
+        }
+      ]
+    },
 
-    '2026-03-29': [POOL_RECOVERY],
+    // Sun Mar 29: Handball 5pm (in DATE_ACTIVITIES). Pool TBD based on readiness.
 
     // Mon Mar 30: PT 5pm + Soccer (LAST ONE) — external activities, not planned here
 
