@@ -1799,6 +1799,56 @@
       background: rgba(245, 158, 11, 0.1);
     }
 
+    .adaptation-banner-cap {
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.10) 0%, rgba(20, 184, 166, 0.08) 100%);
+      border-color: rgba(59, 130, 246, 0.4);
+    }
+
+    .adaptation-banner-cap::before {
+      background: linear-gradient(180deg, rgba(59, 130, 246, 0.8) 0%, rgba(20, 184, 166, 0.8) 100%);
+    }
+
+    .adaptation-banner-cap .adaptation-banner-header {
+      color: rgba(59, 130, 246, 0.9);
+    }
+
+    .override-trigger-btn {
+      background: rgba(20, 184, 166, 0.1);
+      border-color: rgba(20, 184, 166, 0.4);
+      color: rgba(20, 184, 166, 0.9);
+    }
+
+    .override-trigger-btn:hover {
+      border-color: rgba(20, 184, 166, 0.7);
+      background: rgba(20, 184, 166, 0.15);
+      color: rgba(20, 184, 166, 1);
+    }
+
+    .override-check-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .override-check-label {
+      font-size: 13px;
+      color: var(--text-secondary);
+      min-width: 80px;
+      font-weight: 500;
+    }
+
+    .override-chips {
+      display: flex;
+      gap: 6px;
+    }
+
+    .override-chip {
+      min-width: 36px;
+      text-align: center;
+      padding: 6px 10px;
+    }
+
     /* Adjustment Button in Set Modal */
     .adjustment-toggle {
       display: flex;
@@ -2819,6 +2869,11 @@
         </div>
       </div>
 
+      <div class="input-group" style="flex-direction: row; align-items: center; gap: 10px;">
+        <input type="checkbox" id="hrLateInput" style="width: 20px; height: 20px; accent-color: var(--gold);">
+        <label for="hrLateInput" class="input-label" style="margin: 0; font-size: 13px; color: var(--text-secondary);">HR dropped late in the night</label>
+      </div>
+
       <div class="modal-actions">
         <button class="btn btn-primary" onclick="saveReadiness()">Save</button>
       </div>
@@ -3317,6 +3372,10 @@
       readiness: null,
       sleepScore: null,
       hrv: null,
+      hrLate: false,
+      overrideActive: false,
+      overrideScores: null,
+      intensityCapActive: false,
       activeWorkout: null,
       workoutStartTime: null,
       currentExercise: null,
@@ -3362,6 +3421,10 @@
         state.readiness = null;
         state.sleepScore = null;
         state.hrv = null;
+        state.hrLate = false;
+        state.overrideActive = false;
+        state.overrideScores = null;
+        state.intensityCapActive = false;
         loadState();
         updateDateDisplay();
         loadTodaysWorkout();
@@ -3371,45 +3434,52 @@
     }
 
     function loadState() {
+      function applyStateData(data) {
+        state.readiness = data.readiness || null;
+        state.sleepScore = data.sleepScore || null;
+        state.hrv = data.hrv || null;
+        state.hrLate = data.hrLate || false;
+        state.overrideActive = data.overrideUsed || false;
+        state.overrideScores = data.overrideScores || null;
+        state.intensityCapActive = false;
+      }
+
+      function clearState() {
+        state.readiness = null;
+        state.sleepScore = null;
+        state.hrv = null;
+        state.hrLate = false;
+        state.overrideActive = false;
+        state.overrideScores = null;
+        state.intensityCapActive = false;
+      }
+
       // Load from Firestore
       db.collection('userData').doc('dailyState').get()
         .then((doc) => {
           if (doc.exists) {
             const data = doc.data();
-            // Check if saved data is from before today's 1am Central reset
             if (data.savedAt && !isAfterTodaysReset(data.savedAt)) {
-              // Data is stale, clear it
-              state.readiness = null;
-              state.sleepScore = null;
-              state.hrv = null;
+              clearState();
             } else {
-              state.readiness = data.readiness || null;
-              state.sleepScore = data.sleepScore || null;
-              state.hrv = data.hrv || null;
+              applyStateData(data);
             }
           }
           updateReadinessDisplay();
-          // Re-apply adaptations now that readiness is loaded
           applyAdaptationsAndReload();
         })
         .catch((error) => {
           console.log('Error loading state:', error);
-          // Fallback to localStorage
           const saved = localStorage.getItem('trainingTrackerState');
           if (saved) {
             const parsed = JSON.parse(saved);
             if (parsed.savedAt && !isAfterTodaysReset(parsed.savedAt)) {
-              state.readiness = null;
-              state.sleepScore = null;
-              state.hrv = null;
+              clearState();
             } else {
-              state.readiness = parsed.readiness;
-              state.sleepScore = parsed.sleepScore;
-              state.hrv = parsed.hrv;
+              applyStateData(parsed);
             }
           }
           updateReadinessDisplay();
-          // Re-apply adaptations now that readiness is loaded
           applyAdaptationsAndReload();
         });
     }
@@ -3451,6 +3521,10 @@
         readiness: state.readiness,
         sleepScore: state.sleepScore,
         hrv: state.hrv,
+        hrLate: state.hrLate || false,
+        overrideUsed: state.overrideActive || false,
+        overrideScores: state.overrideScores || null,
+        overrideAt: state.overrideActive ? new Date().toISOString() : null,
         savedAt: new Date().toISOString()
       };
 
@@ -4987,7 +5061,10 @@
         timestamp: isEditing && originalData ? originalData.timestamp : new Date().toISOString(),
         adjustments: isEditing && originalData ? (originalData.adjustments || []) : (state.workoutAdjustments || []),
         wasAdapted: isEditing && originalData ? (originalData.wasAdapted || false) : (adaptationApplied !== null),
-        adaptationReason: isEditing && originalData ? (originalData.adaptationReason || null) : (adaptationApplied ? adaptationApplied.message : null)
+        adaptationReason: isEditing && originalData ? (originalData.adaptationReason || null) : (adaptationApplied ? adaptationApplied.message : null),
+        wasOverridden: isEditing && originalData ? (originalData.wasOverridden || false) : (state.overrideActive || false),
+        overrideScores: isEditing && originalData ? (originalData.overrideScores || null) : (state.overrideScores || null),
+        intensityCapped: isEditing && originalData ? (originalData.intensityCapped || false) : (state.intensityCapActive || state.overrideActive || false)
       };
 
       if (isEditing && state.editingDocId) {
@@ -5035,6 +5112,7 @@
       document.getElementById('readinessInput').value = state.readiness || '';
       document.getElementById('sleepInput').value = state.sleepScore || '';
       document.getElementById('hrvInput').value = state.hrv || '';
+      document.getElementById('hrLateInput').checked = state.hrLate || false;
       document.getElementById('readinessModal').classList.add('active');
     }
 
@@ -5046,6 +5124,12 @@
       state.readiness = parseInt(document.getElementById('readinessInput').value) || null;
       state.sleepScore = parseInt(document.getElementById('sleepInput').value) || null;
       state.hrv = parseInt(document.getElementById('hrvInput').value) || null;
+      state.hrLate = document.getElementById('hrLateInput').checked;
+      // Reset override state when re-entering readiness
+      state.overrideActive = false;
+      state.overrideScores = null;
+      state.intensityCapActive = false;
+      cachedHrvBaseline = null;
 
       updateReadinessDisplay();
       saveState();
@@ -5055,118 +5139,233 @@
       applyAdaptationsAndReload();
     }
 
-    function applyAdaptationsAndReload() {
+    // Cache for HRV baseline (invalidated on saveReadiness)
+    let cachedHrvBaseline = null;
+
+    async function applyAdaptationsAndReload() {
+      // If override was already confirmed today, skip re-adapting
+      if (state.overrideActive) {
+        loadTodaysWorkout();
+        setTimeout(() => {
+          const header = document.querySelector('.workout-header');
+          if (header) {
+            const banner = document.createElement('div');
+            banner.className = 'adaptation-banner adaptation-banner-cap';
+            banner.style.margin = '16px';
+            banner.innerHTML = `
+              <div class="adaptation-banner-header"><span>Override active</span></div>
+              <div class="adaptation-banner-message">Training at 80% intensity today. Self-check scores: Energy ${state.overrideScores?.energy || '?'}, Soreness ${state.overrideScores?.soreness || '?'}, Motivation ${state.overrideScores?.motivation || '?'}.</div>
+            `;
+            header.after(banner);
+          }
+        }, 0);
+        return;
+      }
+
+      // Build metrics, including HRV baseline for the hrv_below_baseline rule
+      if (!cachedHrvBaseline && state.hrv) {
+        cachedHrvBaseline = await calculateRollingHrvBaseline();
+      }
+
       const metrics = {
         readiness: state.readiness,
         sleepScore: state.sleepScore,
-        hrv: state.hrv
+        hrv: state.hrv,
+        hrLate: state.hrLate,
+        _hrvBaseline: cachedHrvBaseline
       };
 
       const triggeredRules = applyAdaptationRules(metrics);
 
-      if (triggeredRules.length > 0) {
-        const mainRule = triggeredRules[0];
+      if (triggeredRules.length === 0) return;
 
-        // Check if we're on a workout day
-        const dayIndex = state.currentDate.getDay();
-        const dayNames = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
-        const dayName = dayNames[dayIndex];
-        const dateKey = formatDateKey(state.currentDate);
-        const specialDate = SPECIAL_DATES[dateKey];
+      const mainRule = triggeredRules[0];
 
-        // Only adapt if we have a workout scheduled (not travel, not rest)
-        if (specialDate && specialDate.type === 'travel') return;
-        const hasDateWorkout = DATE_WORKOUTS && DATE_WORKOUTS[dateKey];
-        if (!hasDateWorkout) return;
+      // Check if we're on a workout day
+      const dayIndex = state.currentDate.getDay();
+      const dayNames = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
+      const dayName = dayNames[dayIndex];
+      const dateKey = formatDateKey(state.currentDate);
+      const specialDate = SPECIAL_DATES[dateKey];
 
-        // Check if scheduled workout(s) are already recovery-type
-        const dw = hasDateWorkout;
-        const scheduledWorkouts = Array.isArray(dw) ? dw : [dw];
-        const recoveryTypes = ['recovery', 'prehab', 'rest'];
-        const allRecovery = scheduledWorkouts.every(w =>
-          recoveryTypes.includes((w.type || '').toLowerCase())
-        );
-        const hasRecovery = scheduledWorkouts.some(w =>
-          recoveryTypes.includes((w.type || '').toLowerCase())
-        );
+      // Only adapt if we have a workout scheduled (not travel, not rest)
+      if (specialDate && specialDate.type === 'travel') return;
+      const hasDateWorkout = DATE_WORKOUTS && DATE_WORKOUTS[dateKey];
+      if (!hasDateWorkout) return;
 
-        // Store original workout
-        originalScheduledWorkout = state.activeWorkout;
+      // Check if scheduled workout(s) are already recovery-type
+      const dw = hasDateWorkout;
+      const scheduledWorkouts = Array.isArray(dw) ? dw : [dw];
+      const recoveryTypes = ['recovery', 'prehab', 'rest'];
+      const allRecovery = scheduledWorkouts.every(w =>
+        recoveryTypes.includes((w.type || '').toLowerCase())
+      );
+      const hasRecovery = scheduledWorkouts.some(w =>
+        recoveryTypes.includes((w.type || '').toLowerCase())
+      );
 
-        if (mainRule.action === 'switch_to_rest') {
-          // Show rest day with adaptation banner
-          adaptationApplied = mainRule;
-          showAdaptedRestDay(mainRule);
-        } else if (mainRule.action === 'switch_to_recovery') {
-          // If already all recovery-type, keep the planned workout(s) but show the banner
-          if (allRecovery) {
-            loadTodaysWorkout();
-            setTimeout(() => {
-              const header = document.querySelector('.workout-header');
-              if (header) {
-                const banner = document.createElement('div');
-                banner.className = 'adaptation-banner';
-                banner.style.margin = '16px';
-                banner.innerHTML = `
-                  <div class="adaptation-banner-header"><span>Recovery day</span></div>
-                  <div class="adaptation-banner-message">${mainRule.message}<br>Today's plan is already recovery — you're good.</div>
-                `;
-                header.after(banner);
-              }
-            }, 0);
-            return;
-          }
-          // Mixed array (some recovery, some not): filter to recovery-only workouts
-          if (Array.isArray(dw) && hasRecovery) {
-            const recoveryOnly = dw.filter(w => recoveryTypes.includes((w.type || '').toLowerCase()));
-            // Temporarily override DATE_WORKOUTS for this render
-            const original = DATE_WORKOUTS[dateKey];
-            DATE_WORKOUTS[dateKey] = recoveryOnly.length === 1 ? recoveryOnly[0] : recoveryOnly;
-            adaptationApplied = mainRule;
-            loadTodaysWorkout();
-            DATE_WORKOUTS[dateKey] = original; // restore
-            setTimeout(() => {
-              const header = document.querySelector('.workout-header');
-              if (header) {
-                const dropped = scheduledWorkouts.filter(w => !recoveryTypes.includes((w.type || '').toLowerCase())).map(w => w.name);
-                const banner = document.createElement('div');
-                banner.className = 'adaptation-banner';
-                banner.style.margin = '16px';
-                banner.innerHTML = `
-                  <div class="adaptation-banner-header"><span>Recovery day</span></div>
-                  <div class="adaptation-banner-message">${mainRule.message}<br>Dropped: ${dropped.join(', ')}</div>
-                `;
-                header.after(banner);
-              }
-            }, 0);
-            return;
-          }
-          // Non-recovery workout with no recovery option: swap to pool recovery
-          adaptationApplied = mainRule;
-          renderWorkout(POOL_RECOVERY, mainRule);
-        } else {
-          // Just warnings - reload normally but show banner
+      // Store original workout
+      originalScheduledWorkout = state.activeWorkout;
+
+      if (mainRule.action === 'switch_to_rest') {
+        adaptationApplied = mainRule;
+        showAdaptedRestDay(mainRule);
+
+      } else if (mainRule.action === 'switch_to_recovery') {
+        // Check override eligibility for recovery-gated days
+        const trend = calculateReadinessTrend();
+        const override = mainRule.allowsOverride ? checkOverrideEligibility(metrics, trend) : { eligible: false, reason: null };
+
+        if (allRecovery) {
           loadTodaysWorkout();
-          // Insert warning banner after workout header
           setTimeout(() => {
             const header = document.querySelector('.workout-header');
-            if (header && triggeredRules.length > 0) {
-              const warningBanner = document.createElement('div');
-              warningBanner.className = 'adaptation-banner';
-              warningBanner.style.margin = '16px';
-              warningBanner.innerHTML = `
-                <div class="adaptation-banner-header">
-                  <span>Note for today</span>
-                </div>
-                <div class="adaptation-banner-message">
-                  ${triggeredRules.map(r => r.message).join('<br>')}
-                </div>
+            if (header) {
+              const banner = document.createElement('div');
+              banner.className = 'adaptation-banner';
+              banner.style.margin = '16px';
+              banner.innerHTML = `
+                <div class="adaptation-banner-header"><span>Recovery day</span></div>
+                <div class="adaptation-banner-message">${mainRule.message}<br>Today's plan is already recovery — you're good.</div>
               `;
-              header.after(warningBanner);
+              header.after(banner);
             }
           }, 0);
+          return;
         }
+
+        if (Array.isArray(dw) && hasRecovery) {
+          const recoveryOnly = dw.filter(w => recoveryTypes.includes((w.type || '').toLowerCase()));
+          const original = DATE_WORKOUTS[dateKey];
+          DATE_WORKOUTS[dateKey] = recoveryOnly.length === 1 ? recoveryOnly[0] : recoveryOnly;
+          adaptationApplied = mainRule;
+          loadTodaysWorkout();
+          DATE_WORKOUTS[dateKey] = original;
+          setTimeout(() => {
+            const header = document.querySelector('.workout-header');
+            if (header) {
+              const dropped = scheduledWorkouts.filter(w => !recoveryTypes.includes((w.type || '').toLowerCase())).map(w => w.name);
+              const banner = document.createElement('div');
+              banner.className = 'adaptation-banner';
+              banner.style.margin = '16px';
+              banner.innerHTML = buildRecoveryBannerHTML(mainRule, dropped, override, trend);
+              header.after(banner);
+            }
+          }, 0);
+          return;
+        }
+
+        // Non-recovery workout: swap to pool recovery, but offer override if eligible
+        adaptationApplied = mainRule;
+        renderWorkout(POOL_RECOVERY, mainRule);
+        // Add override UI to the banner if eligible
+        setTimeout(() => {
+          const existingBanner = document.querySelector('.adaptation-banner');
+          if (existingBanner) {
+            existingBanner.innerHTML = buildRecoveryBannerHTML(mainRule, scheduledWorkouts.map(w => w.name), override, trend);
+          }
+        }, 50);
+
+      } else if (mainRule.action === 'warn_and_cap') {
+        // HRV warning: load normal workout but show intensity cap banner
+        state.intensityCapActive = true;
+        loadTodaysWorkout();
+        setTimeout(() => {
+          const header = document.querySelector('.workout-header');
+          if (header) {
+            const banner = document.createElement('div');
+            banner.className = 'adaptation-banner adaptation-banner-cap';
+            banner.style.margin = '16px';
+            let msg = mainRule.message;
+            if (state.hrLate) msg += '<br>HR also dropped late in the night — your body took longer to recover.';
+            // Include any additional warnings (low sleep, high effort yesterday)
+            const extras = triggeredRules.filter(r => r.id !== mainRule.id).map(r => r.message);
+            if (extras.length > 0) msg += '<br>' + extras.join('<br>');
+            banner.innerHTML = `
+              <div class="adaptation-banner-header"><span>Caution</span></div>
+              <div class="adaptation-banner-message">${msg}</div>
+              <div style="font-size: 12px; color: var(--text-secondary); margin-top: 8px;">Keep intensity at ~80%. Come to CLI if you want help scaling back the workout.</div>
+            `;
+            header.after(banner);
+          }
+        }, 0);
+
+      } else {
+        // Just warnings (warn_only, suggest_lighter)
+        loadTodaysWorkout();
+        setTimeout(() => {
+          const header = document.querySelector('.workout-header');
+          if (header && triggeredRules.length > 0) {
+            const warningBanner = document.createElement('div');
+            warningBanner.className = 'adaptation-banner';
+            warningBanner.style.margin = '16px';
+            warningBanner.innerHTML = `
+              <div class="adaptation-banner-header">
+                <span>Note for today</span>
+              </div>
+              <div class="adaptation-banner-message">
+                ${triggeredRules.map(r => r.message).join('<br>')}
+              </div>
+            `;
+            header.after(warningBanner);
+          }
+        }, 0);
       }
+    }
+
+    function buildRecoveryBannerHTML(rule, droppedNames, override, trend) {
+      let html = `
+        <div class="adaptation-banner-header"><span>Recovery day</span></div>
+        <div class="adaptation-banner-message">${rule.message}`;
+      if (droppedNames && droppedNames.length > 0) {
+        html += `<br>Dropped: ${droppedNames.join(', ')}`;
+      }
+      html += '</div>';
+
+      if (override.eligible) {
+        html += `
+          <button class="adaptation-banner-action override-trigger-btn" onclick="showOverrideCheck()">
+            I feel good — let me train
+          </button>
+          <div id="overrideCheckSection" style="display:none; margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--border);">
+            <div style="font-size: 13px; color: var(--text-secondary); margin-bottom: 12px;">
+              Quick self-check (all must be 3+ to override):
+            </div>
+            <div class="override-check-row">
+              <span class="override-check-label">Energy</span>
+              <div class="override-chips" data-field="energy">
+                ${[1,2,3,4,5].map(n => `<button class="reason-chip override-chip" data-value="${n}" onclick="selectOverrideChip(this)">${n}</button>`).join('')}
+              </div>
+            </div>
+            <div class="override-check-row">
+              <span class="override-check-label">Soreness</span>
+              <div class="override-chips" data-field="soreness">
+                ${[1,2,3,4,5].map(n => `<button class="reason-chip override-chip" data-value="${n}" onclick="selectOverrideChip(this)">${n}</button>`).join('')}
+              </div>
+            </div>
+            <div class="override-check-row">
+              <span class="override-check-label">Motivation</span>
+              <div class="override-chips" data-field="motivation">
+                ${[1,2,3,4,5].map(n => `<button class="reason-chip override-chip" data-value="${n}" onclick="selectOverrideChip(this)">${n}</button>`).join('')}
+              </div>
+            </div>
+            <button class="btn btn-primary" id="confirmOverrideBtn" onclick="confirmOverride()" disabled style="margin-top: 12px; width: 100%; opacity: 0.5;">
+              Confirm — train at 80% intensity
+            </button>
+            ${trend.avg3 !== null ? `<div style="font-size: 12px; color: var(--text-secondary); margin-top: 8px; text-align: center;">Trend: 3-day avg ${trend.avg3} vs 7-day avg ${trend.avg7} (${trend.trend.toLowerCase()})</div>` : ''}
+          </div>
+        `;
+      } else if (override.reason && rule.allowsOverride) {
+        html += `<div style="font-size: 12px; color: var(--text-secondary); margin-top: 8px;">${override.reason}</div>`;
+      }
+
+      html += `
+        <button class="adaptation-banner-action" onclick="showOriginalWorkout()" style="margin-top: 10px;">
+          Show Original Workout Instead
+        </button>
+      `;
+
+      return html;
     }
 
     function showAdaptedRestDay(rule) {
@@ -8423,18 +8622,162 @@
     }
 
     // ==================== ADAPTATION RULES ENGINE ====================
+
+    // Centralized readiness configuration -- update thresholds here
+    const READINESS_CONFIG = {
+      recoveryGate: 68,       // Below this: recovery only. Raise to 72 after May 1 taper review.
+      restGate: 60,           // Below this: full rest, no exceptions.
+      hrvWarningPct: 0.90,    // Warn when HRV < 90% of 7-day rolling median
+      hrvFloor: 35,           // Hard floor: always warn below this regardless of rolling stats
+      overrideMinScores: { energy: 3, soreness: 3, motivation: 3 },
+      reviewDate: '2026-05-01' // Reassess recoveryGate after Prozac taper clears
+    };
+
+    // Calculate 7-day rolling median HRV from workout history + oura fallback
+    async function calculateRollingHrvBaseline() {
+      const history = getWorkoutHistory();
+      const now = new Date();
+      const sevenDaysAgo = new Date(now);
+      sevenDaysAgo.setDate(sevenDaysAgo.getDate() - 7);
+      const sevenDaysAgoKey = formatDateKey(sevenDaysAgo);
+
+      // Collect HRV values from workout history (last 7 days)
+      let hrvValues = [];
+      for (const w of history) {
+        if (w.date >= sevenDaysAgoKey && w.hrv) {
+          hrvValues.push(w.hrv);
+        } else if (w.date >= sevenDaysAgoKey && w.readiness && w.type === 'oura') {
+          // oura-synced entries
+          if (w.hrv) hrvValues.push(w.hrv);
+        }
+      }
+
+      // Fallback: query oura/{date} Firestore docs if < 3 data points
+      if (hrvValues.length < 3 && typeof db !== 'undefined') {
+        try {
+          const ouraPromises = [];
+          for (let i = 0; i < 7; i++) {
+            const d = new Date(now);
+            d.setDate(d.getDate() - i);
+            const key = formatDateKey(d);
+            ouraPromises.push(
+              db.collection('oura').doc(key).get()
+                .then(doc => doc.exists && doc.data().hrv ? doc.data().hrv : null)
+                .catch(() => null)
+            );
+          }
+          const ouraResults = await Promise.race([
+            Promise.all(ouraPromises),
+            new Promise(resolve => setTimeout(() => resolve([]), 1500)) // 1.5s timeout
+          ]);
+          for (const hrv of ouraResults) {
+            if (hrv && !hrvValues.includes(hrv)) hrvValues.push(hrv);
+          }
+        } catch (e) {
+          console.log('Oura HRV fallback failed:', e);
+        }
+      }
+
+      if (hrvValues.length === 0) return { median: null, dataPoints: 0 };
+
+      // Calculate median
+      const sorted = [...hrvValues].sort((a, b) => a - b);
+      const mid = Math.floor(sorted.length / 2);
+      const median = sorted.length % 2 === 0
+        ? (sorted[mid - 1] + sorted[mid]) / 2
+        : sorted[mid];
+
+      return { median, dataPoints: hrvValues.length };
+    }
+
+    // Calculate readiness trend: 3-day avg vs 7-day avg
+    function calculateReadinessTrend() {
+      const history = getWorkoutHistory();
+      const now = new Date();
+
+      // Collect readiness values by date (deduplicate: one value per day)
+      const readinessByDate = {};
+      for (const w of history) {
+        if (w.readiness && w.date) {
+          const daysAgo = Math.floor((now - new Date(w.date + 'T12:00:00')) / 86400000);
+          if (daysAgo >= 0 && daysAgo < 7 && !readinessByDate[w.date]) {
+            readinessByDate[w.date] = w.readiness;
+          }
+        }
+      }
+
+      const entries = Object.entries(readinessByDate).sort((a, b) => b[0].localeCompare(a[0]));
+      const values7 = entries.map(e => e[1]);
+      const values3 = entries.slice(0, 3).map(e => e[1]);
+
+      if (values3.length < 2) return { trend: 'FLAT', avg3: null, avg7: null, dataPoints: values7.length };
+
+      const avg3 = values3.reduce((a, b) => a + b, 0) / values3.length;
+      const avg7 = values7.length > 0 ? values7.reduce((a, b) => a + b, 0) / values7.length : avg3;
+
+      let trend = 'FLAT';
+      if (avg3 > avg7 + 2) trend = 'UP';
+      else if (avg3 < avg7 - 2) trend = 'DOWN';
+
+      return { trend, avg3: Math.round(avg3), avg7: Math.round(avg7), dataPoints: values7.length };
+    }
+
+    // Check if athlete can override recovery gate today
+    function checkOverrideEligibility(metrics, trend) {
+      // Must be in the override zone (between rest gate and recovery gate)
+      if (!metrics.readiness || metrics.readiness < READINESS_CONFIG.restGate || metrics.readiness >= READINESS_CONFIG.recoveryGate) {
+        return { eligible: false, reason: 'Readiness not in override zone' };
+      }
+
+      // Trend must be UP or FLAT
+      if (trend.trend === 'DOWN') {
+        return { eligible: false, reason: 'Readiness trending down — recovery sticks today' };
+      }
+
+      // No back-to-back overrides
+      const history = getWorkoutHistory();
+      const yesterday = new Date();
+      yesterday.setDate(yesterday.getDate() - 1);
+      const yesterdayKey = formatDateKey(yesterday);
+      const yesterdayOverride = history.some(w => w.date === yesterdayKey && w.wasOverridden);
+      if (yesterdayOverride) {
+        return { eligible: false, reason: 'You overrode yesterday — back-to-back overrides not allowed' };
+      }
+
+      return { eligible: true, reason: null };
+    }
+
     const ADAPTATION_RULES = [
       {
         id: 'low_readiness_rest',
-        condition: (metrics) => metrics.readiness && metrics.readiness < 60,
+        condition: (metrics) => metrics.readiness && metrics.readiness < READINESS_CONFIG.restGate,
         action: 'switch_to_rest',
-        message: 'Readiness is {readiness} (below 60) — full rest day, no exceptions'
+        message: `Readiness is {readiness} (below ${READINESS_CONFIG.restGate}) — full rest day, no exceptions`
       },
       {
         id: 'mod_readiness_recovery',
-        condition: (metrics) => metrics.readiness && metrics.readiness < 68,
+        condition: (metrics) => metrics.readiness && metrics.readiness < READINESS_CONFIG.recoveryGate,
         action: 'switch_to_recovery',
-        message: 'Readiness is {readiness} (below 68) — recovery only (pool, mobility, walk)'
+        allowsOverride: true,
+        message: `Readiness is {readiness} (below ${READINESS_CONFIG.recoveryGate}) — recovery only (pool, mobility, walk)`
+      },
+      {
+        id: 'hrv_below_baseline',
+        condition: (metrics) => {
+          if (!metrics.hrv) return false;
+          // Hard floor check
+          if (metrics.hrv < READINESS_CONFIG.hrvFloor) return true;
+          // Rolling baseline check (uses cached value if available)
+          if (metrics._hrvBaseline && metrics._hrvBaseline.median) {
+            let threshold = metrics._hrvBaseline.median * READINESS_CONFIG.hrvWarningPct;
+            // Late HR drop compounds: widen threshold by 5% if flagged
+            if (metrics.hrLate) threshold = metrics._hrvBaseline.median * (READINESS_CONFIG.hrvWarningPct + 0.05);
+            return metrics.hrv < threshold;
+          }
+          return false;
+        },
+        action: 'warn_and_cap',
+        message: 'HRV is {hrv} (below your rolling baseline) — keep intensity moderate today'
       },
       {
         id: 'post_event_recovery',
@@ -8482,6 +8825,7 @@
           let message = rule.message;
           if (metrics.readiness) message = message.replace('{readiness}', metrics.readiness);
           if (metrics.sleepScore) message = message.replace('{sleepScore}', metrics.sleepScore);
+          if (metrics.hrv) message = message.replace('{hrv}', metrics.hrv);
           triggeredRules.push({
             ...rule,
             message
@@ -8535,6 +8879,96 @@
         state.activeWorkout = workout;
         renderWorkout(workout);
       }
+    }
+
+    function showOverrideCheck() {
+      const section = document.getElementById('overrideCheckSection');
+      const btn = document.querySelector('.override-trigger-btn');
+      if (section) {
+        section.style.display = 'block';
+        if (btn) btn.style.display = 'none';
+      }
+    }
+
+    function selectOverrideChip(el) {
+      // Deselect siblings in same group
+      const parent = el.parentElement;
+      parent.querySelectorAll('.override-chip').forEach(c => c.classList.remove('selected'));
+      el.classList.add('selected');
+      validateOverrideScores();
+    }
+
+    function validateOverrideScores() {
+      const fields = ['energy', 'soreness', 'motivation'];
+      const scores = {};
+      let allValid = true;
+
+      for (const field of fields) {
+        const group = document.querySelector(`.override-chips[data-field="${field}"]`);
+        const selected = group?.querySelector('.override-chip.selected');
+        if (selected) {
+          scores[field] = parseInt(selected.dataset.value);
+          if (scores[field] < READINESS_CONFIG.overrideMinScores[field]) allValid = false;
+        } else {
+          allValid = false;
+        }
+      }
+
+      const btn = document.getElementById('confirmOverrideBtn');
+      if (btn) {
+        btn.disabled = !allValid;
+        btn.style.opacity = allValid ? '1' : '0.5';
+      }
+      return allValid ? scores : null;
+    }
+
+    function confirmOverride() {
+      const scores = validateOverrideScores();
+      if (!scores) return;
+
+      // Set override state
+      state.overrideActive = true;
+      state.overrideScores = scores;
+      state.intensityCapActive = true;
+
+      // Persist to dailyState
+      saveState();
+
+      // Clear adaptation and reload original workout
+      adaptationApplied = null;
+
+      const dateKey = formatDateKey(state.currentDate);
+      const dw = DATE_WORKOUTS[dateKey];
+      if (dw) {
+        if (Array.isArray(dw)) {
+          // Reload as multi-workout day
+          loadTodaysWorkout();
+        } else {
+          resetWorkoutState();
+          state.activeWorkout = dw;
+          renderWorkout(dw);
+        }
+      } else {
+        loadTodaysWorkout();
+      }
+
+      // Show override cap banner
+      setTimeout(() => {
+        const header = document.querySelector('.workout-header');
+        if (header) {
+          const banner = document.createElement('div');
+          banner.className = 'adaptation-banner adaptation-banner-cap';
+          banner.style.margin = '16px';
+          banner.innerHTML = `
+            <div class="adaptation-banner-header"><span>Override active</span></div>
+            <div class="adaptation-banner-message">Training at 80% intensity today. Self-check: Energy ${scores.energy}, Soreness ${scores.soreness}, Motivation ${scores.motivation}.</div>
+            <div style="font-size: 12px; color: var(--text-secondary); margin-top: 8px;">Come to CLI if you want help scaling back the workout.</div>
+          `;
+          header.after(banner);
+        }
+      }, 0);
+
+      showToast('Override confirmed — train at 80%');
     }
 
     // ==================== ADJUSTMENT CAPTURE ====================
@@ -8760,12 +9194,18 @@ TRAINING APPROACH (updated Mar 2026)
 - Soccer ends late March. Beer Bike mid-April. Post-April: full handball-focused 3:1 periodization.
 - Recurring: PT (day varies), handball practice Wed 7-9pm.
 
-READINESS RULES (HARD RULES -- enforce these)
-- Below 75: recovery only (pool, mobility, walk). No strength, no conditioning.
-- Below 60: full rest, no exceptions.
+READINESS RULES (HARD RULES -- enforce these, updated Mar 28 2026)
+- Below ${READINESS_CONFIG.recoveryGate}: recovery only (pool, mobility, walk). No strength, no conditioning.
+  - EXCEPTION: athlete can override if readiness is trending up/flat AND passes self-check (energy/soreness/motivation all 3+/5). Override caps intensity at 80%, volume at -20%. No back-to-back override days.
+- Below ${READINESS_CONFIG.restGate}: full rest, no exceptions. No override available.
+- HRV below 90% of 7-day rolling median (or below ${READINESS_CONFIG.hrvFloor} absolute): intensity cap warning, even if readiness is above gate. Training allowed but keep it moderate.
+- Late HR drop (HR nadir in second half of night): compounding signal. If flagged alongside borderline HRV, leans more conservative.
 - Post-event 180+ min: 48 hours recovery-only.
 - Cap double-session days at 2/week.
 - Copenhagen adductors 2x/week minimum (groin monitoring).
+- NOTE: Recovery gate is ${READINESS_CONFIG.recoveryGate} during Prozac taper (through ~April 2026). Reassess after ${READINESS_CONFIG.reviewDate}.
+${state.hrLate ? '- TODAY: HR dropped late in the night (flagged by athlete).' : ''}
+${state.overrideActive ? '- TODAY: Override active. Self-check scores: Energy ' + (state.overrideScores?.energy || '?') + ', Soreness ' + (state.overrideScores?.soreness || '?') + ', Motivation ' + (state.overrideScores?.motivation || '?') + '.' : ''}
 
 COACH REPORT FINDINGS (Mar 8, 2026)
 - Training pattern is boom-and-bust (reactive, not planned). Fix with intentional weekly planning.

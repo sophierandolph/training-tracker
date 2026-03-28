@@ -8,6 +8,9 @@ Collected from sessions through Mar 20, 2026. Includes holistic review from 7 ag
 
 - [ ] **Calendar/preview views don't reflect readiness adaptation** -- `getDateWorkout()` doesn't apply readiness filtering, so calendar grid, upcoming workouts list, and day preview modal still show dropped workouts (e.g. Movement Snack) even when readiness < 68 has filtered them from the Today view. Cosmetic only -- Today view is correct.
 - [ ] **showMixedDay() ignores DATE_ACTIVITIES** -- only checks `EXTERNAL_ACTIVITIES[dayName]` (recurring), never `DATE_ACTIVITIES[dateKey]` (date-specific). On a single-workout day with a date-specific external activity, the activity tile won't show. `showNoWorkout()` and `renderMultiWorkoutDay()` both handle this correctly already.
+- [ ] **renderCalendar() priority order wrong** -- checks DATE_ACTIVITIES before DATE_WORKOUTS. Should match loadTodaysWorkout() priority: DATE_WORKOUTS first. If a date has both, calendar tile shows activity type instead of workout type.
+- [ ] **applyAdaptationsAndReload() skips travel days with workouts** -- returns early on `specialDate.type === 'travel'` before checking DATE_WORKOUTS. Readiness adaptations won't apply to workouts scheduled on travel days.
+- [ ] **updateWeekProgress() travel branch priority** -- DATE_ACTIVITIES checked before DATE_WORKOUTS in the `isTravel` block (else-if). If a travel day has both, only activities count toward planned total.
 
 ### Fixed
 
