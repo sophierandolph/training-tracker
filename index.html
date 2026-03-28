@@ -3987,7 +3987,7 @@
       const dateSpecific = DATE_ACTIVITIES[dateKey] || [];
       const activities = dateSpecific.length > 0 ? dateSpecific : (recurring.length > 0 ? recurring : null);
 
-      if (dayName === 'sunday') {
+      if (dayName === 'sunday' && (!activities || activities.length === 0)) {
         document.getElementById('dayName').textContent = 'Rest Day';
         const poolWorkout = POOL_RECOVERY;
         content.innerHTML = `
