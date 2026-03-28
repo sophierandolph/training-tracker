@@ -4108,8 +4108,11 @@
       const displayDayName = dayName.charAt(0).toUpperCase() + dayName.slice(1);
       document.getElementById('dayName').textContent = displayDayName;
 
-      const activities = EXTERNAL_ACTIVITIES[dayName] || [];
       const dateKey = formatDateKey(state.currentDate);
+      const recurring = EXTERNAL_ACTIVITIES[dayName] || [];
+      const dateSpecific = DATE_ACTIVITIES[dateKey] || [];
+      const activities = dateSpecific.length > 0 ? dateSpecific : recurring;
+      const isDateSpecific = dateSpecific.length > 0;
       const history = getWorkoutHistory();
 
       // Build external activity tiles
@@ -4129,7 +4132,7 @@
         ` : '';
 
         activitiesHtml += `
-          <div class="activity-tile ${logged ? 'logged' : ''}" onclick="openExternalActivityModal('${activity.id}', '${dayName}')">
+          <div class="activity-tile ${logged ? 'logged' : ''}" onclick="openExternalActivityModal('${activity.id}', ${isDateSpecific ? `null, '${dateKey}'` : `'${dayName}'`})">
             <div class="activity-tile-header">
               <div>
                 <div class="activity-tile-type">${activity.type}</div>
@@ -5188,10 +5191,12 @@
       const dateKey = formatDateKey(state.currentDate);
       const specialDate = SPECIAL_DATES[dateKey];
 
-      // Only adapt if we have a workout scheduled (not travel, not rest)
-      if (specialDate && specialDate.type === 'travel') return;
+      // Only adapt if we have a workout scheduled
       const hasDateWorkout = DATE_WORKOUTS && DATE_WORKOUTS[dateKey];
-      if (!hasDateWorkout) return;
+      if (!hasDateWorkout) {
+        // No workout planned (travel day without DATE_WORKOUTS, rest day, etc.)
+        return;
+      }
 
       // Check if scheduled workout(s) are already recovery-type
       const dw = hasDateWorkout;
@@ -7979,14 +7984,26 @@
           const dayNamesList = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
           const extActsForDay = EXTERNAL_ACTIVITIES[dayNamesList[dayOfWeek]];
 
-          if (DATE_ACTIVITIES[dateKey] && DATE_ACTIVITIES[dateKey].length > 0) {
-            workoutClass = 'external';
-            workoutDisplay = DATE_ACTIVITIES[dateKey][0].name.includes('Handball') ? 'Handball' : DATE_ACTIVITIES[dateKey][0].type;
-          } else if (hasDateWorkout(dateKey)) {
+          if (hasDateWorkout(dateKey)) {
+            // DATE_WORKOUTS takes priority (matches loadTodaysWorkout)
             const dw = getDateWorkout(dateKey);
-            const dwType = (dw.type || '').toLowerCase();
+            let dwType = (dw.type || '').toLowerCase();
+            // If today has active adaptation (rest/recovery), reflect that in calendar
+            if (isToday && adaptationApplied) {
+              if (adaptationApplied.action === 'switch_to_rest') {
+                workoutClass = 'recovery';
+                workoutDisplay = 'Rest';
+                // Skip normal priority logic
+              } else if (adaptationApplied.action === 'switch_to_recovery') {
+                workoutClass = 'recovery';
+                workoutDisplay = 'Recovery';
+              } else {
+                // warn_and_cap or other -- show normal workout type
+                workoutClass = dwType === 'recovery' ? 'recovery' : dwType === 'cardio' ? 'external' : dwType === 'sport-specific' ? 'external' : '';
+                workoutDisplay = getShortTypeName(dw, dateKey);
+              }
+            } else if (extActsForDay && extActsForDay.length > 0) {
             // If the date also has external activities, show the meatier one
-            if (extActsForDay && extActsForDay.length > 0) {
               const extPriority = extActsForDay[0].name.includes('Handball') ? 4 : extActsForDay[0].name.includes('Soccer') ? 4 : extActsForDay[0].name.includes('Personal') ? 5 : 3;
               const dwPriority = { 'strength': 5, 'sport-specific': 4, 'sport': 4, 'handball': 4, 'clinic': 4, 'mixed': 4, 'conditioning': 3, 'cardio': 3, 'warmup': 2, 'recovery': 1, 'prehab': 1, 'rest': 0 }[dwType] || 0;
               if (extPriority > dwPriority) {
@@ -8000,6 +8017,9 @@
               workoutClass = dwType === 'recovery' ? 'recovery' : dwType === 'cardio' ? 'external' : dwType === 'sport-specific' ? 'external' : '';
               workoutDisplay = getShortTypeName(dw, dateKey);
             }
+          } else if (DATE_ACTIVITIES[dateKey] && DATE_ACTIVITIES[dateKey].length > 0) {
+            workoutClass = 'external';
+            workoutDisplay = DATE_ACTIVITIES[dateKey][0].name.includes('Handball') ? 'Handball' : DATE_ACTIVITIES[dateKey][0].type;
           } else if (isTravel) {
             const facilities = specialDate.facilities;
             const isHandballTraining = specialDate.isTraining;
@@ -8237,14 +8257,16 @@
 
         if (isTravel) {
           if (specialDate.facilities === 'minimal' && !hasDateWorkout(dateKey)) continue;
+          // Count both DATE_WORKOUTS and DATE_ACTIVITIES (matches non-travel branch)
           const dateActivities = DATE_ACTIVITIES[dateKey];
-          if (dateActivities && dateActivities.length > 0) {
-            plannedCount += dateActivities.length;
-          } else if (hasDateWorkout(dateKey)) {
-            plannedCount += Array.isArray(DATE_WORKOUTS[dateKey]) ? DATE_WORKOUTS[dateKey].length : 1;
-          } else {
-            plannedCount++;
+          let travelPlanned = 0;
+          if (hasDateWorkout(dateKey)) {
+            travelPlanned += Array.isArray(DATE_WORKOUTS[dateKey]) ? DATE_WORKOUTS[dateKey].length : 1;
           }
+          if (dateActivities && dateActivities.length > 0) {
+            travelPlanned += dateActivities.length;
+          }
+          plannedCount += travelPlanned || 1;
           continue;
         }
 
