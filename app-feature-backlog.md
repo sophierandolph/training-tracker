@@ -24,11 +24,7 @@ Collected from sessions through Mar 20, 2026. Includes holistic review from 7 ag
 ## Features
 
 - [x] **Composable workout blocks** -- POOL_RECOVERY broken into BLOCK_POOL_SWIMMING, BLOCK_FOAM_ROLL_STRETCH, BLOCK_SHOULDER_SHIN_PREHAB. POOL_RECOVERY composed from them. Ready for mix-and-match in DATE_WORKOUTS and `/plan-workouts`. -- DONE Mar 20.
-- [ ] **Smart readiness adaptation system** -- Replace the single-number recovery gate with a multi-signal system. Three components:
-  1. **Manual override:** When readiness is between 60 and the gate, allow athlete to override with a structured self-check (energy/soreness/motivation all 3+/5). Constraints: no back-to-back override days; override days cap intensity at ~80% / reduce volume ~20%. Log every override with reason.
-  2. **Trend modifier:** Compare 3-day vs 7-day readiness average. If trending up or flat, override is available in the 60-to-gate zone. If trending down, recovery sticks (no override). A 69 rebounding from 53 is different from a 69 falling from 83.
-  3. **Phased thresholds:** Current gate is <68 (Prozac taper period, Mar-Apr 2026). Move to <72 after taper clears. Review date: May 1 -- verify in Oura data that taper effects have actually resolved before changing. Full rest gate stays at <60 regardless.
-  - Implementation: override UI could be a "I feel good -- let me train" button on the adaptation banner, opening a 3-question check. Trend calculation uses existing `getWorkoutHistory()` readiness data. Store override log in Firestore for coach review.
+- [x] **Smart readiness adaptation system** -- DONE Mar 28. READINESS_CONFIG with phased thresholds (68 now, 72 after May taper review). HRV warning rule (90% of 7-day rolling median, floor 35). Trend modifier (3-day vs 7-day avg). Manual override with self-check (energy/soreness/motivation 3+/5, no back-to-back, 80% cap). Late HR drop toggle as compounding modifier. Consulted coach/PT/sports med on HRV thresholds.
 - [ ] **History view** -- week-over-week calendar layout with checkboxes for completed workouts per day
 - [ ] **Streak/consistency tracking** -- running streak, weekly completion rate. Cheapest motivation lever. (Athlete)
 - [ ] **Offline sync indicator** -- show "saved locally, will sync" when no connection. Currently silent. (Athlete, Backend)
