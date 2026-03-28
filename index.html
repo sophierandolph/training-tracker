@@ -3828,6 +3828,10 @@
           return;
         }
         workout = dw;
+        if (hasExternalActivities) {
+          showMixedDay(dayName, workout);
+          return;
+        }
         resetWorkoutState();
         state.activeWorkout = workout;
         renderWorkout(workout);
