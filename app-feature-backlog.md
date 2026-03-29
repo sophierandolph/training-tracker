@@ -8,6 +8,7 @@ Collected from sessions through Mar 20, 2026. Includes holistic review from 7 ag
 
 - [x] **showDayPreview() missing DATE_ACTIVITIES** -- after the travel handler, falls through to EXTERNAL_ACTIVITIES with no DATE_ACTIVITIES check. Non-travel day with date-specific activities but no DATE_WORKOUTS would show "No workout planned." -- Fixed Mar 28.
 - [ ] **renderCalendar() and renderUpcomingWorkouts() DATE_ACTIVITIES before travel** -- both check DATE_ACTIVITIES before travel/SPECIAL_DATES in the else-if chain. Display-only, not routing. Low priority.
+- [ ] **Normalize old /10 effort scores to /5** -- Early sessions (pre-Feb?) logged overallFeel on a 1-10 scale. Current scale is 1-5. Firestore sweep needed: divide by 2 for any overallFeel > 5. Example: Feb 11 Baker gym logged as 6/5. Also check per-set feel values in exercises arrays.
 
 ### Fixed
 
@@ -98,6 +99,7 @@ Collected from sessions through Mar 20, 2026. Includes holistic review from 7 ag
 
 - [x] **Split handball from leg workouts** -- Mar 7 split into Lower Body Strength + Handball: Jump Shot + Left Hand. -- DONE Mar 20.
 - [ ] **Warm-up/cool-down block coverage audit** -- ensure every workout type has a BLOCK_ warm-up and cool-down wired in. Current gaps: Mar 1 upper body uses different cool-down (Doorway Pec + Tricep vs Chest Opener + Thread the Needle) -- decide on one canonical UB cool-down. Lower body warm-ups/cool-downs vary per instance (different exercises, progressing hold times) -- decide if a canonical block works or if variation is intentional. Throwing/handball warm-ups and cool-downs not yet blocked. `/plan-workouts` should auto-include blocks for every workout it generates.
+- [x] **Location realism reference doc** -- `reference/location_equipment.md` with equipment, good-for, limitations, and access notes per location. Wire into `/plan-workouts` coach review step. Started Mar 28, Sophie filling in details.
 - [ ] **Handball drill cue pass** -- shorter, clearer, feel-based and rhythmic cues (aphantasia)
 - [ ] **Menstrual cycle integration** -- revisit early April once cycle stabilizes. Follicular=peak training, late luteal=back off. (Coach)
 - [ ] **Planned deload weeks in future blocks** -- systematic, not accidental from travel. (Coach)
