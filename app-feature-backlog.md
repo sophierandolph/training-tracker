@@ -24,6 +24,7 @@ Collected from sessions through Mar 20, 2026. Includes holistic review from 7 ag
 - [x] **Composable workout blocks** -- POOL_RECOVERY broken into BLOCK_POOL_SWIMMING, BLOCK_FOAM_ROLL_STRETCH, BLOCK_SHOULDER_SHIN_PREHAB. POOL_RECOVERY composed from them. Ready for mix-and-match in DATE_WORKOUTS and `/plan-workouts`. -- DONE Mar 20.
 - [x] **Smart readiness adaptation system** -- DONE Mar 28. READINESS_CONFIG with phased thresholds (68 now, 72 after May taper review). HRV warning rule (90% of 7-day rolling median, floor 35). Trend modifier (3-day vs 7-day avg). Manual override with self-check (energy/soreness/motivation 3+/5, no back-to-back, 80% cap). Late HR drop toggle as compounding modifier. Consulted coach/PT/sports med on HRV thresholds.
 - [ ] **History view** -- week-over-week calendar layout with checkboxes for completed workouts per day
+- [ ] **Calendar completed-day detection** -- check Firestore workout history in renderCalendar() to green-tint only days with logged workouts (not just all past days). Current CSS approximation: all past = green.
 - [ ] **Streak/consistency tracking** -- running streak, weekly completion rate. Cheapest motivation lever. (Athlete)
 - [ ] **Offline sync indicator** -- show "saved locally, will sync" when no connection. Currently silent. (Athlete, Backend)
 - [ ] **Rest day logging** -- mark rest as intentional vs missed. Log quick body check (soreness, energy). (PM, Athlete)
