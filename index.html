@@ -2275,6 +2275,7 @@
       flex: 1;
       overflow-y: auto;
       padding: 16px;
+      padding-bottom: 120px;
       display: flex;
       flex-direction: column;
       gap: 12px;
@@ -2283,8 +2284,9 @@
 
     .coach-welcome {
       text-align: center;
-      padding: 40px 20px;
+      padding: 20px;
       color: var(--text-secondary);
+      margin: auto;
     }
     .coach-welcome-icon { font-size: 48px; margin-bottom: 12px; }
     .coach-welcome-title { font-size: 18px; font-weight: 700; color: var(--text-primary); margin-bottom: 8px; }
@@ -2355,6 +2357,17 @@
     @keyframes coachBounce {
       0%, 60%, 100% { transform: translateY(0); opacity: 0.4; }
       30% { transform: translateY(-6px); opacity: 1; }
+    }
+
+    /* Coach bottom bar (chips + input) */
+    .coach-bottom {
+      position: fixed;
+      bottom: max(72px, calc(60px + env(safe-area-inset-bottom)));
+      left: 0;
+      right: 0;
+      z-index: 99;
+      background: var(--bg-primary);
+      border-top: 1px solid var(--border);
     }
 
     /* Quick action chips */
@@ -2750,19 +2763,19 @@
         </div>
       </div>
 
-      <!-- Quick action chips -->
-      <div class="coach-chips" id="coachChips">
-        <button class="coach-chip" onclick="sendQuickAction('adapt')">Adapt today's workout</button>
-        <button class="coach-chip" onclick="sendQuickAction('design')">Design a workout</button>
-        <button class="coach-chip" onclick="sendQuickAction('rest')">Should I rest today?</button>
-      </div>
-
-      <!-- Input bar -->
-      <div class="coach-input-bar">
-        <input type="text" id="coachInput" class="coach-text-input" placeholder="Ask your coach..." onkeydown="if(event.key==='Enter')sendCoachMessage()">
-        <button class="coach-send-btn" onclick="sendCoachMessage()" id="coachSendBtn">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 2L11 13"/><path d="M22 2L15 22L11 13L2 9L22 2Z"/></svg>
-        </button>
+      <!-- Sticky bottom: chips + input -->
+      <div class="coach-bottom">
+        <div class="coach-chips" id="coachChips">
+          <button class="coach-chip" onclick="sendQuickAction('adapt')">Adapt today's workout</button>
+          <button class="coach-chip" onclick="sendQuickAction('design')">Design a workout</button>
+          <button class="coach-chip" onclick="sendQuickAction('rest')">Should I rest today?</button>
+        </div>
+        <div class="coach-input-bar">
+          <input type="text" id="coachInput" class="coach-text-input" placeholder="Ask your coach..." onkeydown="if(event.key==='Enter')sendCoachMessage()">
+          <button class="coach-send-btn" onclick="sendCoachMessage()" id="coachSendBtn">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 2L11 13"/><path d="M22 2L15 22L11 13L2 9L22 2Z"/></svg>
+          </button>
+        </div>
       </div>
     </div>
 

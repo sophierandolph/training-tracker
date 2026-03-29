@@ -54,6 +54,7 @@ Collected from sessions through Mar 20, 2026. Includes holistic review from 7 ag
 
 ## Low Priority / Nice to Have
 
+- [ ] **Coach view welcome screen takes full height** -- empty state (emoji + description) fills the viewport, pushing input bar and quick chips below the fold. Input should be visible without scrolling when no conversation is active.
 - [ ] **Loading states** -- visual feedback when data is loading
 - [ ] **Fuel tips collapsible** -- don't need to see them every time
 - [ ] **Header date context** -- show what day/week you're in
