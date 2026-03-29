@@ -9610,38 +9610,31 @@ ${recentHistory}`;
       let type = 'rest';
       let label = '';
 
+      // Gather all activity sources for the day to find highest-demand type
+      const typePri = { 'strength': 5, 'sport-specific': 4, 'sport': 4, 'handball': 4, 'clinic': 4, 'mixed': 4, 'conditioning': 3, 'cardio': 3, 'warmup': 2, 'recovery': 1, 'prehab': 1, 'rest': 0 };
+      const candidates = [];
+
       if (DATE_WORKOUTS[dateKey]) {
         const dw = DATE_WORKOUTS[dateKey];
-        if (Array.isArray(dw)) {
-          // For protein target: only consider workouts >= 20 min (ignore movement snacks, psoas protocols)
-          const typePri = { 'strength': 5, 'sport-specific': 4, 'sport': 4, 'handball': 4, 'clinic': 4, 'mixed': 4, 'conditioning': 3, 'cardio': 3, 'warmup': 2, 'recovery': 1, 'prehab': 1, 'rest': 0 };
-          const substantial = dw.filter(w => {
-            const dur = parseInt(w.duration) || 0;
-            return dur >= 20;
-          });
-          const pool = substantial.length > 0 ? substantial : dw;
-          const primary = [...pool].sort((a, b) => (typePri[(b.type || '').toLowerCase()] || 0) - (typePri[(a.type || '').toLowerCase()] || 0))[0];
-          type = primary.type || 'gym';
-          label = primary.name || '';
-        } else {
-          type = dw.type || 'gym';
-          label = dw.name || '';
-        }
-      } else if (specialDate && specialDate.type === 'travel' && specialDate.facilities === 'minimal') {
-        type = 'rest';
-      } else {
+        const dwArr = Array.isArray(dw) ? dw : [dw];
+        // Only consider workouts >= 20 min (ignore movement snacks, psoas protocols)
+        const substantial = dwArr.filter(w => (parseInt(w.duration) || 0) >= 20);
+        (substantial.length > 0 ? substantial : dwArr).forEach(w => candidates.push({ type: w.type || 'gym', name: w.name || '' }));
+      }
+
+      if (!(specialDate && specialDate.type === 'travel' && specialDate.facilities === 'minimal')) {
         // Check EXTERNAL_ACTIVITIES for recurring day-of-week activities (PT, soccer, handball)
         const dayNames = ['sunday','monday','tuesday','wednesday','thursday','friday','saturday'];
         const extActs = EXTERNAL_ACTIVITIES[dayNames[dayIndex]] || [];
         // Also check DATE_ACTIVITIES for one-off events
         const dateActs = DATE_ACTIVITIES[dateKey] || [];
-        const allActs = [...extActs, ...dateActs];
-        if (allActs.length > 0) {
-          const typePri = { 'strength': 5, 'sport-specific': 4, 'sport': 4, 'handball': 4, 'conditioning': 3, 'cardio': 3, 'recovery': 1, 'rest': 0 };
-          const primary = [...allActs].sort((a, b) => (typePri[(b.type || '').toLowerCase()] || 0) - (typePri[(a.type || '').toLowerCase()] || 0))[0];
-          type = primary.type || 'external';
-          label = primary.name || '';
-        }
+        [...extActs, ...dateActs].forEach(a => candidates.push({ type: a.type || 'external', name: a.name || '' }));
+      }
+
+      if (candidates.length > 0) {
+        const primary = [...candidates].sort((a, b) => (typePri[(b.type || '').toLowerCase()] || 0) - (typePri[(a.type || '').toLowerCase()] || 0))[0];
+        type = primary.type;
+        label = primary.name;
       }
       if (type === 'rest' && state.activeWorkout) {
         type = state.activeWorkout.type || 'gym';
