@@ -6,7 +6,7 @@ Collected from sessions through Mar 20, 2026. Includes holistic review from 7 ag
 
 ## Bugs (fix these)
 
-- [ ] **showDayPreview() missing DATE_ACTIVITIES** -- after the travel handler, falls through to EXTERNAL_ACTIVITIES with no DATE_ACTIVITIES check. Non-travel day with date-specific activities but no DATE_WORKOUTS would show "No workout planned."
+- [x] **showDayPreview() missing DATE_ACTIVITIES** -- after the travel handler, falls through to EXTERNAL_ACTIVITIES with no DATE_ACTIVITIES check. Non-travel day with date-specific activities but no DATE_WORKOUTS would show "No workout planned." -- Fixed Mar 28.
 - [ ] **renderCalendar() and renderUpcomingWorkouts() DATE_ACTIVITIES before travel** -- both check DATE_ACTIVITIES before travel/SPECIAL_DATES in the else-if chain. Display-only, not routing. Low priority.
 
 ### Fixed
