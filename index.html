@@ -5744,13 +5744,22 @@
       ],
       '2026-03-29': [
         {
+          id: 'soccer_playoff_0329',
+          name: 'Soccer (Playoff)',
+          time: '2:00pm',
+          duration: 90,
+          location: 'Field',
+          type: 'Sport',
+          description: 'Saturday league finals (won semis Mar 28). Playing with quad contusion -- monitor movement quality.'
+        },
+        {
           id: 'handball_small_group_0329',
           name: 'Handball Practice (Small Group)',
           time: '5:00pm',
           duration: 60,
           location: 'Court',
           type: 'Sport',
-          description: 'Individualized focus session. Non-recurring for now.'
+          description: 'Individualized focus session. Throwing/form only (quad contusion). Non-recurring for now.'
         }
       ]
     };
@@ -8435,17 +8444,20 @@
         return;
       }
 
-      // Check for EXTERNAL_ACTIVITIES on this day
+      // Check for DATE_ACTIVITIES and EXTERNAL_ACTIVITIES on this day
       const previewDayNames = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
+      const dateActs = DATE_ACTIVITIES[dateKey];
       const extActs = EXTERNAL_ACTIVITIES[previewDayNames[dayOfWeek]];
-      if (extActs && extActs.length > 0) {
-        previewTitle = extActs.map(a => a.name).join(' + ');
-        contentHtml = `
-          <div style="padding: 16px; background: var(--bg-card); border-radius: 8px;">
+      const allActs = [...(dateActs || []), ...(extActs || [])];
+      if (allActs.length > 0) {
+        previewTitle = allActs.map(a => a.name).join(' + ');
+        contentHtml = allActs.map(a => `
+          <div style="padding: 16px; background: var(--bg-card); border-radius: 8px; margin-bottom: 8px;">
             <div style="color: var(--warning); font-size: 12px; text-transform: uppercase; margin-bottom: 8px;">External Activity</div>
-            <p style="color: var(--text-secondary); font-size: 13px;">This workout is scheduled externally (team practice, personal training, etc.). Just show up and give it your best!</p>
+            <div style="font-weight: 600; margin-bottom: 4px;">${escHtml(a.name)}${a.time ? ' — ' + escHtml(a.time) : ''}</div>
+            <p style="color: var(--text-secondary); font-size: 13px; margin: 0;">${escHtml(a.description || 'Scheduled externally. Just show up and give it your best!')}</p>
           </div>
-        `;
+        `).join('');
       } else {
         contentHtml = `
           <div style="text-align: center; padding: 20px; color: var(--text-secondary);">
@@ -9187,6 +9199,7 @@
 - HAS APHANTASIA: Cannot visualize movements mentally. Use KINESTHETIC cues (what it feels like) and VERBAL/RHYTHMIC cues (sequenced words). Example: "step, OPEN, launch" not "imagine your body rotating."
 - Bilateral hip tightness, mild low back pain (hip-related). Groin concern flagged Mar 2 -- monitor.
 - Came off Prozac Feb 2026 -- affects HRV, temp, sleep metrics through ~April. Menstrual cycle irregular.
+- ACTIVE INJURY (Mar 28): Quad contusion, inner/front thigh ~3in above knee, ~4in diameter. Goalkeeper knee collision. Stiffens after sitting/low positions. VMO area. Management: compression, ice, ibuprofen, KT tape. No lateral shuffles, defensive slides, or jump landings until cleared. Compensating movement patterns risk re-aggravating right-side hip/psoas chain. See injury_note_mar28.md for full protocol.
 
 GOALS
 1. US Women's Handball Team tryouts (fall 2026) - PRIMARY. T-test target: 10.5 sec. Beep test: establish baseline.
