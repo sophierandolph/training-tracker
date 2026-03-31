@@ -5819,6 +5819,26 @@
           type: 'Sport',
           description: 'Individualized focus session. Throwing/form only (quad contusion). Non-recurring for now.'
         }
+      ],
+      '2026-04-11': [
+        {
+          id: 'beer_bike_0411',
+          name: 'Beer Bike',
+          time: '11:00am',
+          duration: 45,
+          location: 'Rice Campus',
+          type: 'Sport',
+          description: 'Campus bike race. Short all-out effort. Pre-race: 10 min easy spin + 3-4 short builds to 90%. Post-race: easy spin-down, stretch, hydrate immediately. Eat a real meal by noon for scrimmage.'
+        },
+        {
+          id: 'handball_scrimmage_0411',
+          name: 'Handball Scrimmage',
+          time: '2:00pm',
+          duration: 180,
+          location: 'Court',
+          type: 'Sport',
+          description: 'Full scrimmage. Manage minutes if possible — legs will feel heavier than normal after Beer Bike. Dynamic warmup + shoulder band activation + easy throwing progression before start.'
+        }
       ]
     };
 
@@ -7598,12 +7618,12 @@
             ]
           },
           {
-            name: "B. Squat + Power + Core (12 min)",
-            instructions: "B1-B2-B3, rest 90 sec, repeat 3x.",
+            name: "B. Squat + Step-Up + Core (12 min)",
+            instructions: "B1-B2-B3, rest 90 sec, repeat 3x. Jump squats dropped — plyometrics on healing quad contusion not worth the risk 4 days before Beer Bike.",
             restTime: 90,
             exercises: [
               { id: "w9tue_b1", name: "DB Goblet Squat", sets: 3, reps: 12, weight: 27.5, notes: "Hold at 27.5. Full depth, chest up." },
-              { id: "w9tue_b2", name: "Jump Squats", sets: 3, reps: 8, notes: "Explosive up, land soft. Bodyweight.", noWeight: true },
+              { id: "w9tue_b2", name: "Box Step-Ups", sets: 3, reps: 8, notes: "Each leg. Moderate tempo. Drive through the heel, full extension at top. Use a bench or box at knee height.", perSide: true, noWeight: true },
               { id: "w9tue_b3", name: "Front Low Plank Hold", sets: 3, reps: 1, notes: "30 sec.", isHold: true, holdTime: 30, noWeight: true }
             ]
           },
@@ -7771,95 +7791,44 @@
       }
     ],
 
-    '2026-04-10': [
-      {
-        name: "Upper Body Strength (Week 9)",
-        type: "Strength",
-        duration: "45 min",
-        location: "Rec Center",
-        condition: "Full upper body session. Day before Beer Bike + scrimmage double — don't go to failure on anything.\nProgress row to 22.5. Hold chest press 50, lat pulldown 72, rear delt 40. Cable lateral raise stays.\nArm isolation circuit returns this week (push volume was low).\nBring: loop band",
-        circuits: [
-          BLOCK_UB_WARMUP,
-          {
-            name: "B. Pull + Push Superset (12 min)",
-            instructions: "B1-B2, rest 90 sec, repeat 3x.",
-            restTime: 90,
-            exercises: [
-              { id: "w9fri_b1", name: "Single Arm DB Row", sets: 3, reps: 10, weight: 22.5, notes: "Hold at 22.5. Pull elbow back and up, core tight.", perSide: true },
-              { id: "w9fri_b2", name: "Chest Press Machine", sets: 3, reps: 10, weight: 50, notes: "Hold at 50. Full ROM. Don't grind reps — leave 1-2 in the tank." }
-            ]
-          },
-          {
-            name: "C. Vertical Pull + Shoulder (12 min)",
-            instructions: "C1-C2-C3, rest 90 sec, repeat 3x.",
-            restTime: 90,
-            exercises: [
-              { id: "w9fri_c1", name: "Lat Pulldown Machine", sets: 3, reps: 10, weight: 72, notes: "Hold at 72. Pull to upper chest." },
-              { id: "w9fri_c2", name: "Rear Delt Fly Machine", sets: 3, reps: 12, weight: 40, notes: "Hold at 40. Pinch shoulder blades." },
-              { id: "w9fri_c3", name: "Cable Lateral Raise", sets: 3, reps: 12, weight: 5, notes: "Low cable, stand sideways. Raise to shoulder height, controlled lower. Hold at 5.", perSide: true }
-            ]
-          },
-          {
-            name: "D. Arms + Push (8 min)",
-            instructions: "D1-D2-D3, rest 60 sec, repeat 3x. Push volume boost — biceps, triceps, and an extra press.",
-            restTime: 60,
-            exercises: [
-              { id: "w9fri_d1", name: "Bicep Curls", sets: 3, reps: 10, weight: 15, notes: "Hold at 15. No swinging — control the lowering." },
-              { id: "w9fri_d2", name: "Cable Tricep Extension", sets: 3, reps: 10, weight: 22, notes: "Hold at 22. Elbows pinned, extend fully." },
-              { id: "w9fri_d3", name: "DB Shoulder Press (Seated)", sets: 3, reps: 8, weight: 17.5, notes: "Extra push volume. Both arms. Press straight up, lower to ear height. Don't go heavy — tomorrow is a double day." }
-            ]
-          },
-          {
-            name: "E. Core + Anti-Rotation (5 min)",
-            exercises: [
-              { id: "w9fri_e1", name: "Tall-Kneeling Band Hold", sets: 2, reps: 1, notes: "15 sec each side. Anti-rotation, psoas-safe.", isHold: true, holdTime: 15, perSide: true, noWeight: true },
-              { id: "w9fri_e2", name: "Front Low Plank Hold", sets: 2, reps: 1, notes: "30 sec.", isHold: true, holdTime: 30, noWeight: true },
-              { id: "w9fri_e3", name: "Supine Floor Leg Lowering (Bent Knee)", sets: 2, reps: 8, notes: "RIGHT SIDE ONLY. Lower the leg like slowly pressing a gas pedal — stop before the click, reverse.", perSide: true, noWeight: true }
-            ]
-          },
-          BLOCK_UB_COOLDOWN
-        ]
-      },
-      {
-        name: "Movement Snack: Throwing Phase 3 + Feints",
-        type: "Sport-Specific",
-        duration: "20 min",
-        location: "Squash court or any wall",
-        condition: "⚠️ PT flag: consider skipping today — shoulder needs to be fresh for tomorrow's double (Beer Bike + scrimmage). If you do throw, keep it to 10 min max, low intensity, wall passes only.\nPhase 3: full approach, 70-80% effort. ~40-50 throws.\nBoth feint drills included. Wrist work after.\nDo this BEFORE upper body (fresh arms).",
-        circuits: [
-          {
-            name: "A. Wall Throwing (Phase 3)",
-            instructions: "Full approach, 70-80% effort. Stay smooth.",
-            simple: true,
-            exercises: [
-              { id: "w9fri_ms1", name: "Wrist Flicks with Ball", sets: 1, reps: 20, notes: "Snap wrist, feel fingers release.", noWeight: true },
-              { id: "w9fri_ms2", name: "Kneeling Throws (R)", sets: 2, reps: 5, notes: "Warm-up throws. 60-70%. Cue: 'OPEN'.", noWeight: true },
-              { id: "w9fri_ms3", name: "Full Approach Throws (R)", sets: 3, reps: 6, notes: "Full approach, 70-80%. Step, step, OPEN, launch. Smooth, not max.", noWeight: true },
-              { id: "w9fri_ms4", name: "Full Approach Throws (L)", sets: 2, reps: 4, notes: "Left hand. 60% effort.", noWeight: true }
-            ]
-          },
-          {
-            name: "B. Feint Drills (5 min)",
-            instructions: "Both drills today. Game-like movement prep for scrimmage Saturday.",
-            simple: true,
-            exercises: [
-              { id: "w9fri_ms5", name: "Lateral Step-Over Feint Drill", sets: 4, reps: 3, notes: "Each direction. Knee up, load it, snap.", perSide: true, noWeight: true },
-              { id: "w9fri_ms6", name: "Forward Burst Feint Drill", sets: 4, reps: 3, notes: "Each direction. Drive, drive, drive, CUT.", perSide: true, noWeight: true }
-            ]
-          },
-          {
-            name: "C. Post-Throw Wrist Work (4 min)",
-            instructions: "Wrist prehab after throwing.",
-            exercises: [
-              { id: "w9fri_ms7", name: "Wrist Flexion/Extension Isometrics", sets: 3, reps: 1, notes: "30 sec each direction. Lock the wrist, don't let the weight move.", isHold: true, holdTime: 30, noWeight: true },
-              { id: "w9fri_ms8", name: "Wrist Flexion Curls", sets: 2, reps: 10, weight: 5, notes: "Snap the wrist up like you're flicking a ball. Slow on the way down." }
-            ]
-          }
-        ]
-      }
-    ],
+    '2026-04-10': {
+      name: "Pre-Race Taper: Light Activation",
+      type: "Recovery",
+      duration: "20-25 min",
+      location: "Rec Center or home",
+      condition: "TAPER DAY. Tomorrow is Beer Bike + handball scrimmage double. No heavy lifting, no throwing (48hr shoulder rule — Wed practice was the last throw this week).\nGoal: blood flow and activation, not fatigue. Show up Saturday fresh.",
+      circuits: [
+        {
+          name: "A. Upper Body Activation (10 min)",
+          instructions: "Light movement only. Wake things up, don't tire them out.",
+          simple: true,
+          exercises: [
+            { id: "w9fri_a1", name: "Band Pull-Aparts", sets: 2, reps: 15, notes: "Light band. Squeeze shoulder blades. Easy.", noWeight: true },
+            { id: "w9fri_a2", name: "Lat Pulldown Machine", sets: 2, reps: 10, weight: 50, notes: "~70% of normal weight. Controlled tempo. Not a work set — just activation." },
+            { id: "w9fri_a3", name: "Rear Delt Fly Machine", sets: 2, reps: 12, weight: 30, notes: "Light. Pinch shoulder blades. Blood flow to the posterior shoulder." }
+          ]
+        },
+        {
+          name: "B. Posterior Capsule Stretch (5 min)",
+          instructions: "Daily shoulder maintenance. Especially important before tomorrow's scrimmage.",
+          simple: true,
+          exercises: [
+            { id: "w9fri_b1", name: "Sleeper Stretch", sets: 3, reps: 1, notes: "Each side, right first. Lie on your RIGHT side. Right arm out at shoulder height, elbow bent 90°. Use left hand to gently push forearm toward the floor. Stop at first pull. Hold and breathe.", isHold: true, holdTime: 30, perSide: true, noWeight: true },
+            { id: "w9fri_b2", name: "Cross-Body Stretch (Supine)", sets: 3, reps: 1, notes: "Each side, right first. Lie on your back. Pull right arm across chest. Pin shoulder blade to floor.", isHold: true, holdTime: 30, perSide: true, noWeight: true }
+          ]
+        },
+        {
+          name: "C. Easy Spin (Optional, 10 min)",
+          instructions: "Keep the legs loose for tomorrow. Zone 1 only. Skip if you feel good without it.",
+          simple: true,
+          exercises: [
+            { id: "w9fri_c1", name: "Easy Spin", sets: 1, reps: 1, notes: "10 min conversational pace. Flat resistance. Just keep the legs turning over. If you feel fresh, skip this entirely.", isCardio: true, duration: 600, noWeight: true }
+          ]
+        }
+      ]
+    },
 
-    // Sat Apr 11: Beer Bike (11am) + Handball Scrimmage (2-5pm) — external activities, not planned here
+    // Sat Apr 11: Beer Bike (11am) + Handball Scrimmage (2-5pm) — in DATE_ACTIVITIES
 
     '2026-04-12': POOL_RECOVERY,
 
