@@ -5723,15 +5723,6 @@
           location: 'Gym',
           type: 'Strength',
           description: 'Trainer-led session'
-        },
-        {
-          id: 'soccer',
-          name: 'Soccer',
-          time: null, // Set from SPECIAL_DATES
-          duration: 90,
-          location: 'Field',
-          type: 'Sport',
-          description: 'League game'
         }
       ],
       wednesday: [
@@ -5743,17 +5734,6 @@
           location: 'Court',
           type: 'Sport',
           description: 'Team practice'
-        }
-      ],
-      saturday: [
-        {
-          id: 'soccer_pickup',
-          name: 'Soccer',
-          time: '2:00pm',
-          duration: 60,
-          location: 'Field',
-          type: 'Sport',
-          description: 'Pickup game'
         }
       ]
     };
@@ -7232,41 +7212,62 @@
     // Mon Mar 30: PT 5pm + Soccer (LAST ONE) — external activities, not planned here
 
     '2026-03-31': {
-      name: "Recovery: Pool + Mobility (Post-Double)",
+      name: "Recovery: Pool + Shoulder + Mobility",
       type: "Recovery",
-      duration: "30-35 min",
+      duration: "40-45 min",
       location: "Rec Center",
-      condition: "Day after PT + soccer double (last soccer game). Priority: flush legs, open hips. No loading.\nPool if available, otherwise all floor mobility.",
+      condition: "Day after heavy arm PT. Soccer cancelled (season over). Shoulder posterior capsule irritation flagged — this session addresses it.\nLap pool first (backstroke), then rec pool (standing work). Don't go back to lap pool after.\nYellow flag: if backstroke reproduces shoulder crunchiness, stop and move to rec pool early.",
       circuits: [
         {
-          name: "A. Pool Recovery (15 min)",
-          instructions: "Easy movement in the water. Zero intensity.",
+          name: "A. Lap Pool: Backstroke (8 min)",
+          instructions: "Backstroke ONLY. No freestyle (repeated internal rotation stresses the irritated posterior capsule). No breaststroke (catch phase loads anterior shoulder, refers posteriorly). Easy pace, long arms.",
           simple: true,
           exercises: [
-            { id: "w8tue_a1", name: "Easy Swim Laps", sets: 1, reps: 1, notes: "8 min easy freestyle or backstroke. Recovery pace.", isCardio: true, duration: 480, noWeight: true },
-            { id: "w8tue_a2", name: "Water Walking", sets: 1, reps: 1, notes: "5 min. Forward, backward, lateral. Let the water do the work.", isCardio: true, duration: 300, noWeight: true }
+            { id: "w8tue_a1", name: "Easy Backstroke Laps", sets: 1, reps: 1, notes: "8 min. Long arms, easy kick. Let the shoulder stay open. If you feel the crunch during any stroke, stop and head to rec pool.", isCardio: true, duration: 480, noWeight: true }
           ]
         },
         {
-          name: "B. Hip Prehab + Mobility (12 min)",
-          instructions: "New hip exercises integrated. Slow and intentional.",
+          name: "B. Rec Pool: Standing Recovery (8 min)",
+          instructions: "Move to the rec pool (2-4 ft). All standing work. Great for quad contusion — water compression + low-impact movement.",
           simple: true,
           exercises: [
-            { id: "w8tue_b1", name: "Quadruped Hip Pocket Rockback", sets: 2, reps: 10, notes: "Each side. NEW: Sit back, feel the ball settle deeper into the back of the socket. Slow reps.", perSide: true, noWeight: true },
-            { id: "w8tue_b2", name: "Side-Lying Clamshell (3s Pause)", sets: 2, reps: 12, notes: "Each side. NEW: Open like a book, pause when you feel the back of the hip light up, close slowly.", perSide: true, noWeight: true },
-            { id: "w8tue_b3", name: "90/90 Hip Stretch", sets: 1, reps: 1, notes: "60 sec each side.", isHold: true, holdTime: 60, perSide: true, noWeight: true },
-            { id: "w8tue_b4", name: "Hip Flexor Lunge Stretch", sets: 1, reps: 1, notes: "45 sec each side. Extra time on right.", isHold: true, holdTime: 45, perSide: true, noWeight: true },
-            { id: "w8tue_b5", name: "Copenhagen Adductor Hold", sets: 2, reps: 1, notes: "20 sec each side. Side plank, top foot on bench. 2x/week minimum — this is #1.", isHold: true, holdTime: 20, perSide: true, noWeight: true }
+            { id: "w8tue_b1", name: "Water Walking", sets: 1, reps: 1, notes: "3 min. Forward, backward, lateral. Let the water push back against you. Easy pace.", isCardio: true, duration: 180, noWeight: true },
+            { id: "w8tue_b2", name: "High-Knee Water March", sets: 1, reps: 1, notes: "2 min. Drive one knee up toward chest, pause at the top, set it down, switch. Slow and deliberate — feel the quad work on the way up and resist on the way down. Good for contusion blood flow.", isCardio: true, duration: 120, noWeight: true },
+            { id: "w8tue_b3", name: "Water Lateral Lunges", sets: 1, reps: 5, notes: "5 each direction. Step wide to one side, sink your hips, feel the inner thigh stretch on the trailing leg. Push off and come back to center. Slow — the water does the resistance work.", perSide: true, noWeight: true }
           ]
         },
         {
-          name: "C. Psoas + Tibialis (8 min)",
+          name: "C. Shoulder Recovery (8 min)",
+          instructions: "NEW block. Posterior capsule + rotator cuff recovery. Do this right after pool while tissue is warm. Prep for Wednesday throwing.",
+          simple: true,
+          exercises: [
+            { id: "w8tue_c1", name: "Sidelying External Rotation (No Weight)", sets: 2, reps: 10, notes: "Right side only. Lie on your LEFT side. Right elbow pinned to your right hip, bent 90°. Roll your right hand toward the ceiling like you're opening a door. Slow: 3 count up, 3 count down. You should feel the back of the shoulder doing the work — small muscles behind the armpit. This is blood flow, not strengthening. Stay light.", noWeight: true },
+            { id: "w8tue_c2", name: "Sleeper Stretch", sets: 3, reps: 1, notes: "Each side, right first. Lie on your RIGHT side. Right arm straight out in front at shoulder height, elbow bent 90° so forearm points up. Use your left hand to gently push the right forearm toward the floor. Stop the MOMENT you feel a pull deep in the back of the shoulder — don't push past it. Hold there and breathe. You're stretching the posterior capsule, the tissue that's tight.", isHold: true, holdTime: 30, perSide: true, noWeight: true },
+            { id: "w8tue_c3", name: "Cross-Body Stretch (Supine)", sets: 3, reps: 1, notes: "Each side, right first. Lie on your back. Bring your right arm across your chest at shoulder height. Use your left hand to pull it gently across. Pin your right shoulder blade to the floor — don't let it lift. You'll feel a deep stretch in the back/outside of the shoulder. That's the posterior capsule. Hold and breathe.", isHold: true, holdTime: 30, perSide: true, noWeight: true },
+            { id: "w8tue_c4", name: "Prone Y-Raise (No Weight)", sets: 2, reps: 8, notes: "Lie face down, arms out in a Y (thumbs pointing up, angled above your head like a field goal). Lift your hands 2-3 inches off the floor — that's it, tiny movement. Squeeze between your shoulder blades at the top, hold 1 sec, lower. You should feel the muscles between and below your shoulder blades light up. If you feel it in your neck, you're lifting too high.", noWeight: true },
+            { id: "w8tue_c5", name: "Supine 90/90 Shoulder ER", sets: 2, reps: 1, notes: "Right side only. Lie on your back. Right arm out to the side at shoulder height, elbow bent 90° (like a goalpost). Let gravity pull your forearm toward the floor behind you. Don't force it — just let the weight of your arm do the stretch. You'll feel the front of the shoulder and chest opening. Breathe and let it sink a little deeper each exhale.", isHold: true, holdTime: 30, noWeight: true }
+          ]
+        },
+        {
+          name: "D. Hip Prehab + Mobility (12 min)",
+          instructions: "Standard hip block. Ease depth on right-side lunges if quad contusion guards.",
+          simple: true,
+          exercises: [
+            { id: "w8tue_d1", name: "Quadruped Hip Pocket Rockback", sets: 2, reps: 10, notes: "Each side. Sit back, feel the ball settle deeper into the back of the socket. Slow reps.", perSide: true, noWeight: true },
+            { id: "w8tue_d2", name: "Side-Lying Clamshell (3s Pause)", sets: 2, reps: 12, notes: "Each side. Open like a book, pause when you feel the back of the hip light up, close slowly.", perSide: true, noWeight: true },
+            { id: "w8tue_d3", name: "90/90 Hip Stretch", sets: 1, reps: 1, notes: "60 sec each side.", isHold: true, holdTime: 60, perSide: true, noWeight: true },
+            { id: "w8tue_d4", name: "Hip Flexor Lunge Stretch", sets: 1, reps: 1, notes: "45 sec each side. Extra time on right. If the quad contusion makes the deep lunge position uncomfortable on the right, back off the depth — don't push through stiffness there.", isHold: true, holdTime: 45, perSide: true, noWeight: true },
+            { id: "w8tue_d5", name: "Supine Adductor Squeeze", sets: 2, reps: 15, notes: "Lie on your back, knees bent, feet flat. Put a pillow or rolled towel between your knees. Squeeze your knees together — feel the inner thighs fire. Hold each squeeze 3 seconds, release. Replaces Copenhagen hold (no shoulder load needed today). 2x/week adductor work — this is #1.", noWeight: true }
+          ]
+        },
+        {
+          name: "E. Psoas + Tibialis (8 min)",
           instructions: "Psoas management (3x/week schedule). Tibialis pinned to non-court days.",
           simple: true,
           exercises: [
-            { id: "w8tue_c1", name: "Prone Lying + Belly Breathing", sets: 1, reps: 1, notes: "3 min. Lie face down, breathe into belly against the floor.", isHold: true, holdTime: 180, noWeight: true },
-            { id: "w8tue_c2", name: "Half-Kneeling Hip Flexor Stretch", sets: 1, reps: 1, notes: "60 sec each side. Squeeze back glute, tilt pelvis under.", isHold: true, holdTime: 60, perSide: true, noWeight: true },
-            { id: "w8tue_c3", name: "Tibialis Raises", sets: 2, reps: 15, notes: "Heels on edge of step, toes up. 3x/week pin — this is #1.", noWeight: true }
+            { id: "w8tue_e1", name: "Prone Lying + Belly Breathing", sets: 1, reps: 1, notes: "3 min. Lie face down, breathe into belly against the floor.", isHold: true, holdTime: 180, noWeight: true },
+            { id: "w8tue_e2", name: "Half-Kneeling Hip Flexor Stretch", sets: 1, reps: 1, notes: "60 sec each side. Squeeze back glute, tilt pelvis under.", isHold: true, holdTime: 60, perSide: true, noWeight: true },
+            { id: "w8tue_e3", name: "Tibialis Raises", sets: 2, reps: 15, notes: "Heels on edge of step, toes up. 3x/week pin — this is #1.", noWeight: true }
           ]
         }
       ]
