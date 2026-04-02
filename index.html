@@ -5820,6 +5820,17 @@
           description: 'Individualized focus session. Throwing/form only (quad contusion). Non-recurring for now.'
         }
       ],
+      '2026-04-03': [
+        {
+          id: 'mock_beer_bike_0403',
+          name: 'Mock Beer Bike (Dress Rehearsal)',
+          time: 'TBD',
+          duration: 60,
+          location: 'Track',
+          type: 'Sport',
+          description: 'Full race simulation with warmup and cooldown. Replaces planned lower body strength this week.'
+        }
+      ],
       '2026-04-11': [
         {
           id: 'beer_bike_0411',
@@ -7365,21 +7376,29 @@
 
     '2026-04-02': [
       {
-        name: "Beer Bike: Conditioning (Week 8)",
-        type: "Cardio",
-        duration: "35 min",
-        location: "Bike (outdoor or stationary)",
-        condition: "Week 8 Beer Bike training. Building toward race day Apr 11. Slightly longer than last week.",
+        name: "Pool Recovery",
+        type: "Recovery",
+        duration: "15 min",
+        location: "Rec Center",
+        condition: "Mentally and physically tired. Shoulder crunchy from yesterday's handball. Pool first for low-impact recovery.",
         circuits: [
           {
-            name: "Bike Intervals (35 min)",
-            instructions: "Build intensity. Race is 9 days out.",
+            name: "A. Pool Swimming (15 min)",
+            instructions: "Easy recovery pace throughout. No pushing.",
             simple: true,
             exercises: [
-              { id: "w8thu_a1", name: "Easy Spin Warm-Up", sets: 1, reps: 1, notes: "5 min at conversational pace.", isCardio: true, duration: 300, noWeight: true },
-              { id: "w8thu_a2", name: "Moderate Build", sets: 1, reps: 1, notes: "5 min at 70% effort. Settle into rhythm.", isCardio: true, duration: 300, noWeight: true },
-              { id: "w8thu_a3", name: "Tempo Intervals", sets: 5, reps: 1, notes: "2 min at 80% / 1 min easy. 5 rounds. Last round: push to 85%.", isCardio: true, duration: 120, noWeight: true },
-              { id: "w8thu_a4", name: "Easy Cool-Down Spin", sets: 1, reps: 1, notes: "5 min easy.", isCardio: true, duration: 300, noWeight: true }
+              { id: "w8thu_a1", name: "Easy Backstroke", sets: 1, reps: 1, notes: "5 min. Long strokes, low effort. If shoulder crunchiness reproduces, switch to water walking.", isCardio: true, duration: 300, noWeight: true },
+              { id: "w8thu_a2", name: "Water Walking", sets: 1, reps: 1, notes: "5 min. Forward, backward, lateral in shallow end.", isCardio: true, duration: 300, noWeight: true },
+              { id: "w8thu_a3", name: "Easy Freestyle", sets: 1, reps: 1, notes: "5 min. Recovery pace, long strokes.", isCardio: true, duration: 300, noWeight: true }
+            ]
+          },
+          {
+            name: "B. Poolside Hip Prehab (8 min)",
+            instructions: "On pool deck. Copenhagen on bench.",
+            exercises: [
+              { id: "w8thu_b1", name: "Copenhagen Adductor Hold", sets: 2, reps: 1, notes: "20 sec each side. Side plank, top foot on pool deck bench. 2x/week minimum — this is #1.", isHold: true, holdTime: 20, perSide: true, noWeight: true },
+              { id: "w8thu_b2", name: "Standing Hip Hydrants", sets: 1, reps: 10, notes: "Each side. No band. Wall for balance.", perSide: true, noWeight: true },
+              { id: "w8thu_b3", name: "Tibialis Raises", sets: 2, reps: 15, notes: "Heels on edge of step. 2x/week pin — this is #2 (Wed was #1).", noWeight: true }
             ]
           }
         ]
@@ -7387,28 +7406,28 @@
       {
         name: "Shoulder Protocol (Week 8)",
         type: "Prehab",
-        duration: "20 min",
-        location: "Home or gym",
-        condition: "Weekly shoulder protocol. Critical for handball longevity.\nEquipment: long resistance band, light DBs (3-5 lb) or substitute band.",
+        duration: "15 min",
+        location: "Rec Center or home",
+        condition: "Weekly shoulder protocol. Shoulder was crunchy yesterday — if crunchiness reproduces during ER/IR, reduce to 2x10 or stop.\nEquipment: long resistance band.",
         circuits: [
           BLOCK_SHOULDER_WARMUP,
           {
-            name: "B. Rotator Cuff (12 min)",
-            instructions: "30 sec rest between sets.",
+            name: "B. Rotator Cuff (10 min)",
+            instructions: "30 sec rest between sets. Monitor crunchiness — bail out early if needed.",
             simple: true,
             exercises: [
-              { id: "w8thu_b3", name: "External Rotation 90/90", sets: 3, reps: 12, notes: "Both arms. Band at shoulder height. Goal post position, rotate hands up. Quick pace, blades squeezed back.", noWeight: true },
-              { id: "w8thu_b4", name: "Internal Rotation 90/90", sets: 3, reps: 12, notes: "Both arms. Turn around, same band. Rotate hands down/forward. Lighter tension.", noWeight: true },
-              { id: "w8thu_b5", name: "Prone T's", sets: 2, reps: 10, notes: "Face down on bench or floor. Thumbs up, raise arms to T. Squeeze blades at top.", noWeight: true },
-              { id: "w8thu_b6", name: "Band Throws", sets: 2, reps: 10, notes: "Each arm. Band behind at shoulder height. Pull-into-release pattern. Feel chest and lat, NOT tricep.", perSide: true, noWeight: true }
+              { id: "w8thu_b4", name: "External Rotation 90/90", sets: 3, reps: 12, notes: "Both arms. Band at shoulder height. Goal post position, rotate hands up. If crunchy, reduce to 2x10 or stop.", noWeight: true },
+              { id: "w8thu_b5", name: "Internal Rotation 90/90", sets: 3, reps: 12, notes: "Both arms. Turn around, same band. Rotate hands down/forward. Lighter tension.", noWeight: true },
+              { id: "w8thu_b6", name: "Prone T's", sets: 2, reps: 10, notes: "Face down on bench or floor. Thumbs up, raise arms to T. Squeeze blades at top.", noWeight: true },
+              { id: "w8thu_b7", name: "Band Throws", sets: 2, reps: 10, notes: "Each arm. SKIP if shoulder is crunchy. Pull-into-release pattern. Feel chest and lat, NOT tricep.", perSide: true, noWeight: true }
             ]
           },
           {
             name: "C. Scapular Stability (4 min)",
             simple: true,
             exercises: [
-              { id: "w8thu_b7", name: "Scapular Push-Ups", sets: 2, reps: 10, notes: "Plank or knees. Arms straight. Sink chest (blades pinch), push away (blades spread).", noWeight: true },
-              { id: "w8thu_b8", name: "Cross-Body Shoulder Stretch", sets: 1, reps: 1, notes: "30 sec each side.", isHold: true, holdTime: 30, perSide: true, noWeight: true }
+              { id: "w8thu_b8", name: "Scapular Push-Ups", sets: 2, reps: 10, notes: "Plank or knees. Arms straight. Sink chest (blades pinch), push away (blades spread).", noWeight: true },
+              { id: "w8thu_b9", name: "Cross-Body Shoulder Stretch", sets: 1, reps: 1, notes: "30 sec each side.", isHold: true, holdTime: 30, perSide: true, noWeight: true }
             ]
           }
         ]
@@ -7417,81 +7436,40 @@
 
     '2026-04-03': [
       {
-        name: "Lower Body Strength (Week 8)",
-        type: "Strength",
-        duration: "45 min",
-        location: "Rec Center",
-        condition: "Full lower body session. Hold RDL at 17.5. Goblet squat hold at 27.5 (progressed last week). Consider swapping reverse lunges — 4 weeks at 15 lb.\nNew: supine floor leg lowering (bent knee, RIGHT SIDE ONLY).\nBring: loop band",
+        name: "Pre-Ride Warm-Up",
+        type: "Prehab",
+        duration: "10 min",
+        location: "Track",
+        condition: "Mock Beer Bike dress rehearsal today. Light warm-up before race sim.",
         circuits: [
           {
-            name: "A. Hip Prehab Warm-Up (12 min)",
-            instructions: "New hip exercises integrated into warm-up. Slow and controlled.",
+            name: "A. Pre-Ride Warm-Up (10 min)",
+            simple: true,
             exercises: [
-              { id: "w8fri_a1", name: "Quadruped Hip Pocket Rockback", sets: 2, reps: 10, notes: "Each side. Sit back, feel the ball settle deeper into the back of the socket.", perSide: true, noWeight: true },
-              { id: "w8fri_a2", name: "Side-Lying Clamshell (3s Pause)", sets: 2, reps: 12, notes: "Each side. Open like a book, pause when you feel the back of the hip light up, close slowly.", perSide: true, noWeight: true },
-              { id: "w8fri_a3", name: "Standing Hip Hydrants", sets: 2, reps: 12, notes: "Each side. Loop band above knees.", perSide: true, noWeight: true },
-              { id: "w8fri_a4", name: "Copenhagen Adductor Hold", sets: 2, reps: 1, notes: "20 sec each side. Side plank, top foot on bench. 2x/week minimum — this is #2.", isHold: true, holdTime: 20, perSide: true, noWeight: true },
-              { id: "w8fri_a5", name: "Tibialis Raises", sets: 2, reps: 15, notes: "Heels on edge of step. 3x/week pin — this is #3.", noWeight: true },
-              { id: "w8fri_a6", name: "Bear Crawls", sets: 3, reps: 1, notes: "10-15 ft each. Opposite hand and foot move together. Hips low, don't pike. Slow and tight.", noWeight: true }
-            ]
-          },
-          {
-            name: "B. Squat + Power + Core (12 min)",
-            instructions: "B1-B2-B3, rest 90 sec, repeat 3x.",
-            restTime: 90,
-            exercises: [
-              { id: "w8fri_b1", name: "DB Goblet Squat", sets: 3, reps: 12, weight: 27.5, notes: "Hold at 27.5. Full depth, chest up, wider stance." },
-              { id: "w8fri_b2", name: "Jump Squats", sets: 3, reps: 8, notes: "Explosive up, land soft. Bodyweight.", noWeight: true },
-              { id: "w8fri_b3", name: "Front Low Plank Hold", sets: 3, reps: 1, notes: "30 sec. Straight line.", isHold: true, holdTime: 30, noWeight: true }
-            ]
-          },
-          {
-            name: "C. Lunge + Hinge + Core (12 min)",
-            instructions: "C1-C2-C3, rest 90 sec, repeat 3x. Reverse lunges at 4 weeks — if they feel stale, swap to walking lunges or Bulgarian split squats next week.",
-            restTime: 90,
-            exercises: [
-              { id: "w8fri_c1", name: "DB Reverse Lunges", sets: 3, reps: 8, weight: 15, notes: "Each leg. 4 weeks at 15 lb. If feel is 2-3, consider progressing to 17.5 or swapping to walking lunges next week.", perSide: true },
-              { id: "w8fri_c2", name: "DB RDLs", sets: 3, reps: 10, weight: 17.5, notes: "Progressed from 15 to 17.5 this week. Hinge at hips, feel hamstrings load. Slow on the way down." },
-              { id: "w8fri_c3", name: "Side Plank Hold", sets: 3, reps: 1, notes: "25 sec each side.", isHold: true, holdTime: 25, perSide: true, noWeight: true }
-            ]
-          },
-          {
-            name: "D. Leg Lowering + Cool-Down (8 min)",
-            instructions: "New exercise: supine floor leg lowering. RIGHT SIDE ONLY to start. Then hip release.",
-            exercises: [
-              { id: "w8fri_d1", name: "Supine Floor Leg Lowering (Bent Knee)", sets: 2, reps: 8, notes: "RIGHT SIDE ONLY. Lie on back, both knees bent. Slowly lower right leg like pressing a gas pedal — stop before the click, reverse. Keep low back pinned to the floor.", perSide: true, noWeight: true },
-              { id: "w8fri_d2", name: "Figure-4 Hip Stretch", sets: 1, reps: 1, notes: "60 sec each side.", isHold: true, holdTime: 60, perSide: true, noWeight: true },
-              { id: "w8fri_d3", name: "Kneeling Hip Flexor Stretch", sets: 1, reps: 1, notes: "45 sec each side.", isHold: true, holdTime: 45, perSide: true, noWeight: true },
-              { id: "w8fri_d4", name: "90/90 Hip Stretch", sets: 1, reps: 1, notes: "60 sec each side.", isHold: true, holdTime: 60, perSide: true, noWeight: true }
+              { id: "w8fri_a1", name: "Easy Spin", sets: 1, reps: 1, notes: "5 min at conversational pace. Settle in.", isCardio: true, duration: 300, noWeight: true },
+              { id: "w8fri_a2", name: "Hip Circles", sets: 1, reps: 10, notes: "Each direction. Loosen up.", perSide: true, noWeight: true },
+              { id: "w8fri_a3", name: "Leg Swings", sets: 1, reps: 10, notes: "Each leg. Forward/back.", perSide: true, noWeight: true },
+              { id: "w8fri_a4", name: "Copenhagen Adductor Hold", sets: 2, reps: 1, notes: "20 sec each side. On a bench or stable surface. 2x/week minimum — this is #2.", isHold: true, holdTime: 20, perSide: true, noWeight: true },
+              { id: "w8fri_a5", name: "Calf Raises", sets: 1, reps: 15, notes: "Slow, full range.", noWeight: true }
             ]
           }
         ]
       },
       {
-        name: "Movement Snack: Throwing Phase 2 + Feints",
-        type: "Sport-Specific",
-        duration: "18 min",
-        location: "Squash court or any wall",
-        condition: "Phase 2: 1-step approach, 60-70% effort. ~40 throws.\nNew: lateral step-over feint drill added. One feint drill replaces some throw volume.\nDo this BEFORE lower body (fresh arms).",
+        name: "Post-Ride Cool-Down",
+        type: "Recovery",
+        duration: "10 min",
+        location: "Track / nearby",
+        condition: "Cool down after mock race sim. Open up hip flexors and quads.",
         circuits: [
           {
-            name: "A. Wall Throwing (Phase 2)",
-            instructions: "1-step approach. 60-70% effort.",
+            name: "A. Cool-Down (10 min)",
             simple: true,
             exercises: [
-              { id: "w8fri_ms1", name: "Wrist Flicks with Ball", sets: 1, reps: 20, notes: "Snap wrist, feel fingers release.", noWeight: true },
-              { id: "w8fri_ms2", name: "Short Wall Passes Both Hands", sets: 1, reps: 10, notes: "10 each hand.", perSide: true, noWeight: true },
-              { id: "w8fri_ms3", name: "Kneeling Throws (R)", sets: 2, reps: 5, notes: "Stationary. 60-70%. Cue: 'OPEN'.", noWeight: true },
-              { id: "w8fri_ms4", name: "1-Step Standing Throws (R)", sets: 2, reps: 6, notes: "One step into throw. 60-70%. Step, OPEN, launch.", noWeight: true },
-              { id: "w8fri_ms5", name: "1-Step Standing Throws (L)", sets: 2, reps: 4, notes: "Left hand. Low effort, technique focus.", noWeight: true }
-            ]
-          },
-          {
-            name: "B. Feint Drill (4 min)",
-            instructions: "NEW: lateral step-over feint. Court movement quality.",
-            simple: true,
-            exercises: [
-              { id: "w8fri_ms6", name: "Lateral Step-Over Feint Drill", sets: 4, reps: 3, notes: "Each direction. Knee up, load it, snap. Sell the fake with your whole body, not just your feet.", perSide: true, noWeight: true }
+              { id: "w8fri_b1", name: "Easy Spin", sets: 1, reps: 1, notes: "5 min easy. Let heart rate come down.", isCardio: true, duration: 300, noWeight: true },
+              { id: "w8fri_b2", name: "Standing Quad Stretch", sets: 1, reps: 1, notes: "30 sec each side.", isHold: true, holdTime: 30, perSide: true, noWeight: true },
+              { id: "w8fri_b3", name: "Hip Flexor Lunge Stretch", sets: 1, reps: 1, notes: "45 sec each side. Squeeze glute on back leg.", isHold: true, holdTime: 45, perSide: true, noWeight: true },
+              { id: "w8fri_b4", name: "Figure-4 Hip Stretch", sets: 1, reps: 1, notes: "45 sec each side. Standing or supine.", isHold: true, holdTime: 45, perSide: true, noWeight: true }
             ]
           }
         ]
@@ -7503,15 +7481,15 @@
     // ============================================================
 
     '2026-04-04': {
-      name: "Handball Solo Session (Phase 3)",
+      name: "Handball Solo Session (Phase 2 Hold)",
       type: "Sport-Specific",
-      duration: "35-40 min",
+      duration: "35 min",
       location: "Squash court or any wall",
-      condition: "PHASE 3 STARTS: full approach, 70-80% effort, ~40-50 throws.\nFirst time with full approach since return. Keep effort controlled. Stop if shoulder feels off.\nWrist work goes AFTER throwing.",
+      condition: "HOLDING at Phase 2: 1-step approach, 60-70% effort, ~42 throws.\nShoulder was crunchy Wednesday. If shoulder feels good, can push to 70% on last set. If crunchy during warmup, reduce volume.\nPhase 3 (full approach) deferred to next week.\nWrist work goes AFTER throwing.",
       circuits: [
         {
           name: "A. Warm-Up + Hip Activation (8 min)",
-          instructions: "Full warm-up before throwing at increased intensity.",
+          instructions: "Full warm-up before throwing.",
           simple: true,
           exercises: [
             { id: "w9sat_a1", name: "Arm Circles", sets: 1, reps: 20, notes: "10 forward, 10 backward. Big slow circles.", noWeight: true },
@@ -7519,23 +7497,24 @@
             { id: "w9sat_a3", name: "Quadruped Hip Pocket Rockback", sets: 1, reps: 8, notes: "Each side. Open the hips for approach footwork.", perSide: true, noWeight: true },
             { id: "w9sat_a4", name: "Side-Lying Clamshell (3s Pause)", sets: 1, reps: 10, notes: "Each side. Open like a book, pause when you feel the back of the hip light up.", perSide: true, noWeight: true },
             { id: "w9sat_a5", name: "Bear Crawls", sets: 2, reps: 1, notes: "10 ft each. Opposite hand and foot. Hips low, don't pike.", noWeight: true },
-            { id: "w9sat_a6", name: "Wrist Stretches", sets: 2, reps: 1, notes: "30 sec each direction. Press palms flat, lean forward until you feel the pull through your wrist. Pre-throw warm-up.", isHold: true, holdTime: 30, noWeight: true }
+            { id: "w9sat_a6", name: "Wrist Stretches", sets: 2, reps: 1, notes: "30 sec each direction. Press palms flat, lean forward until you feel the pull through your wrist.", isHold: true, holdTime: 30, noWeight: true }
           ]
         },
         {
-          name: "B. Wall Throwing (Phase 3)",
-          instructions: "Full approach, 70-80% effort. ~40-50 throws total. This is new territory — build in gradually. If shoulder feels off, drop back to Phase 2 intensity.",
+          name: "B. Wall Throwing (Phase 2 Hold)",
+          instructions: "1-step approach, 60-70% effort. ~42 throws total. Controlled. If shoulder feels off during kneeling throws, reduce standing volume.",
           simple: true,
           exercises: [
             { id: "w9sat_b1", name: "Wrist Flicks with Ball", sets: 1, reps: 20, notes: "Snap wrist, feel fingers release.", noWeight: true },
-            { id: "w9sat_b2", name: "Kneeling Throws (R)", sets: 2, reps: 5, notes: "Stationary warm-up. 60-70%. Cue: 'OPEN'.", noWeight: true },
-            { id: "w9sat_b3", name: "Full Approach Throws (R)", sets: 3, reps: 6, notes: "Full approach, 70-80%. Step, step, OPEN, launch. Feel the weight transfer through the whole chain. First time at this intensity — stay smooth, not max effort.", noWeight: true },
-            { id: "w9sat_b4", name: "Full Approach Throws (L)", sets: 2, reps: 4, notes: "Left hand. 60% effort. Technique focus.", noWeight: true }
+            { id: "w9sat_b2", name: "Short Wall Passes Both Hands", sets: 1, reps: 10, notes: "10 each hand. Easy.", perSide: true, noWeight: true },
+            { id: "w9sat_b3", name: "Kneeling Throws (R)", sets: 2, reps: 5, notes: "Stationary. 60%. Cue: 'OPEN'.", noWeight: true },
+            { id: "w9sat_b4", name: "1-Step Standing Throws (R)", sets: 3, reps: 6, notes: "One step into throw. 60-70%. Step, OPEN, launch.", noWeight: true },
+            { id: "w9sat_b5", name: "1-Step Standing Throws (L)", sets: 2, reps: 4, notes: "Left hand. Low effort, technique focus.", noWeight: true }
           ]
         },
         {
           name: "C. Feint Drills (5 min)",
-          instructions: "Court movement quality at Phase 3 effort.",
+          instructions: "Court movement quality.",
           simple: true,
           exercises: [
             { id: "w9sat_c1", name: "Lateral Step-Over Feint Drill", sets: 4, reps: 3, notes: "Each direction. Knee up, load it, snap.", perSide: true, noWeight: true },
@@ -7547,10 +7526,10 @@
           instructions: "Wrist work AFTER throwing. Shoulder decompression.",
           exercises: [
             { id: "w9sat_d1", name: "Wrist Flexion/Extension Isometrics", sets: 3, reps: 1, notes: "30 sec each direction. Lock the wrist, don't let the weight move.", isHold: true, holdTime: 30, noWeight: true },
-            { id: "w9sat_d2", name: "Wrist Flexion Curls", sets: 2, reps: 10, weight: 5, notes: "Light DB. Snap the wrist up like you're flicking a ball. Slow on the way down." },
+            { id: "w9sat_d2", name: "Wrist Flexion Curls", sets: 2, reps: 10, weight: 5, notes: "If elbow niggling from Wednesday is still present, do these bodyweight only or skip. Snap wrist up, slow on the way down." },
             { id: "w9sat_d3", name: "Cross-Body Shoulder Stretch", sets: 1, reps: 1, notes: "30 sec each side.", isHold: true, holdTime: 30, perSide: true, noWeight: true },
             { id: "w9sat_d4", name: "Doorway Pec Stretch", sets: 1, reps: 1, notes: "45 sec.", isHold: true, holdTime: 45, noWeight: true },
-            { id: "w9sat_d5", name: "Tibialis Raises", sets: 2, reps: 15, notes: "3x/week pin — Week 9 #1.", noWeight: true }
+            { id: "w9sat_d5", name: "Tibialis Raises", sets: 2, reps: 15, notes: "2x/week pin — this is #2 (Thu was #1 at pool).", noWeight: true }
           ]
         }
       ]
