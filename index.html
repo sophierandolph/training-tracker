@@ -7545,14 +7545,62 @@
         ]
       },
       {
-        name: "Active Recovery: Pool + Mobility",
+        name: "Post-Throwing Recovery: Pool + Mobility",
         type: "Recovery",
-        duration: "20-25 min",
-        location: "Rec Center",
-        condition: "Pool recovery after handball solo session. Water walking > laps. Prioritize hip openers and psoas work.\nDo a range-of-motion check on both hips — flag anything tighter than last week before race week load.",
+        duration: "40 min",
+        location: "Rec Center (lap pool → rec pool → stretching area)",
+        condition: "Period Day 2. Post-throwing recovery customized for shoulder, quad contusion, and race week prep.\nStart in lap pool (backstroke is therapeutic post-throwing), then rec pool for standing work, then foam roll.\nIf cramping is bad, skip lap pool and go straight to rec pool.\nDo a range-of-motion check on both hips — flag anything tighter than last week before race week load.",
         circuits: [
-          BLOCK_POOL_SWIMMING,
-          BLOCK_FOAM_ROLL_STRETCH
+          {
+            name: "A. Lap Pool (10 min)",
+            instructions: "Reduced swimming volume post-throwing. Backstroke first — it's the anti-throwing stroke (opens chest, promotes ER). If shoulder feels crunchy during freestyle, cut it short and move on.",
+            simple: true,
+            exercises: [
+              { id: "w9sun_a1", name: "Easy Backstroke", sets: 1, reps: 1, notes: "3 min. Opens chest and promotes external rotation — counterbalances throwing pattern.", isCardio: true, duration: 180, noWeight: true },
+              { id: "w9sun_a2", name: "Easy Freestyle (Catch-Up Drill)", sets: 1, reps: 1, notes: "2 min. One arm at a time, long glide between strokes. Wider hand entry — don't cross midline. If shoulder feels off, stop and move to rec pool.", isCardio: true, duration: 120, noWeight: true },
+              { id: "w9sun_a3", name: "Gentle Sculling / Treading", sets: 1, reps: 1, notes: "5 min. Replaces flutter kick (VMO contusion — repetitive terminal knee extension not ideal). Easy treading or sculling on your back.", isCardio: true, duration: 300, noWeight: true }
+            ]
+          },
+          {
+            name: "B. Rec Pool Standing Recovery (10 min)",
+            instructions: "Shallow pool (2-4 ft). All standing. The water offloads joints — great for period symptoms and contusion.",
+            simple: true,
+            exercises: [
+              { id: "w9sun_b1", name: "Pool Walking", sets: 1, reps: 1, notes: "3 min forward, easy pace. Decompresses joints, good for quad healing.", isCardio: true, duration: 180, noWeight: true },
+              { id: "w9sun_b2", name: "Lateral Water Shuffles", sets: 2, reps: 1, notes: "30 sec each direction. Hip abductors and adductors with zero impact.", isHold: true, holdTime: 30, perSide: true, noWeight: true },
+              { id: "w9sun_b3", name: "Walking High Knees", sets: 1, reps: 1, notes: "2 min. Gentle hip flexor activation, psoas blood flow.", isCardio: true, duration: 120, noWeight: true },
+              { id: "w9sun_b4", name: "Standing Hip Circles", sets: 1, reps: 10, notes: "Each direction, each leg. Slow, full range. Open the hip capsule.", perSide: true, noWeight: true },
+              { id: "w9sun_b5", name: "Pool Shoulder CARs", sets: 1, reps: 5, notes: "Each arm. Slow controlled circles in chest-deep water. Buoyancy offloads the joint — get full range without gravity compressing.", perSide: true, noWeight: true }
+            ]
+          },
+          {
+            name: "C. Foam Roll (10 min)",
+            instructions: "Stretching area or poolside. Bring foam roller if Rec Center doesn't have one available.\nQUAD CONTUSION: avoid direct pressure on right inner thigh ~3in above knee. Roll above and lateral to it only.",
+            simple: true,
+            exercises: [
+              { id: "w9sun_c1", name: "Foam Roll Quads / Hip Flexors", sets: 1, reps: 1, notes: "60 sec each side. RIGHT SIDE: skip the VMO bruise zone, roll upper and outer quad only.", isHold: true, holdTime: 60, perSide: true, noWeight: true },
+              { id: "w9sun_c2", name: "Foam Roll Adductors", sets: 1, reps: 1, notes: "60 sec each side, emphasis right. Frog position on roller. Key area for tibial torsion compensation.", isHold: true, holdTime: 60, perSide: true, noWeight: true },
+              { id: "w9sun_c3", name: "Foam Roll TFL / IT Band (Upper)", sets: 1, reps: 1, notes: "45 sec right side. Side-lying. Just the TFL and upper IT band, not grinding the whole thing.", isHold: true, holdTime: 45, noWeight: true },
+              { id: "w9sun_c4", name: "Foam Roll Hamstrings / Glutes", sets: 1, reps: 1, notes: "60 sec each side. Cross one leg over for glute focus.", isHold: true, holdTime: 60, perSide: true, noWeight: true },
+              { id: "w9sun_c5", name: "Foam Roll Upper Back / T-Spine", sets: 1, reps: 1, notes: "60 sec. Arms crossed, extend over roller.", isHold: true, holdTime: 60, noWeight: true },
+              { id: "w9sun_c6", name: "Foam Roll Calves (Rotate Foot)", sets: 1, reps: 1, notes: "60 sec each side, emphasis right. Rotate foot in and out to hit posterior tib specifically.", isHold: true, holdTime: 60, perSide: true, noWeight: true }
+            ]
+          },
+          {
+            name: "D. Stretch + Prehab (10 min)",
+            instructions: "Psoas and hip mobility, then shoulder maintenance (non-negotiable post-throwing), then torsion prehab.",
+            simple: true,
+            exercises: [
+              { id: "w9sun_d1", name: "Half-Kneeling Psoas Stretch", sets: 1, reps: 1, notes: "45 sec each side, emphasis right. Squeeze glute on stretch side, slight lateral lean away.", isHold: true, holdTime: 45, perSide: true, noWeight: true },
+              { id: "w9sun_d2", name: "Pigeon Pose (or Supine Figure-4)", sets: 1, reps: 1, notes: "60 sec each side. If knee is cranky from period, do supine figure-4 instead — same target, zero knee compression.", isHold: true, holdTime: 60, perSide: true, noWeight: true },
+              { id: "w9sun_d3", name: "Hip 90/90 Switches", sets: 1, reps: 16, notes: "8 each direction. Controlled transitions. Active mobility may help with cramp relief.", noWeight: true },
+              { id: "w9sun_d4", name: "Ankle DF Mob (Foot Pointed Inward)", sets: 1, reps: 1, notes: "60 sec right side. Torsion-specific mobility.", isHold: true, holdTime: 60, noWeight: true },
+              { id: "w9sun_d5", name: "Sleeper Stretch", sets: 3, reps: 1, notes: "30 sec right side. Lie on RIGHT side, right arm out at shoulder height, elbow bent 90°. Use left hand to gently push forearm toward floor. Stop at first pull.", isHold: true, holdTime: 30, noWeight: true },
+              { id: "w9sun_d6", name: "Cross-Body Shoulder Stretch", sets: 3, reps: 1, notes: "30 sec right side. Pull right arm across chest, pin shoulder blade to floor if supine.", isHold: true, holdTime: 30, noWeight: true },
+              { id: "w9sun_d7", name: "Posterior Tib Raises", sets: 2, reps: 12, notes: "Right side. Poolside or any edge. Barefoot, slow tempo. Light torsion prehab before race week.", perSide: true, noWeight: true },
+              { id: "w9sun_d8", name: "Diaphragmatic Breathing", sets: 1, reps: 6, notes: "Lie on back. Inhale 4 sec into belly, exhale 6 sec. Parasympathetic downshift — period + post-throwing + pre-race week.", noWeight: true }
+            ]
+          }
         ]
       }
     ],
@@ -9203,13 +9251,15 @@
     // ==================== AI COACH ====================
 
     const COACH_CONTEXT = `ATHLETE PROFILE
-- 31F, 6'3", ~175 lbs. Training for US Women's Handball Team tryouts (fall 2026).
+- 31F, 6'3", ~175 lbs. Training for US Women's Handball Team tryouts (May 13-14, 2026, Quad Cities, Iowa).
 - Uses Oura Ring for readiness. Works with personal trainer (day varies).
 - Equipment at home: Tribe fabric loop bands (5 levels), long resistance bands (5 levels), handball, foam roller, Chirp wheel, massage gun, yoga mat. No dumbbells.
 - HAS APHANTASIA: Cannot visualize movements mentally. Use KINESTHETIC cues (what it feels like) and VERBAL/RHYTHMIC cues (sequenced words). Example: "step, OPEN, launch" not "imagine your body rotating."
 - Bilateral hip tightness, mild low back pain (hip-related). Groin concern flagged Mar 2 -- monitor.
 - Came off Prozac Feb 2026 -- affects HRV, temp, sleep metrics through ~April. Menstrual cycle irregular.
-- ACTIVE INJURY (Mar 28): Quad contusion, inner/front thigh ~3in above knee, ~4in diameter. Goalkeeper knee collision. Stiffens after sitting/low positions. VMO area. Management: compression, ice, ibuprofen, KT tape. No lateral shuffles, defensive slides, or jump landings until cleared. Compensating movement patterns risk re-aggravating right-side hip/psoas chain. See reference/injury_note_mar28.md for full protocol.
+- RIGHT EXTERNAL TIBIAL TORSION (structural): Right foot naturally externally rotated ~15-20 degrees. Hip compensates with internal rotation, overloading psoas, adductors, and TFL. This is why adductor foam rolling, TFL foam rolling, and posterior tib work appear in her programming. It's not an injury -- it's her body structure. Exercises should allow asymmetric foot position. Breaststroke kick is permanently excluded (loads adductors in the wrong pattern).
+- RIGHT SHOULDER: Posterior capsule tightness/"crunchiness" from throwing volume + 2011 posterior subluxation history. Sleeper stretch + cross-body stretch 3x30sec daily (especially post-throwing). No upright rows. 48hr minimum between throwing and upper body strength. Backstroke is therapeutic. If shoulder is crunchy during freestyle, stop swimming and switch to standing water work.
+- HEALING INJURY (Mar 28): Quad contusion, inner/front thigh ~3in above knee (VMO area). Still stiffens after sitting/low positions but improving. Avoid direct foam roller pressure on bruise site. Flutter kick replaced with sculling (repetitive terminal knee extension not ideal). Compensating movement patterns risk re-aggravating right-side hip/psoas chain.
 
 GOALS
 1. US Women's Handball Team tryouts (fall 2026) - PRIMARY. T-test target: 10.5 sec. Beep test: establish baseline.
@@ -9384,6 +9434,22 @@ OVERTRAINING SIGNALS & GUARDRAILS
         todaySchedule += ` Planned: ${dw.map(w => w.name).join(' + ')}`;
         if (dw[0].duration) todaySchedule += ` (${dw[0].duration})`;
         if (dw[0].condition) todaySchedule += `\nCondition: ${dw[0].condition}`;
+        // Include exercise details so coach can answer questions about specific exercises
+        const activeWk = state.activeWorkout || dw[0];
+        if (activeWk && activeWk.circuits) {
+          todaySchedule += '\n\nACTIVE WORKOUT EXERCISES:';
+          activeWk.circuits.forEach(c => {
+            const cName = typeof c === 'object' ? c.name : 'Circuit';
+            todaySchedule += `\n[${cName}]`;
+            const exercises = typeof c === 'object' ? c.exercises : [];
+            if (exercises) exercises.forEach(ex => {
+              let line = `- ${ex.name}: ${ex.sets}x${ex.reps}`;
+              if (ex.weight) line += ` @ ${ex.weight}lb`;
+              if (ex.notes) line += ` (${ex.notes})`;
+              todaySchedule += `\n${line}`;
+            });
+          });
+        }
       } else {
         todaySchedule += ' No specific workout loaded for today.';
       }
