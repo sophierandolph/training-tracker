@@ -5867,6 +5867,17 @@
           type: 'Sport',
           description: 'Full scrimmage. Manage minutes if possible — legs will feel heavier than normal after Beer Bike. Dynamic warmup + shoulder band activation + easy throwing progression before start.'
         }
+      ],
+      '2026-04-05': [
+        {
+          id: 'beer_bike_track_cert',
+          name: 'Beer Bike Track Certification',
+          time: 'morning',
+          duration: 30,
+          location: 'Rice Stadium Track',
+          type: 'Conditioning',
+          description: 'Biked to track from Baker. Cone work (tight corners, figure eights), drafting/passing lap, sprint start + race pace lap + stop. More effort than expected.'
+        }
       ]
     };
 
@@ -7560,65 +7571,6 @@
             ]
           }
         ]
-      },
-      {
-        name: "Post-Throwing Recovery: Pool + Mobility",
-        type: "Recovery",
-        duration: "40 min",
-        location: "Rec Center (lap pool → rec pool → stretching area)",
-        condition: "Period Day 2. Post-throwing recovery customized for shoulder, quad contusion, and race week prep.\nStart in lap pool (backstroke is therapeutic post-throwing), then rec pool for standing work, then foam roll.\nIf cramping is bad, skip lap pool and go straight to rec pool.\nDo a range-of-motion check on both hips — flag anything tighter than last week before race week load.",
-        circuits: [
-          {
-            name: "A. Lap Pool (10 min)",
-            instructions: "Reduced swimming volume post-throwing. Backstroke first — it's the anti-throwing stroke (opens chest, promotes ER). If shoulder feels crunchy during freestyle, cut it short and move on.",
-            simple: true,
-            exercises: [
-              { id: "w9sun_a1", name: "Easy Backstroke", sets: 1, reps: 1, notes: "3 min. Opens chest and promotes external rotation — counterbalances throwing pattern.", isCardio: true, duration: 180, noWeight: true },
-              { id: "w9sun_a2", name: "Easy Freestyle (Catch-Up Drill)", sets: 1, reps: 1, notes: "2 min. One arm at a time, long glide between strokes. Wider hand entry — don't cross midline. If shoulder feels off, stop and move to rec pool.", isCardio: true, duration: 120, noWeight: true },
-              { id: "w9sun_a3", name: "Gentle Sculling / Treading", sets: 1, reps: 1, notes: "5 min. Replaces flutter kick (VMO contusion — repetitive terminal knee extension not ideal). Easy treading or sculling on your back.", isCardio: true, duration: 300, noWeight: true }
-            ]
-          },
-          {
-            name: "B. Rec Pool Standing Recovery (10 min)",
-            instructions: "Shallow pool (2-4 ft). All standing. The water offloads joints — great for period symptoms and contusion.",
-            simple: true,
-            exercises: [
-              { id: "w9sun_b1", name: "Pool Walking", sets: 1, reps: 1, notes: "3 min forward, easy pace. Decompresses joints, good for quad healing.", isCardio: true, duration: 180, noWeight: true },
-              { id: "w9sun_b2", name: "Lateral Water Shuffles", sets: 2, reps: 1, notes: "30 sec each direction. Hip abductors and adductors with zero impact.", isHold: true, holdTime: 30, perSide: true, noWeight: true },
-              { id: "w9sun_b3", name: "Walking High Knees", sets: 1, reps: 1, notes: "2 min. Gentle hip flexor activation, psoas blood flow.", isCardio: true, duration: 120, noWeight: true },
-              { id: "w9sun_b4", name: "Standing Hip Circles", sets: 1, reps: 10, notes: "Each direction, each leg. Slow, full range. Open the hip capsule.", perSide: true, noWeight: true },
-              { id: "w9sun_b5", name: "Pool Shoulder CARs", sets: 1, reps: 5, notes: "Each arm. Slow controlled circles in chest-deep water. Buoyancy offloads the joint — get full range without gravity compressing.", perSide: true, noWeight: true }
-            ]
-          },
-          {
-            name: "C. Foam Roll (10 min)",
-            instructions: "Stretching area or poolside. Bring foam roller if Rec Center doesn't have one available.\nQUAD CONTUSION: avoid direct pressure on right inner thigh ~3in above knee. Roll above and lateral to it only.",
-            simple: true,
-            exercises: [
-              { id: "w9sun_c1", name: "Foam Roll Quads / Hip Flexors", sets: 1, reps: 1, notes: "60 sec each side. RIGHT SIDE: skip the VMO bruise zone, roll upper and outer quad only.", isHold: true, holdTime: 60, perSide: true, noWeight: true },
-              { id: "w9sun_c2", name: "Foam Roll Adductors", sets: 1, reps: 1, notes: "60 sec each side, emphasis right. Frog position on roller. Key area for tibial torsion compensation.", isHold: true, holdTime: 60, perSide: true, noWeight: true },
-              { id: "w9sun_c3", name: "Foam Roll TFL / IT Band (Upper)", sets: 1, reps: 1, notes: "45 sec right side. Side-lying. Just the TFL and upper IT band, not grinding the whole thing.", isHold: true, holdTime: 45, noWeight: true },
-              { id: "w9sun_c4", name: "Foam Roll Hamstrings / Glutes", sets: 1, reps: 1, notes: "60 sec each side. Cross one leg over for glute focus.", isHold: true, holdTime: 60, perSide: true, noWeight: true },
-              { id: "w9sun_c5", name: "Foam Roll Upper Back / T-Spine", sets: 1, reps: 1, notes: "60 sec. Arms crossed, extend over roller.", isHold: true, holdTime: 60, noWeight: true },
-              { id: "w9sun_c6", name: "Foam Roll Calves (Rotate Foot)", sets: 1, reps: 1, notes: "60 sec each side, emphasis right. Rotate foot in and out to hit posterior tib specifically.", isHold: true, holdTime: 60, perSide: true, noWeight: true }
-            ]
-          },
-          {
-            name: "D. Stretch + Prehab (10 min)",
-            instructions: "Psoas and hip mobility, then shoulder maintenance (non-negotiable post-throwing), then torsion prehab.",
-            simple: true,
-            exercises: [
-              { id: "w9sun_d1", name: "Half-Kneeling Psoas Stretch", sets: 1, reps: 1, notes: "45 sec each side, emphasis right. Squeeze glute on stretch side, slight lateral lean away.", isHold: true, holdTime: 45, perSide: true, noWeight: true },
-              { id: "w9sun_d2", name: "Pigeon Pose (or Supine Figure-4)", sets: 1, reps: 1, notes: "60 sec each side. If knee is cranky from period, do supine figure-4 instead — same target, zero knee compression.", isHold: true, holdTime: 60, perSide: true, noWeight: true },
-              { id: "w9sun_d3", name: "Hip 90/90 Switches", sets: 1, reps: 16, notes: "8 each direction. Controlled transitions. Active mobility may help with cramp relief.", noWeight: true },
-              { id: "w9sun_d4", name: "Ankle DF Mob (Foot Pointed Inward)", sets: 1, reps: 1, notes: "60 sec right side. Torsion-specific mobility.", isHold: true, holdTime: 60, noWeight: true },
-              { id: "w9sun_d5", name: "Sleeper Stretch", sets: 3, reps: 1, notes: "30 sec right side. Lie on RIGHT side, right arm out at shoulder height, elbow bent 90°. Use left hand to gently push forearm toward floor. Stop at first pull.", isHold: true, holdTime: 30, noWeight: true },
-              { id: "w9sun_d6", name: "Cross-Body Shoulder Stretch", sets: 3, reps: 1, notes: "30 sec right side. Pull right arm across chest, pin shoulder blade to floor if supine.", isHold: true, holdTime: 30, noWeight: true },
-              { id: "w9sun_d7", name: "Posterior Tib Raises", sets: 2, reps: 12, notes: "Right side. Poolside or any edge. Barefoot, slow tempo. Light torsion prehab before race week.", perSide: true, noWeight: true },
-              { id: "w9sun_d8", name: "Diaphragmatic Breathing", sets: 1, reps: 6, notes: "Lie on back. Inhale 4 sec into belly, exhale 6 sec. Parasympathetic downshift — period + post-throwing + pre-race week.", noWeight: true }
-            ]
-          }
-        ]
       }
     ],
 
@@ -7858,6 +7810,1301 @@
     // Sat Apr 11: Beer Bike (11am) + Handball Scrimmage (2-5pm) — in DATE_ACTIVITIES
 
     '2026-04-12': POOL_RECOVERY,
+
+    // ============================================================
+    // TRYOUT BLOCK: WEEKS 10-13 (Apr 13 - May 12, 2026)
+    // Periodization: Build 1 → Build 2 → Peak → Taper → Activation
+    // Target: USWNT Handball Tryout, May 13
+    // ============================================================
+
+    // ---- WEEK 10: BUILD 1 (Apr 13-19) ----
+    // Follicular phase. Establish post-Beer Bike baseline.
+
+    '2026-04-13': POOL_RECOVERY, // Mon: PT external (fallback)
+
+    '2026-04-14': [
+      {
+        name: "Lower Body Strength (Build 1)",
+        type: "Strength",
+        duration: "50 min",
+        location: "Rec Center",
+        condition: "Build 1, Week 10. Follicular phase — energy should be rebounding post-Beer Bike. If quad contusion still tender, reduce squat depth to parallel and sub step-ups for jump squats.\nDaily: sleeper + cross-body stretch 3x30sec each side before bed.",
+        circuits: [
+          {
+            name: "A. Hip Prehab Warm-Up (12 min)",
+            instructions: "Full hip prehab. Copenhagen + tibialis = prehab pin #1 this week.",
+            exercises: [
+              { id: "tb1tue_a1", name: "Quadruped Hip Pocket Rockback", sets: 2, reps: 10, perSide: true, noWeight: true },
+              { id: "tb1tue_a2", name: "Side-Lying Clamshell (3s Pause)", sets: 2, reps: 12, perSide: true, noWeight: true },
+              { id: "tb1tue_a3", name: "Standing Hip Hydrants", sets: 2, reps: 12, perSide: true, noWeight: true },
+              { id: "tb1tue_a4", name: "Copenhagen Adductor Hold", sets: 2, reps: 1, notes: "20 sec each side. Prehab 2x/week — #1 this week.", isHold: true, holdTime: 20, perSide: true, noWeight: true },
+              { id: "tb1tue_a5", name: "Tibialis Raises", sets: 2, reps: 15, notes: "Prehab 2x/week — #1 this week.", noWeight: true },
+              { id: "tb1tue_a6", name: "Bear Crawls", sets: 3, reps: 1, notes: "10-15 ft each. Opposite hand and foot. Hips low.", noWeight: true }
+            ]
+          },
+          {
+            name: "B. Squat + Power + Core (3 rounds, 90 sec rest)",
+            exercises: [
+              { id: "tb1tue_b1", name: "DB Goblet Squat", sets: 3, reps: 12, weight: 35, notes: "Full depth if quad allows. If tender, parallel only." },
+              { id: "tb1tue_b2", name: "Jump Squats", sets: 3, reps: 8, notes: "Bodyweight. Soft landing. Sub step-ups if quad contusion flares.", noWeight: true },
+              { id: "tb1tue_b3", name: "Front Low Plank Hold", sets: 3, reps: 1, isHold: true, holdTime: 35, noWeight: true }
+            ]
+          },
+          {
+            name: "C. Lunge + Hinge + Core (3 rounds, 90 sec rest)",
+            exercises: [
+              { id: "tb1tue_c1", name: "DB Reverse Lunges", sets: 3, reps: 8, weight: 17.5, notes: "Each side.", perSide: true },
+              { id: "tb1tue_c2", name: "DB RDLs", sets: 3, reps: 10, weight: 20, notes: "Hinge at hips, slight knee bend. Feel hamstrings load." },
+              { id: "tb1tue_c3", name: "Side Plank Hold", sets: 3, reps: 1, notes: "25 sec each side.", isHold: true, holdTime: 25, perSide: true, noWeight: true }
+            ]
+          },
+          {
+            name: "D. Cool-Down (8 min)",
+            simple: true,
+            exercises: [
+              { id: "tb1tue_d1", name: "Figure-4 Hip Stretch", sets: 1, reps: 1, isHold: true, holdTime: 60, perSide: true, noWeight: true },
+              { id: "tb1tue_d2", name: "Kneeling Hip Flexor Stretch", sets: 1, reps: 1, isHold: true, holdTime: 45, perSide: true, noWeight: true },
+              { id: "tb1tue_d3", name: "90/90 Hip Stretch", sets: 1, reps: 1, isHold: true, holdTime: 60, perSide: true, noWeight: true }
+            ]
+          }
+        ]
+      },
+      {
+        name: "Movement Snack: Jump Shot Release Timing",
+        type: "Sport-Specific",
+        duration: "12 min",
+        location: "Any wall or open space",
+        condition: "Build 1, follicular phase. 15 throws max. Quality over quantity.\nDaily: sleeper + cross-body stretch 3x30sec each side before bed.",
+        circuits: [{
+          name: "Technique Drill",
+          instructions: "Focus on releasing at the TOP of the jump, not on the way down. Cue: 'Up... NOW.' Film 2-3 reps if possible.",
+          simple: true,
+          exercises: [
+            { id: "tb1tue_ms1", name: "Wrist Flicks", sets: 1, reps: 10, noWeight: true },
+            { id: "tb1tue_ms2", name: "Standing Throw (Release Cue)", sets: 3, reps: 5, notes: "15 throws. Cue: release at peak height. step-OPEN-UP-release.", noWeight: true }
+          ]
+        }]
+      }
+    ],
+
+    '2026-04-15': [
+      {
+        name: "Pre-Handball Warmup",
+        type: "Prehab",
+        duration: "12-15 min",
+        condition: "Build 1, follicular phase. Daily: sleeper + cross-body stretch 3x30sec before bed.",
+        circuits: [{
+          name: "Movement Prep",
+          simple: true,
+          exercises: [
+            { id: "tb1wed_a1", name: "Quadruped Hip Pocket Rockback", sets: 1, reps: 8, perSide: true, noWeight: true },
+            { id: "tb1wed_a2", name: "Side-Lying Clamshell (3s Pause)", sets: 1, reps: 10, perSide: true, noWeight: true },
+            { id: "tb1wed_a3", name: "Standing Hip Hydrants", sets: 1, reps: 10, perSide: true, noWeight: true },
+            { id: "tb1wed_a4", name: "Arm Circles", sets: 1, reps: 20, notes: "10 forward, 10 back.", noWeight: true },
+            { id: "tb1wed_a5", name: "Band Pull-Aparts", sets: 1, reps: 15, noWeight: true },
+            { id: "tb1wed_a6", name: "Wrist Stretches", sets: 2, reps: 1, notes: "Flexion + extension, 15 sec each.", isHold: true, holdTime: 15, noWeight: true }
+          ]
+        }]
+      },
+      {
+        name: "Post-Handball Cooldown",
+        type: "Prehab",
+        duration: "12-15 min",
+        circuits: [{
+          name: "Cooldown + Prehab",
+          simple: true,
+          exercises: [
+            { id: "tb1wed_b1", name: "Cross-Body Shoulder Stretch", sets: 1, reps: 1, isHold: true, holdTime: 30, perSide: true, noWeight: true },
+            { id: "tb1wed_b2", name: "Doorway Pec Stretch", sets: 1, reps: 1, isHold: true, holdTime: 30, perSide: true, noWeight: true },
+            { id: "tb1wed_b3", name: "Overhead Tricep Stretch", sets: 1, reps: 1, isHold: true, holdTime: 30, perSide: true, noWeight: true },
+            { id: "tb1wed_b4", name: "Figure-4 Hip Stretch", sets: 1, reps: 1, isHold: true, holdTime: 60, perSide: true, noWeight: true },
+            { id: "tb1wed_b5", name: "Tibialis Raises", sets: 2, reps: 15, notes: "Prehab 2x/week — #2 this week.", noWeight: true }
+          ]
+        }]
+      }
+    ],
+
+    '2026-04-16': [
+      {
+        name: "Beep Test Baseline",
+        type: "Conditioning",
+        duration: "25 min",
+        location: "Gym or outdoor court (20m marked)",
+        condition: "Build 1, follicular phase. Run to exhaustion for valid baseline. Record final level and shuttle number. This sets the benchmark for Week 3 retest.\nDaily: sleeper + cross-body stretch 3x30sec each side before bed.",
+        circuits: [
+          {
+            name: "A. Dynamic Warm-Up (8 min)",
+            simple: true,
+            exercises: [
+              { id: "tb1thu_a1", name: "Light Jog", sets: 1, reps: 1, isCardio: true, duration: 180, noWeight: true },
+              { id: "tb1thu_a2", name: "High Knees", sets: 1, reps: 20, perSide: true, noWeight: true },
+              { id: "tb1thu_a3", name: "Butt Kicks", sets: 1, reps: 20, perSide: true, noWeight: true },
+              { id: "tb1thu_a4", name: "Leg Swings (Front-Back)", sets: 1, reps: 10, perSide: true, noWeight: true },
+              { id: "tb1thu_a5", name: "Leg Swings (Lateral)", sets: 1, reps: 10, perSide: true, noWeight: true },
+              { id: "tb1thu_a6", name: "Hip Circles", sets: 1, reps: 10, perSide: true, noWeight: true }
+            ]
+          },
+          {
+            name: "B. Beep Test (20m Shuttle Run)",
+            instructions: "Run to exhaustion. Record level + shuttle. Use beep test app or audio track. Pace yourself early — it gets fast quickly.",
+            simple: true,
+            exercises: [
+              { id: "tb1thu_b1", name: "20m Beep Test", sets: 1, reps: 1, notes: "Run to exhaustion. Record final level and shuttle number in notes. This is your baseline.", isCardio: true, noWeight: true }
+            ]
+          },
+          {
+            name: "C. Cool-Down (5 min)",
+            simple: true,
+            exercises: [
+              { id: "tb1thu_c1", name: "Easy Walk", sets: 1, reps: 1, isCardio: true, duration: 120, noWeight: true },
+              { id: "tb1thu_c2", name: "Standing Quad Stretch", sets: 1, reps: 1, isHold: true, holdTime: 30, perSide: true, noWeight: true },
+              { id: "tb1thu_c3", name: "Hip Flexor Lunge Stretch", sets: 1, reps: 1, isHold: true, holdTime: 30, perSide: true, noWeight: true }
+            ]
+          }
+        ]
+      },
+      {
+        name: "Movement Snack: Pivot Shot Arm Separation",
+        type: "Sport-Specific",
+        duration: "12 min",
+        location: "Any wall or open space",
+        condition: "Build 1, follicular phase. 15 throws max. Quality over quantity.\nDaily: sleeper + cross-body stretch 3x30sec each side before bed.",
+        circuits: [{
+          name: "Technique Drill",
+          instructions: "Focus on separating the throwing arm from the torso. Cue: 'Open the door' — chest faces target, arm stays back until the last moment.",
+          simple: true,
+          exercises: [
+            { id: "tb1thu_ms1", name: "Wrist Flicks", sets: 1, reps: 10, noWeight: true },
+            { id: "tb1thu_ms2", name: "Standing Pivot Throw (Separation Cue)", sets: 3, reps: 5, notes: "15 throws. Plant foot, rotate hips, THEN arm follows. Feel the delay.", noWeight: true }
+          ]
+        }]
+      }
+    ],
+
+    '2026-04-17': [
+      {
+        name: "Upper Body Strength (Build 1)",
+        type: "Strength",
+        duration: "55 min",
+        location: "Rec Center",
+        condition: "Build 1, follicular phase. 48hrs since Wed throwing — shoulder is clear to load.\nACL note: ovulatory window may start around Apr 17-22. Extra awareness on landing mechanics.\nDaily: sleeper + cross-body stretch 3x30sec each side before bed.",
+        circuits: [
+          BLOCK_UB_WARMUP,
+          {
+            name: "A. Horizontal Pull + Press + Core (3 rounds, 90 sec rest)",
+            exercises: [
+              { id: "tb1fri_a1", name: "Single Arm DB Row", sets: 3, reps: 10, weight: 22.5, perSide: true },
+              { id: "tb1fri_a2", name: "Chest Press Machine", sets: 3, reps: 10, weight: 50 },
+              { id: "tb1fri_a3", name: "Tall-Kneeling Band Hold", sets: 3, reps: 1, notes: "20 sec each side. Replaces Pallof press (psoas). Squeeze glutes, resist rotation.", isHold: true, holdTime: 20, perSide: true, noWeight: true }
+            ]
+          },
+          {
+            name: "B. Vertical Pull + Shoulder + Prehab (3 rounds, 90 sec rest)",
+            exercises: [
+              { id: "tb1fri_b1", name: "Lat Pulldown Machine", sets: 3, reps: 10, weight: 72, notes: "If feel drops to 3 across all sets by Week 3, try next increment." },
+              { id: "tb1fri_b2", name: "Lateral Raise Combo", sets: 3, reps: 10, weight: 7.5, notes: "Front raise → lateral raise → hold at top 2 sec." },
+              { id: "tb1fri_b3", name: "Rear Delt Fly Machine", sets: 2, reps: 12, weight: 40 }
+            ]
+          },
+          {
+            name: "C. Arms + Core (2 rounds, 60 sec rest)",
+            exercises: [
+              { id: "tb1fri_c1", name: "Bicep Curls", sets: 3, reps: 10, weight: 17.5, notes: "Progression from 15lb. Control the eccentric." },
+              { id: "tb1fri_c2", name: "Cable Tricep Extension", sets: 2, reps: 12, weight: 22 },
+              { id: "tb1fri_c3", name: "Front Low Plank", sets: 2, reps: 1, isHold: true, holdTime: 40, noWeight: true }
+            ]
+          },
+          BLOCK_SHOULDER_WARMUP,
+          {
+            name: "D. Rotator Cuff (10 min)",
+            instructions: "30 sec rest between sets. Full shoulder protocol.",
+            simple: true,
+            exercises: [
+              { id: "tb1fri_d1", name: "External Rotation 90/90", sets: 3, reps: 12, notes: "Both arms. Band at shoulder height. Goal post position, rotate hands up.", noWeight: true },
+              { id: "tb1fri_d2", name: "Internal Rotation 90/90", sets: 3, reps: 12, notes: "Both arms. Lighter tension.", noWeight: true },
+              { id: "tb1fri_d3", name: "Prone T's", sets: 2, reps: 10, notes: "Face down. Thumbs up, raise arms to T.", noWeight: true },
+              { id: "tb1fri_d4", name: "Band Throws", sets: 2, reps: 10, notes: "Each arm. Pull-into-release pattern. Feel chest and lat, NOT tricep.", perSide: true, noWeight: true }
+            ]
+          },
+          {
+            name: "E. Scapular Stability (4 min)",
+            simple: true,
+            exercises: [
+              { id: "tb1fri_e1", name: "Scapular Push-Ups", sets: 2, reps: 10, noWeight: true },
+              { id: "tb1fri_e2", name: "Cross-Body Shoulder Stretch", sets: 1, reps: 1, isHold: true, holdTime: 30, perSide: true, noWeight: true }
+            ]
+          },
+          BLOCK_UB_COOLDOWN
+        ]
+      }
+    ],
+
+    '2026-04-18': {
+      name: "Handball Solo Session (Build 1)",
+      type: "Sport-Specific",
+      duration: "50 min",
+      location: "Squash court or outdoor wall",
+      condition: "Build 1, possible ovulatory window. ~65 throws. If Wednesday practice was throw-heavy (70+), reduce to 55 today.\nACL warmup included — estrogen peaks increase ligament laxity.\nDaily: sleeper + cross-body stretch 3x30sec each side before bed.",
+      circuits: [
+        {
+          name: "A. Get Moving (4 min)",
+          simple: true,
+          exercises: [
+            { id: "tb1sat_a1", name: "Jog in Place", sets: 1, reps: 1, isCardio: true, duration: 30, noWeight: true },
+            { id: "tb1sat_a2", name: "High Knees", sets: 1, reps: 20, perSide: true, noWeight: true },
+            { id: "tb1sat_a3", name: "Butt Kicks", sets: 1, reps: 20, perSide: true, noWeight: true },
+            { id: "tb1sat_a4", name: "Step-Touch Side to Side", sets: 1, reps: 20, noWeight: true },
+            { id: "tb1sat_a5", name: "Hip Circles", sets: 1, reps: 10, perSide: true, noWeight: true }
+          ]
+        },
+        {
+          name: "B. Lower Body + Shin + Copenhagen (5 min)",
+          instructions: "Copenhagen is prehab pin #2 this week.",
+          exercises: [
+            { id: "tb1sat_b1", name: "Standing Hip Abduction (Band)", sets: 1, reps: 15, perSide: true, noWeight: true },
+            { id: "tb1sat_b2", name: "Standing Glute Kickback (Band)", sets: 1, reps: 12, perSide: true, noWeight: true },
+            { id: "tb1sat_b3", name: "Calf Raises", sets: 1, reps: 20, noWeight: true },
+            { id: "tb1sat_b4", name: "Tibialis Raises", sets: 1, reps: 20, notes: "Prehab 2x/week — #2 this week.", noWeight: true },
+            { id: "tb1sat_b5", name: "Copenhagen Adductor Hold", sets: 2, reps: 1, notes: "20 sec each side. Prehab 2x/week — #2 this week.", isHold: true, holdTime: 20, perSide: true, noWeight: true }
+          ]
+        },
+        {
+          name: "ACL Activation (Ovulatory Phase)",
+          instructions: "Extra neuromuscular warmup. Estrogen peaks around ovulation, increasing ligament laxity. Critical with tibial torsion. Take this block seriously.",
+          simple: true,
+          exercises: [
+            { id: "tb1sat_acl1", name: "Nordic Curl Eccentric", sets: 1, reps: 5, notes: "Slow 3-sec lowering. Feet slightly out.", noWeight: true },
+            { id: "tb1sat_acl2", name: "Single-Leg RDL Hold", sets: 1, reps: 3, notes: "5 sec hold at bottom, each leg.", perSide: true, noWeight: true },
+            { id: "tb1sat_acl3", name: "Lateral Bound to Stick", sets: 1, reps: 4, notes: "Each direction. STICK landing 2 sec.", perSide: true, noWeight: true },
+            { id: "tb1sat_acl4", name: "Drop Squat to Hold", sets: 1, reps: 6, notes: "Quick drop to quarter squat, hold 2 sec. Right foot out is correct.", noWeight: true }
+          ]
+        },
+        {
+          name: "C. Shoulder Activation (4 min)",
+          simple: true,
+          exercises: [
+            { id: "tb1sat_c1", name: "Arm Circles", sets: 1, reps: 20, notes: "10 forward, 10 backward each arm.", noWeight: true },
+            { id: "tb1sat_c2", name: "Scapular Squeezes", sets: 1, reps: 15, notes: "Hold 2 sec each.", noWeight: true },
+            { id: "tb1sat_c3", name: "Pendulum Swings", sets: 1, reps: 10, perSide: true, noWeight: true },
+            { id: "tb1sat_c4", name: "Wall Angels", sets: 2, reps: 8, noWeight: true }
+          ]
+        },
+        {
+          name: "D. Throwing Arm Warm-Up (4 min)",
+          simple: true,
+          exercises: [
+            { id: "tb1sat_d1", name: "Wrist Flicks with Ball", sets: 1, reps: 20, noWeight: true },
+            { id: "tb1sat_d2", name: "Short Wall Passes Both Hands", sets: 1, reps: 10, perSide: true, noWeight: true },
+            { id: "tb1sat_d3", name: "3-Step Rhythm, No Ball", sets: 1, reps: 5, notes: "Cue: step, OPEN, launch.", noWeight: true },
+            { id: "tb1sat_d4", name: "3-Step with Ball, Easy", sets: 1, reps: 5, notes: "Right hand only. 50% effort.", noWeight: true }
+          ]
+        },
+        {
+          name: "E. Main Work: Jump Shot + Left Hand + Passing (~65 throws)",
+          instructions: "Rotate through blocks. Quality reps. 65 throws target.",
+          simple: true,
+          exercises: [
+            { id: "tb1sat_e1", name: "Jump Shot Practice (R)", sets: 3, reps: 8, notes: "24 throws. Focus on release at peak. step-OPEN-UP-release.", noWeight: true },
+            { id: "tb1sat_e2", name: "Pivot Shot Practice (R)", sets: 2, reps: 6, notes: "12 throws. Plant, rotate hips, arm follows.", noWeight: true },
+            { id: "tb1sat_e3", name: "Left Hand Passes", sets: 3, reps: 5, notes: "15 throws. Wall passes, focus on wrist snap and accuracy.", noWeight: true },
+            { id: "tb1sat_e4", name: "Defensive Footwork: Lateral Slides", sets: 4, reps: 1, notes: "10 sec each. Low stance, quick feet, don't cross over.", isHold: true, holdTime: 10, noWeight: true },
+            { id: "tb1sat_e5", name: "Quick Feet Ready Position", sets: 1, reps: 1, notes: "15 sec. Finisher.", isHold: true, holdTime: 15, noWeight: true }
+          ]
+        },
+        {
+          name: "F. Mini Shoulder Protocol (8 min)",
+          instructions: "Shortened rotator cuff only. ER/IR + band throws.",
+          simple: true,
+          exercises: [
+            { id: "tb1sat_f1", name: "External Rotation 90/90", sets: 2, reps: 12, notes: "Both arms. Shoulder protocol #2 this week (shortened).", noWeight: true },
+            { id: "tb1sat_f2", name: "Internal Rotation 90/90", sets: 2, reps: 12, notes: "Both arms. Lighter tension.", noWeight: true },
+            { id: "tb1sat_f3", name: "Band Throws", sets: 2, reps: 10, notes: "Each arm. Pull-into-release.", perSide: true, noWeight: true }
+          ]
+        },
+        {
+          name: "G. Cool-Down (5 min)",
+          simple: true,
+          exercises: [
+            { id: "tb1sat_g1", name: "Easy Walk + Shake Out", sets: 1, reps: 1, isCardio: true, duration: 60, noWeight: true },
+            { id: "tb1sat_g2", name: "Cross-Body Shoulder Stretch", sets: 1, reps: 1, isHold: true, holdTime: 30, perSide: true, noWeight: true },
+            { id: "tb1sat_g3", name: "Hip Flexor Lunge Stretch", sets: 1, reps: 1, isHold: true, holdTime: 30, perSide: true, noWeight: true },
+            { id: "tb1sat_g4", name: "Chest Opener", sets: 1, reps: 1, isHold: true, holdTime: 30, noWeight: true }
+          ]
+        }
+      ]
+    },
+
+    '2026-04-19': POOL_RECOVERY, // Sun: recovery
+
+    // ---- WEEK 11: BUILD 2 (Apr 20-26) ----
+    // Possible ovulatory window ~Apr 17-22. ACL warmup on court/plyo days.
+
+    '2026-04-20': POOL_RECOVERY, // Mon: PT external (fallback)
+
+    '2026-04-21': [
+      {
+        name: "Lower Body Strength (Build 2)",
+        type: "Strength",
+        duration: "50 min",
+        location: "Rec Center",
+        condition: "Build 2, Week 11. Possible ovulatory window — ACL warmup added. Same weights as Week 1, building consistency.\nDaily: sleeper + cross-body stretch 3x30sec each side before bed.",
+        circuits: [
+          {
+            name: "A. Hip Prehab Warm-Up (12 min)",
+            instructions: "Full hip prehab. Copenhagen + tibialis = prehab pin #1 this week.",
+            exercises: [
+              { id: "tb2tue_a1", name: "Quadruped Hip Pocket Rockback", sets: 2, reps: 10, perSide: true, noWeight: true },
+              { id: "tb2tue_a2", name: "Side-Lying Clamshell (3s Pause)", sets: 2, reps: 12, perSide: true, noWeight: true },
+              { id: "tb2tue_a3", name: "Standing Hip Hydrants", sets: 2, reps: 12, perSide: true, noWeight: true },
+              { id: "tb2tue_a4", name: "Copenhagen Adductor Hold", sets: 2, reps: 1, notes: "20 sec each side. Prehab 2x/week — #1 this week.", isHold: true, holdTime: 20, perSide: true, noWeight: true },
+              { id: "tb2tue_a5", name: "Tibialis Raises", sets: 2, reps: 15, notes: "Prehab 2x/week — #1 this week.", noWeight: true },
+              { id: "tb2tue_a6", name: "Bear Crawls", sets: 3, reps: 1, notes: "10-15 ft each.", noWeight: true },
+              { id: "tb2tue_a7", name: "Weighted Hip Airplanes", sets: 2, reps: 8, notes: "Each side. New for Week 2 — balance and hip stability.", perSide: true, noWeight: true }
+            ]
+          },
+          {
+            name: "ACL Activation (Ovulatory Phase)",
+            instructions: "Extra neuromuscular warmup. Estrogen peaks around ovulation, increasing ligament laxity. Critical with tibial torsion. Take this block seriously.",
+            simple: true,
+            exercises: [
+              { id: "tb2tue_acl1", name: "Nordic Curl Eccentric", sets: 1, reps: 5, notes: "Slow 3-sec lowering. Feet slightly out.", noWeight: true },
+              { id: "tb2tue_acl2", name: "Single-Leg RDL Hold", sets: 1, reps: 3, notes: "5 sec hold at bottom, each leg.", perSide: true, noWeight: true },
+              { id: "tb2tue_acl3", name: "Lateral Bound to Stick", sets: 1, reps: 4, notes: "Each direction. STICK landing 2 sec.", perSide: true, noWeight: true },
+              { id: "tb2tue_acl4", name: "Drop Squat to Hold", sets: 1, reps: 6, notes: "Quick drop to quarter squat, hold 2 sec. Right foot out is correct.", noWeight: true }
+            ]
+          },
+          {
+            name: "B. Squat + Power + Core (3 rounds, 90 sec rest)",
+            exercises: [
+              { id: "tb2tue_b1", name: "DB Goblet Squat", sets: 3, reps: 12, weight: 35 },
+              { id: "tb2tue_b2", name: "Jump Squats", sets: 3, reps: 8, notes: "Bodyweight. Soft landing — extra focus on knee tracking during ovulatory window.", noWeight: true },
+              { id: "tb2tue_b3", name: "Front Low Plank Hold", sets: 3, reps: 1, isHold: true, holdTime: 35, noWeight: true }
+            ]
+          },
+          {
+            name: "C. Lunge + Hinge + Core (3 rounds, 90 sec rest)",
+            exercises: [
+              { id: "tb2tue_c1", name: "DB Reverse Lunges", sets: 3, reps: 8, weight: 17.5, perSide: true },
+              { id: "tb2tue_c2", name: "DB RDLs", sets: 3, reps: 10, weight: 20 },
+              { id: "tb2tue_c3", name: "Side Plank Hold", sets: 3, reps: 1, notes: "25 sec each side.", isHold: true, holdTime: 25, perSide: true, noWeight: true }
+            ]
+          },
+          {
+            name: "D. Cool-Down (8 min)",
+            simple: true,
+            exercises: [
+              { id: "tb2tue_d1", name: "Figure-4 Hip Stretch", sets: 1, reps: 1, isHold: true, holdTime: 60, perSide: true, noWeight: true },
+              { id: "tb2tue_d2", name: "Kneeling Hip Flexor Stretch", sets: 1, reps: 1, isHold: true, holdTime: 45, perSide: true, noWeight: true },
+              { id: "tb2tue_d3", name: "90/90 Hip Stretch", sets: 1, reps: 1, isHold: true, holdTime: 60, perSide: true, noWeight: true }
+            ]
+          }
+        ]
+      },
+      {
+        name: "Movement Snack: Left-Hand Passing",
+        type: "Sport-Specific",
+        duration: "12 min",
+        location: "Any wall or open space",
+        condition: "Build 2, possible ovulatory window. 15 throws max. Quality over quantity.\nDaily: sleeper + cross-body stretch 3x30sec each side before bed.",
+        circuits: [{
+          name: "Technique Drill",
+          instructions: "Left hand comfort building. Focus on wrist snap and follow-through. Don't try to throw hard — accuracy and feel.",
+          simple: true,
+          exercises: [
+            { id: "tb2tue_ms1", name: "Wrist Flicks (Left Hand)", sets: 1, reps: 10, noWeight: true },
+            { id: "tb2tue_ms2", name: "Left-Hand Wall Passes", sets: 3, reps: 5, notes: "15 throws. Short distance, aim for a target spot on the wall. Wrist snap, follow through.", noWeight: true }
+          ]
+        }]
+      }
+    ],
+
+    '2026-04-22': [
+      {
+        name: "Pre-Handball Warmup",
+        type: "Prehab",
+        duration: "12-15 min",
+        condition: "Build 2, possible ovulatory window. ACL warmup added. Daily: sleeper + cross-body stretch 3x30sec before bed.",
+        circuits: [
+          {
+            name: "Movement Prep",
+            simple: true,
+            exercises: [
+              { id: "tb2wed_a1", name: "Quadruped Hip Pocket Rockback", sets: 1, reps: 8, perSide: true, noWeight: true },
+              { id: "tb2wed_a2", name: "Side-Lying Clamshell (3s Pause)", sets: 1, reps: 10, perSide: true, noWeight: true },
+              { id: "tb2wed_a3", name: "Standing Hip Hydrants", sets: 1, reps: 10, perSide: true, noWeight: true },
+              { id: "tb2wed_a4", name: "Arm Circles", sets: 1, reps: 20, notes: "10 forward, 10 back.", noWeight: true },
+              { id: "tb2wed_a5", name: "Band Pull-Aparts", sets: 1, reps: 15, noWeight: true },
+              { id: "tb2wed_a6", name: "Wrist Stretches", sets: 2, reps: 1, notes: "Flexion + extension, 15 sec each.", isHold: true, holdTime: 15, noWeight: true }
+            ]
+          },
+          {
+            name: "ACL Activation (Ovulatory Phase)",
+            instructions: "Extra neuromuscular warmup. Estrogen peaks around ovulation, increasing ligament laxity. Critical with tibial torsion. Take this block seriously.",
+            simple: true,
+            exercises: [
+              { id: "tb2wed_acl1", name: "Nordic Curl Eccentric", sets: 1, reps: 5, notes: "Slow 3-sec lowering. Feet slightly out.", noWeight: true },
+              { id: "tb2wed_acl2", name: "Single-Leg RDL Hold", sets: 1, reps: 3, notes: "5 sec hold at bottom, each leg.", perSide: true, noWeight: true },
+              { id: "tb2wed_acl3", name: "Lateral Bound to Stick", sets: 1, reps: 4, notes: "Each direction. STICK landing 2 sec.", perSide: true, noWeight: true },
+              { id: "tb2wed_acl4", name: "Drop Squat to Hold", sets: 1, reps: 6, notes: "Quick drop to quarter squat, hold 2 sec. Right foot out is correct.", noWeight: true }
+            ]
+          }
+        ]
+      },
+      {
+        name: "Post-Handball Cooldown",
+        type: "Prehab",
+        duration: "12-15 min",
+        circuits: [{
+          name: "Cooldown + Prehab",
+          simple: true,
+          exercises: [
+            { id: "tb2wed_b1", name: "Cross-Body Shoulder Stretch", sets: 1, reps: 1, isHold: true, holdTime: 30, perSide: true, noWeight: true },
+            { id: "tb2wed_b2", name: "Doorway Pec Stretch", sets: 1, reps: 1, isHold: true, holdTime: 30, perSide: true, noWeight: true },
+            { id: "tb2wed_b3", name: "Overhead Tricep Stretch", sets: 1, reps: 1, isHold: true, holdTime: 30, perSide: true, noWeight: true },
+            { id: "tb2wed_b4", name: "Figure-4 Hip Stretch", sets: 1, reps: 1, isHold: true, holdTime: 60, perSide: true, noWeight: true },
+            { id: "tb2wed_b5", name: "Tibialis Raises", sets: 2, reps: 15, notes: "Prehab 2x/week — #2 this week.", noWeight: true }
+          ]
+        }]
+      }
+    ],
+
+    '2026-04-23': [
+      {
+        name: "Court Conditioning",
+        type: "Conditioning",
+        duration: "30 min",
+        location: "Gym or outdoor court (20m + 40m marked)",
+        condition: "Build 2, Week 11. Shuttle runs + T-test drills. Court-specific conditioning for tryout fitness.\nDaily: sleeper + cross-body stretch 3x30sec each side before bed.",
+        circuits: [
+          {
+            name: "A. Dynamic Warm-Up (8 min)",
+            simple: true,
+            exercises: [
+              { id: "tb2thu_a1", name: "Light Jog", sets: 1, reps: 1, isCardio: true, duration: 180, noWeight: true },
+              { id: "tb2thu_a2", name: "High Knees", sets: 1, reps: 20, perSide: true, noWeight: true },
+              { id: "tb2thu_a3", name: "Butt Kicks", sets: 1, reps: 20, perSide: true, noWeight: true },
+              { id: "tb2thu_a4", name: "Lateral Shuffles", sets: 2, reps: 1, notes: "20m each direction.", isCardio: true, noWeight: true },
+              { id: "tb2thu_a5", name: "Carioca", sets: 2, reps: 1, notes: "20m each direction.", isCardio: true, noWeight: true }
+            ]
+          },
+          {
+            name: "B. Shuttle Runs (12 min)",
+            instructions: "Rest = work time. Full recovery between 20m and 40m blocks.",
+            exercises: [
+              { id: "tb2thu_b1", name: "20m Shuttle Run", sets: 4, reps: 1, notes: "Sprint 20m, touch line, sprint back. Rest = time it took you to run.", isCardio: true, noWeight: true },
+              { id: "tb2thu_b2", name: "40m Shuttle Run", sets: 4, reps: 1, notes: "Sprint 40m, touch line, sprint back. Rest = work time. These are hard.", isCardio: true, noWeight: true }
+            ]
+          },
+          {
+            name: "C. T-Test Drill (8 min)",
+            instructions: "Sprint forward, shuffle left, shuffle right, backpedal. 4 reps with 45 sec rest.",
+            exercises: [
+              { id: "tb2thu_c1", name: "T-Test Drill", sets: 4, reps: 1, notes: "Sprint 10m forward, touch cone, shuffle left 5m, shuffle right 10m, shuffle left 5m, backpedal 10m. 45 sec rest between reps.", isCardio: true, noWeight: true }
+            ]
+          },
+          {
+            name: "D. Cool-Down (5 min)",
+            simple: true,
+            exercises: [
+              { id: "tb2thu_d1", name: "Easy Walk", sets: 1, reps: 1, isCardio: true, duration: 120, noWeight: true },
+              { id: "tb2thu_d2", name: "Standing Quad Stretch", sets: 1, reps: 1, isHold: true, holdTime: 30, perSide: true, noWeight: true },
+              { id: "tb2thu_d3", name: "Hip Flexor Lunge Stretch", sets: 1, reps: 1, isHold: true, holdTime: 30, perSide: true, noWeight: true }
+            ]
+          }
+        ]
+      },
+      {
+        name: "Movement Snack: Jump Shot Release Timing",
+        type: "Sport-Specific",
+        duration: "12 min",
+        location: "Any wall or open space",
+        condition: "Build 2, Week 11. 15 throws max. Quality over quantity.\nDaily: sleeper + cross-body stretch 3x30sec each side before bed.",
+        circuits: [{
+          name: "Technique Drill",
+          instructions: "Same cue as Week 1: release at the TOP of the jump. Building the pattern. Cue: 'Up... NOW.'",
+          simple: true,
+          exercises: [
+            { id: "tb2thu_ms1", name: "Wrist Flicks", sets: 1, reps: 10, noWeight: true },
+            { id: "tb2thu_ms2", name: "Standing Throw (Release Cue)", sets: 3, reps: 5, notes: "15 throws. Release at peak height.", noWeight: true }
+          ]
+        }]
+      }
+    ],
+
+    '2026-04-24': [
+      {
+        name: "Upper Body Strength (Build 2)",
+        type: "Strength",
+        duration: "55 min",
+        location: "Rec Center",
+        condition: "Build 2, Week 11. Same weights, building volume tolerance. 48hrs since Wed throwing.\nDaily: sleeper + cross-body stretch 3x30sec each side before bed.",
+        circuits: [
+          BLOCK_UB_WARMUP,
+          {
+            name: "A. Horizontal Pull + Press + Core (3 rounds, 90 sec rest)",
+            exercises: [
+              { id: "tb2fri_a1", name: "Single Arm DB Row", sets: 3, reps: 10, weight: 22.5, perSide: true },
+              { id: "tb2fri_a2", name: "Chest Press Machine", sets: 3, reps: 10, weight: 50 },
+              { id: "tb2fri_a3", name: "Tall-Kneeling Band Hold", sets: 3, reps: 1, notes: "20 sec each side.", isHold: true, holdTime: 20, perSide: true, noWeight: true }
+            ]
+          },
+          {
+            name: "B. Vertical Pull + Shoulder + Prehab (3 rounds, 90 sec rest)",
+            exercises: [
+              { id: "tb2fri_b1", name: "Lat Pulldown Machine", sets: 3, reps: 10, weight: 72, notes: "If feel drops to 3 across all sets by Week 3, try next increment." },
+              { id: "tb2fri_b2", name: "Lateral Raise Combo", sets: 3, reps: 10, weight: 7.5 },
+              { id: "tb2fri_b3", name: "Rear Delt Fly Machine", sets: 2, reps: 12, weight: 40 }
+            ]
+          },
+          {
+            name: "C. Arms + Core (2 rounds, 60 sec rest)",
+            exercises: [
+              { id: "tb2fri_c1", name: "Bicep Curls", sets: 3, reps: 10, weight: 17.5 },
+              { id: "tb2fri_c2", name: "Cable Tricep Extension", sets: 2, reps: 12, weight: 22 },
+              { id: "tb2fri_c3", name: "Front Low Plank", sets: 2, reps: 1, isHold: true, holdTime: 40, noWeight: true }
+            ]
+          },
+          BLOCK_SHOULDER_WARMUP,
+          {
+            name: "D. Rotator Cuff (10 min)",
+            instructions: "30 sec rest between sets. Full shoulder protocol.",
+            simple: true,
+            exercises: [
+              { id: "tb2fri_d1", name: "External Rotation 90/90", sets: 3, reps: 12, notes: "Both arms.", noWeight: true },
+              { id: "tb2fri_d2", name: "Internal Rotation 90/90", sets: 3, reps: 12, notes: "Both arms. Lighter tension.", noWeight: true },
+              { id: "tb2fri_d3", name: "Prone T's", sets: 2, reps: 10, noWeight: true },
+              { id: "tb2fri_d4", name: "Band Throws", sets: 2, reps: 10, perSide: true, noWeight: true }
+            ]
+          },
+          {
+            name: "E. Scapular Stability (4 min)",
+            simple: true,
+            exercises: [
+              { id: "tb2fri_e1", name: "Scapular Push-Ups", sets: 2, reps: 10, noWeight: true },
+              { id: "tb2fri_e2", name: "Cross-Body Shoulder Stretch", sets: 1, reps: 1, isHold: true, holdTime: 30, perSide: true, noWeight: true }
+            ]
+          },
+          BLOCK_UB_COOLDOWN
+        ]
+      }
+    ],
+
+    '2026-04-25': {
+      name: "Handball Solo Session (Build 2)",
+      type: "Sport-Specific",
+      duration: "50 min",
+      location: "Squash court or outdoor wall",
+      condition: "Build 2, Week 11. ~65-70 throws. If Wednesday practice was throw-heavy (70+), reduce to 55 today.\nDaily: sleeper + cross-body stretch 3x30sec each side before bed.",
+      circuits: [
+        {
+          name: "A. Get Moving (4 min)",
+          simple: true,
+          exercises: [
+            { id: "tb2sat_a1", name: "Jog in Place", sets: 1, reps: 1, isCardio: true, duration: 30, noWeight: true },
+            { id: "tb2sat_a2", name: "High Knees", sets: 1, reps: 20, perSide: true, noWeight: true },
+            { id: "tb2sat_a3", name: "Butt Kicks", sets: 1, reps: 20, perSide: true, noWeight: true },
+            { id: "tb2sat_a4", name: "Step-Touch Side to Side", sets: 1, reps: 20, noWeight: true },
+            { id: "tb2sat_a5", name: "Hip Circles", sets: 1, reps: 10, perSide: true, noWeight: true }
+          ]
+        },
+        {
+          name: "B. Lower Body + Shin + Copenhagen (5 min)",
+          instructions: "Copenhagen is prehab pin #2 this week.",
+          exercises: [
+            { id: "tb2sat_b1", name: "Standing Hip Abduction (Band)", sets: 1, reps: 15, perSide: true, noWeight: true },
+            { id: "tb2sat_b2", name: "Standing Glute Kickback (Band)", sets: 1, reps: 12, perSide: true, noWeight: true },
+            { id: "tb2sat_b3", name: "Calf Raises", sets: 1, reps: 20, noWeight: true },
+            { id: "tb2sat_b4", name: "Tibialis Raises", sets: 1, reps: 20, notes: "Prehab 2x/week — #2 this week.", noWeight: true },
+            { id: "tb2sat_b5", name: "Copenhagen Adductor Hold", sets: 2, reps: 1, notes: "20 sec each side. Prehab 2x/week — #2 this week.", isHold: true, holdTime: 20, perSide: true, noWeight: true }
+          ]
+        },
+        {
+          name: "C. Shoulder Activation (4 min)",
+          simple: true,
+          exercises: [
+            { id: "tb2sat_c1", name: "Arm Circles", sets: 1, reps: 20, notes: "10 forward, 10 backward each arm.", noWeight: true },
+            { id: "tb2sat_c2", name: "Scapular Squeezes", sets: 1, reps: 15, noWeight: true },
+            { id: "tb2sat_c3", name: "Pendulum Swings", sets: 1, reps: 10, perSide: true, noWeight: true },
+            { id: "tb2sat_c4", name: "Wall Angels", sets: 2, reps: 8, noWeight: true }
+          ]
+        },
+        {
+          name: "D. Throwing Arm Warm-Up (4 min)",
+          simple: true,
+          exercises: [
+            { id: "tb2sat_d1", name: "Wrist Flicks with Ball", sets: 1, reps: 20, noWeight: true },
+            { id: "tb2sat_d2", name: "Short Wall Passes Both Hands", sets: 1, reps: 10, perSide: true, noWeight: true },
+            { id: "tb2sat_d3", name: "3-Step Rhythm, No Ball", sets: 1, reps: 5, notes: "Cue: step, OPEN, launch.", noWeight: true },
+            { id: "tb2sat_d4", name: "3-Step with Ball, Easy", sets: 1, reps: 5, noWeight: true }
+          ]
+        },
+        {
+          name: "E. Main Work: Pivot Shot + Defensive Footwork + Passing (~65-70 throws)",
+          instructions: "Rotate through blocks. 65-70 throw target. Quality reps.",
+          simple: true,
+          exercises: [
+            { id: "tb2sat_e1", name: "Pivot Shot Practice (R)", sets: 3, reps: 8, notes: "24 throws. Plant, separate, launch.", noWeight: true },
+            { id: "tb2sat_e2", name: "Jump Shot Practice (R)", sets: 2, reps: 6, notes: "12 throws. Release at peak.", noWeight: true },
+            { id: "tb2sat_e3", name: "Left Hand Wall Passes", sets: 3, reps: 5, notes: "15 throws. Building left-hand comfort.", noWeight: true },
+            { id: "tb2sat_e4", name: "Passing: Chest + Bounce", sets: 2, reps: 5, notes: "10 throws. Mix chest and bounce passes.", noWeight: true },
+            { id: "tb2sat_e5", name: "Defensive Footwork: Drop Steps + Closeouts", sets: 4, reps: 1, notes: "10 sec each. Low stance, explosive first step.", isHold: true, holdTime: 10, noWeight: true },
+            { id: "tb2sat_e6", name: "Quick Feet Ready Position", sets: 1, reps: 1, isHold: true, holdTime: 15, noWeight: true }
+          ]
+        },
+        {
+          name: "F. Mini Shoulder Protocol (8 min)",
+          instructions: "Shortened rotator cuff only.",
+          simple: true,
+          exercises: [
+            { id: "tb2sat_f1", name: "External Rotation 90/90", sets: 2, reps: 12, notes: "Shoulder protocol #2 this week (shortened).", noWeight: true },
+            { id: "tb2sat_f2", name: "Internal Rotation 90/90", sets: 2, reps: 12, noWeight: true },
+            { id: "tb2sat_f3", name: "Band Throws", sets: 2, reps: 10, perSide: true, noWeight: true }
+          ]
+        },
+        {
+          name: "G. Cool-Down (5 min)",
+          simple: true,
+          exercises: [
+            { id: "tb2sat_g1", name: "Easy Walk + Shake Out", sets: 1, reps: 1, isCardio: true, duration: 60, noWeight: true },
+            { id: "tb2sat_g2", name: "Cross-Body Shoulder Stretch", sets: 1, reps: 1, isHold: true, holdTime: 30, perSide: true, noWeight: true },
+            { id: "tb2sat_g3", name: "Hip Flexor Lunge Stretch", sets: 1, reps: 1, isHold: true, holdTime: 30, perSide: true, noWeight: true },
+            { id: "tb2sat_g4", name: "Chest Opener", sets: 1, reps: 1, isHold: true, holdTime: 30, noWeight: true }
+          ]
+        }
+      ]
+    },
+
+    '2026-04-26': POOL_RECOVERY, // Sun: recovery
+
+    // ---- WEEK 12: PEAK (Apr 27 - May 3) ----
+    // Likely luteal phase. Highest load week.
+
+    '2026-04-27': POOL_RECOVERY, // Mon: PT external (fallback)
+
+    '2026-04-28': [
+      {
+        name: "Lower Body Strength (Peak)",
+        type: "Strength",
+        duration: "50 min",
+        location: "Rec Center",
+        condition: "PEAK WEEK. Week 12, likely luteal phase. Same weights, hold quality. Side plank up to 30 sec. Single leg glute bridge added.\nDaily: sleeper + cross-body stretch 3x30sec each side before bed.",
+        circuits: [
+          {
+            name: "A. Hip Prehab Warm-Up (14 min)",
+            instructions: "Full hip prehab + single leg glute bridge added for peak week.",
+            exercises: [
+              { id: "tb3tue_a1", name: "Quadruped Hip Pocket Rockback", sets: 2, reps: 10, perSide: true, noWeight: true },
+              { id: "tb3tue_a2", name: "Side-Lying Clamshell (3s Pause)", sets: 2, reps: 12, perSide: true, noWeight: true },
+              { id: "tb3tue_a3", name: "Standing Hip Hydrants", sets: 2, reps: 12, perSide: true, noWeight: true },
+              { id: "tb3tue_a4", name: "Copenhagen Adductor Hold", sets: 2, reps: 1, notes: "20 sec each side. Prehab 2x/week — #1 this week.", isHold: true, holdTime: 20, perSide: true, noWeight: true },
+              { id: "tb3tue_a5", name: "Tibialis Raises", sets: 2, reps: 15, notes: "Prehab 2x/week — #1 this week.", noWeight: true },
+              { id: "tb3tue_a6", name: "Single Leg Glute Bridge", sets: 2, reps: 10, notes: "Each side. New for peak week — glute endurance under fatigue.", perSide: true, noWeight: true },
+              { id: "tb3tue_a7", name: "Bear Crawls", sets: 3, reps: 1, notes: "10-15 ft each.", noWeight: true }
+            ]
+          },
+          {
+            name: "B. Squat + Power + Core (3 rounds, 90 sec rest)",
+            exercises: [
+              { id: "tb3tue_b1", name: "DB Goblet Squat", sets: 3, reps: 12, weight: 35, notes: "Hold at bottom for 2 sec on last rep of each set." },
+              { id: "tb3tue_b2", name: "Jump Squats", sets: 3, reps: 8, notes: "Bodyweight. Explosive.", noWeight: true },
+              { id: "tb3tue_b3", name: "Front Low Plank Hold", sets: 3, reps: 1, isHold: true, holdTime: 35, noWeight: true }
+            ]
+          },
+          {
+            name: "C. Lunge + Hinge + Core (3 rounds, 90 sec rest)",
+            exercises: [
+              { id: "tb3tue_c1", name: "DB Reverse Lunges", sets: 3, reps: 8, weight: 17.5, perSide: true },
+              { id: "tb3tue_c2", name: "DB RDLs", sets: 3, reps: 10, weight: 20 },
+              { id: "tb3tue_c3", name: "Side Plank Hold", sets: 3, reps: 1, notes: "30 sec each side. Up from 25 sec.", isHold: true, holdTime: 30, perSide: true, noWeight: true }
+            ]
+          },
+          {
+            name: "D. Cool-Down (8 min)",
+            simple: true,
+            exercises: [
+              { id: "tb3tue_d1", name: "Figure-4 Hip Stretch", sets: 1, reps: 1, isHold: true, holdTime: 60, perSide: true, noWeight: true },
+              { id: "tb3tue_d2", name: "Kneeling Hip Flexor Stretch", sets: 1, reps: 1, isHold: true, holdTime: 45, perSide: true, noWeight: true },
+              { id: "tb3tue_d3", name: "90/90 Hip Stretch", sets: 1, reps: 1, isHold: true, holdTime: 60, perSide: true, noWeight: true }
+            ]
+          }
+        ]
+      },
+      {
+        name: "Movement Snack: Pivot Shot Arm Separation",
+        type: "Sport-Specific",
+        duration: "12 min",
+        location: "Any wall or open space",
+        condition: "PEAK WEEK. Luteal phase. 15 throws max. Quality over quantity.\nDaily: sleeper + cross-body stretch 3x30sec each side before bed.",
+        circuits: [{
+          name: "Technique Drill",
+          instructions: "Pivot shot separation. Cue: 'Open the door.' Hips rotate first, arm stays loaded until the last moment.",
+          simple: true,
+          exercises: [
+            { id: "tb3tue_ms1", name: "Wrist Flicks", sets: 1, reps: 10, noWeight: true },
+            { id: "tb3tue_ms2", name: "Standing Pivot Throw (Separation Cue)", sets: 3, reps: 5, notes: "15 throws. Plant foot, rotate hips, THEN arm follows.", noWeight: true }
+          ]
+        }]
+      }
+    ],
+
+    '2026-04-29': [
+      {
+        name: "Pre-Handball Warmup",
+        type: "Prehab",
+        duration: "12-15 min",
+        condition: "PEAK WEEK. Likely luteal phase. Daily: sleeper + cross-body stretch 3x30sec before bed.",
+        circuits: [{
+          name: "Movement Prep",
+          simple: true,
+          exercises: [
+            { id: "tb3wed_a1", name: "Quadruped Hip Pocket Rockback", sets: 1, reps: 8, perSide: true, noWeight: true },
+            { id: "tb3wed_a2", name: "Side-Lying Clamshell (3s Pause)", sets: 1, reps: 10, perSide: true, noWeight: true },
+            { id: "tb3wed_a3", name: "Standing Hip Hydrants", sets: 1, reps: 10, perSide: true, noWeight: true },
+            { id: "tb3wed_a4", name: "Arm Circles", sets: 1, reps: 20, notes: "10 forward, 10 back.", noWeight: true },
+            { id: "tb3wed_a5", name: "Band Pull-Aparts", sets: 1, reps: 15, noWeight: true },
+            { id: "tb3wed_a6", name: "Wrist Stretches", sets: 2, reps: 1, notes: "Flexion + extension, 15 sec each.", isHold: true, holdTime: 15, noWeight: true }
+          ]
+        }]
+      },
+      {
+        name: "Post-Handball Cooldown",
+        type: "Prehab",
+        duration: "12-15 min",
+        circuits: [{
+          name: "Cooldown + Prehab",
+          simple: true,
+          exercises: [
+            { id: "tb3wed_b1", name: "Cross-Body Shoulder Stretch", sets: 1, reps: 1, isHold: true, holdTime: 30, perSide: true, noWeight: true },
+            { id: "tb3wed_b2", name: "Doorway Pec Stretch", sets: 1, reps: 1, isHold: true, holdTime: 30, perSide: true, noWeight: true },
+            { id: "tb3wed_b3", name: "Overhead Tricep Stretch", sets: 1, reps: 1, isHold: true, holdTime: 30, perSide: true, noWeight: true },
+            { id: "tb3wed_b4", name: "Figure-4 Hip Stretch", sets: 1, reps: 1, isHold: true, holdTime: 60, perSide: true, noWeight: true },
+            { id: "tb3wed_b5", name: "Tibialis Raises", sets: 2, reps: 15, notes: "Prehab 2x/week — #2 this week.", noWeight: true }
+          ]
+        }]
+      }
+    ],
+
+    '2026-04-30': [
+      {
+        name: "Beep Test Retest + Court Conditioning",
+        type: "Conditioning",
+        duration: "30 min",
+        location: "Gym or outdoor court (20m marked)",
+        condition: "PEAK WEEK. Beep test retest — compare to Apr 16 baseline. Then court intervals. 30 min total.\nDaily: sleeper + cross-body stretch 3x30sec each side before bed.",
+        circuits: [
+          {
+            name: "A. Dynamic Warm-Up (6 min)",
+            simple: true,
+            exercises: [
+              { id: "tb3thu_a1", name: "Light Jog", sets: 1, reps: 1, isCardio: true, duration: 120, noWeight: true },
+              { id: "tb3thu_a2", name: "High Knees", sets: 1, reps: 20, perSide: true, noWeight: true },
+              { id: "tb3thu_a3", name: "Butt Kicks", sets: 1, reps: 20, perSide: true, noWeight: true },
+              { id: "tb3thu_a4", name: "Leg Swings (Front-Back)", sets: 1, reps: 10, perSide: true, noWeight: true },
+              { id: "tb3thu_a5", name: "Lateral Shuffles", sets: 2, reps: 1, notes: "20m each direction.", isCardio: true, noWeight: true }
+            ]
+          },
+          {
+            name: "B. Beep Test Retest",
+            instructions: "Run to exhaustion. Compare to Week 10 baseline. Record level + shuttle.",
+            simple: true,
+            exercises: [
+              { id: "tb3thu_b1", name: "20m Beep Test (Retest)", sets: 1, reps: 1, notes: "Run to exhaustion. Record final level and shuttle. Compare to Apr 16 baseline.", isCardio: true, noWeight: true }
+            ]
+          },
+          {
+            name: "C. Court Intervals (10 min)",
+            instructions: "If gassed from beep test, reduce to 2 reps each. Listen to your body.",
+            exercises: [
+              { id: "tb3thu_c1", name: "20m Shuttle Run", sets: 3, reps: 1, notes: "Rest = work time.", isCardio: true, noWeight: true },
+              { id: "tb3thu_c2", name: "T-Test Drill", sets: 3, reps: 1, notes: "45 sec rest between reps.", isCardio: true, noWeight: true }
+            ]
+          },
+          {
+            name: "D. Cool-Down (5 min)",
+            simple: true,
+            exercises: [
+              { id: "tb3thu_d1", name: "Easy Walk", sets: 1, reps: 1, isCardio: true, duration: 120, noWeight: true },
+              { id: "tb3thu_d2", name: "Standing Quad Stretch", sets: 1, reps: 1, isHold: true, holdTime: 30, perSide: true, noWeight: true },
+              { id: "tb3thu_d3", name: "Hip Flexor Lunge Stretch", sets: 1, reps: 1, isHold: true, holdTime: 30, perSide: true, noWeight: true }
+            ]
+          }
+        ]
+      },
+      {
+        name: "Movement Snack: Left-Hand Passing",
+        type: "Sport-Specific",
+        duration: "12 min",
+        location: "Any wall or open space",
+        condition: "PEAK WEEK. 15 throws max. Quality over quantity.\nDaily: sleeper + cross-body stretch 3x30sec each side before bed.",
+        circuits: [{
+          name: "Technique Drill",
+          instructions: "Left hand comfort. Wrist snap and accuracy. Don't muscle it.",
+          simple: true,
+          exercises: [
+            { id: "tb3thu_ms1", name: "Wrist Flicks (Left Hand)", sets: 1, reps: 10, noWeight: true },
+            { id: "tb3thu_ms2", name: "Left-Hand Wall Passes", sets: 3, reps: 5, notes: "15 throws. Short distance, target spot on wall.", noWeight: true }
+          ]
+        }]
+      }
+    ],
+
+    '2026-05-01': [
+      {
+        name: "Upper Body Strength (Peak)",
+        type: "Strength",
+        duration: "55 min",
+        location: "Rec Center",
+        condition: "PEAK WEEK. Week 12, likely luteal. Highest load week — maintain intensity, same weights. 48hrs since Wed throwing.\nDaily: sleeper + cross-body stretch 3x30sec each side before bed.",
+        circuits: [
+          BLOCK_UB_WARMUP,
+          {
+            name: "A. Horizontal Pull + Press + Core (3 rounds, 90 sec rest)",
+            exercises: [
+              { id: "tb3fri_a1", name: "Single Arm DB Row", sets: 3, reps: 10, weight: 22.5, perSide: true },
+              { id: "tb3fri_a2", name: "Chest Press Machine", sets: 3, reps: 10, weight: 50 },
+              { id: "tb3fri_a3", name: "Tall-Kneeling Band Hold", sets: 3, reps: 1, notes: "20 sec each side.", isHold: true, holdTime: 20, perSide: true, noWeight: true }
+            ]
+          },
+          {
+            name: "B. Vertical Pull + Shoulder + Prehab (3 rounds, 90 sec rest)",
+            exercises: [
+              { id: "tb3fri_b1", name: "Lat Pulldown Machine", sets: 3, reps: 10, weight: 72, notes: "If feel dropped to 3 this week, try 77 next time." },
+              { id: "tb3fri_b2", name: "Lateral Raise Combo", sets: 3, reps: 10, weight: 7.5 },
+              { id: "tb3fri_b3", name: "Rear Delt Fly Machine", sets: 2, reps: 12, weight: 40 }
+            ]
+          },
+          {
+            name: "C. Arms + Core (2 rounds, 60 sec rest)",
+            exercises: [
+              { id: "tb3fri_c1", name: "Bicep Curls", sets: 3, reps: 10, weight: 17.5 },
+              { id: "tb3fri_c2", name: "Cable Tricep Extension", sets: 2, reps: 12, weight: 22 },
+              { id: "tb3fri_c3", name: "Front Low Plank", sets: 2, reps: 1, isHold: true, holdTime: 40, noWeight: true }
+            ]
+          },
+          BLOCK_SHOULDER_WARMUP,
+          {
+            name: "D. Rotator Cuff (10 min)",
+            instructions: "Full shoulder protocol. 30 sec rest between sets.",
+            simple: true,
+            exercises: [
+              { id: "tb3fri_d1", name: "External Rotation 90/90", sets: 3, reps: 12, notes: "Both arms.", noWeight: true },
+              { id: "tb3fri_d2", name: "Internal Rotation 90/90", sets: 3, reps: 12, notes: "Both arms.", noWeight: true },
+              { id: "tb3fri_d3", name: "Prone T's", sets: 2, reps: 10, noWeight: true },
+              { id: "tb3fri_d4", name: "Band Throws", sets: 2, reps: 10, perSide: true, noWeight: true }
+            ]
+          },
+          {
+            name: "E. Scapular Stability (4 min)",
+            simple: true,
+            exercises: [
+              { id: "tb3fri_e1", name: "Scapular Push-Ups", sets: 2, reps: 10, noWeight: true },
+              { id: "tb3fri_e2", name: "Cross-Body Shoulder Stretch", sets: 1, reps: 1, isHold: true, holdTime: 30, perSide: true, noWeight: true }
+            ]
+          },
+          BLOCK_UB_COOLDOWN
+        ]
+      }
+    ],
+
+    '2026-05-02': {
+      name: "Handball Solo Session (Peak)",
+      type: "Sport-Specific",
+      duration: "55 min",
+      location: "Squash court or outdoor wall",
+      condition: "PEAK WEEK. ~70 throws — tryout simulation intensity. If Wednesday practice was throw-heavy (70+), reduce to 55 today.\nThis is the highest volume solo session before taper.\nDaily: sleeper + cross-body stretch 3x30sec each side before bed.",
+      circuits: [
+        {
+          name: "A. Get Moving (4 min)",
+          simple: true,
+          exercises: [
+            { id: "tb3sat_a1", name: "Jog in Place", sets: 1, reps: 1, isCardio: true, duration: 30, noWeight: true },
+            { id: "tb3sat_a2", name: "High Knees", sets: 1, reps: 20, perSide: true, noWeight: true },
+            { id: "tb3sat_a3", name: "Butt Kicks", sets: 1, reps: 20, perSide: true, noWeight: true },
+            { id: "tb3sat_a4", name: "Step-Touch Side to Side", sets: 1, reps: 20, noWeight: true },
+            { id: "tb3sat_a5", name: "Hip Circles", sets: 1, reps: 10, perSide: true, noWeight: true }
+          ]
+        },
+        {
+          name: "B. Lower Body + Shin + Copenhagen (5 min)",
+          instructions: "Copenhagen is prehab pin #2 this week.",
+          exercises: [
+            { id: "tb3sat_b1", name: "Standing Hip Abduction (Band)", sets: 1, reps: 15, perSide: true, noWeight: true },
+            { id: "tb3sat_b2", name: "Standing Glute Kickback (Band)", sets: 1, reps: 12, perSide: true, noWeight: true },
+            { id: "tb3sat_b3", name: "Calf Raises", sets: 1, reps: 20, noWeight: true },
+            { id: "tb3sat_b4", name: "Tibialis Raises", sets: 1, reps: 20, notes: "Prehab 2x/week — #2 this week.", noWeight: true },
+            { id: "tb3sat_b5", name: "Copenhagen Adductor Hold", sets: 2, reps: 1, notes: "20 sec each side. Prehab 2x/week — #2 this week.", isHold: true, holdTime: 20, perSide: true, noWeight: true }
+          ]
+        },
+        {
+          name: "C. Shoulder Activation (4 min)",
+          simple: true,
+          exercises: [
+            { id: "tb3sat_c1", name: "Arm Circles", sets: 1, reps: 20, noWeight: true },
+            { id: "tb3sat_c2", name: "Scapular Squeezes", sets: 1, reps: 15, noWeight: true },
+            { id: "tb3sat_c3", name: "Pendulum Swings", sets: 1, reps: 10, perSide: true, noWeight: true },
+            { id: "tb3sat_c4", name: "Wall Angels", sets: 2, reps: 8, noWeight: true }
+          ]
+        },
+        {
+          name: "D. Throwing Arm Warm-Up (4 min)",
+          simple: true,
+          exercises: [
+            { id: "tb3sat_d1", name: "Wrist Flicks with Ball", sets: 1, reps: 20, noWeight: true },
+            { id: "tb3sat_d2", name: "Short Wall Passes Both Hands", sets: 1, reps: 10, perSide: true, noWeight: true },
+            { id: "tb3sat_d3", name: "3-Step Rhythm, No Ball", sets: 1, reps: 5, noWeight: true },
+            { id: "tb3sat_d4", name: "3-Step with Ball, Easy", sets: 1, reps: 5, noWeight: true }
+          ]
+        },
+        {
+          name: "E. Main Work: Tryout Simulation (~70 throws)",
+          instructions: "Peak intensity. All three shot types + passing + defensive movement. Simulate tryout pace.",
+          simple: true,
+          exercises: [
+            { id: "tb3sat_e1", name: "Jump Shot Practice (R)", sets: 3, reps: 8, notes: "24 throws. Full approach. Release at peak.", noWeight: true },
+            { id: "tb3sat_e2", name: "Pivot Shot Practice (R)", sets: 3, reps: 6, notes: "18 throws. Plant, separate, launch.", noWeight: true },
+            { id: "tb3sat_e3", name: "Left Hand Passes", sets: 2, reps: 5, notes: "10 throws.", noWeight: true },
+            { id: "tb3sat_e4", name: "Passing: Chest + Bounce + Overhead", sets: 2, reps: 5, notes: "10 throws. Mix all pass types.", noWeight: true },
+            { id: "tb3sat_e5", name: "Defensive Footwork: Full Sequence", sets: 4, reps: 1, notes: "Lateral slide → drop step → closeout → recover. 15 sec each.", isHold: true, holdTime: 15, noWeight: true },
+            { id: "tb3sat_e6", name: "30-in-3 Finisher", sets: 1, reps: 1, notes: "Say one cue word before each throw. 8 throws, 3 min. Step-OPEN-launch.", isCardio: true, duration: 180, noWeight: true }
+          ]
+        },
+        {
+          name: "F. Mini Shoulder Protocol (8 min)",
+          instructions: "Shortened rotator cuff only.",
+          simple: true,
+          exercises: [
+            { id: "tb3sat_f1", name: "External Rotation 90/90", sets: 2, reps: 12, notes: "Shoulder protocol #2 this week (shortened).", noWeight: true },
+            { id: "tb3sat_f2", name: "Internal Rotation 90/90", sets: 2, reps: 12, noWeight: true },
+            { id: "tb3sat_f3", name: "Band Throws", sets: 2, reps: 10, perSide: true, noWeight: true }
+          ]
+        },
+        {
+          name: "G. Cool-Down (5 min)",
+          simple: true,
+          exercises: [
+            { id: "tb3sat_g1", name: "Easy Walk + Shake Out", sets: 1, reps: 1, isCardio: true, duration: 60, noWeight: true },
+            { id: "tb3sat_g2", name: "Cross-Body Shoulder Stretch", sets: 1, reps: 1, isHold: true, holdTime: 30, perSide: true, noWeight: true },
+            { id: "tb3sat_g3", name: "Hip Flexor Lunge Stretch", sets: 1, reps: 1, isHold: true, holdTime: 30, perSide: true, noWeight: true },
+            { id: "tb3sat_g4", name: "Chest Opener", sets: 1, reps: 1, isHold: true, holdTime: 30, noWeight: true }
+          ]
+        }
+      ]
+    },
+
+    '2026-05-03': POOL_RECOVERY, // Sun: recovery
+
+    // ---- WEEK 13: TAPER (May 4-10) ----
+    // Late luteal. Volume -35%, maintain intensity.
+
+    '2026-05-04': POOL_RECOVERY, // Mon: PT external (fallback)
+
+    '2026-05-05': [
+      {
+        name: "Lower Body Strength (Taper)",
+        type: "Strength",
+        duration: "40 min",
+        location: "Rec Center",
+        condition: "TAPER WEEK. Volume -35%: 2 sets instead of 3 for main circuits. Skip jump squats. Same weights — maintain intensity, reduce fatigue.\nLate luteal phase. Daily: sleeper + cross-body stretch 3x30sec each side before bed.",
+        circuits: [
+          {
+            name: "A. Hip Prehab Warm-Up (12 min)",
+            instructions: "Full hip prehab — don't cut warmup during taper.",
+            exercises: [
+              { id: "tb4tue_a1", name: "Quadruped Hip Pocket Rockback", sets: 2, reps: 10, perSide: true, noWeight: true },
+              { id: "tb4tue_a2", name: "Side-Lying Clamshell (3s Pause)", sets: 2, reps: 12, perSide: true, noWeight: true },
+              { id: "tb4tue_a3", name: "Standing Hip Hydrants", sets: 2, reps: 12, perSide: true, noWeight: true },
+              { id: "tb4tue_a4", name: "Copenhagen Adductor Hold", sets: 2, reps: 1, notes: "20 sec each side. Prehab 2x/week — #1 this week.", isHold: true, holdTime: 20, perSide: true, noWeight: true },
+              { id: "tb4tue_a5", name: "Tibialis Raises", sets: 2, reps: 15, notes: "Prehab 2x/week — #1 this week.", noWeight: true },
+              { id: "tb4tue_a6", name: "Bear Crawls", sets: 3, reps: 1, notes: "10-15 ft each.", noWeight: true }
+            ]
+          },
+          {
+            name: "B. Squat + Core (2 rounds, 90 sec rest)",
+            instructions: "TAPER: 2 sets, no jump squats.",
+            exercises: [
+              { id: "tb4tue_b1", name: "DB Goblet Squat", sets: 2, reps: 10, weight: 35, notes: "Reduced reps. Same weight." },
+              { id: "tb4tue_b2", name: "Front Low Plank Hold", sets: 2, reps: 1, isHold: true, holdTime: 35, noWeight: true }
+            ]
+          },
+          {
+            name: "C. Lunge + Hinge + Core (2 rounds, 90 sec rest)",
+            instructions: "TAPER: 2 sets, reduced reps.",
+            exercises: [
+              { id: "tb4tue_c1", name: "DB Reverse Lunges", sets: 2, reps: 6, weight: 17.5, notes: "Reduced to 6 reps.", perSide: true },
+              { id: "tb4tue_c2", name: "DB RDLs", sets: 2, reps: 8, weight: 20, notes: "Reduced to 8 reps." },
+              { id: "tb4tue_c3", name: "Side Plank Hold", sets: 2, reps: 1, notes: "30 sec each side. Maintain from peak.", isHold: true, holdTime: 30, perSide: true, noWeight: true }
+            ]
+          },
+          {
+            name: "D. Cool-Down (8 min)",
+            simple: true,
+            exercises: [
+              { id: "tb4tue_d1", name: "Figure-4 Hip Stretch", sets: 1, reps: 1, isHold: true, holdTime: 60, perSide: true, noWeight: true },
+              { id: "tb4tue_d2", name: "Kneeling Hip Flexor Stretch", sets: 1, reps: 1, isHold: true, holdTime: 45, perSide: true, noWeight: true },
+              { id: "tb4tue_d3", name: "90/90 Hip Stretch", sets: 1, reps: 1, isHold: true, holdTime: 60, perSide: true, noWeight: true }
+            ]
+          }
+        ]
+      },
+      {
+        name: "Movement Snack: Left-Hand Passing",
+        type: "Sport-Specific",
+        duration: "10 min",
+        location: "Any wall or open space",
+        condition: "TAPER WEEK. 10 throws only. Light touch.\nDaily: sleeper + cross-body stretch 3x30sec each side before bed.",
+        circuits: [{
+          name: "Technique Drill",
+          instructions: "Reduced volume for taper. 10 throws only. Easy effort, feel the pattern.",
+          simple: true,
+          exercises: [
+            { id: "tb4tue_ms1", name: "Wrist Flicks (Left Hand)", sets: 1, reps: 10, noWeight: true },
+            { id: "tb4tue_ms2", name: "Left-Hand Wall Passes", sets: 2, reps: 5, notes: "10 throws. Short distance, easy.", noWeight: true }
+          ]
+        }]
+      }
+    ],
+
+    '2026-05-06': [
+      {
+        name: "Pre-Handball Warmup",
+        type: "Prehab",
+        duration: "12-15 min",
+        condition: "TAPER WEEK. Late luteal. Daily: sleeper + cross-body stretch 3x30sec before bed.",
+        circuits: [{
+          name: "Movement Prep",
+          simple: true,
+          exercises: [
+            { id: "tb4wed_a1", name: "Quadruped Hip Pocket Rockback", sets: 1, reps: 8, perSide: true, noWeight: true },
+            { id: "tb4wed_a2", name: "Side-Lying Clamshell (3s Pause)", sets: 1, reps: 10, perSide: true, noWeight: true },
+            { id: "tb4wed_a3", name: "Standing Hip Hydrants", sets: 1, reps: 10, perSide: true, noWeight: true },
+            { id: "tb4wed_a4", name: "Arm Circles", sets: 1, reps: 20, notes: "10 forward, 10 back.", noWeight: true },
+            { id: "tb4wed_a5", name: "Band Pull-Aparts", sets: 1, reps: 15, noWeight: true },
+            { id: "tb4wed_a6", name: "Wrist Stretches", sets: 2, reps: 1, notes: "Flexion + extension, 15 sec each.", isHold: true, holdTime: 15, noWeight: true }
+          ]
+        }]
+      },
+      {
+        name: "Post-Handball Cooldown",
+        type: "Prehab",
+        duration: "12-15 min",
+        circuits: [{
+          name: "Cooldown + Prehab",
+          simple: true,
+          exercises: [
+            { id: "tb4wed_b1", name: "Cross-Body Shoulder Stretch", sets: 1, reps: 1, isHold: true, holdTime: 30, perSide: true, noWeight: true },
+            { id: "tb4wed_b2", name: "Doorway Pec Stretch", sets: 1, reps: 1, isHold: true, holdTime: 30, perSide: true, noWeight: true },
+            { id: "tb4wed_b3", name: "Overhead Tricep Stretch", sets: 1, reps: 1, isHold: true, holdTime: 30, perSide: true, noWeight: true },
+            { id: "tb4wed_b4", name: "Figure-4 Hip Stretch", sets: 1, reps: 1, isHold: true, holdTime: 60, perSide: true, noWeight: true },
+            { id: "tb4wed_b5", name: "Tibialis Raises", sets: 2, reps: 15, notes: "Prehab 2x/week — #2 this week.", noWeight: true }
+          ]
+        }]
+      }
+    ],
+
+    '2026-05-07': POOL_RECOVERY, // Thu: Coach fix — no court work in taper, accumulate rest
+
+    '2026-05-08': [
+      {
+        name: "Upper Body Strength (Taper)",
+        type: "Strength",
+        duration: "40 min",
+        location: "Rec Center",
+        condition: "TAPER WEEK. 2 rounds instead of 3 for circuits A and B. Skip circuit C (arms) entirely. Still do full shoulder protocol.\n48hrs since Wed throwing. Daily: sleeper + cross-body stretch 3x30sec each side before bed.",
+        circuits: [
+          BLOCK_UB_WARMUP,
+          {
+            name: "A. Horizontal Pull + Press + Core (2 rounds, 90 sec rest)",
+            instructions: "TAPER: 2 rounds only.",
+            exercises: [
+              { id: "tb4fri_a1", name: "Single Arm DB Row", sets: 2, reps: 10, weight: 22.5, perSide: true },
+              { id: "tb4fri_a2", name: "Chest Press Machine", sets: 2, reps: 10, weight: 50 },
+              { id: "tb4fri_a3", name: "Tall-Kneeling Band Hold", sets: 2, reps: 1, notes: "20 sec each side.", isHold: true, holdTime: 20, perSide: true, noWeight: true }
+            ]
+          },
+          {
+            name: "B. Vertical Pull + Shoulder + Prehab (2 rounds, 90 sec rest)",
+            instructions: "TAPER: 2 rounds only.",
+            exercises: [
+              { id: "tb4fri_b1", name: "Lat Pulldown Machine", sets: 2, reps: 10, weight: 72 },
+              { id: "tb4fri_b2", name: "Lateral Raise Combo", sets: 2, reps: 10, weight: 7.5 },
+              { id: "tb4fri_b3", name: "Rear Delt Fly Machine", sets: 2, reps: 12, weight: 40 }
+            ]
+          },
+          BLOCK_SHOULDER_WARMUP,
+          {
+            name: "C. Rotator Cuff (10 min)",
+            instructions: "Full shoulder protocol — don't cut this during taper.",
+            simple: true,
+            exercises: [
+              { id: "tb4fri_c1", name: "External Rotation 90/90", sets: 3, reps: 12, notes: "Both arms.", noWeight: true },
+              { id: "tb4fri_c2", name: "Internal Rotation 90/90", sets: 3, reps: 12, notes: "Both arms.", noWeight: true },
+              { id: "tb4fri_c3", name: "Prone T's", sets: 2, reps: 10, noWeight: true },
+              { id: "tb4fri_c4", name: "Band Throws", sets: 2, reps: 10, perSide: true, noWeight: true }
+            ]
+          },
+          {
+            name: "D. Scapular Stability (4 min)",
+            simple: true,
+            exercises: [
+              { id: "tb4fri_d1", name: "Scapular Push-Ups", sets: 2, reps: 10, noWeight: true },
+              { id: "tb4fri_d2", name: "Cross-Body Shoulder Stretch", sets: 1, reps: 1, isHold: true, holdTime: 30, perSide: true, noWeight: true }
+            ]
+          },
+          BLOCK_UB_COOLDOWN
+        ]
+      }
+    ],
+
+    '2026-05-09': {
+      name: "Handball Solo Session (Taper)",
+      type: "Sport-Specific",
+      duration: "40 min",
+      location: "Squash court or outdoor wall",
+      condition: "TAPER WEEK. ~40 throws only. Quality over volume. If Wednesday practice was throw-heavy (70+), reduce to 30 today.\nLast full solo session before tryout.\nDaily: sleeper + cross-body stretch 3x30sec each side before bed.",
+      circuits: [
+        {
+          name: "A. Get Moving (4 min)",
+          simple: true,
+          exercises: [
+            { id: "tb4sat_a1", name: "Jog in Place", sets: 1, reps: 1, isCardio: true, duration: 30, noWeight: true },
+            { id: "tb4sat_a2", name: "High Knees", sets: 1, reps: 20, perSide: true, noWeight: true },
+            { id: "tb4sat_a3", name: "Butt Kicks", sets: 1, reps: 20, perSide: true, noWeight: true },
+            { id: "tb4sat_a4", name: "Step-Touch Side to Side", sets: 1, reps: 20, noWeight: true },
+            { id: "tb4sat_a5", name: "Hip Circles", sets: 1, reps: 10, perSide: true, noWeight: true }
+          ]
+        },
+        {
+          name: "B. Lower Body + Shin + Copenhagen (5 min)",
+          instructions: "Copenhagen is prehab pin #2 this week.",
+          exercises: [
+            { id: "tb4sat_b1", name: "Standing Hip Abduction (Band)", sets: 1, reps: 15, perSide: true, noWeight: true },
+            { id: "tb4sat_b2", name: "Standing Glute Kickback (Band)", sets: 1, reps: 12, perSide: true, noWeight: true },
+            { id: "tb4sat_b3", name: "Calf Raises", sets: 1, reps: 20, noWeight: true },
+            { id: "tb4sat_b4", name: "Tibialis Raises", sets: 1, reps: 20, notes: "Prehab 2x/week — #2 this week.", noWeight: true },
+            { id: "tb4sat_b5", name: "Copenhagen Adductor Hold", sets: 2, reps: 1, notes: "20 sec each side. Prehab 2x/week — #2 this week.", isHold: true, holdTime: 20, perSide: true, noWeight: true }
+          ]
+        },
+        {
+          name: "C. Shoulder Activation (4 min)",
+          simple: true,
+          exercises: [
+            { id: "tb4sat_c1", name: "Arm Circles", sets: 1, reps: 20, noWeight: true },
+            { id: "tb4sat_c2", name: "Scapular Squeezes", sets: 1, reps: 15, noWeight: true },
+            { id: "tb4sat_c3", name: "Pendulum Swings", sets: 1, reps: 10, perSide: true, noWeight: true },
+            { id: "tb4sat_c4", name: "Wall Angels", sets: 2, reps: 8, noWeight: true }
+          ]
+        },
+        {
+          name: "D. Throwing Arm Warm-Up (4 min)",
+          simple: true,
+          exercises: [
+            { id: "tb4sat_d1", name: "Wrist Flicks with Ball", sets: 1, reps: 20, noWeight: true },
+            { id: "tb4sat_d2", name: "Short Wall Passes Both Hands", sets: 1, reps: 10, perSide: true, noWeight: true },
+            { id: "tb4sat_d3", name: "3-Step Rhythm, No Ball", sets: 1, reps: 5, noWeight: true },
+            { id: "tb4sat_d4", name: "3-Step with Ball, Easy", sets: 1, reps: 5, noWeight: true }
+          ]
+        },
+        {
+          name: "E. Main Work: Quality Reps Only (~40 throws)",
+          instructions: "Taper volume. 40 throws. Every rep should feel automatic. No grinding.",
+          simple: true,
+          exercises: [
+            { id: "tb4sat_e1", name: "Jump Shot Practice (R)", sets: 2, reps: 6, notes: "12 throws. Smooth, automatic.", noWeight: true },
+            { id: "tb4sat_e2", name: "Pivot Shot Practice (R)", sets: 2, reps: 5, notes: "10 throws. Plant, separate, launch.", noWeight: true },
+            { id: "tb4sat_e3", name: "Left Hand Passes", sets: 2, reps: 4, notes: "8 throws. Easy.", noWeight: true },
+            { id: "tb4sat_e4", name: "Passing: Mixed", sets: 2, reps: 5, notes: "10 throws. Chest, bounce, overhead.", noWeight: true },
+            { id: "tb4sat_e5", name: "Defensive Footwork: Lateral Slides", sets: 3, reps: 1, notes: "10 sec each. Stay sharp.", isHold: true, holdTime: 10, noWeight: true }
+          ]
+        },
+        {
+          name: "F. Mini Shoulder Protocol (8 min)",
+          instructions: "Shortened rotator cuff only.",
+          simple: true,
+          exercises: [
+            { id: "tb4sat_f1", name: "External Rotation 90/90", sets: 2, reps: 12, notes: "Shoulder protocol #2 this week (shortened).", noWeight: true },
+            { id: "tb4sat_f2", name: "Internal Rotation 90/90", sets: 2, reps: 12, noWeight: true },
+            { id: "tb4sat_f3", name: "Band Throws", sets: 2, reps: 10, perSide: true, noWeight: true }
+          ]
+        },
+        {
+          name: "G. Cool-Down (5 min)",
+          simple: true,
+          exercises: [
+            { id: "tb4sat_g1", name: "Easy Walk + Shake Out", sets: 1, reps: 1, isCardio: true, duration: 60, noWeight: true },
+            { id: "tb4sat_g2", name: "Cross-Body Shoulder Stretch", sets: 1, reps: 1, isHold: true, holdTime: 30, perSide: true, noWeight: true },
+            { id: "tb4sat_g3", name: "Hip Flexor Lunge Stretch", sets: 1, reps: 1, isHold: true, holdTime: 30, perSide: true, noWeight: true },
+            { id: "tb4sat_g4", name: "Chest Opener", sets: 1, reps: 1, isHold: true, holdTime: 30, noWeight: true }
+          ]
+        }
+      ]
+    },
+
+    '2026-05-10': POOL_RECOVERY, // Sun: recovery
+
+    // ---- PRE-TRYOUT ACTIVATION (May 11-12) ----
+
+    '2026-05-11': {
+      name: "Pre-Tryout Activation Day 1",
+      type: "Recovery",
+      duration: "20 min",
+      location: "Home or hotel",
+      condition: "No PT this week. Travel day. Light band work + shoulder prep only.\nDaily: sleeper + cross-body stretch 3x30sec each side before bed.",
+      circuits: [{
+        name: "Light Activation",
+        simple: true,
+        exercises: [
+          { id: "tb5mon_a1", name: "Band Pull-Aparts", sets: 2, reps: 15, noWeight: true },
+          { id: "tb5mon_a2", name: "Arm Circles", sets: 1, reps: 20, noWeight: true },
+          { id: "tb5mon_a3", name: "Standing Hip Hydrants", sets: 1, reps: 10, perSide: true, noWeight: true },
+          { id: "tb5mon_a4", name: "Bodyweight Squats", sets: 1, reps: 10, noWeight: true },
+          { id: "tb5mon_a5", name: "Sleeper Stretch", sets: 3, reps: 1, isHold: true, holdTime: 30, perSide: true, noWeight: true },
+          { id: "tb5mon_a6", name: "Cross-Body Shoulder Stretch", sets: 3, reps: 1, isHold: true, holdTime: 30, perSide: true, noWeight: true }
+        ]
+      }]
+    },
+
+    '2026-05-12': {
+      name: "Pre-Tryout Activation Day 2",
+      type: "Sport-Specific",
+      duration: "25 min",
+      location: "Hotel or venue warm-up area",
+      condition: "15 easy throws max. Feel the rhythm, don't chase power. Ready for tomorrow.\nDaily: sleeper + cross-body stretch 3x30sec each side before bed.",
+      circuits: [
+        {
+          name: "A. Movement Prep (10 min)",
+          simple: true,
+          exercises: [
+            { id: "tb5tue_a1", name: "Light Jog", sets: 1, reps: 1, isCardio: true, duration: 180, noWeight: true },
+            { id: "tb5tue_a2", name: "Hip Circles", sets: 1, reps: 10, perSide: true, noWeight: true },
+            { id: "tb5tue_a3", name: "Leg Swings (Front-Back)", sets: 1, reps: 10, perSide: true, noWeight: true },
+            { id: "tb5tue_a4", name: "Standing Hip Hydrants", sets: 1, reps: 8, perSide: true, noWeight: true },
+            { id: "tb5tue_a5", name: "Arm Circles", sets: 1, reps: 20, noWeight: true },
+            { id: "tb5tue_a6", name: "Band Pull-Aparts", sets: 1, reps: 15, noWeight: true }
+          ]
+        },
+        {
+          name: "B. Easy Throws (10 min)",
+          instructions: "50-60% effort. Feel the pattern. step-OPEN-launch. 15 throws max.",
+          simple: true,
+          exercises: [
+            { id: "tb5tue_b1", name: "Wrist Flicks", sets: 1, reps: 10, noWeight: true },
+            { id: "tb5tue_b2", name: "Short Tosses Both Hands", sets: 1, reps: 5, perSide: true, noWeight: true },
+            { id: "tb5tue_b3", name: "Standing Throws (R)", sets: 2, reps: 5, notes: "50-60%. Feel the rhythm. step-OPEN-launch.", noWeight: true }
+          ]
+        },
+        {
+          name: "C. Stretch (5 min)",
+          simple: true,
+          exercises: [
+            { id: "tb5tue_c1", name: "Sleeper Stretch", sets: 2, reps: 1, isHold: true, holdTime: 30, perSide: true, noWeight: true },
+            { id: "tb5tue_c2", name: "Cross-Body Shoulder Stretch", sets: 2, reps: 1, isHold: true, holdTime: 30, perSide: true, noWeight: true },
+            { id: "tb5tue_c3", name: "Hip Flexor Lunge Stretch", sets: 1, reps: 1, isHold: true, holdTime: 30, perSide: true, noWeight: true }
+          ]
+        }
+      ]
+    }
+
+
 
     };
 

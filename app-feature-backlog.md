@@ -103,7 +103,7 @@ Collected from sessions through Mar 20, 2026. Includes holistic review from 7 ag
 - [ ] **Warm-up/cool-down block coverage audit** -- ensure every workout type has a BLOCK_ warm-up and cool-down wired in. Current gaps: Mar 1 upper body uses different cool-down (Doorway Pec + Tricep vs Chest Opener + Thread the Needle) -- decide on one canonical UB cool-down. Lower body warm-ups/cool-downs vary per instance (different exercises, progressing hold times) -- decide if a canonical block works or if variation is intentional. Throwing/handball warm-ups and cool-downs not yet blocked. `/plan-workouts` should auto-include blocks for every workout it generates.
 - [x] **Location realism reference doc** -- `reference/location_equipment.md` with equipment, good-for, limitations, and access notes per location. Wire into `/plan-workouts` coach review step. Started Mar 28, Sophie filling in details.
 - [ ] **Handball drill cue pass** -- shorter, clearer, feel-based and rhythmic cues (aphantasia)
-- [ ] **Menstrual cycle integration** -- revisit early April once cycle stabilizes. Follicular=peak training, late luteal=back off. (Coach)
+- [x] **Menstrual cycle integration** -- Integrated into /plan-workouts skill (Apr 2026). Phase mapped at planning time from period start + ovulation confirmation. Informs exercise selection, condition notes, and nutrition context. ACL warmup protocol for ovulatory-window court days. Readiness system stays primary governor. Revisit as app-level adaptation rule after 6+ tracked cycles (~Aug 2026).
 - [ ] **Planned deload weeks in future blocks** -- systematic, not accidental from travel. (Coach)
 
 ---
