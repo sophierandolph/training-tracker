@@ -7481,98 +7481,81 @@
     // ============================================================
 
     '2026-04-04': {
-      name: "Handball Solo Session (Phase 2 Hold)",
-      type: "Sport-Specific",
-      duration: "35 min",
-      location: "Squash court or any wall",
-      condition: "HOLDING at Phase 2: 1-step approach, 60-70% effort, ~42 throws.\nShoulder was crunchy Wednesday. If shoulder feels good, can push to 70% on last set. If crunchy during warmup, reduce volume.\nPhase 3 (full approach) deferred to next week.\nWrist work goes AFTER throwing.",
-      circuits: [
-        {
-          name: "A. Warm-Up + Hip Activation (8 min)",
-          instructions: "Full warm-up before throwing.",
-          simple: true,
-          exercises: [
-            { id: "w9sat_a1", name: "Arm Circles", sets: 1, reps: 20, notes: "10 forward, 10 backward. Big slow circles.", noWeight: true },
-            { id: "w9sat_a2", name: "Band Pull-Aparts", sets: 1, reps: 15, notes: "Light band. Squeeze shoulder blades.", noWeight: true },
-            { id: "w9sat_a3", name: "Quadruped Hip Pocket Rockback", sets: 1, reps: 8, notes: "Each side. Open the hips for approach footwork.", perSide: true, noWeight: true },
-            { id: "w9sat_a4", name: "Side-Lying Clamshell (3s Pause)", sets: 1, reps: 10, notes: "Each side. Open like a book, pause when you feel the back of the hip light up.", perSide: true, noWeight: true },
-            { id: "w9sat_a5", name: "Bear Crawls", sets: 2, reps: 1, notes: "10 ft each. Opposite hand and foot. Hips low, don't pike.", noWeight: true },
-            { id: "w9sat_a6", name: "Wrist Stretches", sets: 2, reps: 1, notes: "30 sec each direction. Press palms flat, lean forward until you feel the pull through your wrist.", isHold: true, holdTime: 30, noWeight: true }
-          ]
-        },
-        {
-          name: "B. Wall Throwing (Phase 2 Hold)",
-          instructions: "1-step approach, 60-70% effort. ~42 throws total. Controlled. If shoulder feels off during kneeling throws, reduce standing volume.",
-          simple: true,
-          exercises: [
-            { id: "w9sat_b1", name: "Wrist Flicks with Ball", sets: 1, reps: 20, notes: "Snap wrist, feel fingers release.", noWeight: true },
-            { id: "w9sat_b2", name: "Short Wall Passes Both Hands", sets: 1, reps: 10, notes: "10 each hand. Easy.", perSide: true, noWeight: true },
-            { id: "w9sat_b3", name: "Kneeling Throws (R)", sets: 2, reps: 5, notes: "Stationary. 60%. Cue: 'OPEN'.", noWeight: true },
-            { id: "w9sat_b4", name: "1-Step Standing Throws (R)", sets: 3, reps: 6, notes: "One step into throw. 60-70%. Step, OPEN, launch.", noWeight: true },
-            { id: "w9sat_b5", name: "1-Step Standing Throws (L)", sets: 2, reps: 4, notes: "Left hand. Low effort, technique focus.", noWeight: true }
-          ]
-        },
-        {
-          name: "C. Feint Drills (5 min)",
-          instructions: "Court movement quality.",
-          simple: true,
-          exercises: [
-            { id: "w9sat_c1", name: "Lateral Step-Over Feint Drill", sets: 4, reps: 3, notes: "Each direction. Knee up, load it, snap.", perSide: true, noWeight: true },
-            { id: "w9sat_c2", name: "Forward Burst Feint Drill", sets: 4, reps: 3, notes: "Each direction. Drive, drive, drive, CUT. Sell the burst then redirect.", perSide: true, noWeight: true }
-          ]
-        },
-        {
-          name: "D. Post-Throw Wrist + Shoulder (8 min)",
-          instructions: "Wrist work AFTER throwing. Shoulder decompression.",
-          exercises: [
-            { id: "w9sat_d1", name: "Wrist Flexion/Extension Isometrics", sets: 3, reps: 1, notes: "30 sec each direction. Lock the wrist, don't let the weight move.", isHold: true, holdTime: 30, noWeight: true },
-            { id: "w9sat_d2", name: "Wrist Flexion Curls", sets: 2, reps: 10, weight: 5, notes: "If elbow niggling from Wednesday is still present, do these bodyweight only or skip. Snap wrist up, slow on the way down." },
-            { id: "w9sat_d3", name: "Cross-Body Shoulder Stretch", sets: 1, reps: 1, notes: "30 sec each side.", isHold: true, holdTime: 30, perSide: true, noWeight: true },
-            { id: "w9sat_d4", name: "Doorway Pec Stretch", sets: 1, reps: 1, notes: "45 sec.", isHold: true, holdTime: 45, noWeight: true },
-            { id: "w9sat_d5", name: "Tibialis Raises", sets: 2, reps: 15, notes: "2x/week pin — this is #2 (Thu was #1 at pool).", noWeight: true }
-          ]
-        }
-      ]
+      name: "Rest Day",
+      type: "Recovery",
+      duration: "Done",
+      location: "Home",
+      condition: "Period Day 1 — cramping and knee pain. True rest. Walked 20-30 min earlier.\nHandball solo session moved to tomorrow.",
+      circuits: []
     },
 
-    '2026-04-05': {
-      name: "Active Recovery: Pool + Mobility",
-      type: "Recovery",
-      duration: "20-25 min",
-      location: "Rec Center",
-      condition: "Pool recovery before race week starts Monday. Water walking > laps. Prioritize hip openers and psoas work.\nDo a range-of-motion check on both hips — flag anything tighter than last week before race week load.",
-      circuits: [
-        BLOCK_POOL_SWIMMING,
-        BLOCK_FOAM_ROLL_STRETCH
-      ]
-    },
-
-    '2026-04-06': {
-      name: "Walk + Stretch",
-      type: "Recovery",
-      duration: "20 min",
-      location: "Outdoors or home",
-      condition: "Light recovery day. Post-PT walk + stretch. Race week — manage energy, don't build stress.\nFocus on hip flexors and calves (the two zones most at risk for Beer Bike + scrimmage Saturday).",
-      circuits: [
-        {
-          name: "A. Easy Walk (10 min)",
-          simple: true,
-          exercises: [
-            { id: "w9mon_a1", name: "Easy Walk", sets: 1, reps: 1, notes: "10 min at conversation pace. Flat ground. Just move.", isCardio: true, duration: 600, noWeight: true }
-          ]
-        },
-        {
-          name: "B. Hip + Calf Stretch (10 min)",
-          simple: true,
-          exercises: [
-            { id: "w9mon_b1", name: "Half-Kneeling Hip Flexor Stretch", sets: 1, reps: 1, notes: "60 sec each side. Squeeze glute on the back leg, don't arch the low back.", isHold: true, holdTime: 60, perSide: true, noWeight: true },
-            { id: "w9mon_b2", name: "Standing Calf Stretch (Wall)", sets: 1, reps: 1, notes: "45 sec each side. Straight back leg, heel down.", isHold: true, holdTime: 45, perSide: true, noWeight: true },
-            { id: "w9mon_b3", name: "Figure-4 Hip Stretch (Supine)", sets: 1, reps: 1, notes: "60 sec each side. Gentle pull, let gravity do the work.", isHold: true, holdTime: 60, perSide: true, noWeight: true },
-            { id: "w9mon_b4", name: "Supine Psoas Release", sets: 1, reps: 1, notes: "90 sec each side. Let the leg hang off the edge of a bed or bench.", isHold: true, holdTime: 90, perSide: true, noWeight: true }
-          ]
-        }
-      ]
-    },
+    '2026-04-05': [
+      {
+        name: "Handball Solo Session (Phase 2 Hold)",
+        type: "Sport-Specific",
+        duration: "35 min",
+        location: "Squash court or any wall",
+        condition: "Moved from Saturday. HOLDING at Phase 2: 1-step approach, 60-70% effort, ~42 throws.\nShoulder was crunchy Wednesday. If shoulder feels good, can push to 70% on last set. If crunchy during warmup, reduce volume.\nPhase 3 (full approach) deferred to next week.\nWrist work goes AFTER throwing.",
+        circuits: [
+          {
+            name: "A. Warm-Up + Hip Activation (8 min)",
+            instructions: "Full warm-up before throwing.",
+            simple: true,
+            exercises: [
+              { id: "w9sat_a1", name: "Arm Circles", sets: 1, reps: 20, notes: "10 forward, 10 backward. Big slow circles.", noWeight: true },
+              { id: "w9sat_a2", name: "Band Pull-Aparts", sets: 1, reps: 15, notes: "Light band. Squeeze shoulder blades.", noWeight: true },
+              { id: "w9sat_a3", name: "Quadruped Hip Pocket Rockback", sets: 1, reps: 8, notes: "Each side. Open the hips for approach footwork.", perSide: true, noWeight: true },
+              { id: "w9sat_a4", name: "Side-Lying Clamshell (3s Pause)", sets: 1, reps: 10, notes: "Each side. Open like a book, pause when you feel the back of the hip light up.", perSide: true, noWeight: true },
+              { id: "w9sat_a5", name: "Bear Crawls", sets: 2, reps: 1, notes: "10 ft each. Opposite hand and foot. Hips low, don't pike.", noWeight: true },
+              { id: "w9sat_a6", name: "Wrist Stretches", sets: 2, reps: 1, notes: "30 sec each direction. Press palms flat, lean forward until you feel the pull through your wrist.", isHold: true, holdTime: 30, noWeight: true }
+            ]
+          },
+          {
+            name: "B. Wall Throwing (Phase 2 Hold)",
+            instructions: "1-step approach, 60-70% effort. ~42 throws total. Controlled. If shoulder feels off during kneeling throws, reduce standing volume.",
+            simple: true,
+            exercises: [
+              { id: "w9sat_b1", name: "Wrist Flicks with Ball", sets: 1, reps: 20, notes: "Snap wrist, feel fingers release.", noWeight: true },
+              { id: "w9sat_b2", name: "Short Wall Passes Both Hands", sets: 1, reps: 10, notes: "10 each hand. Easy.", perSide: true, noWeight: true },
+              { id: "w9sat_b3", name: "Kneeling Throws (R)", sets: 2, reps: 5, notes: "Stationary. 60%. Cue: 'OPEN'.", noWeight: true },
+              { id: "w9sat_b4", name: "1-Step Standing Throws (R)", sets: 3, reps: 6, notes: "One step into throw. 60-70%. Step, OPEN, launch.", noWeight: true },
+              { id: "w9sat_b5", name: "1-Step Standing Throws (L)", sets: 2, reps: 4, notes: "Left hand. Low effort, technique focus.", noWeight: true }
+            ]
+          },
+          {
+            name: "C. Feint Drills (5 min)",
+            instructions: "Court movement quality.",
+            simple: true,
+            exercises: [
+              { id: "w9sat_c1", name: "Lateral Step-Over Feint Drill", sets: 4, reps: 3, notes: "Each direction. Knee up, load it, snap.", perSide: true, noWeight: true },
+              { id: "w9sat_c2", name: "Forward Burst Feint Drill", sets: 4, reps: 3, notes: "Each direction. Drive, drive, drive, CUT. Sell the burst then redirect.", perSide: true, noWeight: true }
+            ]
+          },
+          {
+            name: "D. Post-Throw Wrist + Shoulder (8 min)",
+            instructions: "Wrist work AFTER throwing. Shoulder decompression.",
+            exercises: [
+              { id: "w9sat_d1", name: "Wrist Flexion/Extension Isometrics", sets: 3, reps: 1, notes: "30 sec each direction. Lock the wrist, don't let the weight move.", isHold: true, holdTime: 30, noWeight: true },
+              { id: "w9sat_d2", name: "Wrist Flexion Curls", sets: 2, reps: 10, weight: 5, notes: "If elbow niggling from Wednesday is still present, do these bodyweight only or skip. Snap wrist up, slow on the way down." },
+              { id: "w9sat_d3", name: "Cross-Body Shoulder Stretch", sets: 1, reps: 1, notes: "30 sec each side.", isHold: true, holdTime: 30, perSide: true, noWeight: true },
+              { id: "w9sat_d4", name: "Doorway Pec Stretch", sets: 1, reps: 1, notes: "45 sec.", isHold: true, holdTime: 45, noWeight: true },
+              { id: "w9sat_d5", name: "Tibialis Raises", sets: 2, reps: 15, notes: "2x/week pin — this is #2 (Thu was #1 at pool).", noWeight: true }
+            ]
+          }
+        ]
+      },
+      {
+        name: "Active Recovery: Pool + Mobility",
+        type: "Recovery",
+        duration: "20-25 min",
+        location: "Rec Center",
+        condition: "Pool recovery after handball solo session. Water walking > laps. Prioritize hip openers and psoas work.\nDo a range-of-motion check on both hips — flag anything tighter than last week before race week load.",
+        circuits: [
+          BLOCK_POOL_SWIMMING,
+          BLOCK_FOAM_ROLL_STRETCH
+        ]
+      }
+    ],
 
     // Mon Apr 6: PT 5pm — external activity, not planned here
 
