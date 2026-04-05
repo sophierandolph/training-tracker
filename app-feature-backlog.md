@@ -8,7 +8,7 @@ Collected from sessions through Mar 20, 2026. Includes holistic review from 7 ag
 
 - [x] **showDayPreview() missing DATE_ACTIVITIES** -- after the travel handler, falls through to EXTERNAL_ACTIVITIES with no DATE_ACTIVITIES check. Non-travel day with date-specific activities but no DATE_WORKOUTS would show "No workout planned." -- Fixed Mar 28.
 - [ ] **renderCalendar() and renderUpcomingWorkouts() DATE_ACTIVITIES before travel** -- both check DATE_ACTIVITIES before travel/SPECIAL_DATES in the else-if chain. Display-only, not routing. Low priority.
-- [ ] **Normalize old /10 effort scores to /5** -- Early sessions (pre-Feb?) logged overallFeel on a 1-10 scale. Current scale is 1-5. Firestore sweep needed: divide by 2 for any overallFeel > 5. Example: Feb 11 Baker gym logged as 6/5. Also check per-set feel values in exercises arrays.
+- [x] **Normalize old /10 effort scores to /5** -- Firestore sweep Apr 4. 5 docs updated (Feb 11, Feb 14 x2, Feb 19, Mar 1). overallFeel divided by 2, rounded up. No per-set issues found.
 
 ### Fixed
 
