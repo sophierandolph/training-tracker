@@ -3289,7 +3289,9 @@
       // Save to Firestore (idempotent: doc ID based on date + workout name prevents duplicates)
       const docId = `${workoutData.date}_${(workoutData.workout || workoutData.activityId || 'workout').replace(/[^a-zA-Z0-9]/g, '_')}`;
       workoutData.docId = docId;
-      db.collection('workouts').doc(docId).set(workoutData)
+      // merge: true preserves fields written by other tools (e.g. Claude logging PT exercises via CLI).
+      // Without merge, re-logging via the app silently wipes any exercises array Claude wrote.
+      db.collection('workouts').doc(docId).set(workoutData, { merge: true })
         .then(() => { console.log('Workout saved to cloud'); showToast('Saved to cloud'); })
         .catch((error) => { console.log('Error saving workout:', error); showToast('Save failed - check connection', 'error'); });
     }
