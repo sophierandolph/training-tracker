@@ -4166,7 +4166,7 @@
         ` : '';
 
         activitiesHtml += `
-          <div class="activity-tile ${logged ? 'logged' : ''}" onclick="openExternalActivityModal('${activity.id}', ${isDateSpecific ? `null, '${dateKey}'` : `'${dayName}'`})">
+          <div class="activity-tile ${logged ? 'logged' : ''}" ${logged ? '' : `onclick="openExternalActivityModal('${activity.id}', ${isDateSpecific ? `null, '${dateKey}'` : `'${dayName}'`})"`}>
             <div class="activity-tile-header">
               <div>
                 <div class="activity-tile-type">${activity.type}</div>
@@ -4233,7 +4233,7 @@
         ` : '';
 
         activitiesHtml += `
-          <div class="activity-tile ${logged ? 'logged' : ''}" onclick="openExternalActivityModal('${activity.id}', ${isDateSpecific ? `null, '${dateKey}'` : `'${dayName}'`})">
+          <div class="activity-tile ${logged ? 'logged' : ''}" ${logged ? '' : `onclick="openExternalActivityModal('${activity.id}', ${isDateSpecific ? `null, '${dateKey}'` : `'${dayName}'`})"`}>
             <div class="activity-tile-header">
               <div>
                 <div class="activity-tile-type">${activity.type}</div>
@@ -4427,7 +4427,7 @@
         ` : '';
 
         tilesHtml += `
-          <div class="activity-tile ${logged ? 'logged' : ''}" onclick="openExternalActivityModal('${activity.id}', ${isDateSpecific ? `null, '${dateKey}'` : `'${dayName}'`})">
+          <div class="activity-tile ${logged ? 'logged' : ''}" ${logged ? '' : `onclick="openExternalActivityModal('${activity.id}', ${isDateSpecific ? `null, '${dateKey}'` : `'${dayName}'`})"`}>
             <div class="activity-tile-header">
               <div>
                 <div class="activity-tile-type">${activity.type}</div>
