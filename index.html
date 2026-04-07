@@ -7584,7 +7584,7 @@
         type: "Strength",
         duration: "45 min",
         location: "Rec Center",
-        condition: "Full lower body. Hold goblet squat at 27.5, RDL at 17.5. Swap reverse lunges to walking lunges if ready (coach decision — 4 weeks at 15 lb reverse).\nBring: loop band",
+        condition: "TRIMMED: PT yesterday hit reverse lunges + walking lunges + squat-to-press. Handball tomorrow, Beer Bike Saturday. Cutting single-leg quad volume — keeping bilateral squat + hinge + prehab. Bike tune-up is the priority session today.\nBring: loop band",
         circuits: [
           {
             name: "A. Hip Prehab Warm-Up (12 min)",
@@ -7599,23 +7599,20 @@
             ]
           },
           {
-            name: "B. Squat + Step-Up + Core (12 min)",
-            instructions: "B1-B2-B3, rest 90 sec, repeat 3x. Jump squats dropped — plyometrics on healing quad contusion not worth the risk 4 days before Beer Bike.",
+            name: "B. Squat + Hinge + Core (12 min)",
+            instructions: "B1-B2-B3, rest 90 sec, repeat 3x. TRIMMED from PT overlap: box step-ups and reverse lunges removed (single-leg quad volume already covered yesterday). Bilateral squat + hinge only.",
             restTime: 90,
             exercises: [
-              { id: "w9tue_b1", name: "DB Goblet Squat", sets: 3, reps: 12, weight: 27.5, notes: "Hold at 27.5. Full depth, chest up." },
-              { id: "w9tue_b2", name: "Box Step-Ups", sets: 3, reps: 8, notes: "Each leg. Moderate tempo. Drive through the heel, full extension at top. Use a bench or box at knee height.", perSide: true, noWeight: true },
+              { id: "w9tue_b1", name: "DB Goblet Squat", sets: 3, reps: 10, weight: 27.5, notes: "Hold at 27.5. Full depth, chest up. Dropped to 10 reps (from 12) — taper trim." },
+              { id: "w9tue_b2", name: "DB RDLs", sets: 3, reps: 10, weight: 17.5, notes: "Hold at 17.5. Hinge at hips, slow eccentric. Posterior chain wasn't hit in PT — this is the missing piece." },
               { id: "w9tue_b3", name: "Front Low Plank Hold", sets: 3, reps: 1, notes: "30 sec.", isHold: true, holdTime: 30, noWeight: true }
             ]
           },
           {
-            name: "C. Lunge + Hinge + Core (12 min)",
-            instructions: "C1-C2-C3, rest 90 sec, repeat 3x.",
-            restTime: 90,
+            name: "C. Core Finisher (5 min)",
+            instructions: "Side planks both sides, then move to cool-down.",
             exercises: [
-              { id: "w9tue_c1", name: "DB Reverse Lunges", sets: 3, reps: 8, weight: 15, notes: "Each leg. If these feel too easy, progress to 17.5 or swap to walking lunges next block.", perSide: true },
-              { id: "w9tue_c2", name: "DB RDLs", sets: 3, reps: 10, weight: 17.5, notes: "Hold at 17.5. Hinge at hips, slow eccentric." },
-              { id: "w9tue_c3", name: "Side Plank Hold", sets: 3, reps: 1, notes: "25 sec each side.", isHold: true, holdTime: 25, perSide: true, noWeight: true }
+              { id: "w9tue_c3", name: "Side Plank Hold", sets: 2, reps: 1, notes: "25 sec each side.", isHold: true, holdTime: 25, perSide: true, noWeight: true }
             ]
           },
           {
