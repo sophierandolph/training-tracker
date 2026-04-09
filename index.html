@@ -7722,8 +7722,8 @@
         name: "Beer Bike: Race Prep (Bike #2, Last Hard Effort)",
         type: "Cardio",
         duration: "30 min",
-        location: "Bike (outdoor or stationary)",
-        condition: "Last hard effort before race day Saturday. Simulate race intensity in short bursts, then taper. 2 days of rest after this.",
+        location: "Stationary or road bike (track closed til Rice Day)",
+        condition: "Last hard effort before race day Saturday. Touch race pace, then shut it down.\nINJURY MOD (elbow/shoulder): keep grip LOOSE on bars. Upright stationary preferred — hands light or rested on thighs during hard intervals. If road bike: hoods only, never drops, drive from legs not arms. If elbow flares on interval 1, cut to 2 intervals not 3.",
         circuits: [
           {
             name: "Race Prep Ride (30 min)",
@@ -7732,37 +7732,46 @@
             exercises: [
               { id: "w9thu_a1", name: "Easy Spin Warm-Up", sets: 1, reps: 1, notes: "5 min conversational pace.", isCardio: true, duration: 300, noWeight: true },
               { id: "w9thu_a2", name: "Progressive Build", sets: 1, reps: 1, notes: "5 min building from 60% to 80%.", isCardio: true, duration: 300, noWeight: true },
-              { id: "w9thu_a3", name: "Race Simulation Intervals", sets: 3, reps: 1, notes: "90 sec at 90% (race pace) / 2 min easy. 3 rounds. This is the sharpener — not a fitness builder.", isCardio: true, duration: 90, noWeight: true },
+              { id: "w9thu_a3", name: "Race Simulation Intervals", sets: 3, reps: 1, notes: "90 sec at 90% (race pace) / 2 min easy. 3 rounds. Cut to 2 if elbow flares. Loose grip on bars.", isCardio: true, duration: 90, noWeight: true },
               { id: "w9thu_a4", name: "Easy Cool-Down Spin", sets: 1, reps: 1, notes: "8 min easy. Let the legs flush.", isCardio: true, duration: 480, noWeight: true }
             ]
           }
         ]
       },
       {
-        name: "Shoulder Protocol (Week 9)",
+        name: "Shoulder + Elbow Decongest",
         type: "Prehab",
         duration: "20 min",
         location: "Home or gym",
-        condition: "Weekly shoulder protocol. Same structure — don't skip this 2 days before scrimmage.\nEquipment: long resistance band, light DBs (3-5 lb) or substitute band.",
+        condition: "INJURY MOD: Right posterior shoulder flared after Wed heavy throw day. Right lateral epicondyle (tennis elbow) flagged from defensive holds. Replaces normal Week 9 shoulder protocol.\nNO band throws, NO 90/90 ER/IR, NO prone T's, NO scap push-ups, NO gripping work.\nThis block is decongestion only — calm the tissue, do not load it.\nProtocol: heat the elbow extensor mass 10 min before mobility. Repeat sleeper + cross-body stretches a second time tonight (AM/PM dosing). Ice shoulder 10-15 min after the session.\nSleep tonight: NOT on right side. Pillow under right elbow if supine.\nNSAIDs: skip Thu and Fri (blunts tendon remodeling + want honest pain signal Saturday).",
         circuits: [
-          BLOCK_SHOULDER_WARMUP,
           {
-            name: "B. Rotator Cuff (12 min)",
-            instructions: "30 sec rest between sets.",
+            name: "A. Posterior Capsule Decompress (8 min)",
+            instructions: "Right side first. Stop at first pull, breathe.",
             simple: true,
             exercises: [
-              { id: "w9thu_b3", name: "External Rotation 90/90", sets: 3, reps: 12, notes: "Both arms. Band at shoulder height. Goal post position, rotate hands up.", noWeight: true },
-              { id: "w9thu_b4", name: "Internal Rotation 90/90", sets: 3, reps: 12, notes: "Both arms. Turn around, same band. Lighter tension.", noWeight: true },
-              { id: "w9thu_b5", name: "Prone T's", sets: 2, reps: 10, notes: "Face down. Thumbs up, raise arms to T. Squeeze blades at top.", noWeight: true },
-              { id: "w9thu_b6", name: "Band Throws", sets: 2, reps: 10, notes: "Each arm. Pull-into-release pattern. Feel chest and lat, NOT tricep.", perSide: true, noWeight: true }
+              { id: "w9thu_d1", name: "Sleeper Stretch", sets: 3, reps: 1, notes: "Each side, RIGHT first. Lie on right side, arm 90°, gently push forearm toward floor.", isHold: true, holdTime: 30, perSide: true, noWeight: true },
+              { id: "w9thu_d2", name: "Cross-Body Stretch (Supine)", sets: 3, reps: 1, notes: "Each side, right first. Pin shoulder blade to floor, pull arm across.", isHold: true, holdTime: 30, perSide: true, noWeight: true },
+              { id: "w9thu_d3", name: "Scap CARs", sets: 2, reps: 5, notes: "Each direction. Slow, controlled circles with shoulder blade only.", noWeight: true }
             ]
           },
           {
-            name: "C. Scapular Stability (4 min)",
+            name: "B. Light Cuff Activation (5 min)",
+            instructions: "Pain-free only. If anything pulls or crunches, stop.",
             simple: true,
             exercises: [
-              { id: "w9thu_b7", name: "Scapular Push-Ups", sets: 2, reps: 10, notes: "Plank or knees. Sink chest, push away.", noWeight: true },
-              { id: "w9thu_b8", name: "Cross-Body Shoulder Stretch", sets: 1, reps: 1, notes: "30 sec each side.", isHold: true, holdTime: 30, perSide: true, noWeight: true }
+              { id: "w9thu_d4", name: "Band Pull-Aparts", sets: 1, reps: 15, notes: "Light band, LOOSE grip. Single set only — cuff is fatigued from yesterday's throws.", noWeight: true },
+              { id: "w9thu_d5", name: "Banded ER at 0°", sets: 2, reps: 15, notes: "Each arm. Elbow tucked at side, very light band. Rotate hand outward in a small arc. Circulation, not strength.", perSide: true, noWeight: true }
+            ]
+          },
+          {
+            name: "C. Elbow Calm-Down (7 min)",
+            instructions: "Heat extensor mass 10 min first. Isometrics calm the tendon, stretches finish.",
+            simple: true,
+            exercises: [
+              { id: "w9thu_d6", name: "Wrist Extensor Stretch", sets: 3, reps: 1, notes: "Right arm out straight, palm down. Use left hand to gently pull fingers down and toward you. Feel stretch on top of forearm.", isHold: true, holdTime: 30, noWeight: true },
+              { id: "w9thu_d7", name: "Lateral Elbow Isometric", sets: 5, reps: 1, notes: "Right arm at side, elbow bent 90°, loose fist. Press back of right hand UP into left palm at ~30% effort. 10 sec hold. Pain-free only.", isHold: true, holdTime: 10, noWeight: true },
+              { id: "w9thu_d8", name: "Forearm Self-Massage", sets: 1, reps: 1, notes: "2 min on the meaty top of the forearm (extensor mass). NOT on the bony bump itself.", isHold: true, holdTime: 120, noWeight: true }
             ]
           }
         ]
@@ -7770,43 +7779,82 @@
     ],
 
     '2026-04-10': {
-      name: "Pre-Race Taper: Light Activation",
+      name: "Pre-Race Taper: Activation + Injury Care",
       type: "Recovery",
-      duration: "20-25 min",
+      duration: "25-30 min",
       location: "Rec Center or home",
-      condition: "TAPER DAY. Tomorrow is Beer Bike + handball scrimmage double. No heavy lifting, no throwing (48hr shoulder rule — Wed practice was the last throw this week).\nGoal: blood flow and activation, not fatigue. Show up Saturday fresh.",
+      condition: "TAPER DAY. Tomorrow is Beer Bike + women's scrimmage double. 48hr shoulder rule respected (Wed throws → Sat throws).\nINJURY MOD: no lat pulldown (grip load aggravates elbow tendon). Eccentric wrist extension intentionally NOT here — eccentrics cause 24-48hr tendon soreness, save them for Monday post-Flannery.\nProtocol: heat elbow extensors 10 min before mobility. Sleeper + cross-body stretches AM and PM. Sleep NOT on right side; pillow under right elbow if supine.\nNSAIDs: still skip Thu/Fri. Tylenol OK Sat pre-game if needed; ibuprofen Sat post-game fine.",
       circuits: [
         {
-          name: "A. Upper Body Activation (10 min)",
-          instructions: "Light movement only. Wake things up, don't tire them out.",
+          name: "A1. Pull-Apart Activation (2 min)",
           simple: true,
           exercises: [
-            { id: "w9fri_a1", name: "Band Pull-Aparts", sets: 2, reps: 15, notes: "Light band. Squeeze shoulder blades. Easy.", noWeight: true },
-            { id: "w9fri_a2", name: "Lat Pulldown Machine", sets: 2, reps: 10, weight: 50, notes: "~70% of normal weight. Controlled tempo. Not a work set — just activation." },
-            { id: "w9fri_a3", name: "Rear Delt Fly Machine", sets: 2, reps: 12, weight: 30, notes: "Light. Pinch shoulder blades. Blood flow to the posterior shoulder." }
+            { id: "w9fri_a1", name: "Band Pull-Aparts", sets: 2, reps: 15, notes: "Light band. Loose grip. Squeeze shoulder blades.", noWeight: true }
           ]
         },
         {
-          name: "B. Posterior Capsule Stretch (5 min)",
+          name: "A2. Rear Delt Fly (3 min)",
+          instructions: "Light, relaxed grip on the handles. Blood flow only.",
+          exercises: [
+            { id: "w9fri_a3", name: "Rear Delt Fly Machine", sets: 2, reps: 12, weight: 30, notes: "Light. Pinch shoulder blades. Use a relaxed grip on the handles." }
+          ]
+        },
+        {
+          name: "B. Posterior Capsule Stretch (6 min)",
           instructions: "Daily shoulder maintenance. Especially important before tomorrow's scrimmage.",
           simple: true,
           exercises: [
-            { id: "w9fri_b1", name: "Sleeper Stretch", sets: 3, reps: 1, notes: "Each side, right first. Lie on your RIGHT side. Right arm out at shoulder height, elbow bent 90°. Use left hand to gently push forearm toward the floor. Stop at first pull. Hold and breathe.", isHold: true, holdTime: 30, perSide: true, noWeight: true },
-            { id: "w9fri_b2", name: "Cross-Body Stretch (Supine)", sets: 3, reps: 1, notes: "Each side, right first. Lie on your back. Pull right arm across chest. Pin shoulder blade to floor.", isHold: true, holdTime: 30, perSide: true, noWeight: true }
+            { id: "w9fri_b1", name: "Sleeper Stretch", sets: 3, reps: 1, notes: "Each side, RIGHT first. Lie on right side, arm 90°, gently push forearm toward floor. Stop at first pull, breathe.", isHold: true, holdTime: 30, perSide: true, noWeight: true },
+            { id: "w9fri_b2", name: "Cross-Body Stretch (Supine)", sets: 3, reps: 1, notes: "Each side, right first. Pin shoulder blade to floor.", isHold: true, holdTime: 30, perSide: true, noWeight: true }
           ]
         },
         {
-          name: "C. Easy Spin (Optional, 10 min)",
+          name: "C. Elbow Tendon Care (5 min)",
+          instructions: "Heat extensor mass 10 min first. Isometrics are analgesic — your pre-game tool.",
+          simple: true,
+          exercises: [
+            { id: "w9fri_c1", name: "Wrist Extensor Stretch", sets: 3, reps: 1, notes: "Right arm out, palm down, pull fingers down and toward you.", isHold: true, holdTime: 30, noWeight: true },
+            { id: "w9fri_c2", name: "Lateral Elbow Isometric", sets: 5, reps: 1, notes: "Right arm at side, elbow 90°, back of hand into left palm at ~50% effort if pain-free. 20 sec hold.", isHold: true, holdTime: 20, noWeight: true }
+          ]
+        },
+        {
+          name: "D. Easy Spin (Optional, 10 min)",
           instructions: "Keep the legs loose for tomorrow. Zone 1 only. Skip if you feel good without it.",
           simple: true,
           exercises: [
-            { id: "w9fri_c1", name: "Easy Spin", sets: 1, reps: 1, notes: "10 min conversational pace. Flat resistance. Just keep the legs turning over. If you feel fresh, skip this entirely.", isCardio: true, duration: 600, noWeight: true }
+            { id: "w9fri_d1", name: "Easy Spin", sets: 1, reps: 1, notes: "10 min conversational pace. Skip if fresh.", isCardio: true, duration: 600, noWeight: true }
           ]
         }
       ]
     },
 
-    // Sat Apr 11: Beer Bike (11am) + Handball Scrimmage (2-5pm) — in DATE_ACTIVITIES
+    // ============================================================
+    // Sat Apr 11: Beer Bike (11am) + Women's Handball Scrimmage (~90 min within 2-5pm window)
+    // In DATE_ACTIVITIES — no DATE_WORKOUTS entry, but injury-aware game day plan:
+    //
+    // PRE-GAME WARMUP (do at the field, ~20 min before tip):
+    //   - Heat elbow extensors / general arm warmup
+    //   - Sleeper stretch + cross-body stretch (right first, 3x30s each)
+    //   - Wrist extensor stretch 3x30s
+    //   - Lateral elbow isometric 5x20s @50%
+    //   - Banded ER at 0° + light pull-aparts
+    //   - THROWING RAMP: 10% → 30% → 50% → 70% → 80% over 15+ min. Do not skip the ramp.
+    //   - Counterforce brace on right forearm (or KT tape mid-forearm pulled toward elbow)
+    //
+    // BETWEEN BEER BIKE AND SCRIMMAGE (~12:45):
+    //   - 15 min shade, electrolytes (not just water), don't go cold
+    //   - Re-warm shoulder: bands + one isometric set + light throws
+    //
+    // GO/NO-GO:
+    //   GREEN (full women's scrimmage): morning shoulder feels stiff not crunchy, throwing ramp reaches 80% with no crunch + no velocity drop, water-bottle squeeze ≤2/10 elbow pain, isometrics 5x10s @50% pain-free
+    //   YELLOW (play modified — sub out aggressively, no max-effort throws, skip heaviest defensive sets): crunch returns at 70% but no pain, elbow 3-4/10 on grip but isometrics tolerable, Beer Bike left a structure tight
+    //   RED (bench, watch, save it for Flannery Mon): crunch + pain in warmup ramp, velocity drop at 70%, grip failure or pain >4/10, any new symptom (numbness, catching, giving way), can't complete isometric holds
+    //
+    // POST-GAME: ice shoulder + elbow 15 min each, stretches, no lifting. Ibuprofen OK now.
+    //
+    // HONEST CALL: Two flags 2 days out, tryouts 5 weeks away, Flannery Monday.
+    // Beer Bike is non-negotiable fun. Scrimmage is negotiable reps. If close between yellow and red, it's red.
+    // ============================================================
 
     '2026-04-12': POOL_RECOVERY,
 
