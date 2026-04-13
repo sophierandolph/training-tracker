@@ -7856,7 +7856,24 @@
     // Beer Bike is non-negotiable fun. Scrimmage is negotiable reps. If close between yellow and red, it's red.
     // ============================================================
 
-    '2026-04-12': POOL_RECOVERY,
+    '2026-04-12': [
+      {
+        name: "Pool Workout",
+        type: "Conditioning",
+        duration: "25-30 min",
+        location: "Rice Rec Center",
+        condition: "Post back-to-back intensity days. Focus on flushing legs.",
+        circuits: [BLOCK_POOL_LAP, BLOCK_POOL_REC]
+      },
+      {
+        name: "Recovery: Mobility + Prehab",
+        type: "Recovery",
+        duration: "20-25 min",
+        location: "Rice Rec Center",
+        condition: "Foam rolling and shoulder/shin maintenance.",
+        circuits: [BLOCK_FOAM_ROLL_STRETCH, BLOCK_SHOULDER_SHIN_PREHAB]
+      }
+    ],
 
     // ============================================================
     // TRYOUT BLOCK: WEEKS 10-13 (Apr 13 - May 12, 2026)
