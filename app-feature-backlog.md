@@ -33,6 +33,7 @@ Collected from sessions through Mar 20, 2026. Includes holistic review from 7 ag
 - [ ] **Swipe-to-dismiss on modals** -- feels more native on iPhone. (UX)
 - [ ] **Logged PT tile: tappable read-only detail view** -- After Claude logs a PT session via CLI, the tile is currently non-clickable (Apr 6 fix to prevent re-log overwrites). Make it tappable to open a read-only view showing exercises, sets, weights, reps, circuit grouping, and overall feel/notes. No edit affordance (PT has no workout definition to re-render from). (Athlete, UX)
 - [ ] **Exercise video references** -- exercises can carry a `videoRef` URL (e.g. Instagram reel link). AI coach surfaces the link when Sophie asks "show me how" for an unfamiliar exercise. Could also show a small video icon on exercises that have a reference. Needs: Sophie to save Instagram post URLs alongside downloaded reels. (Coach, Athlete)
+- [ ] **Multi-workout tile ordering relative to external activities** -- on mixed days (e.g. Wednesday: Pre-Handball Warmup + Handball Practice + Post-Handball Cooldown), `renderMultiWorkoutDay()` always renders all DATE_WORKOUTS first then all EXTERNAL_ACTIVITIES below. Result: Warmup → Cooldown → Practice instead of Warmup → Practice → Cooldown. Proposed: optional `renderAfterExternal: true` flag on a workout, two-pass render. (UX, Sophie -- Apr 13)
 
 ## Nutrition / Fuel Tab
 
