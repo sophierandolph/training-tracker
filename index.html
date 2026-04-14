@@ -7998,7 +7998,7 @@
         condition: "Build 1, follicular phase. Run to exhaustion for valid baseline. Record final level and shuttle number. This sets the benchmark for Week 3 retest.\nDaily: sleeper + cross-body stretch 3x30sec each side before bed.",
         circuits: [
           {
-            name: "A. Dynamic Warm-Up (8 min)",
+            name: "A. Dynamic Warm-Up (10-11 min)",
             simple: true,
             exercises: [
               { id: "tb1thu_a1", name: "Light Jog", sets: 1, reps: 1, isCardio: true, duration: 180, noWeight: true },
@@ -8006,15 +8006,16 @@
               { id: "tb1thu_a3", name: "Butt Kicks", sets: 1, reps: 20, perSide: true, noWeight: true },
               { id: "tb1thu_a4", name: "Leg Swings (Front-Back)", sets: 1, reps: 10, perSide: true, noWeight: true },
               { id: "tb1thu_a5", name: "Leg Swings (Lateral)", sets: 1, reps: 10, perSide: true, noWeight: true },
-              { id: "tb1thu_a6", name: "Hip Circles", sets: 1, reps: 10, perSide: true, noWeight: true }
+              { id: "tb1thu_a6", name: "Hip Circles", sets: 1, reps: 10, perSide: true, noWeight: true },
+              { id: "tb1thu_a7", name: "Build-Up Runs (20m)", sets: 3, reps: 1, notes: "3 progressive 20m runs at 50% / 70% / 85% effort. Primes HR and neuromuscular system so level 1 isn't a cold start. Walk back between each.", noWeight: true }
             ]
           },
           {
             name: "B. Beep Test (20m Shuttle Run)",
-            instructions: "Run to exhaustion. Record level + shuttle. Use beep test app or audio track. Pace yourself early — it gets fast quickly.",
+            instructions: "Run to exhaustion. Record level + shuttle. Use 'Bleep Test' app (iOS) for audio + visual level display + stop button. Bluetooth speaker if outdoor, AirPods (one ear) if indoor. Mark 20m with cones, water bottles, or use handball court sidelines (40x20m = sidelines are exactly 20m apart).",
             simple: true,
             exercises: [
-              { id: "tb1thu_b1", name: "20m Beep Test", sets: 1, reps: 1, notes: "Run to exhaustion. Record final level and shuttle number in notes. This is your baseline.", isCardio: true, noWeight: true }
+              { id: "tb1thu_b1", name: "20m Beep Test", sets: 1, reps: 1, notes: "PACING: jog levels 1-5, land on the line as the beep hits, NOT before. Overrunning early burns gas you need at level 8+. TURNS: small step over line, plant outside foot, push off. Right foot plants will feel the torsion chain -- alternate naturally, don't fight it. BAIL: miss two consecutive beeps = done. One miss is recoverable. Keep going past where it 'feels' done -- most people quit a level early. REFERENCE: 7.8 was MEDIAN at one ID camp (rank 67/120). Not a senior-pool cutoff. For back/pivot positions at your height, beep test matters less than throwing power, T-test, and 30m sprint. Record final level + shuttle.", isCardio: true, noWeight: true }
             ]
           },
           {
@@ -8337,11 +8338,11 @@
 
     '2026-04-23': [
       {
-        name: "Court Conditioning",
+        name: "Court Conditioning + Baselines",
         type: "Conditioning",
-        duration: "30 min",
-        location: "Gym or outdoor court (20m + 40m marked)",
-        condition: "Build 2, Week 11. Shuttle runs + T-test drills. Court-specific conditioning for tryout fitness.\nDaily: sleeper + cross-body stretch 3x30sec each side before bed.",
+        duration: "40 min",
+        location: "Gym or outdoor court (20m, 30m, 40m marked)",
+        condition: "Build 2, Week 11. Doubles as baseline-test day: 30m sprint + T-test (both fresh). Shuttle runs after.\nDaily: sleeper + cross-body stretch 3x30sec each side before bed.",
         circuits: [
           {
             name: "A. Dynamic Warm-Up (8 min)",
@@ -8355,7 +8356,15 @@
             ]
           },
           {
-            name: "B. Shuttle Runs (12 min)",
+            name: "B. 30m Sprint Baseline (10 min)",
+            instructions: "FRESH-LEGS test. 3 max-effort trials with FULL recovery (~3 min between). Standing start, time the 30m. Best of 3 is the baseline. Reference: Maegan Buckley best 5.07s (top performer). Tryout target: sub-5.5.",
+            simple: true,
+            exercises: [
+              { id: "tb2thu_sprint", name: "30m Sprint", sets: 3, reps: 1, notes: "Standing start. Max effort. Walk back to start, rest ~3 min between. Record best of 3 + all 3 times in notes. Use phone stopwatch or ask someone to time. Cones at 0m and 30m.", isCardio: true, noWeight: true }
+            ]
+          },
+          {
+            name: "C. Shuttle Runs (12 min)",
             instructions: "Rest = work time. Full recovery between 20m and 40m blocks.",
             exercises: [
               { id: "tb2thu_b1", name: "20m Shuttle Run", sets: 4, reps: 1, notes: "Sprint 20m, touch line, sprint back. Rest = time it took you to run.", isCardio: true, noWeight: true },
@@ -8363,14 +8372,14 @@
             ]
           },
           {
-            name: "C. T-Test Drill (8 min)",
-            instructions: "Sprint forward, shuffle left, shuffle right, backpedal. 4 reps with 45 sec rest.",
+            name: "D. T-Test Drill (8 min) — also a fresh-legs baseline",
+            instructions: "Sprint forward, shuffle left, shuffle right, backpedal. 4 reps with 45 sec rest. Bonus: this is a fresh T-test data point. Best trial = baseline. Reference: Maegan Buckley avg 7.92 (rank 6/121, top 5%). Sophie's last T-test was 11.7 fatigued; target 10.5 fresh.",
             exercises: [
-              { id: "tb2thu_c1", name: "T-Test Drill", sets: 4, reps: 1, notes: "Sprint 10m forward, touch cone, shuffle left 5m, shuffle right 10m, shuffle left 5m, backpedal 10m. 45 sec rest between reps.", isCardio: true, noWeight: true }
+              { id: "tb2thu_c1", name: "T-Test Drill", sets: 4, reps: 1, notes: "Sprint 10m forward, touch cone, shuffle left 5m, shuffle right 10m, shuffle left 5m, backpedal 10m. 45 sec rest between reps. Record best trial + all 4 times in notes.", isCardio: true, noWeight: true }
             ]
           },
           {
-            name: "D. Cool-Down (5 min)",
+            name: "E. Cool-Down (5 min)",
             simple: true,
             exercises: [
               { id: "tb2thu_d1", name: "Easy Walk", sets: 1, reps: 1, isCardio: true, duration: 120, noWeight: true },
