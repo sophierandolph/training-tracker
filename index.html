@@ -8274,11 +8274,11 @@
 
     '2026-04-23': [
       {
-        name: "Court Conditioning + Baselines",
+        name: "Fresh-Legs Baselines: T-Test + Beep Test",
         type: "Conditioning",
-        duration: "40 min",
-        location: "Gym or outdoor court (20m, 30m, 40m marked)",
-        condition: "Build 2, Week 11. Doubles as baseline-test day: 30m sprint + T-test (both fresh). Shuttle runs after.\nDaily: sleeper + cross-body stretch 3x30sec each side before bed.",
+        duration: "45 min",
+        location: "Handball court preferred (sidelines = exactly 20m apart)",
+        condition: "Build 2, Week 11. Two fresh-legs baseline tests. T-test first (max-effort agility, fresh), 6-8 min active recovery, then beep test (progressive exhaustion).\nMEASUREMENT CRITICAL: use handball court sidelines (40x20m court = sidelines are exactly 20m) OR a proper tape measure. Do NOT pace off. Double-check before the beep test. Apr 16 attempt was 14m by mistake.\n30m sprint + shuttle runs moved to Week 3 retest block (May 4-10).\nDaily: sleeper + cross-body stretch 3x30sec each side before bed.",
         circuits: [
           {
             name: "A. Dynamic Warm-Up (8 min)",
@@ -8288,34 +8288,36 @@
               { id: "tb2thu_a2", name: "High Knees", sets: 1, reps: 20, perSide: true, noWeight: true },
               { id: "tb2thu_a3", name: "Butt Kicks", sets: 1, reps: 20, perSide: true, noWeight: true },
               { id: "tb2thu_a4", name: "Lateral Shuffles", sets: 2, reps: 1, notes: "20m each direction.", isCardio: true, noWeight: true },
-              { id: "tb2thu_a5", name: "Carioca", sets: 2, reps: 1, notes: "20m each direction.", isCardio: true, noWeight: true }
+              { id: "tb2thu_a5", name: "Carioca", sets: 2, reps: 1, notes: "20m each direction.", isCardio: true, noWeight: true },
+              { id: "tb2thu_a6", name: "Build-Up Runs (20m)", sets: 3, reps: 1, notes: "3 progressive 20m runs at 50% / 70% / 85% effort. Primes HR and neuromuscular system. Walk back between each.", noWeight: true }
             ]
           },
           {
-            name: "B. 30m Sprint Baseline (10 min)",
-            instructions: "FRESH-LEGS test. 3 max-effort trials with FULL recovery (~3 min between). Standing start, time the 30m. Best of 3 is the baseline. Reference: Maegan Buckley best 5.07s (top performer). Tryout target: sub-5.5.",
-            simple: true,
-            exercises: [
-              { id: "tb2thu_sprint", name: "30m Sprint", sets: 3, reps: 1, notes: "Standing start. Max effort. Walk back to start, rest ~3 min between. Record best of 3 + all 3 times in notes. Use phone stopwatch or ask someone to time. Cones at 0m and 30m.", isCardio: true, noWeight: true }
-            ]
-          },
-          {
-            name: "C. Shuttle Runs (12 min)",
-            instructions: "Rest = work time. Full recovery between 20m and 40m blocks.",
-            exercises: [
-              { id: "tb2thu_b1", name: "20m Shuttle Run", sets: 4, reps: 1, notes: "Sprint 20m, touch line, sprint back. Rest = time it took you to run.", isCardio: true, noWeight: true },
-              { id: "tb2thu_b2", name: "40m Shuttle Run", sets: 4, reps: 1, notes: "Sprint 40m, touch line, sprint back. Rest = work time. These are hard.", isCardio: true, noWeight: true }
-            ]
-          },
-          {
-            name: "D. T-Test Drill (8 min) — also a fresh-legs baseline",
-            instructions: "Sprint forward, shuffle left, shuffle right, backpedal. 4 reps with 45 sec rest. Bonus: this is a fresh T-test data point. Best trial = baseline. Reference: Maegan Buckley avg 7.92 (rank 6/121, top 5%). Sophie's last T-test was 11.7 fatigued; target 10.5 fresh.",
+            name: "B. T-Test Drill (8 min) — Fresh-Legs Baseline",
+            instructions: "DO THIS BEFORE BEEP TEST. Sprint forward, shuffle left, shuffle right, backpedal. 4 trials with 45 sec rest. Best trial = baseline. Reference: Maegan Buckley avg 7.92 (rank 6/121, top 5%). Sophie's last T-test was 11.7 fatigued; target 10.5 fresh.",
             exercises: [
               { id: "tb2thu_c1", name: "T-Test Drill", sets: 4, reps: 1, notes: "Sprint 10m forward, touch cone, shuffle left 5m, shuffle right 10m, shuffle left 5m, backpedal 10m. 45 sec rest between reps. Record best trial + all 4 times in notes.", isCardio: true, noWeight: true }
             ]
           },
           {
-            name: "E. Cool-Down (5 min)",
+            name: "C. Inter-Test Recovery (6-8 min)",
+            instructions: "Clear lactate, drop HR below 120, hydrate. Re-verify the 20m measurement before starting the beep test.",
+            simple: true,
+            exercises: [
+              { id: "tb2thu_rec1", name: "Easy Walk + Jog Intervals", sets: 1, reps: 1, notes: "Alternate 60 sec walk + 30 sec easy jog x4. Drop HR below 120 before beep test.", isCardio: true, duration: 360, noWeight: true },
+              { id: "tb2thu_rec2", name: "Standing Quad + Hip Flexor Stretch", sets: 1, reps: 1, notes: "30 sec each side, each stretch. Keep blood flowing — don't sit down.", isHold: true, holdTime: 30, perSide: true, noWeight: true }
+            ]
+          },
+          {
+            name: "D. Beep Test (15 min) — Fresh-Legs Baseline",
+            instructions: "Run to exhaustion. Use 'Bleep Test' app (iOS). Bluetooth speaker if outdoor, AirPods (one ear) if indoor. Record final level + shuttle.\n\nLESSONS FROM APR 16 ATTEMPT:\n(1) MEASUREMENT: verify 20m with court sidelines or tape BEFORE starting. No pacing off.\n(2) PACING: went a little fast mid-test last time. Jog levels 1-5, land on the line as the beep hits, NOT before. Stay locked to tempo.\n(3) TURNS: small step over line, plant outside foot, push off. Right foot plants will feel the torsion chain — alternate naturally.\n(4) STOP BUTTON: dry your hands before reaching for it. Apr 16 app kept running ~3 legs past real bail.\n(5) BREATHING: rhythmic 2-in-2-out at lower levels, shift to 1-in-1-out as HR climbs.",
+            simple: true,
+            exercises: [
+              { id: "tb2thu_beep", name: "20m Beep Test", sets: 1, reps: 1, notes: "BAIL: miss two consecutive beeps = done. One miss is recoverable. Record final level + shuttle. Apr 16 result (L12.10 on 14m) was INVALID — this is the real baseline. Reference: 7.8 was MEDIAN at one ID camp (rank 67/120). For back/pivot at your height, beep test matters less than throwing power, T-test, and 30m sprint.", isCardio: true, noWeight: true }
+            ]
+          },
+          {
+            name: "E. Cool-Down (4 min)",
             simple: true,
             exercises: [
               { id: "tb2thu_d1", name: "Easy Walk", sets: 1, reps: 1, isCardio: true, duration: 120, noWeight: true },
