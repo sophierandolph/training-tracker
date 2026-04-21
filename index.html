@@ -8142,7 +8142,7 @@
     // ---- WEEK 11: BUILD 2 (Apr 20-26) ----
     // Possible ovulatory window ~Apr 17-22. ACL warmup on court/plyo days.
     // Mon Apr 20: PT external activity covers the day (no DATE_WORKOUTS entry needed).
-    // Thu/Fri swapped: upper body Thu, baselines Fri (fresh legs for testing, better shoulder spacing).
+    // Thu: upper body (swapped from Fri). Fri: short pool + rehab PT. Sat: baselines (freshest legs). Sun: TBD (coached 1:1 or pool).
 
     '2026-04-21': [
       {
@@ -8273,78 +8273,17 @@
       }
     ],
 
-    '2026-04-24': [
-      {
-        name: "Fresh-Legs Baselines: T-Test + Beep Test",
-        type: "Conditioning",
-        duration: "45 min",
-        location: "Handball court preferred (sidelines = exactly 20m apart)",
-        condition: "Build 2, Week 11. Two fresh-legs baseline tests. Moved from Thu to Fri for 72hr recovery after Tue lower body. Rehab PT also today -- do baselines first if PT is afternoon.\nT-test first (max-effort agility, fresh), 6-8 min active recovery, then beep test (progressive exhaustion).\nMEASUREMENT CRITICAL: use handball court sidelines (40x20m court = sidelines are exactly 20m) OR a proper tape measure. Do NOT pace off. Double-check before the beep test. Apr 16 attempt was 14m by mistake.\n30m sprint + shuttle runs moved to Week 3 retest block (May 4-10).\nDaily: sleeper + cross-body stretch 3x30sec each side before bed.",
-        circuits: [
-          {
-            name: "A. Dynamic Warm-Up (8 min)",
-            simple: true,
-            exercises: [
-              { id: "tb2thu_a1", name: "Light Jog", sets: 1, reps: 1, isCardio: true, duration: 180, noWeight: true },
-              { id: "tb2thu_a2", name: "High Knees", sets: 1, reps: 20, perSide: true, noWeight: true },
-              { id: "tb2thu_a3", name: "Butt Kicks", sets: 1, reps: 20, perSide: true, noWeight: true },
-              { id: "tb2thu_a4", name: "Lateral Shuffles", sets: 2, reps: 1, notes: "20m each direction.", isCardio: true, noWeight: true },
-              { id: "tb2thu_a5", name: "Carioca", sets: 2, reps: 1, notes: "20m each direction.", isCardio: true, noWeight: true },
-              { id: "tb2thu_a6", name: "Build-Up Runs (20m)", sets: 3, reps: 1, notes: "3 progressive 20m runs at 50% / 70% / 85% effort. Primes HR and neuromuscular system. Walk back between each.", noWeight: true }
-            ]
-          },
-          {
-            name: "B. T-Test Drill (8 min) — Fresh-Legs Baseline",
-            instructions: "DO THIS BEFORE BEEP TEST. Sprint forward, shuffle left, shuffle right, backpedal. 4 trials with 45 sec rest. Best trial = baseline. Reference: Maegan Buckley avg 7.92 (rank 6/121, top 5%). Sophie's last T-test was 11.7 fatigued; target 10.5 fresh.",
-            exercises: [
-              { id: "tb2thu_c1", name: "T-Test Drill", sets: 4, reps: 1, notes: "Sprint 10m forward, touch cone, shuffle left 5m, shuffle right 10m, shuffle left 5m, backpedal 10m. 45 sec rest between reps. Record best trial + all 4 times in notes.", isCardio: true, noWeight: true }
-            ]
-          },
-          {
-            name: "C. Inter-Test Recovery (6-8 min)",
-            instructions: "Clear lactate, drop HR below 120, hydrate. Re-verify the 20m measurement before starting the beep test.",
-            simple: true,
-            exercises: [
-              { id: "tb2thu_rec1", name: "Easy Walk + Jog Intervals", sets: 1, reps: 1, notes: "Alternate 60 sec walk + 30 sec easy jog x4. Drop HR below 120 before beep test.", isCardio: true, duration: 360, noWeight: true },
-              { id: "tb2thu_rec2", name: "Standing Quad + Hip Flexor Stretch", sets: 1, reps: 1, notes: "30 sec each side, each stretch. Keep blood flowing — don't sit down.", isHold: true, holdTime: 30, perSide: true, noWeight: true }
-            ]
-          },
-          {
-            name: "D. Beep Test (15 min) — Fresh-Legs Baseline",
-            instructions: "Run to exhaustion. Use 'Bleep Test' app (iOS). Bluetooth speaker if outdoor, AirPods (one ear) if indoor. Record final level + shuttle.\n\nLESSONS FROM APR 16 ATTEMPT:\n(1) MEASUREMENT: verify 20m with court sidelines or tape BEFORE starting. No pacing off.\n(2) PACING: went a little fast mid-test last time. Jog levels 1-5, land on the line as the beep hits, NOT before. Stay locked to tempo.\n(3) TURNS: small step over line, plant outside foot, push off. Right foot plants will feel the torsion chain — alternate naturally.\n(4) STOP BUTTON: dry your hands before reaching for it. Apr 16 app kept running ~3 legs past real bail.\n(5) BREATHING: rhythmic 2-in-2-out at lower levels, shift to 1-in-1-out as HR climbs.",
-            simple: true,
-            exercises: [
-              { id: "tb2thu_beep", name: "20m Beep Test", sets: 1, reps: 1, notes: "BAIL: miss two consecutive beeps = done. One miss is recoverable. Record final level + shuttle. Apr 16 result (L12.10 on 14m) was INVALID — this is the real baseline. Reference: 7.8 was MEDIAN at one ID camp (rank 67/120). For back/pivot at your height, beep test matters less than throwing power, T-test, and 30m sprint.", isCardio: true, noWeight: true }
-            ]
-          },
-          {
-            name: "E. Cool-Down (4 min)",
-            simple: true,
-            exercises: [
-              { id: "tb2thu_d1", name: "Easy Walk", sets: 1, reps: 1, isCardio: true, duration: 120, noWeight: true },
-              { id: "tb2thu_d2", name: "Standing Quad Stretch", sets: 1, reps: 1, isHold: true, holdTime: 30, perSide: true, noWeight: true },
-              { id: "tb2thu_d3", name: "Hip Flexor Lunge Stretch", sets: 1, reps: 1, isHold: true, holdTime: 30, perSide: true, noWeight: true }
-            ]
-          }
-        ]
-      },
-      {
-        name: "Movement Snack: Jump Shot Release Timing",
-        type: "Sport-Specific",
-        duration: "12 min",
-        location: "Any wall or open space",
-        condition: "Build 2, Week 11. 15 throws max. Quality over quantity.\nDaily: sleeper + cross-body stretch 3x30sec each side before bed.",
-        circuits: [{
-          name: "Technique Drill",
-          instructions: "Same cue as Week 1: release at the TOP of the jump. Building the pattern. Cue: 'Up... NOW.'",
-          simple: true,
-          exercises: [
-            { id: "tb2thu_ms1", name: "Wrist Flicks", sets: 1, reps: 10, noWeight: true },
-            { id: "tb2thu_ms2", name: "Standing Throw (Release Cue)", sets: 3, reps: 5, notes: "15 throws. Release at peak height.", noWeight: true }
-          ]
-        }]
-      }
-    ],
+    '2026-04-24': {
+      name: "Short Pool Recovery",
+      type: "Recovery",
+      duration: "30 min",
+      location: "Rec Center Pool",
+      condition: "Build 2, Week 11. Light flush before Sat baselines. Rehab PT also today (rotator cuff).\nDaily: sleeper + cross-body stretch 3x30sec each side before bed.",
+      circuits: [
+        BLOCK_POOL_LAP,
+        BLOCK_FOAM_ROLL_STRETCH
+      ]
+    },
 
     '2026-04-23': [
       {
@@ -8404,90 +8343,78 @@
       }
     ],
 
-    '2026-04-25': {
-      name: "Handball Solo Session (Build 2)",
-      type: "Sport-Specific",
-      duration: "50 min",
-      location: "Squash court or outdoor wall",
-      condition: "Build 2, Week 11. ~65-70 throws. If Wednesday practice was throw-heavy (70+), reduce to 55 today.\nDaily: sleeper + cross-body stretch 3x30sec each side before bed.",
-      circuits: [
-        {
-          name: "A. Get Moving (4 min)",
+    '2026-04-25': [
+      {
+        name: "Fresh-Legs Baselines: T-Test + Beep Test",
+        type: "Conditioning",
+        duration: "45 min",
+        location: "Handball court preferred (sidelines = exactly 20m apart)",
+        condition: "Build 2, Week 11. Two fresh-legs baseline tests. Moved to Sat for 96hr recovery after Tue lower body -- freshest possible legs.\nT-test first (max-effort agility, fresh), 6-8 min active recovery, then beep test (progressive exhaustion).\nMEASUREMENT CRITICAL: use handball court sidelines (40x20m court = sidelines are exactly 20m) OR a proper tape measure. Do NOT pace off. Double-check before the beep test. Apr 16 attempt was 14m by mistake.\n30m sprint + shuttle runs moved to Week 3 retest block (May 4-10).\nDaily: sleeper + cross-body stretch 3x30sec each side before bed.",
+        circuits: [
+          {
+            name: "A. Dynamic Warm-Up (8 min)",
+            simple: true,
+            exercises: [
+              { id: "tb2sat_a1", name: "Light Jog", sets: 1, reps: 1, isCardio: true, duration: 180, noWeight: true },
+              { id: "tb2sat_a2", name: "High Knees", sets: 1, reps: 20, perSide: true, noWeight: true },
+              { id: "tb2sat_a3", name: "Butt Kicks", sets: 1, reps: 20, perSide: true, noWeight: true },
+              { id: "tb2sat_a4", name: "Lateral Shuffles", sets: 2, reps: 1, notes: "20m each direction.", isCardio: true, noWeight: true },
+              { id: "tb2sat_a5", name: "Carioca", sets: 2, reps: 1, notes: "20m each direction.", isCardio: true, noWeight: true },
+              { id: "tb2sat_a6", name: "Build-Up Runs (20m)", sets: 3, reps: 1, notes: "3 progressive 20m runs at 50% / 70% / 85% effort. Primes HR and neuromuscular system. Walk back between each.", noWeight: true }
+            ]
+          },
+          {
+            name: "B. T-Test Drill (8 min) — Fresh-Legs Baseline",
+            instructions: "DO THIS BEFORE BEEP TEST. Sprint forward, shuffle left, shuffle right, backpedal. 4 trials with 45 sec rest. Best trial = baseline. Reference: Maegan Buckley avg 7.92 (rank 6/121, top 5%). Sophie's last T-test was 11.7 fatigued; target 10.5 fresh.",
+            exercises: [
+              { id: "tb2sat_b1", name: "T-Test Drill", sets: 4, reps: 1, notes: "Sprint 10m forward, touch cone, shuffle left 5m, shuffle right 10m, shuffle left 5m, backpedal 10m. 45 sec rest between reps. Record best trial + all 4 times in notes.", isCardio: true, noWeight: true }
+            ]
+          },
+          {
+            name: "C. Inter-Test Recovery (6-8 min)",
+            instructions: "Clear lactate, drop HR below 120, hydrate. Re-verify the 20m measurement before starting the beep test.",
+            simple: true,
+            exercises: [
+              { id: "tb2sat_c1", name: "Easy Walk + Jog Intervals", sets: 1, reps: 1, notes: "Alternate 60 sec walk + 30 sec easy jog x4. Drop HR below 120 before beep test.", isCardio: true, duration: 360, noWeight: true },
+              { id: "tb2sat_c2", name: "Standing Quad + Hip Flexor Stretch", sets: 1, reps: 1, notes: "30 sec each side, each stretch. Keep blood flowing — don't sit down.", isHold: true, holdTime: 30, perSide: true, noWeight: true }
+            ]
+          },
+          {
+            name: "D. Beep Test (15 min) — Fresh-Legs Baseline",
+            instructions: "Run to exhaustion. Use 'Bleep Test' app (iOS). Bluetooth speaker if outdoor, AirPods (one ear) if indoor. Record final level + shuttle.\n\nLESSONS FROM APR 16 ATTEMPT:\n(1) MEASUREMENT: verify 20m with court sidelines or tape BEFORE starting. No pacing off.\n(2) PACING: went a little fast mid-test last time. Jog levels 1-5, land on the line as the beep hits, NOT before. Stay locked to tempo.\n(3) TURNS: small step over line, plant outside foot, push off. Right foot plants will feel the torsion chain — alternate naturally.\n(4) STOP BUTTON: dry your hands before reaching for it. Apr 16 app kept running ~3 legs past real bail.\n(5) BREATHING: rhythmic 2-in-2-out at lower levels, shift to 1-in-1-out as HR climbs.",
+            simple: true,
+            exercises: [
+              { id: "tb2sat_d1", name: "20m Beep Test", sets: 1, reps: 1, notes: "BAIL: miss two consecutive beeps = done. One miss is recoverable. Record final level + shuttle. Apr 16 result (L12.10 on 14m) was INVALID — this is the real baseline. Reference: 7.8 was MEDIAN at one ID camp (rank 67/120). For back/pivot at your height, beep test matters less than throwing power, T-test, and 30m sprint.", isCardio: true, noWeight: true }
+            ]
+          },
+          {
+            name: "E. Cool-Down (4 min)",
+            simple: true,
+            exercises: [
+              { id: "tb2sat_e1", name: "Easy Walk", sets: 1, reps: 1, isCardio: true, duration: 120, noWeight: true },
+              { id: "tb2sat_e2", name: "Standing Quad Stretch", sets: 1, reps: 1, isHold: true, holdTime: 30, perSide: true, noWeight: true },
+              { id: "tb2sat_e3", name: "Hip Flexor Lunge Stretch", sets: 1, reps: 1, isHold: true, holdTime: 30, perSide: true, noWeight: true }
+            ]
+          }
+        ]
+      },
+      {
+        name: "Movement Snack: Jump Shot Release Timing",
+        type: "Sport-Specific",
+        duration: "12 min",
+        location: "Any wall or open space",
+        condition: "Build 2, Week 11. 15 throws max. Quality over quantity.\nDaily: sleeper + cross-body stretch 3x30sec each side before bed.",
+        circuits: [{
+          name: "Technique Drill",
+          instructions: "Same cue as Week 1: release at the TOP of the jump. Building the pattern. Cue: 'Up... NOW.'",
           simple: true,
           exercises: [
-            { id: "tb2sat_a1", name: "Jog in Place", sets: 1, reps: 1, isCardio: true, duration: 30, noWeight: true },
-            { id: "tb2sat_a2", name: "High Knees", sets: 1, reps: 20, perSide: true, noWeight: true },
-            { id: "tb2sat_a3", name: "Butt Kicks", sets: 1, reps: 20, perSide: true, noWeight: true },
-            { id: "tb2sat_a4", name: "Step-Touch Side to Side", sets: 1, reps: 20, noWeight: true },
-            { id: "tb2sat_a5", name: "Hip Circles", sets: 1, reps: 10, perSide: true, noWeight: true }
+            { id: "tb2sat_ms1", name: "Wrist Flicks", sets: 1, reps: 10, noWeight: true },
+            { id: "tb2sat_ms2", name: "Standing Throw (Release Cue)", sets: 3, reps: 5, notes: "15 throws. Release at peak height.", noWeight: true }
           ]
-        },
-        {
-          name: "B. Lower Body + Shin + Copenhagen (5 min)",
-          instructions: "Copenhagen is prehab pin #2 this week.",
-          exercises: [
-            { id: "tb2sat_b1", name: "Standing Hip Abduction (Band)", sets: 1, reps: 15, perSide: true, noWeight: true },
-            { id: "tb2sat_b2", name: "Standing Glute Kickback (Band)", sets: 1, reps: 12, perSide: true, noWeight: true },
-            { id: "tb2sat_b3", name: "Calf Raises", sets: 1, reps: 20, noWeight: true },
-            { id: "tb2sat_b4", name: "Tibialis Raises", sets: 1, reps: 20, notes: "Prehab 2x/week — #2 this week.", noWeight: true },
-            { id: "tb2sat_b5", name: "Copenhagen Adductor Hold", sets: 2, reps: 1, notes: "20 sec each side. Prehab 2x/week — #2 this week.", isHold: true, holdTime: 20, perSide: true, noWeight: true }
-          ]
-        },
-        {
-          name: "C. Shoulder Activation (4 min)",
-          simple: true,
-          exercises: [
-            { id: "tb2sat_c1", name: "Arm Circles", sets: 1, reps: 20, notes: "10 forward, 10 backward each arm.", noWeight: true },
-            { id: "tb2sat_c2", name: "Scapular Squeezes", sets: 1, reps: 15, noWeight: true },
-            { id: "tb2sat_c3", name: "Pendulum Swings", sets: 1, reps: 10, perSide: true, noWeight: true },
-            { id: "tb2sat_c4", name: "Wall Angels", sets: 2, reps: 8, noWeight: true }
-          ]
-        },
-        {
-          name: "D. Throwing Arm Warm-Up (4 min)",
-          simple: true,
-          exercises: [
-            { id: "tb2sat_d1", name: "Wrist Flicks with Ball", sets: 1, reps: 20, noWeight: true },
-            { id: "tb2sat_d2", name: "Short Wall Passes Both Hands", sets: 1, reps: 10, perSide: true, noWeight: true },
-            { id: "tb2sat_d3", name: "3-Step Rhythm, No Ball", sets: 1, reps: 5, notes: "Cue: step, OPEN, launch.", noWeight: true },
-            { id: "tb2sat_d4", name: "3-Step with Ball, Easy", sets: 1, reps: 5, noWeight: true }
-          ]
-        },
-        {
-          name: "E. Main Work: Pivot Shot + Defensive Footwork + Passing (~65-70 throws)",
-          instructions: "Rotate through blocks. 65-70 throw target. Quality reps.",
-          simple: true,
-          exercises: [
-            { id: "tb2sat_e1", name: "Pivot Shot Practice (R)", sets: 3, reps: 8, notes: "24 throws. Plant, separate, launch.", noWeight: true },
-            { id: "tb2sat_e2", name: "Jump Shot Practice (R)", sets: 2, reps: 6, notes: "12 throws. Release at peak.", noWeight: true },
-            { id: "tb2sat_e3", name: "Left Hand Wall Passes", sets: 3, reps: 5, notes: "15 throws. Building left-hand comfort.", noWeight: true },
-            { id: "tb2sat_e4", name: "Passing: Chest + Bounce", sets: 2, reps: 5, notes: "10 throws. Mix chest and bounce passes.", noWeight: true },
-            { id: "tb2sat_e5", name: "Defensive Footwork: Drop Steps + Closeouts", sets: 4, reps: 1, notes: "10 sec each. Low stance, explosive first step.", isHold: true, holdTime: 10, noWeight: true },
-            { id: "tb2sat_e6", name: "Quick Feet Ready Position", sets: 1, reps: 1, isHold: true, holdTime: 15, noWeight: true }
-          ]
-        },
-        {
-          name: "F. Mini Shoulder Protocol (8 min)",
-          instructions: "Shortened rotator cuff only.",
-          simple: true,
-          exercises: [
-            { id: "tb2sat_f1", name: "External Rotation 90/90", sets: 2, reps: 12, notes: "Shoulder protocol #2 this week (shortened).", noWeight: true },
-            { id: "tb2sat_f2", name: "Internal Rotation 90/90", sets: 2, reps: 12, noWeight: true },
-            { id: "tb2sat_f3", name: "Band Throws", sets: 2, reps: 10, perSide: true, noWeight: true }
-          ]
-        },
-        {
-          name: "G. Cool-Down (5 min)",
-          simple: true,
-          exercises: [
-            { id: "tb2sat_g1", name: "Easy Walk + Shake Out", sets: 1, reps: 1, isCardio: true, duration: 60, noWeight: true },
-            { id: "tb2sat_g2", name: "Cross-Body Shoulder Stretch", sets: 1, reps: 1, isHold: true, holdTime: 30, perSide: true, noWeight: true },
-            { id: "tb2sat_g3", name: "Hip Flexor Lunge Stretch", sets: 1, reps: 1, isHold: true, holdTime: 30, perSide: true, noWeight: true },
-            { id: "tb2sat_g4", name: "Chest Opener", sets: 1, reps: 1, isHold: true, holdTime: 30, noWeight: true }
-          ]
-        }
-      ]
-    },
+        }]
+      }
+    ],
 
     '2026-04-26': POOL_RECOVERY, // Sun: recovery
 
