@@ -8204,18 +8204,18 @@
         ]
       },
       {
-        name: "Movement Snack: Left-Hand Passing",
+        name: "Movement Snack: 3-Step Rhythm",
         type: "Sport-Specific",
-        duration: "12 min",
+        duration: "10 min",
         location: "Any wall or open space",
-        condition: "Build 2, possible ovulatory window. 15 throws max. Quality over quantity.\nDaily: sleeper + cross-body stretch 3x30sec each side before bed.",
+        condition: "Build 2. 15 throws max. Focus on opening up on step 2.\nDaily: sleeper + cross-body stretch 3x30sec each side before bed.",
         circuits: [{
           name: "Technique Drill",
-          instructions: "Left hand comfort building. Focus on wrist snap and follow-through. Don't try to throw hard — accuracy and feel.",
+          instructions: "Cue: step, OPEN, launch. Step 2 is where the torso rotates open. Don't rush it. Feel the chest face the wall before the arm comes through.",
           simple: true,
           exercises: [
-            { id: "tb2tue_ms1", name: "Wrist Flicks (Left Hand)", sets: 1, reps: 10, noWeight: true },
-            { id: "tb2tue_ms2", name: "Left-Hand Wall Passes", sets: 3, reps: 5, notes: "15 throws. Short distance, aim for a target spot on the wall. Wrist snap, follow through.", noWeight: true }
+            { id: "tb2tue_ms1", name: "Wrist Flicks", sets: 1, reps: 10, noWeight: true },
+            { id: "tb2tue_ms2", name: "3-Step Wall Throws", sets: 3, reps: 5, notes: "15 throws. Step, OPEN on step 2, launch on step 3. Chest faces wall before arm comes through.", noWeight: true }
           ]
         }]
       }
@@ -9224,13 +9224,14 @@
       const today = new Date();
       const todayStart = new Date(today.getFullYear(), today.getMonth(), today.getDate());
 
-      // Filter to current + future weeks only
-      const activeWeeks = WEEK_DATES.filter(w => w.end >= todayStart);
+      // Filter to current week + next 2 weeks only
+      const twoWeeksOut = new Date(todayStart);
+      twoWeeksOut.setDate(twoWeeksOut.getDate() + 20);
+      const activeWeeks = WEEK_DATES.filter(w => w.end >= todayStart && w.start <= twoWeeksOut);
 
       // Auto-extend: generate weeks beyond the last hardcoded week through today + 2 weeks
       const lastWeek = WEEK_DATES[WEEK_DATES.length - 1];
-      const targetEnd = new Date(todayStart);
-      targetEnd.setDate(targetEnd.getDate() + 14); // 2 weeks ahead
+      const targetEnd = new Date(twoWeeksOut);
 
       if (targetEnd > lastWeek.end) {
         let nextStart = new Date(lastWeek.end);
@@ -9242,7 +9243,8 @@
           const nextEnd = new Date(nextStart);
           nextEnd.setDate(nextEnd.getDate() + 6);
           nextEnd.setHours(23, 59, 59);
-          activeWeeks.push({ weekNum, start: new Date(nextStart), end: new Date(nextEnd) });
+          const week = { weekNum, start: new Date(nextStart), end: new Date(nextEnd) };
+          if (week.end >= todayStart) activeWeeks.push(week);
           nextStart.setDate(nextStart.getDate() + 7);
           weekNum++;
         }
