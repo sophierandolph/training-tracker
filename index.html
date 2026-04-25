@@ -8315,15 +8315,19 @@
     ],
 
     '2026-04-24': {
-      name: "Short Pool Recovery",
-      type: "Recovery",
-      duration: "30 min",
-      location: "Rec Center Pool",
-      condition: "Build 2, Week 11. Light flush before Sat baselines. Rehab PT also today (rotator cuff).\nDaily: sleeper + cross-body stretch 3x30sec each side before bed.",
-      circuits: [
-        BLOCK_POOL_LAP,
-        BLOCK_FOAM_ROLL_STRETCH
-      ]
+      name: "Physical Therapy (Rehab Intake)",
+      type: "Rehab",
+      duration: "45 min",
+      location: "PT clinic",
+      condition: "First rotator cuff rehab visit. Pool recovery dropped — PT was the day's load.\nPT prescribed: wall isometrics 3x/day (off-app), side-lying ER + flexion 4x/week (loaded, on-app), bodyweight activation pre-throwing.\nDiagnosis reframe: ligamentous laxity from generalized hypermobility, not primary cuff/impingement. 12+ week timeline. Aleve paused.\nDaily: sleeper + cross-body stretch 3x30sec each side before bed.",
+      circuits: [{
+        name: "Session Log",
+        instructions: "Tap to mark complete. New rehab protocol details captured in memory + future days.",
+        simple: true,
+        exercises: [
+          { id: "pt0424_1", name: "PT Session Attended", sets: 1, reps: 1, notes: "First rehab visit. Hypermobility reframe + new protocol prescribed.", noWeight: true }
+        ]
+      }]
     },
 
     '2026-04-23': [
