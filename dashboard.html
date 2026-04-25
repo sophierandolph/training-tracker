@@ -916,11 +916,17 @@ function renderSummaryStrip() {
   const avgReadiness = readinessVals.length ? Math.round(readinessVals.reduce((a, b) => a + b, 0) / readinessVals.length) : '--';
 
   // Protein adherence (exclude today -- day isn't over yet)
+  // "On target" = >=90% of target (matches chart gold+green bars and the app's hit-target visual cue).
   const today = formatDate(new Date());
   const fuelByDate = {};
   rawFuelLogs.forEach(f => fuelByDate[f.date] = f);
   const completedFuelLogs = rawFuelLogs.filter(f => f.date !== today);
   const proteinDays = completedFuelLogs.filter(f => {
+    const protein = f.totalProtein || f.total || 0;
+    const target = f.target || 130;
+    return protein >= target * 0.9;
+  }).length;
+  const proteinFullDays = completedFuelLogs.filter(f => {
     const protein = f.totalProtein || f.total || 0;
     const target = f.target || 130;
     return protein >= target;
@@ -973,6 +979,7 @@ function renderSummaryStrip() {
     <div class="stat-card">
       <div class="stat-value">${proteinDays}/${totalFuelDays}</div>
       <div class="stat-label">Protein on Target</div>
+      <div class="stat-delta flat">${proteinFullDays} full target</div>
     </div>
   `;
 }
@@ -1595,18 +1602,24 @@ function renderProteinChart() {
     return '#f43f5e';                                   // under
   });
 
-  // Summary stat (exclude today)
+  // Summary stat (exclude today). "On target" = >=90% of target (matches chart gold+green bars).
   const completedDates = dates.filter(d => d !== today);
-  const hitDays = completedDates.filter(d => {
+  const onTargetDays = completedDates.filter(d => {
+    const log = fuelByDate[d];
+    const protein = log ? (log.totalProtein || log.total || 0) : 0;
+    const target = log?.target || 130;
+    return protein >= target * 0.9;
+  }).length;
+  const fullTargetDays = completedDates.filter(d => {
     const log = fuelByDate[d];
     const protein = log ? (log.totalProtein || log.total || 0) : 0;
     const target = log?.target || 130;
     return protein >= target;
   }).length;
   const totalDays = completedDates.length;
-  const pct = totalDays > 0 ? Math.round(hitDays / totalDays * 100) : 0;
+  const pct = totalDays > 0 ? Math.round(onTargetDays / totalDays * 100) : 0;
   document.getElementById('proteinSummary').textContent = totalDays > 0
-    ? `Hit target ${hitDays}/${totalDays} days (${pct}%)`
+    ? `Hit ${onTargetDays}/${totalDays} days at 90%+ (${pct}%) · ${fullTargetDays} hit full target`
     : '';
 
   // 7-day rolling average
