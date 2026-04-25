@@ -3431,6 +3431,27 @@
       ]
     };
 
+    // Loaded rotator cuff rehab (PT-prescribed Apr 24, 2026). 4x/week strength phase. Up to 4/10 pain ok.
+    const BLOCK_SHOULDER_REHAB_LOADED = {
+      name: "Shoulder Rehab (Loaded)",
+      instructions: "PT strength block. 3 lb to start, progress as cleared. Up to 4/10 pain is fine. Skip on PT-rehab days and pre-throwing days.",
+      exercises: [
+        { id: "shrl1", name: "Side-Lying External Rotation", sets: 3, reps: 12, notes: "3 lb DB. Lie on opposite side, top arm with elbow tucked at 90 deg. Rotate forearm up — STOP at neutral or just past. Never force into full overhead. 10-12 reps each side.", perSide: true },
+        { id: "shrl2", name: "Side-Lying Shoulder Flexion (Short ROM)", sets: 3, reps: 12, notes: "3 lb DB. Lie on side, top arm straight along body. Lift forward toward face — STOP below shoulder height (PT cue: stop sooner than typical). 10-12 reps each side.", perSide: true }
+      ]
+    };
+
+    // Bodyweight activation version of side-lying rehab. Used as a pre-throwing primer (practice, tournaments, tryouts).
+    const BLOCK_SHOULDER_REHAB_ACTIVATION = {
+      name: "Shoulder Rehab Activation (Bodyweight)",
+      instructions: "Pre-throw activation. No weight, just prime the cuff. 1 set of 10 each side.",
+      simple: true,
+      exercises: [
+        { id: "shra1", name: "Side-Lying External Rotation (Bodyweight)", sets: 1, reps: 10, notes: "No DB. Same form as loaded version. Stop at neutral.", perSide: true, noWeight: true },
+        { id: "shra2", name: "Side-Lying Shoulder Flexion (Bodyweight)", sets: 1, reps: 10, notes: "No DB. Same form. Stop below shoulder height.", perSide: true, noWeight: true }
+      ]
+    };
+
     // Bike cool-down: easy spin
     const BLOCK_BIKE_COOLDOWN = {
       name: "Cool-Down (10 min)",
@@ -5879,6 +5900,26 @@
           location: 'Rice Stadium Track',
           type: 'Conditioning',
           description: 'Biked to track from Baker. Cone work (tight corners, figure eights), drafting/passing lap, sprint start + race pace lap + stop. More effort than expected.'
+        }
+      ],
+      '2026-04-26': [
+        {
+          id: 'flag_football_tournament_0426',
+          name: 'Flag Football Tournament',
+          time: '9:00am-4:00pm',
+          duration: 420,
+          location: 'TBD',
+          type: 'Sport',
+          description: 'Committed pre-rehab. Non-QB role. Minimum play time, NOT 100% effort. Bodyweight cuff activation before. Shoulder is in active rehab — protect it. Hydrate, sunscreen, snacks for 7-hour window. Eat carbs+protein in the gap before evening practice.'
+        },
+        {
+          id: 'handball_practice_extra_0426',
+          name: 'Handball Practice (Extra)',
+          time: '5:00pm',
+          duration: 60,
+          location: 'Court',
+          type: 'Sport',
+          description: 'Coach-led extra session. Bodyweight cuff activation before throwing. Heavy day already (flag football + practice) — manage shoulder load.'
         }
       ]
     };
@@ -8413,15 +8454,30 @@
             { id: "tb2sat_ms2", name: "Standing Throw (Release Cue)", sets: 3, reps: 5, notes: "15 throws. Release at peak height.", noWeight: true }
           ]
         }]
+      },
+      {
+        name: "Shoulder Rehab (Loaded)",
+        type: "Rehab",
+        duration: "10 min",
+        location: "Home or gym",
+        condition: "PT-prescribed strength block (started Apr 24). 4x/week cadence. 3 lb to start, up to 4/10 pain ok. Tag-on after baselines or whenever cuff is fresh — skip if shoulder is irritated post-baselines.",
+        circuits: [BLOCK_SHOULDER_REHAB_LOADED]
       }
     ],
 
-    '2026-04-26': POOL_RECOVERY, // Sun: recovery
+    '2026-04-26': {
+      name: "Pre-Throw Shoulder Activation (x2)",
+      type: "Rehab",
+      duration: "5 min each, do twice today",
+      location: "Anywhere",
+      condition: "Bodyweight activation primer before throwing days (PT Apr 24). Do once before flag football (~8:30am) and once before handball practice (~4:30pm). Wall isometrics 3x/day continue off-app.\nFlag football tournament 9am-4pm (non-QB, minimum play, not 100% effort) + extra handball practice 5pm/60min.",
+      circuits: [BLOCK_SHOULDER_REHAB_ACTIVATION]
+    },
 
     // ---- WEEK 12: PEAK (Apr 27 - May 3) ----
     // Likely luteal phase. Highest load week.
-
-    '2026-04-27': POOL_RECOVERY, // Mon: PT external (fallback)
+    // Mon Apr 27: Personal Training 5pm (EXTERNAL_ACTIVITIES) + PT-rehab 10am (off-app).
+    // No additional programmed work — heavy weekend stack (Sat baselines + Sun double sport) absorbs Mon.
 
     '2026-04-28': [
       {
@@ -8486,6 +8542,14 @@
             { id: "tb3tue_ms2", name: "Standing Pivot Throw (Separation Cue)", sets: 3, reps: 5, notes: "15 throws. Plant foot, rotate hips, THEN arm follows.", noWeight: true }
           ]
         }]
+      },
+      {
+        name: "Shoulder Rehab (Loaded)",
+        type: "Rehab",
+        duration: "10 min",
+        location: "Home or gym",
+        condition: "PT-prescribed strength block (Apr 24). 4x/week cadence. 3 lb to start, up to 4/10 pain ok.",
+        circuits: [BLOCK_SHOULDER_REHAB_LOADED]
       }
     ],
 
@@ -8495,7 +8559,7 @@
         type: "Prehab",
         duration: "12-15 min",
         location: "Court",
-        condition: "PEAK WEEK. Likely luteal phase. Daily: sleeper + cross-body stretch 3x30sec before bed.",
+        condition: "PEAK WEEK. Likely luteal phase. Daily: sleeper + cross-body stretch 3x30sec before bed.\nIncludes pre-throw cuff activation (PT-prescribed Apr 24).",
         circuits: [{
           name: "Movement Prep",
           simple: true,
@@ -8505,7 +8569,9 @@
             { id: "tb3wed_a3", name: "Standing Hip Hydrants", sets: 1, reps: 10, perSide: true, noWeight: true },
             { id: "tb3wed_a4", name: "Arm Circles", sets: 1, reps: 20, notes: "10 forward, 10 back.", noWeight: true },
             { id: "tb3wed_a5", name: "Band Pull-Aparts", sets: 1, reps: 15, noWeight: true },
-            { id: "tb3wed_a6", name: "Wrist Stretches", sets: 2, reps: 1, notes: "Flexion + extension, 15 sec each.", isHold: true, holdTime: 15, noWeight: true }
+            { id: "tb3wed_a6", name: "Side-Lying External Rotation (Bodyweight)", sets: 1, reps: 10, notes: "PT pre-throw activation. No DB. Stop at neutral.", perSide: true, noWeight: true },
+            { id: "tb3wed_a7", name: "Side-Lying Shoulder Flexion (Bodyweight)", sets: 1, reps: 10, notes: "PT pre-throw activation. No DB. Stop below shoulder height.", perSide: true, noWeight: true },
+            { id: "tb3wed_a8", name: "Wrist Stretches", sets: 2, reps: 1, notes: "Flexion + extension, 15 sec each.", isHold: true, holdTime: 15, noWeight: true }
           ]
         }]
       },
@@ -8589,6 +8655,14 @@
             { id: "tb3thu_ms2", name: "Left-Hand Wall Passes", sets: 3, reps: 5, notes: "15 throws. Short distance, target spot on wall.", noWeight: true }
           ]
         }]
+      },
+      {
+        name: "Shoulder Rehab (Loaded)",
+        type: "Rehab",
+        duration: "10 min",
+        location: "Home or gym",
+        condition: "PT-prescribed strength block (Apr 24). 4x/week cadence. 3 lb to start, up to 4/10 pain ok. Right shoulder loaded — left-hand movement snack does not conflict.",
+        circuits: [BLOCK_SHOULDER_REHAB_LOADED]
       }
     ],
 
@@ -8680,13 +8754,16 @@
           ]
         },
         {
-          name: "C. Shoulder Activation (4 min)",
+          name: "C. Shoulder Activation (6 min)",
+          instructions: "Includes PT-prescribed pre-throw cuff activation (Apr 24).",
           simple: true,
           exercises: [
             { id: "tb3sat_c1", name: "Arm Circles", sets: 1, reps: 20, noWeight: true },
             { id: "tb3sat_c2", name: "Scapular Squeezes", sets: 1, reps: 15, noWeight: true },
             { id: "tb3sat_c3", name: "Pendulum Swings", sets: 1, reps: 10, perSide: true, noWeight: true },
-            { id: "tb3sat_c4", name: "Wall Angels", sets: 2, reps: 8, noWeight: true }
+            { id: "tb3sat_c4", name: "Wall Angels", sets: 2, reps: 8, noWeight: true },
+            { id: "tb3sat_c5", name: "Side-Lying External Rotation (Bodyweight)", sets: 1, reps: 10, notes: "PT pre-throw activation. No DB. Stop at neutral.", perSide: true, noWeight: true },
+            { id: "tb3sat_c6", name: "Side-Lying Shoulder Flexion (Bodyweight)", sets: 1, reps: 10, notes: "PT pre-throw activation. No DB. Stop below shoulder height.", perSide: true, noWeight: true }
           ]
         },
         {
@@ -8735,12 +8812,32 @@
       ]
     },
 
-    '2026-05-03': POOL_RECOVERY, // Sun: recovery
+    '2026-05-03': [
+      POOL_RECOVERY,
+      {
+        name: "Shoulder Rehab (Loaded)",
+        type: "Rehab",
+        duration: "10 min",
+        location: "Home or gym",
+        condition: "PT-prescribed strength block (Apr 24). 4x/week cadence. 3 lb to start, up to 4/10 pain ok. Pair with pool day for low-load context.",
+        circuits: [BLOCK_SHOULDER_REHAB_LOADED]
+      }
+    ], // Sun: pool recovery + loaded shoulder rehab
 
     // ---- WEEK 13: TAPER (May 4-10) ----
     // Late luteal. Volume -35%, maintain intensity.
 
-    '2026-05-04': POOL_RECOVERY, // Mon: PT external (fallback)
+    '2026-05-04': [
+      POOL_RECOVERY,
+      {
+        name: "Shoulder Rehab (Loaded)",
+        type: "Rehab",
+        duration: "10 min",
+        location: "Home or gym",
+        condition: "PT-prescribed strength block (Apr 24). 4x/week cadence. 3 lb to start, up to 4/10 pain ok.",
+        circuits: [BLOCK_SHOULDER_REHAB_LOADED]
+      }
+    ], // Mon: pool recovery + loaded shoulder rehab; Personal Training 5pm in EXTERNAL_ACTIVITIES
 
     '2026-05-05': [
       {
@@ -8805,6 +8902,14 @@
             { id: "tb4tue_ms2", name: "Left-Hand Wall Passes", sets: 2, reps: 5, notes: "10 throws. Short distance, easy.", noWeight: true }
           ]
         }]
+      },
+      {
+        name: "Shoulder Rehab (Loaded)",
+        type: "Rehab",
+        duration: "10 min",
+        location: "Home or gym",
+        condition: "PT-prescribed strength block (Apr 24). 4x/week cadence. 3 lb to start, up to 4/10 pain ok. Right shoulder loaded — left-hand movement snack does not conflict.",
+        circuits: [BLOCK_SHOULDER_REHAB_LOADED]
       }
     ],
 
@@ -8814,7 +8919,7 @@
         type: "Prehab",
         duration: "12-15 min",
         location: "Court",
-        condition: "TAPER WEEK. Late luteal. Daily: sleeper + cross-body stretch 3x30sec before bed.",
+        condition: "TAPER WEEK. Late luteal. Daily: sleeper + cross-body stretch 3x30sec before bed.\nIncludes pre-throw cuff activation (PT-prescribed Apr 24). PT-rehab earlier today (10am).",
         circuits: [{
           name: "Movement Prep",
           simple: true,
@@ -8824,7 +8929,9 @@
             { id: "tb4wed_a3", name: "Standing Hip Hydrants", sets: 1, reps: 10, perSide: true, noWeight: true },
             { id: "tb4wed_a4", name: "Arm Circles", sets: 1, reps: 20, notes: "10 forward, 10 back.", noWeight: true },
             { id: "tb4wed_a5", name: "Band Pull-Aparts", sets: 1, reps: 15, noWeight: true },
-            { id: "tb4wed_a6", name: "Wrist Stretches", sets: 2, reps: 1, notes: "Flexion + extension, 15 sec each.", isHold: true, holdTime: 15, noWeight: true }
+            { id: "tb4wed_a6", name: "Side-Lying External Rotation (Bodyweight)", sets: 1, reps: 10, notes: "PT pre-throw activation. No DB. Stop at neutral.", perSide: true, noWeight: true },
+            { id: "tb4wed_a7", name: "Side-Lying Shoulder Flexion (Bodyweight)", sets: 1, reps: 10, notes: "PT pre-throw activation. No DB. Stop below shoulder height.", perSide: true, noWeight: true },
+            { id: "tb4wed_a8", name: "Wrist Stretches", sets: 2, reps: 1, notes: "Flexion + extension, 15 sec each.", isHold: true, holdTime: 15, noWeight: true }
           ]
         }]
       },
@@ -8847,7 +8954,17 @@
       }
     ],
 
-    '2026-05-07': POOL_RECOVERY, // Thu: Coach fix — no court work in taper, accumulate rest
+    '2026-05-07': [
+      POOL_RECOVERY,
+      {
+        name: "Shoulder Rehab (Loaded)",
+        type: "Rehab",
+        duration: "10 min",
+        location: "Home or gym",
+        condition: "PT-prescribed strength block (Apr 24). 4x/week cadence. 3 lb to start, up to 4/10 pain ok. Pair with pool day for low-load context.",
+        circuits: [BLOCK_SHOULDER_REHAB_LOADED]
+      }
+    ], // Thu: Coach fix — no court work in taper. Pool + loaded shoulder rehab.
 
     '2026-05-08': [
       {
@@ -8931,13 +9048,16 @@
           ]
         },
         {
-          name: "C. Shoulder Activation (4 min)",
+          name: "C. Shoulder Activation (6 min)",
+          instructions: "Includes PT-prescribed pre-throw cuff activation (Apr 24).",
           simple: true,
           exercises: [
             { id: "tb4sat_c1", name: "Arm Circles", sets: 1, reps: 20, noWeight: true },
             { id: "tb4sat_c2", name: "Scapular Squeezes", sets: 1, reps: 15, noWeight: true },
             { id: "tb4sat_c3", name: "Pendulum Swings", sets: 1, reps: 10, perSide: true, noWeight: true },
-            { id: "tb4sat_c4", name: "Wall Angels", sets: 2, reps: 8, noWeight: true }
+            { id: "tb4sat_c4", name: "Wall Angels", sets: 2, reps: 8, noWeight: true },
+            { id: "tb4sat_c5", name: "Side-Lying External Rotation (Bodyweight)", sets: 1, reps: 10, notes: "PT pre-throw activation. No DB. Stop at neutral.", perSide: true, noWeight: true },
+            { id: "tb4sat_c6", name: "Side-Lying Shoulder Flexion (Bodyweight)", sets: 1, reps: 10, notes: "PT pre-throw activation. No DB. Stop below shoulder height.", perSide: true, noWeight: true }
           ]
         },
         {
@@ -8985,7 +9105,17 @@
       ]
     },
 
-    '2026-05-10': POOL_RECOVERY, // Sun: recovery
+    '2026-05-10': [
+      POOL_RECOVERY,
+      {
+        name: "Shoulder Rehab (Loaded)",
+        type: "Rehab",
+        duration: "10 min",
+        location: "Home or gym",
+        condition: "PT-prescribed strength block (Apr 24). 4x/week cadence. 3 lb to start, up to 4/10 pain ok. Pair with pool day for low-load context.",
+        circuits: [BLOCK_SHOULDER_REHAB_LOADED]
+      }
+    ], // Sun: pool recovery + loaded shoulder rehab
 
     // ---- PRE-TRYOUT ACTIVATION (May 11-12) ----
 

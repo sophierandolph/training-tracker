@@ -8,6 +8,7 @@ Collected from sessions through Mar 20, 2026. Includes holistic review from 7 ag
 
 - [x] **showDayPreview() missing DATE_ACTIVITIES** -- after the travel handler, falls through to EXTERNAL_ACTIVITIES with no DATE_ACTIVITIES check. Non-travel day with date-specific activities but no DATE_WORKOUTS would show "No workout planned." -- Fixed Mar 28.
 - [ ] **renderCalendar() and renderUpcomingWorkouts() DATE_ACTIVITIES before travel** -- both check DATE_ACTIVITIES before travel/SPECIAL_DATES in the else-if chain. Display-only, not routing. Low priority.
+- [ ] **showDayPreview() and renderUpcomingWorkouts() drop DATE_ACTIVITIES when DATE_WORKOUTS exists on same date** -- early return in showDayPreview after DATE_WORKOUTS branch (line ~9772) skips the DATE_ACTIVITIES merge at line ~9849. Same priority pattern in renderUpcomingWorkouts (`if (!displayName && dateActivities)`). Apr 26 case: tapping the Sunday calendar tile shows only "Pre-Throw Shoulder Activation" and misses flag football tournament + extra handball practice. The current-day path (loadTodaysWorkout → showMixedDay) handles it correctly; only preview/upcoming views are affected.
 - [x] **Normalize old /10 effort scores to /5** -- Firestore sweep Apr 4. 5 docs updated (Feb 11, Feb 14 x2, Feb 19, Mar 1). overallFeel divided by 2, rounded up. No per-set issues found.
 
 ### Fixed
