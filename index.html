@@ -11065,11 +11065,11 @@ ${recentHistory}`;
 
       // Normalize type (DATE_WORKOUTS uses capitalized types like "Strength", "Recovery")
       const t = type.toLowerCase();
-      const isLight = ['rest', 'cardio', 'recovery', 'prehab'].includes(t);
+      const isLight = ['rest', 'cardio', 'recovery', 'prehab', 'rehab'].includes(t);
       const target = isLight ? 130 : 150;
 
       let context = '';
-      if (['rest', 'recovery', 'prehab'].includes(t)) context = 'Rest day — prioritize protein and sleep';
+      if (['rest', 'recovery', 'prehab', 'rehab'].includes(t)) context = 'Rest day — prioritize protein and sleep';
       else if (t === 'cardio') context = 'Light day — stay hydrated';
       else if (['sport', 'sport-specific'].includes(t)) context = 'Sport day — carbs pre-practice, protein after';
       else if (t === 'external') context = 'Training day — fuel up, protein within 1hr post';
