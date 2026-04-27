@@ -3434,10 +3434,14 @@
     // Loaded rotator cuff rehab (PT-prescribed Apr 24, 2026). 4x/week strength phase. Up to 4/10 pain ok.
     const BLOCK_SHOULDER_REHAB_LOADED = {
       name: "Shoulder Rehab (Loaded)",
-      instructions: "PT strength block. 3 lb to start, progress as cleared. Up to 4/10 pain is fine. Skip on PT-rehab days and pre-throwing days.",
+      instructions: "PT-prescribed shoulder rehab block. Every other day cadence. Up to 4/10 pain is fine. Updated after each PT session — current weights from Apr 27.",
       exercises: [
-        { id: "shrl1", name: "Side-Lying External Rotation", sets: 3, reps: 12, notes: "3 lb DB. Lie on opposite side, top arm with elbow tucked at 90 deg. Rotate forearm up — STOP at neutral or just past. Never force into full overhead. 10-12 reps each side.", perSide: true },
-        { id: "shrl2", name: "Side-Lying Shoulder Flexion (Short ROM)", sets: 3, reps: 12, notes: "3 lb DB. Lie on side, top arm straight along body. Lift forward toward face — STOP below shoulder height (PT cue: stop sooner than typical). 10-12 reps each side.", perSide: true }
+        { id: "shrl1", name: "Side-Lying External Rotation", sets: 10, reps: 3, weight: 5, notes: "10 sets × 3 reps, 3 sec hold at top, 30 sec rest. Towel under elbow. STOP at neutral or just past — never force overhead.", perSide: true },
+        { id: "shrl2", name: "Side-Lying Shoulder Flexion (Short ROM)", sets: 3, reps: 10, weight: 3, notes: "3 sec hold. STOP below shoulder height (PT cue: stop sooner than typical). Each side.", perSide: true },
+        { id: "shrl3", name: "Side-Lying Shoulder Abduction", sets: 3, reps: 10, weight: 5, notes: "Thumb up, arm straight, slowly lift toward ceiling. Each side.", perSide: true },
+        { id: "shrl4", name: "Horizontal Abduction Palm Down", sets: 3, reps: 10, weight: 3, notes: "Standing stagger stance, chest parallel to ground (bent-over Y/T). Quad position is the fallback if standing form breaks down. Each side.", perSide: true },
+        { id: "shrl5", name: "Face Pulls (Cable, Goal Post)", sets: 3, reps: 10, weight: 10, notes: "Cable machine. Pull to face, finish in goal post position (elbows in line with shoulders, hands stacked above elbows). Squeeze blades." },
+        { id: "shrl6", name: "Waiter's Carry Bottoms Up (KB)", sets: 1, reps: 1, weight: 8, notes: "60 sec each side. KB held bottoms-up, elbow at 90° at side. Walk slowly, maintain height, keep KB still.", isHold: true, holdTime: 60, perSide: true }
       ]
     };
 
@@ -8469,39 +8473,40 @@
 
     '2026-04-28': [
       {
-        name: "Lower Body Strength (Peak)",
+        name: "Lower Body Strength (Deload)",
         type: "Strength",
-        duration: "50 min",
+        duration: "40 min",
         location: "Rec Center",
-        condition: "PEAK WEEK. Week 12, likely luteal phase. Same weights, hold quality. Side plank up to 30 sec. Single leg glute bridge added.\nDaily: sleeper + cross-body stretch 3x30sec each side before bed.",
+        condition: "DELOADED from Peak. Recovery 66 + heavy weekend (4.5hr Sun) + PT 5pm Mon. No jumps. Lighter goblet, fewer reps. Hold quality, drop volume.\nDaily: sleeper + cross-body stretch 3x30sec each side before bed.",
         circuits: [
           {
             name: "A. Hip Prehab Warm-Up (14 min)",
-            instructions: "Full hip prehab + single leg glute bridge added for peak week.",
+            instructions: "Full hip prehab — keep this intact even on deload.",
             exercises: [
               { id: "tb3tue_a1", name: "Quadruped Hip Pocket Rockback", sets: 2, reps: 10, perSide: true, noWeight: true },
               { id: "tb3tue_a2", name: "Side-Lying Clamshell (3s Pause)", sets: 2, reps: 12, perSide: true, noWeight: true },
               { id: "tb3tue_a3", name: "Standing Hip Hydrants", sets: 2, reps: 12, perSide: true, noWeight: true },
               { id: "tb3tue_a4", name: "Copenhagen Adductor Hold", sets: 2, reps: 1, notes: "20 sec each side. Prehab 2x/week — #1 this week.", isHold: true, holdTime: 20, perSide: true, noWeight: true },
               { id: "tb3tue_a5", name: "Tibialis Raises", sets: 2, reps: 15, notes: "Prehab 2x/week — #1 this week.", noWeight: true },
-              { id: "tb3tue_a6", name: "Single Leg Glute Bridge", sets: 2, reps: 10, notes: "Each side. New for peak week — glute endurance under fatigue.", perSide: true, noWeight: true },
+              { id: "tb3tue_a6", name: "Single Leg Glute Bridge", sets: 2, reps: 10, notes: "Each side. Glute endurance under fatigue.", perSide: true, noWeight: true },
               { id: "tb3tue_a7", name: "Bear Crawls", sets: 3, reps: 1, notes: "10-15 ft each.", noWeight: true }
             ]
           },
           {
-            name: "B. Squat + Power + Core (3 rounds, 90 sec rest)",
+            name: "B. Squat + Core (3 rounds, 90 sec rest)",
+            instructions: "DELOAD: lighter goblet, jumps cut (SI was bending-aggravated Sunday).",
             exercises: [
-              { id: "tb3tue_b1", name: "DB Goblet Squat", sets: 3, reps: 12, weight: 35, notes: "Hold at bottom for 2 sec on last rep of each set." },
-              { id: "tb3tue_b2", name: "Jump Squats", sets: 3, reps: 8, notes: "Bodyweight. Explosive.", noWeight: true },
-              { id: "tb3tue_b3", name: "Front Low Plank Hold", sets: 3, reps: 1, isHold: true, holdTime: 35, noWeight: true }
+              { id: "tb3tue_b1", name: "DB Goblet Squat", sets: 3, reps: 10, weight: 30, notes: "Drop from 35x12 → 30x10. Hold at bottom for 2 sec on last rep of each set." },
+              { id: "tb3tue_b2", name: "Front Low Plank Hold", sets: 3, reps: 1, isHold: true, holdTime: 35, noWeight: true }
             ]
           },
           {
             name: "C. Lunge + Hinge + Core (3 rounds, 90 sec rest)",
+            instructions: "DELOAD: reduced reps. Same weights.",
             exercises: [
-              { id: "tb3tue_c1", name: "DB Reverse Lunges", sets: 3, reps: 8, weight: 17.5, perSide: true },
-              { id: "tb3tue_c2", name: "DB RDLs", sets: 3, reps: 10, weight: 20 },
-              { id: "tb3tue_c3", name: "Side Plank Hold", sets: 3, reps: 1, notes: "30 sec each side. Up from 25 sec.", isHold: true, holdTime: 30, perSide: true, noWeight: true }
+              { id: "tb3tue_c1", name: "DB Reverse Lunges", sets: 3, reps: 6, weight: 17.5, notes: "Reduced from 8 → 6.", perSide: true },
+              { id: "tb3tue_c2", name: "DB RDLs", sets: 3, reps: 8, weight: 20, notes: "Reduced from 10 → 8." },
+              { id: "tb3tue_c3", name: "Side Plank Hold", sets: 3, reps: 1, notes: "30 sec each side.", isHold: true, holdTime: 30, perSide: true, noWeight: true }
             ]
           },
           {
@@ -8530,24 +8535,24 @@
             { id: "tb3tue_ms2", name: "Standing Pivot Throw (Separation Cue)", sets: 3, reps: 5, notes: "15 throws. Plant foot, rotate hips, THEN arm follows.", noWeight: true }
           ]
         }]
-      },
-      {
-        name: "Shoulder Rehab (Loaded)",
-        type: "Rehab",
-        duration: "10 min",
-        location: "Home or gym",
-        condition: "PT-prescribed strength block (Apr 24). 4x/week cadence. 3 lb to start, up to 4/10 pain ok.",
-        circuits: [BLOCK_SHOULDER_REHAB_LOADED]
       }
     ],
 
     '2026-04-29': [
       {
+        name: "Shoulder Rehab (Loaded) — AM",
+        type: "Rehab",
+        duration: "20 min",
+        location: "Home or gym",
+        condition: "AM session. PT-prescribed strength block. Every other day cadence (PT confirmed Wed this week despite evening practice). Up to 4/10 pain ok. ~10hr gap before practice.",
+        circuits: [BLOCK_SHOULDER_REHAB_LOADED]
+      },
+      {
         name: "Pre-Handball Warmup",
         type: "Prehab",
         duration: "12-15 min",
         location: "Court",
-        condition: "PEAK WEEK. Likely luteal phase. Daily: sleeper + cross-body stretch 3x30sec before bed.\nIncludes pre-throw cuff activation (PT-prescribed Apr 24).",
+        condition: "PEAK WEEK. Evening practice. Likely luteal phase. Daily: sleeper + cross-body stretch 3x30sec before bed.\nIncludes pre-throw cuff activation (PT-prescribed Apr 24).",
         circuits: [{
           name: "Movement Prep",
           simple: true,
@@ -8643,14 +8648,6 @@
             { id: "tb3thu_ms2", name: "Left-Hand Wall Passes", sets: 3, reps: 5, notes: "15 throws. Short distance, target spot on wall.", noWeight: true }
           ]
         }]
-      },
-      {
-        name: "Shoulder Rehab (Loaded)",
-        type: "Rehab",
-        duration: "10 min",
-        location: "Home or gym",
-        condition: "PT-prescribed strength block (Apr 24). 4x/week cadence. 3 lb to start, up to 4/10 pain ok. Right shoulder loaded — left-hand movement snack does not conflict.",
-        circuits: [BLOCK_SHOULDER_REHAB_LOADED]
       }
     ],
 
