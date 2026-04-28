@@ -3217,7 +3217,7 @@
       <!-- Daily Progress -->
       <div class="fuel-progress">
         <div class="fuel-total" id="fuelTotal">0g</div>
-        <div class="fuel-target-label" id="fuelTargetLabel">of 150g protein target</div>
+        <div class="fuel-target-label" id="fuelTargetLabel">of 155g protein target</div>
         <div class="fuel-progress-bar-track">
           <div class="fuel-progress-bar-fill" id="fuelProgressFill" style="width: 0%"></div>
         </div>
@@ -8521,18 +8521,20 @@
         ]
       },
       {
-        name: "Movement Snack: Pivot Shot Arm Separation",
+        name: "Movement Snack: Passing — Protected Position & Goal-Facing Rotation",
         type: "Sport-Specific",
-        duration: "12 min",
+        duration: "10 min",
         location: "Any wall or open space",
-        condition: "PEAK WEEK. Luteal phase. 15 throws max. Quality over quantity.\nDaily: sleeper + cross-body stretch 3x30sec each side before bed.",
+        condition: "PEAK WEEK. Luteal phase. 10 throws max + 15 no-throw catches — trimmed from 15 throws (PT yesterday + Recovery 66 + R shoulder 4/10 twinge in PT). Quality over quantity. If R shoulder >4/10 in AM check, skip throws — the bounce + protected reset is still ok.\nDaily: sleeper + cross-body stretch 3x30sec each side before bed.",
         circuits: [{
           name: "Technique Drill",
-          instructions: "Pivot shot separation. Cue: 'Open the door.' Hips rotate first, arm stays loaded until the last moment.",
+          instructions: "Two priorities: (1) After every catch, ball goes UP AND BACK to protected high-cock position before anything else — fast reset, no lazy hands at hip. (2) Body stays facing goal even when passing laterally. Eyes look goal FIRST (read the shot), THEN follow the ball to the pass target. Hips/shoulders rotate, feet stay square to goal.",
           simple: true,
           exercises: [
             { id: "tb3tue_ms1", name: "Wrist Flicks", sets: 1, reps: 10, noWeight: true },
-            { id: "tb3tue_ms2", name: "Standing Pivot Throw (Separation Cue)", sets: 3, reps: 5, notes: "15 throws. Plant foot, rotate hips, THEN arm follows.", noWeight: true }
+            { id: "tb3tue_ms2", name: "Bounce + Protected Reset (No Throw)", sets: 1, reps: 15, notes: "Bounce ball to floor or light wall toss, catch, immediately up-and-back to protected position. High-rep on the transition, low shoulder load. Quick hands.", noWeight: true },
+            { id: "tb3tue_ms3", name: "Wall Pass + Protected Reset", sets: 1, reps: 6, notes: "6 throws. Catch, IMMEDIATELY up-and-back to protected position before next throw.", noWeight: true },
+            { id: "tb3tue_ms4", name: "Goal-Facing Lateral Pass", sets: 1, reps: 4, notes: "4 throws (2 ea side). Wall = goal. Look goal first, then eyes follow ball to lateral target. Hips/shoulders rotate, feet stay square to goal.", noWeight: true }
           ]
         }]
       }
@@ -8589,11 +8591,11 @@
 
     '2026-04-30': [
       {
-        name: "Beep Test Retest + Court Conditioning",
+        name: "Court Conditioning (Sub-Max)",
         type: "Conditioning",
-        duration: "30 min",
+        duration: "25 min",
         location: "Gym or outdoor court (20m marked)",
-        condition: "PEAK WEEK. Beep test retest — compare to Apr 16 baseline. Then court intervals. 30 min total.\nDaily: sleeper + cross-body stretch 3x30sec each side before bed.",
+        condition: "PEAK WEEK. Beep test moved to May 4-8 retest window — Sat Apr 25 was beep test on fresh legs, Thu is too soon for a meaningful retest. Court intervals at sub-max effort instead.\nDaily: sleeper + cross-body stretch 3x30sec each side before bed.",
         circuits: [
           {
             name: "A. Dynamic Warm-Up (6 min)",
@@ -8607,19 +8609,11 @@
             ]
           },
           {
-            name: "B. Beep Test Retest",
-            instructions: "Run to exhaustion. Compare to Week 10 baseline. Record level + shuttle.",
-            simple: true,
+            name: "C. Court Intervals (12 min, sub-max)",
+            instructions: "Sub-max effort — bank fatigue for Fri/Sat peak sessions. ~75-80% pace, focus on movement quality.",
             exercises: [
-              { id: "tb3thu_b1", name: "20m Beep Test (Retest)", sets: 1, reps: 1, notes: "Run to exhaustion. Record final level and shuttle. Compare to Apr 16 baseline.", isCardio: true, noWeight: true }
-            ]
-          },
-          {
-            name: "C. Court Intervals (10 min)",
-            instructions: "If gassed from beep test, reduce to 2 reps each. Listen to your body.",
-            exercises: [
-              { id: "tb3thu_c1", name: "20m Shuttle Run", sets: 3, reps: 1, notes: "Rest = work time.", isCardio: true, noWeight: true },
-              { id: "tb3thu_c2", name: "T-Test Drill", sets: 3, reps: 1, notes: "45 sec rest between reps.", isCardio: true, noWeight: true }
+              { id: "tb3thu_c1", name: "20m Shuttle Run", sets: 3, reps: 1, notes: "Sub-max ~80%. Rest = 1.5x work time.", isCardio: true, noWeight: true },
+              { id: "tb3thu_c2", name: "T-Test Drill", sets: 3, reps: 1, notes: "Sub-max ~80%. 60 sec rest between reps. Movement quality over time.", isCardio: true, noWeight: true }
             ]
           },
           {
@@ -8671,7 +8665,7 @@
           {
             name: "B. Vertical Pull + Shoulder + Prehab (3 rounds, 90 sec rest)",
             exercises: [
-              { id: "tb3fri_b1", name: "Lat Pulldown Machine", sets: 3, reps: 10, weight: 72, notes: "If feel dropped to 3 this week, try 77 next time." },
+              { id: "tb3fri_b1", name: "Lat Pulldown Machine (Neutral Grip / Wide Rope)", sets: 3, reps: 10, weight: 72, notes: "GRIP SWAP: PT Mon's straight-bar standing lat pulldown went into triceps not lats. Use neutral-grip handle or wide-grip rope at 72lb — cue elbows-down-and-back, pause at bottom. If still triceps-dominant, drop to 60lb to get the lat work." },
               { id: "tb3fri_b2", name: "Lateral Raise Combo", sets: 3, reps: 10, weight: 7.5 },
               { id: "tb3fri_b3", name: "Rear Delt Fly Machine", sets: 2, reps: 12, weight: 40 }
             ]
@@ -11047,7 +11041,7 @@ ${recentHistory}`;
       // Normalize type (DATE_WORKOUTS uses capitalized types like "Strength", "Recovery")
       const t = type.toLowerCase();
       const isLight = ['rest', 'cardio', 'recovery', 'prehab', 'rehab'].includes(t);
-      const target = isLight ? 130 : 150;
+      const target = isLight ? 135 : 155;
 
       let context = '';
       if (['rest', 'recovery', 'prehab', 'rehab'].includes(t)) context = 'Rest day — prioritize protein and sleep';
