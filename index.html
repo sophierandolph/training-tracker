@@ -8782,15 +8782,15 @@
 
     '2026-05-05': [
       {
-        name: "Wood-Court Retest: T-Test + Sprints + Shuttles",
+        name: "Court Form Work: T-Test + Beep Test Pacing",
         type: "Conditioning",
-        duration: "50 min",
+        duration: "35 min",
         location: "Wood court (Rice Rec or similar)",
-        condition: "RETEST DAY (moved from Mon — Sun was small-group handball, Mon true rest, fresh legs today).\nWood-court surface for clean baseline. Sequence matters: shortest/most technical first while CNS fresh, longest last.\nNo pre-fatigue, no band work before tests.\nCycle: menstrual likely — auto-regulate. Hydrate well morning of.",
+        condition: "Period day 2 — medium energy. Form focus only, no scoring today.\nT-test: pattern reinforcement, one cue per rep. Beep test: levels 1-5 only, familiarity not fatigue.\nStop after level 5 regardless of how you feel. Cap T-test at 3 reps.",
         circuits: [
           {
             name: "A. Dynamic Warm-Up (10 min)",
-            instructions: "Build CNS, don't fatigue it. Save the snap for the tests.",
+            instructions: "Build CNS, don't fatigue it.",
             simple: true,
             exercises: [
               { id: "ret_a1", name: "Light Jog", sets: 1, reps: 1, isCardio: true, duration: 180, noWeight: true },
@@ -8804,34 +8804,21 @@
             ]
           },
           {
-            name: "B. T-Test (3 trials, full rest)",
-            instructions: "Standard 9.14m cone setup. T1 ramp-up + T2 + T3 scored. 2-3 min rest between trials. Take faster of T2/T3 as wood-court baseline.",
+            name: "B. T-Test (3 reps, form focus)",
+            instructions: "Standard 9.14m cone setup. One cue only: 'reach, don't bend' at every cone touch — spine stays tall, arm extends down. 2 min rest between reps. Film at least one rep.",
             exercises: [
-              { id: "ret_b1", name: "T-Test Drill", sets: 3, reps: 1, notes: "T1 = ramp (75-85%). T2 + T3 = full effort. 2-3 min rest between. Film if possible.", isCardio: true, trackScore: true, noWeight: true }
+              { id: "ret_b1", name: "T-Test Drill", sets: 3, reps: 1, notes: "~80% effort. Cue: spine tall, reach with the arm at every cone. 2 min rest between. Film one rep.", isCardio: true, noWeight: true }
             ]
           },
           {
-            name: "C. 30m Sprint (3 trials, full recovery)",
-            instructions: "Standing start. 60-90 sec rest between trials. New baseline (not previously tested).",
+            name: "C. Beep Test — Levels 1-5 Only",
+            instructions: "Not a fitness test today — this is pacing and turn practice. Run to the line, get your feet set, turn cleanly. Internalize the beep cadence and the 180-degree turn mechanics. Hard stop after level 5.",
             exercises: [
-              { id: "ret_c1", name: "30m Sprint", sets: 3, reps: 1, notes: "Standing start. Full recovery between (60-90 sec). Take fastest as baseline.", isCardio: true, trackScore: true, noWeight: true }
+              { id: "ret_c1", name: "Beep Test", sets: 1, reps: 1, notes: "Levels 1-5 only. Focus: clean turns, feet set at the line, learn the early-stage cadence. Stop at end of level 5 no matter what.", isCardio: true, noWeight: true }
             ]
           },
           {
-            name: "D. 20m Shuttle (2 trials)",
-            exercises: [
-              { id: "ret_d1", name: "20m Shuttle Run", sets: 2, reps: 1, notes: "Down + back. Touch line each end. 90 sec rest between.", isCardio: true, trackScore: true, noWeight: true }
-            ]
-          },
-          {
-            name: "E. 40m Shuttle (1 trial)",
-            instructions: "One good rep beats two tired ones. Most taxing test of the day — go last.",
-            exercises: [
-              { id: "ret_e1", name: "40m Shuttle Run", sets: 1, reps: 1, notes: "Down + back. Touch line each end. Single max effort.", isCardio: true, trackScore: true, noWeight: true }
-            ]
-          },
-          {
-            name: "F. Cool-Down (8 min)",
+            name: "D. Cool-Down (8 min)",
             simple: true,
             exercises: [
               { id: "ret_f1", name: "Easy Walk + Jog Intervals", sets: 1, reps: 1, isCardio: true, duration: 180, noWeight: true },
