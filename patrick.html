@@ -33,8 +33,8 @@
     const auth = firebase.auth();
 
     // Google sign-in -- gates Firestore access via security rules
-    // Allowed email: patrickray007@gmail.com
-    const ALLOWED_EMAIL = 'patrickray007@gmail.com';
+    // Allowed emails: Patrick + Sophie (Sophie manages workouts for both)
+    const ALLOWED_EMAILS = ['patrickray007@gmail.com', 'randolph.sophia@gmail.com'];
     let authReady = false;
     let authUid = null;
 
@@ -50,19 +50,27 @@
       if (errEl) errEl.textContent = 'Sign-in error: ' + error.message;
     });
 
+    const IS_LOCALHOST = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+
     const authPromise = new Promise((resolve) => {
+      if (IS_LOCALHOST) {
+        // Skip auth gate on localhost for local preview
+        authReady = true;
+        resolve();
+        return;
+      }
       auth.onAuthStateChanged((user) => {
-        if (user && user.email === ALLOWED_EMAIL) {
+        if (user && ALLOWED_EMAILS.includes(user.email)) {
           authUid = user.uid;
           authReady = true;
           console.log('Auth ready:', authUid);
           document.getElementById('authGate')?.remove();
           resolve();
-        } else if (user && user.email !== ALLOWED_EMAIL) {
+        } else if (user && !ALLOWED_EMAILS.includes(user.email)) {
           // Wrong account -- sign out and show login again
           console.warn('Wrong account:', user.email);
           const errEl = document.getElementById('authError');
-          if (errEl) errEl.textContent = 'Wrong account: ' + user.email + '. Use patrickray007@gmail.com';
+          if (errEl) errEl.textContent = 'Wrong account: ' + user.email + '. Use patrickray007@gmail.com or randolph.sophia@gmail.com';
           auth.signOut();
         } else {
           // Not signed in -- show login screen

@@ -50,7 +50,15 @@
       if (errEl) errEl.textContent = 'Sign-in error: ' + error.message;
     });
 
+    const IS_LOCALHOST = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+
     const authPromise = new Promise((resolve) => {
+      if (IS_LOCALHOST) {
+        // Skip auth gate on localhost for local preview
+        authReady = true;
+        resolve();
+        return;
+      }
       auth.onAuthStateChanged((user) => {
         if (user && user.email === ALLOWED_EMAIL) {
           authUid = user.uid;
