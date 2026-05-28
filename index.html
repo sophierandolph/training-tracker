@@ -4535,8 +4535,8 @@
           <div class="workout-type">${workout.type}</div>
           <div class="workout-title">${workout.name}</div>
           <div class="workout-meta">
-            <span>⏱ ${workout.duration}</span>
-            <span>📍 ${workout.location}</span>
+            ${workout.duration ? `<span>⏱ ${workout.duration}</span>` : ''}
+            ${workout.location ? `<span>📍 ${workout.location}</span>` : ''}
           </div>
         </div>
 
@@ -4557,7 +4557,7 @@
             <div class="circuit-header">
               <div>
                 <h3>${circuit.name}</h3>
-                <div class="circuit-instructions">${circuit.instructions}</div>
+                ${circuit.instructions ? `<div class="circuit-instructions">${circuit.instructions}</div>` : ''}
               </div>
               <div class="circuit-status" id="circuit-status-${circuitIndex}">0/${getTotalSets(circuit)}</div>
             </div>
@@ -9252,7 +9252,9 @@
 
     '2026-05-27': {
       type: 'Recovery',
-      workout: 'Drive Day — Active Rest',
+      name: 'Drive Day — Active Rest',
+      duration: '15 min',
+      location: 'Blackfoot, ID Rest Area',
       condition: 'Sleeping at Blackfoot ID rest area. No gym. Follicular phase — tissue repair window, prioritize sleep and hydration.',
       focus: 'Shake out legs from the drive. Gentle only.',
       circuits: [
@@ -9272,7 +9274,9 @@
 
     '2026-05-28': {
       type: 'Strength',
-      workout: 'Upper Body — Return Week, Day 1',
+      name: 'Upper Body — Return Week, Day 1',
+      duration: '55 min',
+      location: 'Planet Fitness Idaho Falls',
       condition: 'Planet Fitness Idaho Falls. Follicular phase. First gym session since tryouts. Weights at ~80% — feel the pattern, not the load. Right shoulder mid-rehab: keep chest press light and watch for cuff feedback.',
       focus: 'Pull before push. Re-establish shoulder stability. Cardio first for full-body blood flow.',
       circuits: [
@@ -9328,7 +9332,9 @@
 
     '2026-05-29': {
       type: 'Strength',
-      workout: 'Lower Body — Return Week, Day 2',
+      name: 'Lower Body — Return Week, Day 2',
+      duration: '60 min',
+      location: 'Planet Fitness Bozeman',
       condition: "Planet Fitness Bozeman. Patrick's show tonight — aim for 60 min max. Altitude ~4,800 ft (Bozeman): HR will run higher than usual at the same effort. That's altitude, not deconditioning. Follicular phase — good window for leg work.",
       focus: 'Hinge and squat patterns. Hip prehab first. Achilles loading. Leave legs fresh enough for the show.',
       circuits: [
@@ -9393,7 +9399,9 @@
 
     '2026-05-30': {
       type: 'Strength',
-      workout: 'Upper Body — Return Week, Day 3',
+      name: 'Upper Body — Return Week, Day 3',
+      duration: '50 min',
+      location: 'Planet Fitness Bozeman',
       condition: 'Planet Fitness Bozeman (passing through on way to Three Forks). Aim for 50-55 min — road day. Shoulder still mid-rehab: rotator cuff activation before any pressing.',
       focus: 'Vertical pull emphasis (complements Thursday). Re-establish rotator cuff activation.',
       circuits: [
@@ -9435,7 +9443,9 @@
 
     '2026-05-31': {
       type: 'Recovery',
-      workout: 'Missouri Headwaters — Active Rest',
+      name: 'Missouri Headwaters — Active Rest',
+      duration: '30-45 min',
+      location: 'Missouri Headwaters State Park',
       condition: 'Missouri Headwaters State Park campsite. No gym. Three gym days in a row — this is intentional rest. Move gently. Optional trail walk or band circuit.',
       focus: "Let the week's training absorb. Prioritize protein + sleep tonight.",
       circuits: [

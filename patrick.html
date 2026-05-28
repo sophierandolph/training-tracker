@@ -4535,8 +4535,8 @@
           <div class="workout-type">${workout.type}</div>
           <div class="workout-title">${workout.name}</div>
           <div class="workout-meta">
-            <span>⏱ ${workout.duration}</span>
-            <span>📍 ${workout.location}</span>
+            ${workout.duration ? `<span>⏱ ${workout.duration}</span>` : ''}
+            ${workout.location ? `<span>📍 ${workout.location}</span>` : ''}
           </div>
         </div>
 
@@ -4557,7 +4557,7 @@
             <div class="circuit-header">
               <div>
                 <h3>${circuit.name}</h3>
-                <div class="circuit-instructions">${circuit.instructions}</div>
+                ${circuit.instructions ? `<div class="circuit-instructions">${circuit.instructions}</div>` : ''}
               </div>
               <div class="circuit-status" id="circuit-status-${circuitIndex}">0/${getTotalSets(circuit)}</div>
             </div>
@@ -5772,7 +5772,9 @@
 
     '2026-05-27': {
       type: 'Recovery',
-      workout: 'Drive Day — Active Rest',
+      name: 'Drive Day — Active Rest',
+      duration: '15 min',
+      location: 'Blackfoot, ID Rest Area',
       condition: 'Sleeping at Blackfoot ID rest area. No gym.',
       focus: 'Shake out legs from the drive. Gentle only.',
       circuits: [
@@ -5791,7 +5793,9 @@
 
     '2026-05-28': {
       type: 'Strength',
-      workout: 'Upper Body — Return Week, Day 1',
+      name: 'Upper Body — Return Week, Day 1',
+      duration: '55 min',
+      location: 'Planet Fitness Idaho Falls',
       condition: "Planet Fitness Idaho Falls. First gym session on the road. Weights at ~80% of PT weights. Being sore before a workout doesn't mean you shouldn't do it — light movement clears metabolic waste and speeds recovery. Start, and your body will thank you by the second circuit.",
       focus: 'Cardio first for full-body blood flow. Pull before push. Start lighter than you think you need to.',
       circuits: [
@@ -5847,7 +5851,9 @@
 
     '2026-05-29': {
       type: 'Strength',
-      workout: 'Lower Body — Return Week, Day 2',
+      name: 'Lower Body — Return Week, Day 2',
+      duration: '60 min',
+      location: 'Planet Fitness Bozeman',
       condition: "Planet Fitness Bozeman. Show tonight — keep to ~60 min. Altitude ~4,800 ft: your heart rate will run higher than normal at the same effort. That's just altitude, not a fitness drop.",
       focus: 'Squat and hinge patterns. Leave enough in the tank for a great show.',
       circuits: [
@@ -5911,7 +5917,9 @@
 
     '2026-05-30': {
       type: 'Strength',
-      workout: 'Upper Body — Return Week, Day 3',
+      name: 'Upper Body — Return Week, Day 3',
+      duration: '50 min',
+      location: 'Planet Fitness Bozeman',
       condition: 'Planet Fitness Bozeman (passing through). 50-55 min max — road day.',
       focus: 'Vertical pull emphasis + rotator cuff. Complete the upper body week.',
       circuits: [
@@ -5953,7 +5961,9 @@
 
     '2026-05-31': {
       type: 'Recovery',
-      workout: 'Missouri Headwaters — Active Rest',
+      name: 'Missouri Headwaters — Active Rest',
+      duration: '30-45 min',
+      location: 'Missouri Headwaters State Park',
       condition: 'Missouri Headwaters State Park. No gym. Three gym days in a row — rest is part of the plan.',
       focus: "Move gently. Let the week's work absorb.",
       circuits: [
@@ -7374,7 +7384,7 @@ OVERTRAINING SIGNALS
 - Sharp pain = stop immediately. Persistent pain >24h = extra rest.
 - Can't maintain form = drop weight or switch to recovery.
 - DOMS is normal — active recovery beats full rest for DOMS.
-- Better to do 80% of a workout well than 100% poorly.\`;
+- Better to do 80% of a workout well than 100% poorly.`;
 
     // Coach conversation state
     let coachMessages = [];
