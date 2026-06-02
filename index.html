@@ -5079,25 +5079,6 @@
     }
 
     function finishWorkout() {
-      // Count sets for confirmation
-      let totalSets = 0;
-      let completedSets = 0;
-      if (state.activeWorkout && state.activeWorkout.circuits) {
-        state.activeWorkout.circuits.forEach((circuit, ci) => {
-          circuit.exercises.forEach((ex, ei) => {
-            totalSets += ex.sets;
-            const id = `${ci}-${ei}`;
-            if (state.workoutLog[id]) {
-              completedSets += state.workoutLog[id].filter(s => s && !s.skipped).length;
-            }
-          });
-        });
-      }
-
-      if (!confirm(`Finish workout? ${completedSets} of ${totalSets} sets completed.`)) {
-        return;
-      }
-
       const duration = state.workoutStartTime ?
         Math.round((new Date() - state.workoutStartTime) / 60000) : 0;
 
