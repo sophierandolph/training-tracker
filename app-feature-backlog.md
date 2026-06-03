@@ -123,7 +123,7 @@ Collected from sessions through Mar 20, 2026. Includes holistic review from 7 ag
 - [x] **UX: Autofocus weight input** -- set modal autofocuses weight (or reps for noWeight). Mar 20.
 - [x] **UX: 44px modal close buttons** -- touch target from 36px to 44px. Mar 20.
 - [x] **UX: Dismissable completion modal** -- backdrop click + close button. Mar 20.
-- [x] **UX: Finish workout confirmation** -- confirm() showing sets completed count. Mar 20.
+- [x] **UX: Finish workout confirmation** -- confirm() removed Jun 2026; blocked on iOS standalone. Complete modal serves as confirmation step.
 - [x] **UX: Exercise notes readability** -- 13px, secondary color (was 12px, muted). Mar 20.
 - [x] **UX: Feel button padding** -- 8px horizontal (was 4px). Mar 20.
 - [x] **UX: Auto-scroll to current circuit** -- after logging a set. Mar 20.
