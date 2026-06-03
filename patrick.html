@@ -5971,47 +5971,56 @@
     '2026-06-03': {
       type: 'Strength',
       name: 'Full Body — Day 1',
-      duration: '60 min',
+      duration: '65 min',
       location: 'Livingston, MT',
-      condition: 'Full gym available — barbell, KB, cable. Livingston is ~4,500 ft elevation: HR runs higher than expected. Work by feel, not pace.',
-      focus: 'Posterior chain. Rotational core. Standing push. Calibrate barbell weights on set 1.',
+      condition: 'Full gym available — barbell, KB, cable. Livingston is ~4,500 ft elevation: HR runs higher than expected at any given pace. Work by feel, not pace.',
+      focus: 'Posterior chain as anchor. Rotational and anti-extension core. Standing push.',
       circuits: [
         {
-          name: 'Warm-Up: Cardio + Activation (12 min)',
+          name: 'Warm-Up: Cardio + Activation (15 min)',
           simple: true,
           exercises: [
-            { id: 'p_fb3_w1', name: 'Treadmill — Interval Walk/Jog', sets: 1, reps: 1, isCardio: true, duration: 600, notes: '2 min walk → 4× (1 min moderate jog / 1 min walk) → 2 min walk. Work by effort — elevation makes HR run high.', noWeight: true },
-            { id: 'p_fb3_w2', name: 'Band Pull-Aparts', sets: 2, reps: 15, noWeight: true, notes: 'Arms straight at chest height. Pull apart fully, hold 1 sec. Shoulder activation.' },
-            { id: 'p_fb3_w3', name: 'Standing Hip Hydrants (band)', sets: 1, reps: 12, perSide: true, noWeight: true, notes: 'Mini band above knees. Hip abductor activation.' }
+            { id: 'p_fb3_w1', name: 'Treadmill — Interval Walk/Jog', sets: 1, reps: 1, isCardio: true, duration: 600, notes: '2 min easy walk → 4× (1 min moderate push / 1 min walk) → 2 min easy. Work by effort, not pace — elevation makes HR run higher than normal.', noWeight: true },
+            { id: 'p_fb3_w2', name: 'Copenhagen Adductor Hold (bench)', sets: 2, reps: 1, isHold: true, holdTime: 20, perSide: true, noWeight: true, notes: 'Side plank, top foot resting on bench. 20 sec each side. Adductor activation.' },
+            { id: 'p_fb3_w3', name: 'Standing Hip Hydrants (band)', sets: 2, reps: 10, perSide: true, noWeight: true, notes: 'Mini band above knees. Kick leg out to side, controlled return. Hip abductor activation.' },
+            { id: 'p_fb3_w4', name: 'Band Pull-Aparts', sets: 2, reps: 15, noWeight: true, notes: 'Arms straight at chest height. Pull apart fully, hold 1 sec. Shoulder blade activation.' },
+            { id: 'p_fb3_w5', name: 'Face Pulls (band or cable)', sets: 2, reps: 12, noWeight: true, notes: 'Band or cable at face height. Pull to face, finish in goal post position. Squeeze shoulder blades at end range.' }
+          ]
+        },
+        {
+          name: 'Perturbation: Single-Leg Bench Sit-to-Stand',
+          simple: true,
+          exercises: [
+            { id: 'p_fb3_p1', name: 'Single-Leg Bench Sit-to-Stand', sets: 3, reps: 5, perSide: true, noWeight: true, notes: 'Sit all the way down on bench, lift one foot, drive through the heel to stand on one leg. Slow controlled descent back down. Single-leg stability work — focus on control, not speed.' }
           ]
         },
         {
           name: 'A. Posterior Chain + Anti-Extension (3 rounds, 90 sec rest)',
           exercises: [
-            { id: 'p_fb3_a1', name: 'Barbell Romanian Deadlift', sets: 3, reps: 10, weight: 105, notes: 'Calibrate on set 1 — start at 95-105 lb. Hinge from hips, soft knee, bar traces the legs. Feel hamstrings fully load at the bottom. No low back rounding.' },
-            { id: 'p_fb3_a2', name: 'Hardstyle Dead Bug', sets: 3, reps: 8, perSide: true, noWeight: true, notes: 'Lower back pressed actively into the floor — not just neutral. Opposite arm and leg extend slow and long. Stop the rep if the low back lifts.' }
+            { id: 'p_fb3_a1', name: 'Barbell Romanian Deadlift', sets: 3, reps: 10, weight: 105, notes: 'Calibrate on set 1 — start at 95-105 lb. Hinge from the hips, soft knee bend, bar traces the legs down and back. Feel the hamstrings fully load at the bottom. No rounding at the low back.' },
+            { id: 'p_fb3_a2', name: 'Hardstyle Dead Bug', sets: 3, reps: 8, perSide: true, noWeight: true, notes: 'Lower back PRESSED into the floor — actively pressed flat, not just neutral. Opposite arm and leg extend slow and long. Stop the rep the moment the low back lifts.' }
           ]
         },
         {
           name: 'B. Squat Pattern + Anti-Rotation (3 rounds, 90 sec rest)',
           exercises: [
-            { id: 'p_fb3_b1', name: 'KB Goblet Squat', sets: 3, reps: 10, weight: 35, notes: 'Start at 35 lb KB. Chest up, elbows inside knees, 1 sec pause at bottom. Feet shoulder-width or slightly wider.' },
-            { id: 'p_fb3_b2', name: 'Cable Pallof Press (hold)', sets: 3, reps: 1, isHold: true, holdTime: 20, perSide: true, weight: 15, notes: 'Cable at chest height. Stand perpendicular to anchor, hands clasped at chest, press out and hold 20 sec. Resist the rotation — do not let the cable pull you. Switch sides.' }
+            { id: 'p_fb3_b1', name: 'KB Goblet Squat', sets: 3, reps: 10, weight: 35, notes: 'Start at 35 lb KB. Chest up, elbows inside knees at bottom. 1 sec pause at bottom.' },
+            { id: 'p_fb3_b2', name: 'Cable Pallof Press (hold)', sets: 3, reps: 1, isHold: true, holdTime: 20, perSide: true, weight: 15, notes: 'Cable at chest height, stand perpendicular to the anchor. Hands clasped at chest, press out and hold 20 sec — resist the rotation pulling you toward the machine. Switch sides.' }
           ]
         },
         {
           name: 'C. Pull + Standing Push (3 rounds, 90 sec rest)',
           exercises: [
-            { id: 'p_fb3_c1', name: 'Bent-Over Barbell Row', sets: 3, reps: 10, weight: 85, notes: 'Hip hinge to 45°, row to lower sternum. Squeeze blades at top. Full stretch at bottom. Start at 80-85 lb based on cable row history.' },
-            { id: 'p_fb3_c2', name: 'Landmine Press', sets: 3, reps: 10, perSide: true, weight: 20, notes: 'Wedge bar in corner or landmine attachment. Add 15-20 lb. Stagger stance, hold end at shoulder, press up and out at 45°. Each arm.' }
+            { id: 'p_fb3_c1', name: 'Bent-Over Barbell Row', sets: 3, reps: 10, weight: 85, notes: 'Start at 80-85 lb. Hip hinge to about 45°, row bar to lower sternum. Squeeze shoulder blades at the top. Full stretch at bottom.' },
+            { id: 'p_fb3_c2', name: 'Landmine Press', sets: 3, reps: 10, perSide: true, weight: 20, notes: 'Wedge one end of a barbell in a corner or landmine attachment. Add 15-20 lb to the free end. Stagger stance, hold the free end at shoulder height, press up and out at a 45° angle. Each arm.' }
           ]
         },
         {
-          name: 'Finisher: Calf + Shin',
+          name: 'Finisher: Achilles + Shin Prehab',
           simple: true,
           exercises: [
-            { id: 'p_fb3_f1', name: 'HSR Calf Raise (Double Leg)', sets: 3, reps: 12, noWeight: true, notes: '3-sec rise, 3-sec lower. On a step for full ROM. Tendon loading — the slow tempo is the mechanism.' },
-            { id: 'p_fb3_f2', name: 'Tibialis Raise (wall)', sets: 2, reps: 20, noWeight: true, notes: 'Back against wall, heels ~12 inches out. Lift toes to max, lower slowly. Both feet.' }
+            { id: 'p_fb3_f1', name: 'HSR Calf Raise (Single Leg)', sets: 3, reps: 10, perSide: true, noWeight: true, notes: '3-sec rise, pause at top, 3-sec lower. Use a step edge for full ROM. Wall for balance. Tendon loading — the slow tempo is what drives adaptation.' },
+            { id: 'p_fb3_f2', name: 'Tibialis Raise (wall)', sets: 2, reps: 20, noWeight: true, notes: 'Back against wall, heels about 12 inches out. Lift toes to maximum, lower slowly. Both feet at once.' }
           ]
         },
         {
@@ -6029,31 +6038,39 @@
     '2026-06-05': {
       type: 'Strength',
       name: 'Upper Body',
-      duration: '55 min',
+      duration: '60 min',
       location: 'Planet Fitness',
-      condition: 'Standard PF. Weights calibrated from first two logged sessions. Cable row ramps to 85 — start there steady this time.',
-      focus: 'Horizontal + vertical pull. Standing push. Shoulder health. Rotational core.',
+      condition: 'Standard PF. Cable row starts steady at 85 — no ramp this time.',
+      focus: 'Horizontal + vertical pull. Standing cable press. Rotational core. Shoulder health throughout.',
       circuits: [
         {
-          name: 'Warm-Up: Cardio + Shoulder Activation (12 min)',
+          name: 'Warm-Up: Cardio + Shoulder Activation (15 min)',
           simple: true,
           exercises: [
             { id: 'p_ub5_w1', name: 'Stationary Bike or Treadmill', sets: 1, reps: 1, isCardio: true, duration: 600, notes: '10 min. Bike: steady 65% effort. Treadmill: 2 min walk, 4× (1 min jog / 1 min walk), 2 min walk.', noWeight: true },
-            { id: 'p_ub5_w2', name: 'Band Pull-Aparts', sets: 2, reps: 15, noWeight: true, notes: 'Arms straight. Pull apart fully, hold 1 sec.' },
-            { id: 'p_ub5_w3', name: 'Rear Delt Fly (light DB)', sets: 2, reps: 15, weight: 7, notes: 'Hinge forward 45°. Arms out to sides, thumbs up. Scapular health.' }
+            { id: 'p_ub5_w2', name: 'Band Pull-Aparts', sets: 2, reps: 15, noWeight: true, notes: 'Arms straight, band at chest height. Pull apart fully, hold 1 sec.' },
+            { id: 'p_ub5_w3', name: 'External Rotation (band, elbow at side)', sets: 2, reps: 12, perSide: true, noWeight: true, notes: 'Elbow at 90° pinned to side. Rotate forearm away from body. Feel the back of the shoulder engage.' },
+            { id: 'p_ub5_w4', name: 'Rear Delt Fly (light DB)', sets: 2, reps: 15, weight: 7, notes: 'Hinge forward 45°. Arms out to sides, thumbs up. 7 lb — scapular health, not strength.' }
+          ]
+        },
+        {
+          name: 'Core: Anti-Extension (before loading)',
+          simple: true,
+          exercises: [
+            { id: 'p_ub5_core1', name: 'Hardstyle Dead Bug', sets: 3, reps: 8, perSide: true, noWeight: true, notes: 'Lower back pressed into the floor — actively flat, not neutral. Opposite arm and leg extend slow and long. Stop the rep the moment the low back lifts. Form degrades fast when fatigued, so this goes here while fresh.' }
           ]
         },
         {
           name: 'A. Horizontal Pull + Rotational Core (3 rounds, 90 sec rest)',
           exercises: [
-            { id: 'p_ub5_a1', name: 'Seated Cable Row', sets: 3, reps: 10, weight: 85, notes: 'Ramped to 85 last session — start here steady for all 3 sets. Full pull, pause at chest, controlled return.' },
-            { id: 'p_ub5_a2', name: 'Cable Woodchop (High to Low)', sets: 3, reps: 10, perSide: true, weight: 20, notes: 'Cable set high. Rotate from the hips — not just the arms. Pull diagonally down and across. Both sides. Adjust height from row setup.' }
+            { id: 'p_ub5_a1', name: 'Seated Cable Row', sets: 3, reps: 10, weight: 85, notes: 'Ramped to 85 last session — start here steady for all 3 sets. Full pull to lower chest, pause, controlled return.' },
+            { id: 'p_ub5_a2', name: 'Cable Woodchop (High to Low)', sets: 3, reps: 10, perSide: true, weight: 20, notes: 'Cable set high. Rotate from the hips — not just the arms. Pull diagonally down and across the body. Both sides.' }
           ]
         },
         {
           name: 'B. DB Row + Curl (3 rounds, 60 sec rest)',
           exercises: [
-            { id: 'p_ub5_b1', name: 'Single-Arm DB Row', sets: 3, reps: 10, perSide: true, weight: 35, notes: 'Up from 30 lb last session. Row from the lat — elbow to hip pocket. Brace hard, no hip rotation. Full stretch at the bottom.' },
+            { id: 'p_ub5_b1', name: 'Single-Arm DB Row', sets: 3, reps: 10, perSide: true, weight: 35, notes: 'Up from 30 lb last session. Row from the lat — elbow drives to hip pocket. Brace hard, no hip rotation. Full stretch at the bottom.' },
             { id: 'p_ub5_b2', name: 'Bicep Curl (DB)', sets: 3, reps: 10, weight: 20, notes: 'Both arms. Full ROM. Same DB zone.' }
           ]
         },
@@ -6067,14 +6084,8 @@
         {
           name: 'D. Standing Cable Press + Face Pulls (3 rounds, 90 sec rest)',
           exercises: [
-            { id: 'p_ub5_d1', name: 'Standing Single-Arm Cable Press', sets: 3, reps: 10, perSide: true, weight: 25, notes: 'Cable at chest height. Stagger stance, press forward to full extension. Trunk has to stabilize. Each arm.' },
-            { id: 'p_ub5_d2', name: 'Face Pulls', sets: 3, reps: 12, weight: 15, notes: 'Rope attachment, cable at face height. Pull to face, goal post finish. Squeeze blades at end range.' }
-          ]
-        },
-        {
-          name: 'Finisher: Chest Press (2 rounds)',
-          exercises: [
-            { id: 'p_ub5_f1', name: 'DB Chest Press (Flat or Low Incline)', sets: 2, reps: 10, weight: 25, notes: 'Hold at 25 lb — it was very hard last session. Push strength does not always match pull strength. Get all sets feeling clean and controlled before going up. Elbows at 45° (not flared wide). Full ROM.' }
+            { id: 'p_ub5_d1', name: 'Standing Single-Arm Cable Press', sets: 3, reps: 10, perSide: true, weight: 25, notes: 'Cable at chest height. Stagger stance, press forward to full arm extension, controlled return. Trunk stabilizes throughout. Each arm.' },
+            { id: 'p_ub5_d2', name: 'Face Pulls', sets: 3, reps: 12, weight: 15, notes: 'Rope attachment, cable at face height. Pull to face, finish in goal post position. Squeeze shoulder blades at end range. Swap rope from the press — same cable tower.' }
           ]
         },
         {
@@ -6092,47 +6103,55 @@
     '2026-06-07': {
       type: 'Strength',
       name: 'Lower Body',
-      duration: '55 min',
+      duration: '65 min',
       location: 'Planet Fitness',
-      condition: 'Standard PF. Weights calibrated from May 30 session — start at the weights that felt manageable, not where you opened.',
-      focus: 'Posterior chain. Machine legs. Calf and shin maintenance.',
+      condition: 'Standard PF — machines and DBs. Start at the weights that felt manageable last session, not where you opened.',
+      focus: 'Posterior chain anchor. Single-leg stability. Adductor strength. Calf and shin prehab.',
       circuits: [
         {
-          name: 'Warm-Up: Cardio + Hip Activation (12 min)',
+          name: 'Warm-Up: Cardio + Hip Activation (15 min)',
           simple: true,
           exercises: [
-            { id: 'p_lb7_w1', name: 'Treadmill — Interval Walk/Jog', sets: 1, reps: 1, isCardio: true, duration: 600, notes: '2 min walk → 4× (1 min push / 1 min walk) → 2 min walk. Gets blood to legs before loading.', noWeight: true },
-            { id: 'p_lb7_w2', name: 'Glute Bridge (double leg)', sets: 2, reps: 15, noWeight: true, notes: 'Feet flat, drive hips up, squeeze at top, hold 1 sec. Posterior chain activation.' },
-            { id: 'p_lb7_w3', name: 'Standing Hip Hydrants (band)', sets: 1, reps: 12, perSide: true, noWeight: true, notes: 'Mini band above knees. Kick out to side, controlled.' }
+            { id: 'p_lb7_w1', name: 'Treadmill — Interval Walk/Jog', sets: 1, reps: 1, isCardio: true, duration: 600, notes: '2 min easy walk → 4× (1 min push / 1 min walk) → 2 min easy. Gets full blood flow to legs before loading.', noWeight: true },
+            { id: 'p_lb7_w2', name: 'Glute Bridge (double leg)', sets: 2, reps: 15, noWeight: true, notes: 'Feet flat, drive hips up, squeeze glutes at top, hold 1 sec. Posterior chain activation.' },
+            { id: 'p_lb7_w3', name: 'Standing Hip Hydrants (band)', sets: 2, reps: 10, perSide: true, noWeight: true, notes: 'Mini band above knees. Kick leg out to side, controlled. Glute med activation.' }
+          ]
+        },
+        {
+          name: 'Perturbation: Single-Leg Bench Sit-to-Stand',
+          simple: true,
+          exercises: [
+            { id: 'p_lb7_p1', name: 'Single-Leg Bench Sit-to-Stand', sets: 3, reps: 5, perSide: true, noWeight: true, notes: 'Sit fully on bench, lift one foot, drive through the heel to stand. Slow controlled descent. Do this while neurally fresh, before loading.' }
           ]
         },
         {
           name: 'A. Posterior Chain — Hinge + Lunge (3 rounds, 90 sec rest)',
           exercises: [
-            { id: 'p_lb7_a1', name: 'DB Romanian Deadlift', sets: 3, reps: 10, weight: 30, notes: 'Up from 25 lb. Push hips back, soft knee. Feel hamstrings load fully at the bottom. No low back rounding.' },
-            { id: 'p_lb7_a2', name: 'DB Reverse Lunge', sets: 3, reps: 10, perSide: true, weight: 20, notes: 'Hold at 20 lb, add 2 reps (8→10) before bumping weight. Step back, back knee hovers 1 inch. Front knee tracks over toes.' }
+            { id: 'p_lb7_a1', name: 'DB Romanian Deadlift', sets: 3, reps: 10, weight: 30, notes: 'Up from 25 lb. Push hips back, soft knee bend. Feel the hamstring pull taut at the bottom. No low back rounding.' },
+            { id: 'p_lb7_a2', name: 'DB Reverse Lunge', sets: 3, reps: 10, perSide: true, weight: 20, notes: 'Hold at 20 lb, adding reps (8→10) before bumping weight. Step back, back knee hovers 1 inch above floor. Front knee tracks over toes.' }
           ]
         },
         {
           name: 'B. Machine Legs (3 rounds, 90 sec rest)',
           exercises: [
             { id: 'p_lb7_b1', name: 'Leg Press', sets: 3, reps: 12, notes: 'Start at 130 lb — where you finished last session. Build from a clean set. Full ROM, no knee cave.' },
-            { id: 'p_lb7_b2', name: 'Seated Leg Curl', sets: 3, reps: 12, notes: 'Start at 50 lb — where you settled last session. Controlled 2-sec pull, 2-sec return.' }
+            { id: 'p_lb7_b2', name: 'Seated Leg Curl', sets: 3, reps: 12, notes: 'Start at 50 lb — where you settled last session. 2-sec pull, 2-sec return.' }
           ]
         },
         {
-          name: 'C. Squat Pattern + Core (3 rounds, 90 sec rest)',
+          name: 'C. Squat Pattern + Adductor (3 rounds, 90 sec rest)',
           exercises: [
             { id: 'p_lb7_c1', name: 'DB Goblet Squat', sets: 3, reps: 10, weight: 35, notes: 'Up from 30 lb. Chest up, elbows inside knees, 1 sec pause at bottom.' },
-            { id: 'p_lb7_c2', name: 'Side Plank Hold', sets: 3, reps: 1, isHold: true, holdTime: 30, perSide: true, noWeight: true, notes: '30 sec each side. Hips stacked, body in a straight line. Lateral stability.' }
+            { id: 'p_lb7_c2', name: 'Copenhagen Adductor Hold (bench)', sets: 3, reps: 1, isHold: true, holdTime: 25, perSide: true, noWeight: true, notes: 'Side plank with top foot on bench. 25 sec each side. This is the adductor strength work.' }
           ]
         },
         {
-          name: 'Finisher: Calf + Shin',
+          name: 'Finisher: Adductor Machine + Achilles + Shin',
           simple: true,
           exercises: [
-            { id: 'p_lb7_f1', name: 'HSR Calf Raise (Single Leg)', sets: 3, reps: 10, perSide: true, noWeight: true, notes: '3-sec rise, 3-sec lower. On a step for full ROM. Wall for balance. Progressed from double-leg last session.' },
-            { id: 'p_lb7_f2', name: 'Tibialis Raise (wall)', sets: 2, reps: 20, noWeight: true, notes: 'Back against wall, heels ~12 inches out. Lift toes to max, lower slowly. Both feet.' }
+            { id: 'p_lb7_f1', name: 'Hip Adductor Machine', sets: 3, reps: 15, notes: 'Start light — find a weight where the last 3 reps feel like a 3-4. Controlled tempo, no slamming the stack.' },
+            { id: 'p_lb7_f2', name: 'HSR Calf Raise (Single Leg)', sets: 3, reps: 10, perSide: true, noWeight: true, notes: '3-sec rise, 3-sec lower. On a step if available, or floor edge. Full ROM. Tendon loading protocol.' },
+            { id: 'p_lb7_f3', name: 'Tibialis Raise (wall)', sets: 2, reps: 20, noWeight: true, notes: 'Back against wall, heels ~12 inches out. Lift toes to max, lower slowly. Both feet.' }
           ]
         },
         {
