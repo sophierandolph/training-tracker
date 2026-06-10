@@ -6164,6 +6164,72 @@
           ]
         }
       ]
+    },
+
+    '2026-06-10': {
+      type: 'Strength',
+      name: 'Lower Body',
+      duration: '65 min',
+      location: 'Planet Fitness — Billings',
+      condition: 'Jun 7 was skipped — legs are fresh. Same calibrated weights as planned. Standard PF setup.',
+      focus: 'Posterior chain. Single-leg stability. Adductors. Calf and shin prehab.',
+      circuits: [
+        {
+          name: 'Warm-Up: Cardio + Hip Activation (15 min)',
+          simple: true,
+          exercises: [
+            { id: 'p_lb10_w1', name: 'Treadmill — Interval Walk/Jog', sets: 1, reps: 1, isCardio: true, duration: 600, notes: '2 min easy walk → 4× (1 min push / 1 min walk) → 2 min easy.', noWeight: true },
+            { id: 'p_lb10_w2', name: 'Glute Bridge (double leg)', sets: 2, reps: 15, noWeight: true, notes: 'Feet flat, drive hips up, squeeze glutes at top, hold 1 sec.' },
+            { id: 'p_lb10_w3', name: 'Standing Hip Hydrants (band)', sets: 2, reps: 10, perSide: true, noWeight: true, notes: 'Mini band above knees. Kick leg out to side, controlled.' }
+          ]
+        },
+        {
+          name: 'Perturbation: Single-Leg Bench Sit-to-Stand',
+          simple: true,
+          exercises: [
+            { id: 'p_lb10_p1', name: 'Single-Leg Bench Sit-to-Stand', sets: 3, reps: 5, perSide: true, noWeight: true, notes: 'Sit fully on bench, lift one foot, drive through heel to stand. Slow controlled descent. Do this while neurally fresh.' }
+          ]
+        },
+        {
+          name: 'A. Posterior Chain — Hinge + Lunge (3 rounds, 90 sec rest)',
+          exercises: [
+            { id: 'p_lb10_a1', name: 'DB Romanian Deadlift', sets: 3, reps: 10, weight: 30, notes: '30 lb each hand — up from 25 lb last lower body. Push hips back, soft knee bend. Feel hamstring pull taut at the bottom.' },
+            { id: 'p_lb10_a2', name: 'DB Reverse Lunge', sets: 3, reps: 10, perSide: true, weight: 20, notes: '20 lb, 10 reps. Consolidate the reps before bumping weight. Back knee hovers 1 inch above floor.' }
+          ]
+        },
+        {
+          name: 'B. Machine Legs (3 rounds, 90 sec rest)',
+          exercises: [
+            { id: 'p_lb10_b1', name: 'Leg Press', sets: 3, reps: 12, notes: 'Start at 130 lb. If sets 1-2 feel easy, build to 150 lb. Full ROM, knees track over toes.' },
+            { id: 'p_lb10_b2', name: 'Seated Leg Curl', sets: 3, reps: 12, notes: '50 lb — settled here last time. 2-sec pull, 2-sec return. Add reps before adding weight.' }
+          ]
+        },
+        {
+          name: 'C. Squat Pattern + Adductor (3 rounds, 90 sec rest)',
+          exercises: [
+            { id: 'p_lb10_c1', name: 'DB Goblet Squat', sets: 3, reps: 10, weight: 35, notes: '35 lb — up from 30. Chest up, elbows inside knees, 1 sec pause at bottom.' },
+            { id: 'p_lb10_c2', name: 'Copenhagen Adductor Hold (bench)', sets: 3, reps: 1, isHold: true, holdTime: 25, perSide: true, noWeight: true, notes: 'Side plank, top foot on bench. 25 sec each side.' }
+          ]
+        },
+        {
+          name: 'Finisher: Adductor Machine + Calf + Shin',
+          simple: true,
+          exercises: [
+            { id: 'p_lb10_f1', name: 'Hip Adductor Machine', sets: 3, reps: 15, notes: 'Start light — find a weight where last 3 reps feel like 3-4. Log the weight for next time.' },
+            { id: 'p_lb10_f2', name: 'HSR Calf Raise (Single Leg)', sets: 3, reps: 10, perSide: true, noWeight: true, notes: '3-sec rise, 3-sec lower. Step edge if available. Full ROM.' },
+            { id: 'p_lb10_f3', name: 'Tibialis Raise (wall)', sets: 2, reps: 20, noWeight: true, notes: 'Back against wall, heels ~12 inches out. Lift toes to max, lower slowly.' }
+          ]
+        },
+        {
+          name: 'Cool-Down',
+          simple: true,
+          exercises: [
+            { id: 'p_lb10_cd1', name: 'Figure-4 Hip Stretch', sets: 1, reps: 1, isHold: true, holdTime: 60, perSide: true, noWeight: true },
+            { id: 'p_lb10_cd2', name: 'Kneeling Hip Flexor Stretch', sets: 1, reps: 1, isHold: true, holdTime: 45, perSide: true, noWeight: true },
+            { id: 'p_lb10_cd3', name: 'Seated Hamstring Stretch', sets: 1, reps: 1, isHold: true, holdTime: 45, perSide: true, noWeight: true }
+          ]
+        }
+      ]
     }
 
     };
