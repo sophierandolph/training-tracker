@@ -9629,6 +9629,72 @@
           ]
         }
       ]
+    },
+
+    '2026-06-10': {
+      type: 'Strength',
+      name: 'Lower Body',
+      duration: '65 min',
+      location: 'Planet Fitness — Billings',
+      condition: 'Menstrual phase — auto-regulate. If cramping or fatigue hits, dial back volume but keep the weights. Standard PF setup.',
+      focus: 'Recalibrated weights based on actual logged data. Posterior chain, single-leg stability, adductors, Achilles.',
+      circuits: [
+        {
+          name: 'Warm-Up: Cardio + Hip Activation (15 min)',
+          simple: true,
+          exercises: [
+            { id: 'lb10_w1', name: 'Treadmill — Interval Walk/Jog', sets: 1, reps: 1, isCardio: true, duration: 600, notes: '2 min easy walk → 4× (1 min push / 1 min walk) → 2 min easy.', noWeight: true },
+            { id: 'lb10_w2', name: 'Glute Bridge (double leg)', sets: 2, reps: 15, noWeight: true, notes: 'Feet flat, drive hips up, squeeze glutes at top, hold 1 sec.' },
+            { id: 'lb10_w3', name: 'Standing Hip Hydrants (band)', sets: 2, reps: 10, perSide: true, noWeight: true, notes: 'Mini band above knees. Controlled kick out to side.' }
+          ]
+        },
+        {
+          name: 'Perturbation: Single-Leg Bench Sit-to-Stand',
+          simple: true,
+          exercises: [
+            { id: 'lb10_p1', name: 'Single-Leg Bench Sit-to-Stand', sets: 3, reps: 5, perSide: true, noWeight: true, notes: 'Sit fully, lift one foot, drive through heel to stand. Right foot turned out — correct. Slow controlled descent. Neurally fresh, do this before loading.' }
+          ]
+        },
+        {
+          name: 'A. Posterior Chain — Hinge + Lunge (3 rounds, 90 sec rest)',
+          exercises: [
+            { id: 'lb10_a1', name: 'DB Romanian Deadlift', sets: 3, reps: 10, weight: 40, notes: 'You did barbell 75 lb on Jun 3 and 20 lb DBs return week — 40 lb each hand is the real working weight now. Push hips back, soft knee bend. Hamstring pulls taut at the bottom, that is the target.' },
+            { id: 'lb10_a2', name: 'DB Reverse Lunge', sets: 3, reps: 8, perSide: true, weight: 20, notes: 'Was 15 lb May 30 at feel 3 — step up to 20 lb. Back knee hovers 1 inch above floor. Right side: front foot turned out slightly is correct neutral.' }
+          ]
+        },
+        {
+          name: 'B. Machine Legs (3 rounds, 90 sec rest)',
+          exercises: [
+            { id: 'lb10_b1', name: 'Leg Press', sets: 3, reps: 12, notes: 'Start at 120 lb — you hit 120 feeling hard on May 30. Build within the session if sets 1-2 feel easy. Full ROM, knees track over toes.' },
+            { id: 'lb10_b2', name: 'Seated Leg Curl', sets: 3, reps: 12, notes: '60 lb — you did this May 30 at feel 3. 2-sec pull, 2-sec return.' }
+          ]
+        },
+        {
+          name: 'C. Squat Pattern + Adductor (3 rounds, 90 sec rest)',
+          exercises: [
+            { id: 'lb10_c1', name: 'DB Goblet Squat', sets: 3, reps: 10, weight: 45, notes: 'You ramped to 50 lb on Jun 3 (feel 4). Start 45 lb for 3 steady sets. Wider than shoulder width, right foot out further, 1 sec pause at bottom.' },
+            { id: 'lb10_c2', name: 'Copenhagen Adductor Hold (bench)', sets: 3, reps: 1, isHold: true, holdTime: 25, perSide: true, noWeight: true, notes: 'Side plank, top foot on bench. 25 sec each side. Adductor strength, not just activation.' }
+          ]
+        },
+        {
+          name: 'Finisher: Adductor Machine + Achilles + Shin',
+          simple: true,
+          exercises: [
+            { id: 'lb10_f1', name: 'Hip Adductor Machine', sets: 3, reps: 15, notes: 'Start light — find a weight where last 3 reps feel like 3-4. Note the weight for next time.' },
+            { id: 'lb10_f2', name: 'HSR Calf Raise (Single Leg)', sets: 3, reps: 10, perSide: true, noWeight: true, notes: '3-sec rise, 3-sec lower. Step edge if available. Full stretch at bottom, full rise at top. Achilles prehab.' },
+            { id: 'lb10_f3', name: 'Tibialis Raise (wall)', sets: 2, reps: 20, noWeight: true, notes: 'Back against wall, heels ~12 inches out. Lift toes to max, lower slowly. Shin prehab.' }
+          ]
+        },
+        {
+          name: 'Cool-Down',
+          simple: true,
+          exercises: [
+            { id: 'lb10_cd1', name: 'Figure-4 Hip Stretch', sets: 1, reps: 1, isHold: true, holdTime: 60, perSide: true, noWeight: true },
+            { id: 'lb10_cd2', name: 'Kneeling Hip Flexor Stretch', sets: 1, reps: 1, isHold: true, holdTime: 45, perSide: true, noWeight: true },
+            { id: 'lb10_cd3', name: 'Seated Hamstring Stretch', sets: 1, reps: 1, isHold: true, holdTime: 45, perSide: true, noWeight: true }
+          ]
+        }
+      ]
     }
 
     };
