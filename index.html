@@ -3473,6 +3473,19 @@
       ]
     };
 
+    // Post-conditioning cooldown: used after sprints and running sessions
+    const BLOCK_CONDITIONING_COOLDOWN = {
+      name: "Cooldown (7 min)",
+      simple: true,
+      exercises: [
+        { id: "ccd1", name: "Easy Walk — 2 min", sets: 1, reps: 1, noWeight: true, notes: "Let HR come down. Don't stop cold after sprinting.", isCardio: true, duration: 120 },
+        { id: "ccd2", name: "Wall Calf / Achilles Stretch", sets: 1, reps: 1, isHold: true, holdTime: 30, perSide: true, noWeight: true, notes: "30 sec each side. Heel on ground, lean into wall. Feel it into the lower Achilles." },
+        { id: "ccd3", name: "Hip Flexor Lunge Stretch", sets: 1, reps: 1, isHold: true, holdTime: 30, perSide: true, noWeight: true, notes: "30 sec each side. Squeeze back glute, slight forward lean. Psoas-specific." },
+        { id: "ccd4", name: "Standing Hamstring Stretch", sets: 1, reps: 1, isHold: true, holdTime: 30, perSide: true, noWeight: true, notes: "30 sec each side. Foot on a low surface or standing hinge. Soft hips." },
+        { id: "ccd5", name: "Standing Quad Pull", sets: 1, reps: 1, isHold: true, holdTime: 30, perSide: true, noWeight: true, notes: "30 sec each side. Pull heel to glute, stand tall. Use wall for balance if needed." }
+      ]
+    };
+
     // Psoas protocol: daily psoas management routine
     const BLOCK_PSOAS_PROTOCOL = {
       name: "Psoas Release",
@@ -10173,6 +10186,15 @@
             { id: 'c18_r3', name: '150yd Tempo Runs — 2 sets × 3 reps at 75%', sets: 2, reps: 3, noWeight: true, notes: 'Hard but rhythmic breathing, not gasping. Walk back after each rep, 2 min rest between sets. Lean from ankles, elbows back on the pull. NOT max effort.' }
           ]
         },
+        {
+          name: 'Finisher: Achilles + Shin (5 min)',
+          simple: true,
+          exercises: [
+            { id: 'c18_f1', name: 'HSR Calf Raise (Single Leg)', sets: 2, reps: 10, perSide: true, noWeight: true, notes: '3-sec rise, 3-sec lower. Full stretch at bottom, full rise at top. Tendon is warm — this is the window. Skip if Achilles is above 3/10 after the run.' },
+            { id: 'c18_f2', name: 'Tibialis Raise (wall)', sets: 2, reps: 20, noWeight: true, notes: 'Toes to max dorsiflexion, lower slowly.' }
+          ]
+        },
+        BLOCK_CONDITIONING_COOLDOWN
       ]
     },
 
@@ -10209,11 +10231,19 @@
           exercises: [
             { id: 'c19_d1', name: 'Piston Movement — 5 sets × 1 min', sets: 5, reps: 1, noWeight: true, notes: 'Up from 4 sets. 3-5m forward and back continuously for 1 min. Push hard on first step. Soft landings.' },
             { id: 'c19_d2', name: 'Skater Hops — 4 sets × 8 each side', sets: 4, reps: 8, perSide: true, noWeight: true, notes: 'Hold each landing for a clear beat. Glute catches.' },
-            { id: 'c19_d3', name: 'Narrow Wipers — 25 sec, 4 sets', sets: 4, reps: 1, noWeight: true, notes: 'Outside foot drives sideways. Balls of feet.' },
-            { id: 'c19_d4', name: 'Wide Wipers — 25 sec, 4 sets', sets: 4, reps: 1, noWeight: true, notes: 'Hip fires the direction change.' },
-            { id: 'c19_d5', name: 'Wipers + Jump Throw (mime) — 4 sets × 5 each side', sets: 4, reps: 5, perSide: true, noWeight: true, notes: 'Flowing into jump throw. Hip drives, arm follows last.' }
+            { id: 'c19_d3', name: 'Flying 10s — 4 reps', sets: 4, reps: 1, noWeight: true, notes: '10m rolling build, then push through a 10m fly zone at ~85%. Walk back full recovery (60-75 sec). Tall through the fly zone — drive elbows back, high hips. Don\'t lean forward chasing speed.' },
+            { id: 'c19_d4', name: 'Sprint-Coast-Sprint — 3 reps, 20m', sets: 3, reps: 1, noWeight: true, notes: 'Sprint hard 10m, float/coast 5m (hold speed, don\'t let hips drop), sprint final 5m hard. Walk back full recovery (~90 sec). ~80-85% effort. Mirrors the handball fast break burst. Re-accelerate the last 5m like someone is closing on you.' }
           ]
         },
+        {
+          name: 'Finisher: Achilles + Shin (5 min)',
+          simple: true,
+          exercises: [
+            { id: 'c19_f1', name: 'HSR Calf Raise (Single Leg)', sets: 2, reps: 10, perSide: true, noWeight: true, notes: '3-sec rise, 3-sec lower. Tendon is warm — this is the window. Skip if Achilles is above 3/10 after the session.' },
+            { id: 'c19_f2', name: 'Tibialis Raise (wall)', sets: 2, reps: 20, noWeight: true, notes: 'Toes to max dorsiflexion, lower slowly.' }
+          ]
+        },
+        BLOCK_CONDITIONING_COOLDOWN
       ]
     },
 
@@ -10241,6 +10271,15 @@
             { id: 'c20_z1', name: 'Zone 2 Outdoor Run — 30 min', sets: 1, reps: 1, noWeight: true, notes: 'Conversational pace — you can speak in full sentences. Lean from ankles, arms relaxed. Aerobic base, not a tempo run. Fort Collins has the Poudre River Trail.' }
           ]
         },
+        {
+          name: 'Finisher: Achilles + Shin (5 min)',
+          simple: true,
+          exercises: [
+            { id: 'c20_f1', name: 'HSR Calf Raise (Single Leg)', sets: 2, reps: 10, perSide: true, noWeight: true, notes: '3-sec rise, 3-sec lower. Tendon warm from the run — ideal window for HSR.' },
+            { id: 'c20_f2', name: 'Tibialis Raise (wall)', sets: 2, reps: 20, noWeight: true, notes: 'Toes to max dorsiflexion, lower slowly.' }
+          ]
+        },
+        BLOCK_CONDITIONING_COOLDOWN
       ]
     },
 
@@ -10321,6 +10360,15 @@
             { id: 'c23_r4', name: '150yd Tempo Runs — 2 sets × 4 reps at 78%', sets: 2, reps: 4, noWeight: true, notes: 'Up from 3 reps at 75%. Hard but rhythmic breathing. Walk back after each rep, 2 min rest between sets. Lean from ankles, elbows back on the pull.' }
           ]
         },
+        {
+          name: 'Finisher: Achilles + Shin (5 min)',
+          simple: true,
+          exercises: [
+            { id: 'c23_f1', name: 'HSR Calf Raise (Single Leg)', sets: 2, reps: 10, perSide: true, noWeight: true, notes: '3-sec rise, 3-sec lower. Tendon warm from the run — ideal window for HSR.' },
+            { id: 'c23_f2', name: 'Tibialis Raise (wall)', sets: 2, reps: 20, noWeight: true, notes: 'Toes to max dorsiflexion, lower slowly.' }
+          ]
+        },
+        BLOCK_CONDITIONING_COOLDOWN
       ]
     },
 
