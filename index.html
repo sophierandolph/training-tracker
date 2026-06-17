@@ -3449,7 +3449,7 @@
         { id: "shrl3", name: "Side-Lying Shoulder Abduction", sets: 3, reps: 10, weight: 5, notes: "Thumb up, arm straight, slowly lift toward ceiling. Each side.", perSide: true },
         { id: "shrl4", name: "Horizontal Abduction Palm Down", sets: 3, reps: 10, weight: 3, notes: "Standing stagger stance, chest parallel to ground (bent-over Y/T). Quad position is the fallback if standing form breaks down. Each side.", perSide: true },
         { id: "shrl5", name: "Face Pulls (Cable, Goal Post)", sets: 3, reps: 10, weight: 10, notes: "Cable machine. Pull to face, finish in goal post position (elbows in line with shoulders, hands stacked above elbows). Squeeze blades." },
-        { id: "shrl6", name: "Waiter's Carry Bottoms Up (KB)", sets: 1, reps: 1, weight: 8, notes: "60 sec each side. KB held bottoms-up, elbow at 90° at side. Walk slowly, maintain height, keep KB still.", isHold: true, holdTime: 60, perSide: true }
+        { id: "shrl6", name: "Bottoms-Up KB Overhead Walk", sets: 1, reps: 1, weight: 8, notes: "60 sec each side. KB held upside down, arm pressed overhead, elbow slightly soft. Walk slowly. The inverted KB demands constant grip and shoulder stability to keep it from tipping.", isHold: true, holdTime: 60, perSide: true }
       ]
     };
 
@@ -10097,34 +10097,44 @@
           name: 'Elbow Prehab (8 min)',
           simple: true,
           exercises: [
-            { id: 'cc17_e1', name: 'Straight Arm ISO — 30 sec hold each side', sets: 2, reps: 1, perSide: true, notes: '2-5 lb. Outer forearm.' },
-            { id: 'cc17_e2', name: 'Reverse Curl ISO — 30 sec hold', sets: 2, reps: 1, notes: 'Top of forearm.' },
+            { id: 'cc17_e1', name: 'Straight Arm ISO — 30 sec hold each side', sets: 2, reps: 1, perSide: true, weight: 7.5, notes: 'Outer forearm.' },
+            { id: 'cc17_e2', name: 'Reverse Curl ISO — 30 sec hold', sets: 2, reps: 1, weight: 7.5, notes: 'Top of forearm.' },
             { id: 'cc17_e3', name: 'Wrist Pronation/Supination', sets: 2, reps: 10, noWeight: true, notes: '3 sec each direction.' },
-            { id: 'cc17_e4', name: 'Wrist Deviations', sets: 2, reps: 10, noWeight: true, notes: 'Up-two-three, down-two-three.' }
+            { id: 'cc17_e4', name: 'Wrist Deviations', sets: 2, reps: 10, weight: 5, notes: 'Up-two-three, down-two-three.' }
+          ]
+        },
+        {
+          name: 'Shoulder PT — Loaded (12 min)',
+          simple: true,
+          exercises: [
+            { id: 'cc17_sh1', name: 'Side-Lying External Rotation', sets: 3, reps: 10, weight: 5, notes: '3 sec hold at top. Towel under elbow. Each side.', perSide: true },
+            { id: 'cc17_sh2', name: 'Side-Lying Shoulder Abduction', sets: 3, reps: 10, weight: 5, notes: 'Thumb up, arm straight, lift toward ceiling. Each side.', perSide: true },
+            { id: 'cc17_sh3', name: 'Side-Lying Shoulder Flexion (Short ROM)', sets: 3, reps: 10, weight: 3, notes: '3 sec hold. Stop below shoulder height. Each side.', perSide: true },
+            { id: 'cc17_sh4', name: 'Bottoms-Up KB Overhead Walk', sets: 1, reps: 1, weight: 8, notes: '60 sec each side. KB upside down, arm overhead. Walk slowly, keep KB stable.', isHold: true, holdTime: 60, perSide: true }
           ]
         },
         {
           name: 'A. Hip Thrust + Single Leg + Adductor (3 rounds, 90 sec rest)',
           exercises: [
-            { id: 'cc17_a1', name: 'Barbell Hip Thrust', sets: 3, reps: 10, notes: 'First session — do this FRESH, first in the circuit. 65 lb. Upper back on bench, feet flat, barbell across hip crease (pad it). Drive hips up until body is a straight plank. Squeeze glutes hard at top, hold 1 sec.' },
-            { id: 'cc17_a2', name: 'DB Bulgarian Split Squat', sets: 3, reps: 8, perSide: true, notes: 'Move to 20 lb if 15 lb felt easy Jun 13. Rear foot on bench. Front shin stays vertical. Drive through front heel.' },
+            { id: 'cc17_a1', name: 'Barbell Hip Thrust', sets: 3, reps: 10, weight: 65, notes: 'First session — do this FRESH, first in the circuit. 65 lb. Upper back on bench, feet flat, barbell across hip crease (pad it). Drive hips up until body is a straight plank. Squeeze glutes hard at top, hold 1 sec.' },
+            { id: 'cc17_a2', name: 'DB Bulgarian Split Squat', sets: 3, reps: 8, perSide: true, weight: 20, notes: 'Move to 20 lb if 15 lb felt easy Jun 13. Rear foot on bench. Front shin stays vertical. Drive through front heel.' },
             { id: 'cc17_a3', name: 'Copenhagen Adductor Hold (bench)', sets: 3, reps: 1, isHold: true, holdTime: 25, perSide: true, noWeight: true, notes: '25 sec each side. Adductor anchor.' }
           ]
         },
         {
           name: 'B. Hinge + Squat + Rotate (3 rounds, 90 sec rest)',
           exercises: [
-            { id: 'cc17_b1', name: 'Barbell Romanian Deadlift', sets: 3, reps: 10, notes: 'Try 80 lb if Jun 13 felt manageable at 75 lb. Hips back, hamstring pulls taut. Use straps if elbow is feeling any sensitivity from yesterday\'s conditioning — drop to 70 lb if so.' },
-            { id: 'cc17_b2', name: 'DB Goblet Squat', sets: 3, reps: 10, notes: '45 lb. Wider than shoulder width, right foot out further, 1 sec pause at bottom.' },
+            { id: 'cc17_b1', name: 'Barbell Romanian Deadlift', sets: 3, reps: 10, weight: 80, notes: 'Try 80 lb if Jun 13 felt manageable at 75 lb. Hips back, hamstring pulls taut. Use straps if elbow is feeling any sensitivity from yesterday\'s conditioning — drop to 70 lb if so.' },
+            { id: 'cc17_b2', name: 'DB Goblet Squat', sets: 3, reps: 10, weight: 45, notes: '45 lb. Wider than shoulder width, right foot out further, 1 sec pause at bottom.' },
             { id: 'cc17_b3', name: 'Half-Kneeling Med Ball Rotation', sets: 3, reps: 10, perSide: true, noWeight: true, notes: 'Back knee down. Drive with ribcage toward back hip, hold at far end. Obliques squeeze like a fist.' }
           ]
         },
         {
           name: 'C. Machine Legs + Shoulder PT (3 rounds, 90 sec rest)',
           exercises: [
-            { id: 'cc17_c1', name: 'Leg Press', sets: 3, reps: 12, notes: '120-130 lb. Build if sets 1-2 feel easy.' },
-            { id: 'cc17_c2', name: 'Seated Leg Curl', sets: 3, reps: 12, notes: '60 lb. 2-sec pull, 2-sec return.' },
-            { id: 'cc17_c3', name: 'Face Pulls', sets: 3, reps: 12, notes: '25 lb. Last set to fatigue. Elbows high.' }
+            { id: 'cc17_c1', name: 'Leg Press', sets: 3, reps: 12, weight: 120, notes: '120-130 lb. Build if sets 1-2 feel easy.' },
+            { id: 'cc17_c2', name: 'Seated Leg Curl', sets: 3, reps: 12, weight: 60, notes: '60 lb. 2-sec pull, 2-sec return.' },
+            { id: 'cc17_c3', name: 'Face Pulls', sets: 3, reps: 12, weight: 25, notes: '25 lb. Last set to fatigue. Elbows high.' }
           ]
         },
         {
@@ -10132,8 +10142,7 @@
           simple: true,
           exercises: [
             { id: 'cc17_f1', name: 'HSR Calf Raise (Single Leg)', sets: 3, reps: 10, perSide: true, noWeight: true, notes: '3-sec rise, 3-sec lower. Full stretch and rise.' },
-            { id: 'cc17_f2', name: 'Tibialis Raise (wall)', sets: 2, reps: 20, noWeight: true, notes: 'Toes to max, lower slowly.' },
-            { id: 'cc17_f3', name: 'External Rotation 90/90 (band)', sets: 3, reps: 12, noWeight: true, notes: 'Last set to fatigue. Send out strong.' }
+            { id: 'cc17_f2', name: 'Tibialis Raise (wall)', sets: 2, reps: 20, noWeight: true, notes: 'Toes to max, lower slowly.' }
           ]
         },
         {
@@ -10157,22 +10166,23 @@
       focus: 'Lateral start sprints + lateral bounds + first 150yd tempo runs. 75% effort max.',
       circuits: [
         {
-          name: 'Warm-Up: Jump Rope (5 min)',
+          name: 'Warm-Up: Achilles-Safe Activation (5 min)',
           simple: true,
           exercises: [
-            { id: 'c18_w1', name: 'Jump Rope — 2 min, two-foot', sets: 1, reps: 1, noWeight: true, notes: 'Rhythm. Building on yesterday.' },
-            { id: 'c18_w2', name: 'Jump Rope — 1 min, alternating foot', sets: 1, reps: 1, noWeight: true, notes: 'Running in place.' },
-            { id: 'c18_w3', name: 'Jump Rope — 30 sec each leg, single leg', sets: 2, reps: 1, perSide: true, noWeight: true, notes: 'Find the bounce.' }
+            { id: 'c18_w1', name: 'Brisk Walk — 2 min', sets: 1, reps: 1, noWeight: true, notes: 'Swing arms freely. Build HR gradually. Replaces jump rope while Achilles settles.' },
+            { id: 'c18_w2', name: 'Heel Walks — 45 sec', sets: 1, reps: 1, noWeight: true, notes: 'Walk forward on heels only, toes up. Direct shin/tibialis activation.' },
+            { id: 'c18_w3', name: 'Lateral Shuffle — 20 sec each direction', sets: 1, reps: 1, noWeight: true, notes: 'Low amplitude. Stay light on your feet. Sport-specific.' },
+            { id: 'c18_w4', name: 'Ankle Alphabet — each foot', sets: 1, reps: 1, noWeight: true, notes: 'Seated or one foot raised. Draw the full alphabet with each foot. Achilles mobility.' }
           ]
         },
         {
           name: 'Elbow Prehab (8 min)',
           simple: true,
           exercises: [
-            { id: 'c18_e1', name: 'Straight Arm ISO — 30 sec hold each side', sets: 2, reps: 1, perSide: true, noWeight: true, notes: '2-5 lb. Outer forearm.' },
-            { id: 'c18_e2', name: 'Reverse Curl ISO — 30 sec hold', sets: 2, reps: 1, noWeight: true, notes: 'Top of forearm.' },
+            { id: 'c18_e1', name: 'Straight Arm ISO — 30 sec hold each side', sets: 2, reps: 1, perSide: true, weight: 7.5, notes: 'Outer forearm.' },
+            { id: 'c18_e2', name: 'Reverse Curl ISO — 30 sec hold', sets: 2, reps: 1, weight: 7.5, notes: 'Top of forearm.' },
             { id: 'c18_e3', name: 'Wrist Pronation/Supination — 10 reps, 3 sec each way', sets: 2, reps: 10, noWeight: true, notes: 'Forearm pinned.' },
-            { id: 'c18_e4', name: 'Wrist Deviations — 10 reps', sets: 2, reps: 10, noWeight: true, notes: 'Up-two-three, down-two-three.' }
+            { id: 'c18_e4', name: 'Wrist Deviations — 10 reps', sets: 2, reps: 10, weight: 5, notes: 'Up-two-three, down-two-three.' }
           ]
         },
         {
@@ -10193,14 +10203,6 @@
             { id: 'c18_r3', name: '150yd Tempo Runs — 2 sets × 3 reps at 75%', sets: 2, reps: 3, noWeight: true, notes: 'Hard but rhythmic breathing, not gasping. Walk back after each rep, 2 min rest between sets. Lean from ankles, elbows back on the pull. NOT max effort.' }
           ]
         },
-        {
-          name: 'Shoulder Prehab Finisher (5 min)',
-          simple: true,
-          exercises: [
-            { id: 'c18_sp1', name: 'Wall Goal Posts — 3 × 12', sets: 3, reps: 12, noWeight: true, notes: 'Upper arms stay on wall. Blade slides down.' },
-            { id: 'c18_sp2', name: 'Bird Dogs — 2 × 8 each side', sets: 2, reps: 8, perSide: true, noWeight: true, notes: 'Spine flat. Both sides of low back work.' }
-          ]
-        }
       ]
     },
 
@@ -10213,22 +10215,23 @@
       focus: 'Reel 3 full sequence. Build on Jun 11 and Jun 16 patterns.',
       circuits: [
         {
-          name: 'Warm-Up: Jump Rope (5 min)',
+          name: 'Warm-Up: Achilles-Safe Activation (5 min)',
           simple: true,
           exercises: [
-            { id: 'c19_w1', name: 'Jump Rope — 2 min, two-foot', sets: 1, reps: 1, noWeight: true, notes: 'Easy pace.' },
-            { id: 'c19_w2', name: 'Jump Rope — 1 min, alternating foot', sets: 1, reps: 1, noWeight: true, notes: 'Running in place.' },
-            { id: 'c19_w3', name: 'Jump Rope — 30 sec each leg, single leg', sets: 2, reps: 1, perSide: true, noWeight: true, notes: 'Find the bounce.' }
+            { id: 'c19_w1', name: 'Brisk Walk — 2 min', sets: 1, reps: 1, noWeight: true, notes: 'Swing arms freely. Build HR gradually.' },
+            { id: 'c19_w2', name: 'Heel Walks — 45 sec', sets: 1, reps: 1, noWeight: true, notes: 'Walk forward on heels only, toes up. Shin activation.' },
+            { id: 'c19_w3', name: 'Lateral Shuffle — 20 sec each direction', sets: 1, reps: 1, noWeight: true, notes: 'Low amplitude. Sport-specific direction change.' },
+            { id: 'c19_w4', name: 'Ankle Alphabet — each foot', sets: 1, reps: 1, noWeight: true, notes: 'Seated or raised foot. Full alphabet each side. Achilles mobility.' }
           ]
         },
         {
           name: 'Elbow Prehab (8 min)',
           simple: true,
           exercises: [
-            { id: 'c19_e1', name: 'Straight Arm ISO — 30 sec hold each side', sets: 2, reps: 1, perSide: true, noWeight: true, notes: '2-5 lb. Outer forearm.' },
-            { id: 'c19_e2', name: 'Reverse Curl ISO — 30 sec hold', sets: 2, reps: 1, noWeight: true, notes: 'Top of forearm.' },
+            { id: 'c19_e1', name: 'Straight Arm ISO — 30 sec hold each side', sets: 2, reps: 1, perSide: true, weight: 7.5, notes: 'Outer forearm.' },
+            { id: 'c19_e2', name: 'Reverse Curl ISO — 30 sec hold', sets: 2, reps: 1, weight: 7.5, notes: 'Top of forearm.' },
             { id: 'c19_e3', name: 'Wrist Pronation/Supination — 10 reps, 3 sec each way', sets: 2, reps: 10, noWeight: true, notes: 'Forearm pinned.' },
-            { id: 'c19_e4', name: 'Wrist Deviations — 10 reps', sets: 2, reps: 10, noWeight: true, notes: 'Up-two-three, down-two-three.' }
+            { id: 'c19_e4', name: 'Wrist Deviations — 10 reps', sets: 2, reps: 10, weight: 5, notes: 'Up-two-three, down-two-three.' }
           ]
         },
         {
@@ -10251,14 +10254,6 @@
             { id: 'c19_d5', name: 'Wipers + Jump Throw (mime) — 4 sets × 5 each side', sets: 4, reps: 5, perSide: true, noWeight: true, notes: 'Flowing into jump throw. Hip drives, arm follows last.' }
           ]
         },
-        {
-          name: 'Shoulder Prehab Finisher (5 min)',
-          simple: true,
-          exercises: [
-            { id: 'c19_sp1', name: 'Wall Goal Posts — 3 × 12', sets: 3, reps: 12, noWeight: true, notes: 'Upper arms on wall. Blade down ribcage.' },
-            { id: 'c19_sp2', name: 'Bird Dogs — 2 × 8 each side', sets: 2, reps: 8, perSide: true, noWeight: true, notes: 'Spine flat.' }
-          ]
-        }
       ]
     },
 
@@ -10271,21 +10266,22 @@
       focus: 'Sustained aerobic effort — 30 min at conversational pace. Let the legs flush after the sprint + barbell week.',
       circuits: [
         {
-          name: 'Warm-Up: Jump Rope (5 min)',
+          name: 'Warm-Up: Achilles-Safe Activation (3 min)',
           simple: true,
           exercises: [
-            { id: 'c20_w1', name: 'Jump Rope — 2 min, two-foot', sets: 1, reps: 1, noWeight: true, notes: 'Easy pace.' },
-            { id: 'c20_w2', name: 'Jump Rope — 90 sec, alternating foot', sets: 1, reps: 1, noWeight: true, notes: 'Running in place.' }
+            { id: 'c20_w1', name: 'Brisk Walk — 90 sec', sets: 1, reps: 1, noWeight: true, notes: 'Easy build. Zone 2 run follows — no need for long warmup.' },
+            { id: 'c20_w2', name: 'Heel Walks — 30 sec', sets: 1, reps: 1, noWeight: true, notes: 'Shin activation before the run.' },
+            { id: 'c20_w3', name: 'Ankle Alphabet — each foot', sets: 1, reps: 1, noWeight: true, notes: 'Quick — 30 sec/side. Achilles mobility before running.' }
           ]
         },
         {
           name: 'Elbow Prehab (8 min)',
           simple: true,
           exercises: [
-            { id: 'c20_e1', name: 'Straight Arm ISO — 30 sec hold each side', sets: 2, reps: 1, perSide: true, noWeight: true, notes: '2-5 lb. Outer forearm.' },
-            { id: 'c20_e2', name: 'Reverse Curl ISO — 30 sec hold', sets: 2, reps: 1, noWeight: true, notes: 'Top of forearm.' },
+            { id: 'c20_e1', name: 'Straight Arm ISO — 30 sec hold each side', sets: 2, reps: 1, perSide: true, weight: 7.5, notes: 'Outer forearm.' },
+            { id: 'c20_e2', name: 'Reverse Curl ISO — 30 sec hold', sets: 2, reps: 1, weight: 7.5, notes: 'Top of forearm.' },
             { id: 'c20_e3', name: 'Wrist Pronation/Supination — 10 reps, 3 sec each way', sets: 2, reps: 10, noWeight: true, notes: 'Forearm pinned.' },
-            { id: 'c20_e4', name: 'Wrist Deviations — 10 reps', sets: 2, reps: 10, noWeight: true, notes: 'Up-two-three, down-two-three.' }
+            { id: 'c20_e4', name: 'Wrist Deviations — 10 reps', sets: 2, reps: 10, weight: 5, notes: 'Up-two-three, down-two-three.' }
           ]
         },
         {
@@ -10295,14 +10291,6 @@
             { id: 'c20_z1', name: 'Zone 2 Outdoor Run — 30 min', sets: 1, reps: 1, noWeight: true, notes: 'Conversational pace — you can speak in full sentences. Lean from ankles, arms relaxed. Aerobic base, not a tempo run. Fort Collins has the Poudre River Trail.' }
           ]
         },
-        {
-          name: 'Shoulder Prehab Finisher (5 min)',
-          simple: true,
-          exercises: [
-            { id: 'c20_sp1', name: 'Wall Goal Posts — 3 × 12', sets: 3, reps: 12, noWeight: true, notes: 'Upper arms on wall.' },
-            { id: 'c20_sp2', name: 'Bird Dogs — 2 × 8 each side', sets: 2, reps: 8, perSide: true, noWeight: true, notes: 'Spine flat.' }
-          ]
-        }
       ]
     },
 
@@ -10315,10 +10303,10 @@
       focus: 'Elbow circuit + skipping + shoulder prehab. Brain and body touch.',
       circuits: [
         {
-          name: 'Jump Rope + Skipping (5 min)',
+          name: 'Movement Warm-Up (5 min)',
           simple: true,
           exercises: [
-            { id: 'dm21_w1', name: 'Jump Rope — 2 min, two-foot', sets: 1, reps: 1, noWeight: true, notes: 'Easy pace.' },
+            { id: 'dm21_w1', name: 'Brisk Walk — 2 min', sets: 1, reps: 1, noWeight: true, notes: 'Rest stop or parking lot. Get the blood moving.' },
             { id: 'dm21_w2', name: 'A-Skip — 2 × 20m', sets: 2, reps: 1, noWeight: true, notes: 'Keep the mechanics grooved.' }
           ]
         },
@@ -10326,21 +10314,12 @@
           name: 'Elbow Prehab (8 min)',
           simple: true,
           exercises: [
-            { id: 'dm21_e1', name: 'Straight Arm ISO — 30 sec hold each side', sets: 2, reps: 1, perSide: true, noWeight: true, notes: 'Water bottle if no weights.' },
-            { id: 'dm21_e2', name: 'Reverse Curl ISO — 30 sec hold', sets: 2, reps: 1, noWeight: true, notes: 'Top of forearm.' },
+            { id: 'dm21_e1', name: 'Straight Arm ISO — 30 sec hold each side', sets: 2, reps: 1, perSide: true, weight: 7.5, notes: 'Outer forearm.' },
+            { id: 'dm21_e2', name: 'Reverse Curl ISO — 30 sec hold', sets: 2, reps: 1, weight: 7.5, notes: 'Top of forearm.' },
             { id: 'dm21_e3', name: 'Wrist Pronation/Supination — 10 reps, 3 sec each way', sets: 2, reps: 10, noWeight: true, notes: 'Forearm pinned.' },
-            { id: 'dm21_e4', name: 'Wrist Deviations — 10 reps', sets: 2, reps: 10, noWeight: true, notes: 'Up-two-three, down-two-three.' }
+            { id: 'dm21_e4', name: 'Wrist Deviations — 10 reps', sets: 2, reps: 10, weight: 5, notes: 'Up-two-three, down-two-three.' }
           ]
         },
-        {
-          name: 'Shoulder Prehab (8 min)',
-          simple: true,
-          exercises: [
-            { id: 'dm21_sp1', name: 'Wall Goal Posts — 3 × 10', sets: 3, reps: 10, noWeight: true, notes: 'Find any wall. Upper arms stay on it.' },
-            { id: 'dm21_sp2', name: 'Bird Dogs — 2 × 8 each side', sets: 2, reps: 8, perSide: true, noWeight: true, notes: 'Floor or grass. Spine flat.' },
-            { id: 'dm21_sp3', name: 'Chin Tucks — 2 × 10, hold 6 sec each', sets: 2, reps: 10, noWeight: true, notes: 'Counteract all the sitting. Pull chin back, hold 6 sec.' }
-          ]
-        }
       ]
     },
 
@@ -10353,10 +10332,10 @@
       focus: 'Elbow circuit + shoulder prehab. Preserve the habit.',
       circuits: [
         {
-          name: 'Jump Rope + Movement (5 min)',
+          name: 'Movement Warm-Up (5 min)',
           simple: true,
           exercises: [
-            { id: 'dm22_w1', name: 'Jump Rope — 2 min, two-foot', sets: 1, reps: 1, noWeight: true, notes: 'Easy pace.' },
+            { id: 'dm22_w1', name: 'Brisk Walk — 2 min', sets: 1, reps: 1, noWeight: true, notes: 'Walmart or rest stop — any space works.' },
             { id: 'dm22_w2', name: 'High Knees — 20 sec, 2 sets', sets: 2, reps: 1, noWeight: true, notes: 'Drive to hip height. Quick contact.' }
           ]
         },
@@ -10364,21 +10343,12 @@
           name: 'Elbow Prehab (8 min)',
           simple: true,
           exercises: [
-            { id: 'dm22_e1', name: 'Straight Arm ISO — 30 sec hold each side', sets: 2, reps: 1, perSide: true, noWeight: true, notes: 'Water bottle if needed.' },
-            { id: 'dm22_e2', name: 'Reverse Curl ISO — 30 sec hold', sets: 2, reps: 1, noWeight: true, notes: 'Top of forearm.' },
+            { id: 'dm22_e1', name: 'Straight Arm ISO — 30 sec hold each side', sets: 2, reps: 1, perSide: true, weight: 7.5, notes: 'Outer forearm.' },
+            { id: 'dm22_e2', name: 'Reverse Curl ISO — 30 sec hold', sets: 2, reps: 1, weight: 7.5, notes: 'Top of forearm.' },
             { id: 'dm22_e3', name: 'Wrist Pronation/Supination — 10 reps, 3 sec each way', sets: 2, reps: 10, noWeight: true, notes: 'Forearm pinned.' },
-            { id: 'dm22_e4', name: 'Wrist Deviations — 10 reps', sets: 2, reps: 10, noWeight: true, notes: 'Up-two-three, down-two-three.' }
+            { id: 'dm22_e4', name: 'Wrist Deviations — 10 reps', sets: 2, reps: 10, weight: 5, notes: 'Up-two-three, down-two-three.' }
           ]
         },
-        {
-          name: 'Shoulder Prehab (8 min)',
-          simple: true,
-          exercises: [
-            { id: 'dm22_sp1', name: 'Wall Goal Posts — 3 × 10', sets: 3, reps: 10, noWeight: true, notes: 'Any wall. Upper arms stay on.' },
-            { id: 'dm22_sp2', name: 'Bird Dogs — 2 × 8 each side', sets: 2, reps: 8, perSide: true, noWeight: true, notes: 'Spine flat.' },
-            { id: 'dm22_sp3', name: 'Chin Tucks — 2 × 10, hold 6 sec each', sets: 2, reps: 10, noWeight: true, notes: 'Two big drive days in a row — neck needs this.' }
-          ]
-        }
       ]
     },
 
@@ -10391,22 +10361,24 @@
       focus: 'Lateral start sprints + bounds + COD runs + 150yd tempo (2 sets × 4 reps). Push past Jun 18.',
       circuits: [
         {
-          name: 'Warm-Up: Jump Rope (8 min)',
+          name: 'Warm-Up: Achilles-Safe Activation (6 min)',
           simple: true,
           exercises: [
-            { id: 'c23_w1', name: 'Jump Rope — 2 min, two-foot', sets: 1, reps: 1, noWeight: true, notes: 'Easy pace.' },
-            { id: 'c23_w2', name: 'Jump Rope — 90 sec, alternating foot', sets: 1, reps: 1, noWeight: true, notes: 'Running in place.' },
-            { id: 'c23_w3', name: 'Jump Rope — 30 sec each leg, single leg', sets: 2, reps: 1, perSide: true, noWeight: true, notes: 'Find the bounce.' }
+            { id: 'c23_w1', name: 'Brisk Walk — 2 min', sets: 1, reps: 1, noWeight: true, notes: 'Build HR before the sprint session. Swing arms, long stride.' },
+            { id: 'c23_w2', name: 'Heel Walks — 45 sec', sets: 1, reps: 1, noWeight: true, notes: 'Toes up, walk on heels. Direct shin/tibialis activation.' },
+            { id: 'c23_w3', name: 'Toe Walks — 30 sec', sets: 1, reps: 1, noWeight: true, notes: 'Controlled rise, walk on toes. Skip if Achilles >3/10.' },
+            { id: 'c23_w4', name: 'Lateral Shuffle — 20 sec each direction', sets: 1, reps: 1, noWeight: true, notes: 'Low amplitude. Sport-specific primer.' },
+            { id: 'c23_w5', name: 'Ankle Alphabet — each foot', sets: 1, reps: 1, noWeight: true, notes: 'Full alphabet each side. Achilles mobility.' }
           ]
         },
         {
           name: 'Elbow Prehab (8 min)',
           simple: true,
           exercises: [
-            { id: 'c23_e1', name: 'Straight Arm ISO — 30 sec hold each side', sets: 2, reps: 1, perSide: true, noWeight: true, notes: '2-5 lb. Outer forearm.' },
-            { id: 'c23_e2', name: 'Reverse Curl ISO — 30 sec hold', sets: 2, reps: 1, noWeight: true, notes: 'Top of forearm.' },
+            { id: 'c23_e1', name: 'Straight Arm ISO — 30 sec hold each side', sets: 2, reps: 1, perSide: true, weight: 7.5, notes: 'Outer forearm.' },
+            { id: 'c23_e2', name: 'Reverse Curl ISO — 30 sec hold', sets: 2, reps: 1, weight: 7.5, notes: 'Top of forearm.' },
             { id: 'c23_e3', name: 'Wrist Pronation/Supination — 10 reps, 3 sec each way', sets: 2, reps: 10, noWeight: true, notes: 'Forearm pinned.' },
-            { id: 'c23_e4', name: 'Wrist Deviations — 10 reps', sets: 2, reps: 10, noWeight: true, notes: 'Up-two-three, down-two-three.' }
+            { id: 'c23_e4', name: 'Wrist Deviations — 10 reps', sets: 2, reps: 10, weight: 5, notes: 'Up-two-three, down-two-three.' }
           ]
         },
         {
@@ -10429,14 +10401,6 @@
             { id: 'c23_r4', name: '150yd Tempo Runs — 2 sets × 4 reps at 78%', sets: 2, reps: 4, noWeight: true, notes: 'Up from 3 reps at 75%. Hard but rhythmic breathing. Walk back after each rep, 2 min rest between sets. Lean from ankles, elbows back on the pull.' }
           ]
         },
-        {
-          name: 'Shoulder Prehab Finisher (5 min)',
-          simple: true,
-          exercises: [
-            { id: 'c23_sp1', name: 'Wall Goal Posts — 3 × 12', sets: 3, reps: 12, noWeight: true, notes: 'Upper arms on wall.' },
-            { id: 'c23_sp2', name: 'Bird Dogs — 2 × 8 each side', sets: 2, reps: 8, perSide: true, noWeight: true, notes: 'Spine flat.' }
-          ]
-        }
       ]
     },
 
@@ -10454,48 +10418,56 @@
           exercises: [
             { id: 'pf24_w1', name: 'Treadmill — Zone 2, 8 min', sets: 1, reps: 1, noWeight: true, notes: 'Conversational pace. Back in a gym after a week of driving.' },
             { id: 'pf24_w2', name: 'Band Pull-Aparts', sets: 1, reps: 15, noWeight: true, notes: 'Squeeze blades at full pull.' },
-            { id: 'pf24_w3', name: 'Bodyweight Y-T-W', sets: 1, reps: 10, noWeight: true, notes: 'Hinge 45 deg. Slow.' },
-            { id: 'pf24_w4', name: 'Wall Angels', sets: 1, reps: 10, noWeight: true, notes: 'Stop before right blade lifts.' },
-            { id: 'pf24_w5', name: 'Arm Circles', sets: 1, reps: 20, noWeight: true, notes: '10 forward, 10 backward. Big and slow.' }
+            { id: 'pf24_w3', name: 'Arm Circles', sets: 1, reps: 20, noWeight: true, notes: '10 forward, 10 backward. Big and slow.' }
           ]
         },
         {
           name: 'Elbow Prehab (8 min)',
           simple: true,
           exercises: [
-            { id: 'pf24_e1', name: 'Straight Arm ISO — 30 sec hold each side', sets: 2, reps: 1, perSide: true, notes: '2-5 lb DB. Outer forearm.' },
-            { id: 'pf24_e2', name: 'Reverse Curl ISO — 30 sec hold', sets: 2, reps: 1, notes: 'Top of forearm.' },
+            { id: 'pf24_e1', name: 'Straight Arm ISO — 30 sec hold each side', sets: 2, reps: 1, perSide: true, weight: 7.5, notes: 'Outer forearm.' },
+            { id: 'pf24_e2', name: 'Reverse Curl ISO — 30 sec hold', sets: 2, reps: 1, weight: 7.5, notes: 'Top of forearm.' },
             { id: 'pf24_e3', name: 'Wrist Pronation/Supination', sets: 2, reps: 10, noWeight: true, notes: '3 sec each.' },
-            { id: 'pf24_e4', name: 'Wrist Deviations', sets: 2, reps: 10, noWeight: true, notes: 'Up-two-three, down-two-three.' }
+            { id: 'pf24_e4', name: 'Wrist Deviations', sets: 2, reps: 10, weight: 5, notes: 'Up-two-three, down-two-three.' }
+          ]
+        },
+        {
+          name: 'Shoulder PT — Loaded (12 min)',
+          simple: true,
+          exercises: [
+            { id: 'pf24_sh1', name: 'Side-Lying External Rotation', sets: 3, reps: 10, weight: 5, notes: '3 sec hold at top. Towel under elbow. Each side.', perSide: true },
+            { id: 'pf24_sh2', name: 'Side-Lying Shoulder Abduction', sets: 3, reps: 10, weight: 5, notes: 'Thumb up, arm straight, lift toward ceiling. Each side.', perSide: true },
+            { id: 'pf24_sh3', name: 'Side-Lying Shoulder Flexion (Short ROM)', sets: 3, reps: 10, weight: 3, notes: '3 sec hold. Stop below shoulder height. Each side.', perSide: true },
+            { id: 'pf24_sh4', name: 'Bottoms-Up KB Overhead Walk', sets: 1, reps: 1, weight: 8, notes: '60 sec each side. KB upside down, arm overhead. Walk slowly, keep KB stable.', isHold: true, holdTime: 60, perSide: true }
           ]
         },
         {
           name: 'A. Vertical Pull + Shoulder PT (3 rounds, 90 sec rest)',
           exercises: [
-            { id: 'pf24_a1', name: 'Lat Pulldown', sets: 3, reps: 10, notes: '75 lb (up from 72). Pull elbows to back pockets, 1-sec squeeze at bottom.' },
-            { id: 'pf24_a2', name: 'Face Pulls', sets: 3, reps: 12, notes: '25 lb. Last set to fatigue. Elbows high, hands to temples, squeeze between blades.' }
+            { id: 'pf24_a1', name: 'Lat Pulldown', sets: 3, reps: 10, weight: 75, notes: '75 lb (up from 72). Pull elbows to back pockets, 1-sec squeeze at bottom.' },
+            { id: 'pf24_a2', name: 'Face Pulls', sets: 3, reps: 12, weight: 25, notes: '25 lb. Last set to fatigue. Elbows high, hands to temples, squeeze between blades.' }
           ]
         },
         {
           name: 'B. Horizontal Pull + Shoulder PT (3 rounds, 90 sec rest)',
           exercises: [
-            { id: 'pf24_b1', name: 'Seated Cable Row', sets: 3, reps: 10, notes: '85 lb. Elbows track back, squeeze blades at end, 1-sec hold.' },
+            { id: 'pf24_b1', name: 'Seated Cable Row', sets: 3, reps: 10, weight: 85, notes: '85 lb. Elbows track back, squeeze blades at end, 1-sec hold.' },
             { id: 'pf24_b2', name: 'External Rotation (band, elbow at side)', sets: 3, reps: 12, noWeight: true, notes: 'Last set to fatigue. Elbow pinned, rotate forearm out. Feel rear shoulder.' }
           ]
         },
         {
           name: 'C. Push + Shoulder (3 rounds, 90 sec rest)',
           exercises: [
-            { id: 'pf24_c1', name: 'DB Bench Press', sets: 3, reps: 10, notes: '35 lb. Full ROM, elbows at 45 deg to body.' },
-            { id: 'pf24_c2', name: 'Lateral Raise Combo', sets: 3, reps: 10, notes: '5 lb. Front raise to T, lateral raise to T. Controlled — no momentum.' }
+            { id: 'pf24_c1', name: 'DB Bench Press', sets: 3, reps: 10, weight: 35, notes: '35 lb. Full ROM, elbows at 45 deg to body.' },
+            { id: 'pf24_c2', name: 'Lateral Raise Combo', sets: 3, reps: 10, weight: 5, notes: '5 lb. Front raise to T, lateral raise to T. Controlled — no momentum.' }
           ]
         },
         {
           name: 'Finisher: Arms + Adductor + Achilles',
           simple: true,
           exercises: [
-            { id: 'pf24_f1', name: 'Bicep Curl', sets: 2, reps: 10, notes: '15 lb. Controlled.' },
-            { id: 'pf24_f2', name: 'Cable Tricep Extension', sets: 2, reps: 12, notes: '15 lb. Elbows pinned.' },
+            { id: 'pf24_f1', name: 'Bicep Curl', sets: 2, reps: 10, weight: 15, notes: '15 lb. Controlled.' },
+            { id: 'pf24_f2', name: 'Cable Tricep Extension', sets: 2, reps: 12, weight: 15, notes: '15 lb. Elbows pinned.' },
             { id: 'pf24_f3', name: 'Copenhagen Adductor Hold (bench)', sets: 3, reps: 1, isHold: true, holdTime: 25, perSide: true, noWeight: true, notes: '25 sec each side.' },
             { id: 'pf24_f4', name: 'HSR Calf Raise (Single Leg)', sets: 2, reps: 10, perSide: true, noWeight: true, notes: '3-sec rise, 3-sec lower.' }
           ]
@@ -10531,34 +10503,24 @@
           ]
         },
         {
-          name: 'Elbow Prehab (8 min)',
-          simple: true,
-          exercises: [
-            { id: 'pf25_e1', name: 'Straight Arm ISO — 30 sec hold each side', sets: 2, reps: 1, perSide: true, notes: '2-5 lb. Outer forearm.' },
-            { id: 'pf25_e2', name: 'Reverse Curl ISO — 30 sec hold', sets: 2, reps: 1, notes: 'Top of forearm.' },
-            { id: 'pf25_e3', name: 'Wrist Pronation/Supination', sets: 2, reps: 10, noWeight: true, notes: '3 sec each.' },
-            { id: 'pf25_e4', name: 'Wrist Deviations', sets: 2, reps: 10, noWeight: true, notes: 'Up-two-three, down-two-three.' }
-          ]
-        },
-        {
           name: 'A. Machine Legs — Leg Press + Leg Curl (3 rounds, 90 sec rest)',
           exercises: [
-            { id: 'pf25_a1', name: 'Leg Press', sets: 3, reps: 12, notes: '130 lb. Full ROM, knees track over toes. Adjacent machines — swap across.' },
-            { id: 'pf25_a2', name: 'Seated Leg Curl', sets: 3, reps: 12, notes: '60 lb. 2-sec pull, 2-sec return.' }
+            { id: 'pf25_a1', name: 'Leg Press', sets: 3, reps: 12, weight: 130, notes: '130 lb. Full ROM, knees track over toes. Adjacent machines — swap across.' },
+            { id: 'pf25_a2', name: 'Seated Leg Curl', sets: 3, reps: 12, weight: 60, notes: '60 lb. 2-sec pull, 2-sec return.' }
           ]
         },
         {
           name: 'B. Hinge + Squat (3 rounds, 90 sec rest)',
           exercises: [
-            { id: 'pf25_b1', name: 'DB Romanian Deadlift', sets: 3, reps: 10, notes: '40 lb. Consolidate. Hamstring pulls taut at bottom.' },
-            { id: 'pf25_b2', name: 'DB Goblet Squat', sets: 3, reps: 10, notes: '45 lb. Wider than shoulder width, right foot out further. 1-sec pause at bottom.' }
+            { id: 'pf25_b1', name: 'DB Romanian Deadlift', sets: 3, reps: 10, weight: 40, notes: '40 lb. Consolidate. Hamstring pulls taut at bottom.' },
+            { id: 'pf25_b2', name: 'DB Goblet Squat', sets: 3, reps: 10, weight: 45, notes: '45 lb. Wider than shoulder width, right foot out further. 1-sec pause at bottom.' }
           ]
         },
         {
           name: 'C. Lunge + Core (3 rounds, 90 sec rest)',
           exercises: [
-            { id: 'pf25_c1', name: 'DB Reverse Lunge', sets: 3, reps: 10, perSide: true, notes: '20 lb × 10 reps. Right front foot turned out slightly is correct.' },
-            { id: 'pf25_c2', name: 'Pallof Press', sets: 3, reps: 10, perSide: true, notes: '17.5 lb. Press out to full extension, hold 1 sec. Core resists rotation.' }
+            { id: 'pf25_c1', name: 'DB Reverse Lunge', sets: 3, reps: 10, perSide: true, weight: 20, notes: '20 lb × 10 reps. Right front foot turned out slightly is correct.' },
+            { id: 'pf25_c2', name: 'Pallof Press', sets: 3, reps: 10, perSide: true, weight: 17.5, notes: '17.5 lb. Press out to full extension, hold 1 sec. Core resists rotation.' }
           ]
         },
         {
@@ -11605,22 +11567,6 @@
         },
         action: 'warn_and_cap',
         message: 'HRV is {hrv} (below your rolling baseline) — keep intensity moderate today'
-      },
-      {
-        id: 'post_event_recovery',
-        condition: (metrics) => {
-          const history = getWorkoutHistory();
-          if (history.length === 0) return false;
-          const now = new Date();
-          const twoDaysAgo = new Date(now);
-          twoDaysAgo.setDate(twoDaysAgo.getDate() - 2);
-          return history.some(w => {
-            const wDate = new Date(w.date + 'T00:00:00');
-            return wDate >= twoDaysAgo && wDate < now && parseInt(w.duration) >= 180;
-          });
-        },
-        action: 'switch_to_recovery',
-        message: 'You had a 180+ min session in the last 48 hours — recovery only'
       },
       {
         id: 'low_sleep_warning',
