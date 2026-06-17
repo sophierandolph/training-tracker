@@ -3486,6 +3486,55 @@
       ]
     };
 
+    // Morning block components: shoulder activation, ankle/shin prep, ball handling
+    const BLOCK_MORNING_SHOULDER_ACTIVATION = {
+      name: "Shoulder + Core Activation",
+      simple: true,
+      exercises: [
+        { id: "msa1", name: "Chin Tucks", sets: 2, reps: 10, noWeight: true, notes: "Against wall or standing. Pull chin straight back, hold 6 sec. Feel back of neck lengthen." },
+        { id: "msa2", name: "Bird Dogs", sets: 2, reps: 8, perSide: true, noWeight: true, notes: "Opposite arm/leg, hold 2 sec, controlled return. Spine flat. Both sides of lower back work equally." },
+        { id: "msa3", name: "Dead Bug", sets: 2, reps: 8, perSide: true, noWeight: true, notes: "Low back PRESSED into floor — actively flat, not just neutral. Opposite arm and leg extend slow and long. Stop the rep the moment the low back lifts." },
+        { id: "msa4", name: "Wall Angels", sets: 2, reps: 10, noWeight: true, notes: "Back flat against wall. Slide arms up keeping contact. STOP before right shoulder blade lifts." },
+        { id: "msa5", name: "Bodyweight Y-T-W", sets: 1, reps: 10, noWeight: true, notes: "Hinge forward 45 degrees. Y: arms overhead. T: arms out to sides. W: elbows bent. 10 reps each position. Slow and controlled." },
+        { id: "msa6", name: "Wall Goal Posts (External Rotation)", sets: 3, reps: 10, noWeight: true, notes: "Arms in 90/90 against wall, forearms vertical. Rotate back keeping upper arms on wall. Blade slides down ribcage. Optional: light band across wrists for resistance." },
+        { id: "msa7", name: "Scapular Push-Ups", sets: 2, reps: 15, noWeight: true, notes: "Push-up position (full or kneeling). Without bending elbows, let chest sink toward floor (retract), then push floor away (protract). Slow, deliberate. Serratus anterior — direct overhead support." },
+        { id: "msa8", name: "Pallof Press", sets: 2, reps: 10, perSide: true, noWeight: true, notes: "Band anchored at chest height. Press straight out, hold 2 sec, return. Core resists rotation — don't let hips twist. If no band, substitute a second set of Dead Bug." }
+      ]
+    };
+
+    const BLOCK_MORNING_ACHILLES_SHIN = {
+      name: "Ankle + Shin Prep",
+      simple: true,
+      exercises: [
+        { id: "mas1", name: "Ankle Alphabet", sets: 1, reps: 1, perSide: true, noWeight: true, notes: "Full alphabet each side — seated or foot raised. Morning Achilles stiffness warm-up." },
+        { id: "mas2", name: "Heel Walks", sets: 1, reps: 1, noWeight: true, notes: "45 sec forward on heels only, toes up. Tibialis activation.", isCardio: true, duration: 45 },
+        { id: "mas3", name: "Standing Calf / Achilles Stretch", sets: 1, reps: 1, isHold: true, holdTime: 30, perSide: true, noWeight: true, notes: "30 sec each side. Heel on ground, lean into wall. Passive morning looseness — not a training stimulus." }
+      ]
+    };
+
+    const BLOCK_BALL_HANDLING = {
+      name: "Ball Handling (handball)",
+      simple: true,
+      exercises: [
+        { id: "bh1", name: "Overhead Drop", sets: 3, reps: 10, noWeight: true, notes: "Toss ball overhead, let it drop, catch soft. Full arm extension at top. Fingers spread on catch — receive, don't grab." },
+        { id: "bh2", name: "V-Pass Between Legs", sets: 3, reps: 10, noWeight: true, notes: "Pass front-to-back and back-to-front through legs in a V-pattern. Athletic stance, soft knees. Quick wrist flick." },
+        { id: "bh3", name: "Figure-8 Dribble Around Legs", sets: 3, reps: 1, noWeight: true, notes: "30 sec. Weave ball around both legs in a figure-8 continuously. Eyes forward, not on the ball. Consistent rhythm.", isCardio: true, duration: 30 },
+        { id: "bh4", name: "Catch-Release No Drop Between Legs", sets: 3, reps: 1, noWeight: true, notes: "30 sec. Catch front, toss through legs, catch behind — no bounce. Rhythm is the drill. Soft knees.", isCardio: true, duration: 30 },
+        { id: "bh5", name: "Throw Up, Sit Down, One-Hand Catch", sets: 3, reps: 5, noWeight: true, notes: "Throw ball straight up, sit your body all the way to the ground while it's in the air, catch it one-handed from seated. Throw with enough height to give yourself time. Eyes track the ball the whole way down. Sit with control, don't crash." },
+        { id: "bh6", name: "Step Throw (mime)", sets: 2, reps: 8, noWeight: true, notes: "No ball — groove the mechanics. Step with opposite foot, hip rotates first, shoulder follows, arm whips through last. Release point at ear height. Dominant arm." },
+        { id: "bh7", name: "Jump Throw (mime)", sets: 2, reps: 5, noWeight: true, notes: "No ball. One-step approach, take off on outside foot. Hip drives before shoulder — feel the hip swing through first, then the arm follows. Full extension at release." }
+      ]
+    };
+
+    const MORNING_BLOCK = {
+      name: "Morning Block",
+      type: "Prehab",
+      duration: "35 min",
+      location: "Anywhere",
+      condition: "Daily morning activation. Shoulder chain, ankle/shin mobility, ball handling. Bands optional for Pallof and Wall Goal Posts.",
+      circuits: [BLOCK_MORNING_SHOULDER_ACTIVATION, BLOCK_MORNING_ACHILLES_SHIN, BLOCK_BALL_HANDLING]
+    };
+
     // Psoas protocol: daily psoas management routine
     const BLOCK_PSOAS_PROTOCOL = {
       name: "Psoas Release",
@@ -10087,7 +10136,7 @@
       ]
     },
 
-    '2026-06-17': {
+    '2026-06-17': [ MORNING_BLOCK, {
       type: 'Strength',
       name: 'Lower Body — Campbell County',
       duration: '75 min',
@@ -10104,6 +10153,13 @@
             { id: 'cc17_w3', name: 'Glute Bridge (double leg)', sets: 2, reps: 15, noWeight: true, notes: 'Drive hips up, squeeze at top, hold 1 sec.' },
             { id: 'cc17_w4', name: 'Kickstand RDL (bodyweight)', sets: 1, reps: 10, perSide: true, noWeight: true, notes: '90% weight on working leg. Feel hamstring load up before adding barbell.' },
             { id: 'cc17_w5', name: 'Band Pull-Aparts', sets: 1, reps: 15, noWeight: true, notes: 'Shoulder activation.' }
+          ]
+        },
+        {
+          name: 'Perturbation: Single-Leg Bench Sit-to-Stand',
+          simple: true,
+          exercises: [
+            { id: 'cc17_p1', name: 'Single-Leg Bench Sit-to-Stand', sets: 3, reps: 5, perSide: true, noWeight: true, notes: 'Sit fully on bench, lift one foot, drive through the heel of the standing leg to stand. Right foot turned out further than left — correct. Slow controlled descent. Do while neurally fresh, before loading.' }
           ]
         },
         {
@@ -10148,9 +10204,9 @@
           ]
         }
       ]
-    },
+    } ],
 
-    '2026-06-18': {
+    '2026-06-18': [ MORNING_BLOCK, {
       type: 'Conditioning',
       name: 'Outdoor Conditioning — RSA Sprint Intro',
       duration: '50 min',
@@ -10196,9 +10252,9 @@
         },
         BLOCK_CONDITIONING_COOLDOWN
       ]
-    },
+    } ],
 
-    '2026-06-19': {
+    '2026-06-19': [ MORNING_BLOCK, {
       type: 'Conditioning',
       name: 'Outdoor Conditioning — Court Drills',
       duration: '50 min',
@@ -10245,9 +10301,9 @@
         },
         BLOCK_CONDITIONING_COOLDOWN
       ]
-    },
+    } ],
 
-    '2026-06-20': {
+    '2026-06-20': [ MORNING_BLOCK, {
       type: 'Conditioning',
       name: 'Zone 2 Run — Active Recovery',
       duration: '45 min',
@@ -10281,47 +10337,13 @@
         },
         BLOCK_CONDITIONING_COOLDOWN
       ]
-    },
+    } ],
 
-    '2026-06-21': {
-      type: 'Conditioning',
-      name: 'Daily Minimum — Movement Snack',
-      duration: '25 min',
-      location: 'Anywhere — rest stop, campsite, parking lot',
-      condition: 'Massive drive day (460 mi, Fort Collins → Salina). Morning before loading or at a rest stop. Keep it short.',
-      focus: 'Elbow circuit + skipping + shoulder prehab. Brain and body touch.',
-      circuits: [
-        {
-          name: 'Movement Warm-Up (5 min)',
-          simple: true,
-          exercises: [
-            { id: 'dm21_w1', name: 'Brisk Walk — 2 min', sets: 1, reps: 1, noWeight: true, notes: 'Rest stop or parking lot. Get the blood moving.' },
-            { id: 'dm21_w2', name: 'A-Skip — 2 × 20m', sets: 2, reps: 1, noWeight: true, notes: 'Keep the mechanics grooved.' }
-          ]
-        },
-      ]
-    },
+    '2026-06-21': MORNING_BLOCK,
 
-    '2026-06-22': {
-      type: 'Conditioning',
-      name: 'Daily Minimum — Movement Snack',
-      duration: '25 min',
-      location: 'Anywhere — Walmart Memphis or rest stop',
-      condition: 'Massive drive day (500 mi, Salina → Memphis). Same deal as yesterday — minimum is plenty.',
-      focus: 'Elbow circuit + shoulder prehab. Preserve the habit.',
-      circuits: [
-        {
-          name: 'Movement Warm-Up (5 min)',
-          simple: true,
-          exercises: [
-            { id: 'dm22_w1', name: 'Brisk Walk — 2 min', sets: 1, reps: 1, noWeight: true, notes: 'Walmart or rest stop — any space works.' },
-            { id: 'dm22_w2', name: 'High Knees — 20 sec, 2 sets', sets: 2, reps: 1, noWeight: true, notes: 'Drive to hip height. Quick contact.' }
-          ]
-        },
-      ]
-    },
+    '2026-06-22': MORNING_BLOCK,
 
-    '2026-06-23': {
+    '2026-06-23': [ MORNING_BLOCK, {
       type: 'Conditioning',
       name: 'Outdoor Conditioning — Full Sprint Session',
       duration: '55 min',
@@ -10370,9 +10392,9 @@
         },
         BLOCK_CONDITIONING_COOLDOWN
       ]
-    },
+    } ],
 
-    '2026-06-24': {
+    '2026-06-24': [ MORNING_BLOCK, {
       type: 'Strength',
       name: 'Upper Body — PF Nashville',
       duration: '65 min',
@@ -10450,9 +10472,9 @@
           ]
         }
       ]
-    },
+    } ],
 
-    '2026-06-25': {
+    '2026-06-25': [ MORNING_BLOCK, {
       type: 'Strength',
       name: 'Lower Body — PF Nashville',
       duration: '65 min',
@@ -10468,6 +10490,13 @@
             { id: 'pf25_w2', name: 'Glute Bridge (double leg)', sets: 2, reps: 15, noWeight: true, notes: 'Drive hips, squeeze at top.' },
             { id: 'pf25_w3', name: 'Standing Hip Hydrants (band)', sets: 2, reps: 10, perSide: true, noWeight: true, notes: 'Mini band above knees.' },
             { id: 'pf25_w4', name: 'Band Pull-Aparts', sets: 1, reps: 15, noWeight: true, notes: 'Shoulder activation.' }
+          ]
+        },
+        {
+          name: 'Perturbation: Single-Leg Bench Sit-to-Stand',
+          simple: true,
+          exercises: [
+            { id: 'pf25_p1', name: 'Single-Leg Bench Sit-to-Stand', sets: 3, reps: 5, perSide: true, noWeight: true, notes: 'Sit fully on bench, lift one foot, drive through the heel of the standing leg to stand. Right foot turned out further than left — correct. Slow controlled descent. Do while neurally fresh, before loading.' }
           ]
         },
         {
@@ -10510,7 +10539,7 @@
           ]
         }
       ]
-    },
+    } ],
 
     };
 
