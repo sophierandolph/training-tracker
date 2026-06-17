@@ -3535,6 +3535,37 @@
       circuits: [BLOCK_MORNING_SHOULDER_ACTIVATION, BLOCK_MORNING_ACHILLES_SHIN, BLOCK_BALL_HANDLING]
     };
 
+    // Handball throwing session blocks: warmup, form isolation, standing technique
+    const BLOCK_THROWING_WARMUP = {
+      name: "Throwing Warmup",
+      simple: true,
+      exercises: [
+        { id: "thw1", name: "Arm Circles — 30 sec each direction", sets: 1, reps: 1, noWeight: true, notes: "30 sec forward, 30 sec backward. Start small, gradually open to full range. Both arms together. Let the shoulder settle before picking up the ball.", isCardio: true, duration: 60 },
+        { id: "thw2", name: "Loaded Rehearsal — 15 reps", sets: 1, reps: 15, noWeight: true, notes: "Hold the handball. Full throw pattern at 60-70% speed — don't release. Feel each phase: hip loads first, trunk opens, shoulder follows, arm extends to release point. Grooving the sequence, not generating power." }
+      ]
+    };
+
+    const BLOCK_THROWING_FORM = {
+      name: "Throwing — Form Isolation",
+      simple: true,
+      exercises: [
+        { id: "thf1", name: "Kneeling Throw at Wall — 3×8", sets: 3, reps: 8, noWeight: true, notes: "Both knees down, 3-4m from wall. Lead elbow pulls back first — feel the lat and upper back load before the shoulder fires. Trunk rotates, arm follows. Aim for the same spot each rep." },
+        { id: "thf2", name: "Half-Kneeling Throw — 3×8 each side", sets: 3, reps: 8, perSide: true, noWeight: true, notes: "Right-hand throw = right knee back, left foot forward. Left-hand = reverse. Notice how much more hip drive you get vs. both-knees-down. Keep torso tall — don't let the front hip hike or the back collapse." },
+        { id: "thf3", name: "Seated Throw at Wall — 2×8", sets: 2, reps: 8, noWeight: true, notes: "Sit on ground, legs crossed or extended, 2-3m from wall. Dominant arm. No leg drive at all. Feel how if the trunk doesn't rotate, the ball goes nowhere — trunk rotation is the whole throw from here." }
+      ]
+    };
+
+    const BLOCK_THROWING_STANDING = {
+      name: "Throwing — Standing Technique",
+      simple: true,
+      exercises: [
+        { id: "ths1", name: "1-Step Jump Throw — 3×6", sets: 3, reps: 6, noWeight: true, notes: "One step, then jump. Feel the ball in your hand at the TOP of the jump — release there. If it feels late, you released on the way down. Jump up AND out. Land soft — bent knee, absorb through the hip, heel-to-toe." },
+        { id: "ths2", name: "Pivot Shot — 3×6 each direction, right arm", sets: 3, reps: 6, perSide: true, noWeight: true, notes: "Back to wall. Clockwise 6×, then counterclockwise 6× — right arm throws both directions. Start pulling the throwing arm back while still mid-turn — the turn and the arm load overlap, not sequential." },
+        { id: "ths3", name: "Full Approach Jump Throw — 2×5", sets: 2, reps: 5, noWeight: true, notes: "3-step approach. Step, OPEN (rotate on step 2), launch off step 3. Release at the top of the jump. Land soft and bent — heel-to-toe, absorb through the knee." },
+        { id: "ths4", name: "Rapid Fire — 90 sec", sets: 1, reps: 1, noWeight: true, notes: "Throw, retrieve, throw. High pace, no self-coaching. Hard and accurate into target. Let the form drills carry through.", isCardio: true, duration: 90 }
+      ]
+    };
+
     // Psoas protocol: daily psoas management routine
     const BLOCK_PSOAS_PROTOCOL = {
       name: "Psoas Release",
@@ -10204,6 +10235,13 @@
           ]
         }
       ]
+    }, {
+      type: 'Sport',
+      name: 'Handball Throwing — Form Session',
+      duration: '27 min',
+      location: 'Anywhere with a wall, fence, or goal',
+      condition: 'Post-gym, after the body is warm. Handball only.',
+      circuits: [BLOCK_THROWING_WARMUP, BLOCK_THROWING_FORM, BLOCK_THROWING_STANDING]
     } ],
 
     '2026-06-18': [ MORNING_BLOCK, {
