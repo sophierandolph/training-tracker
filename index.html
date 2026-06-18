@@ -10298,59 +10298,82 @@
     } ],
 
     '2026-06-19': [ MORNING_BLOCK, {
-      type: 'Conditioning',
-      name: 'Outdoor Conditioning — Court Drills',
-      duration: '50 min',
-      location: 'Grass or flat outdoor space — Wright or Laramie area',
-      condition: 'Drive to Laramie (250 mi) + Ruffed Up Duck gig. Morning before the long drive. Court drills — different stimulus from yesterday\'s sprints.',
-      focus: 'Reel 3 full sequence. Build on Jun 11 and Jun 16 patterns.',
+      type: 'Strength',
+      name: 'Upper Body — Planet Fitness Laramie',
+      duration: '55 min',
+      location: 'Planet Fitness, Laramie WY',
+      condition: 'Travel day + Ruffed Up Duck gig tonight. Accumulation day — RPE 7 cap, leave 2 reps in reserve everywhere. No PRs today. Elbow: if sore at warmup, cut Cable Woodchop first.',
       circuits: [
         {
-          name: 'Warm-Up: Achilles-Safe Activation (5 min)',
+          name: 'Warm-Up (10 min)',
           simple: true,
           exercises: [
-            { id: 'c19_w1', name: 'Brisk Walk — 2 min', sets: 1, reps: 1, noWeight: true, notes: 'Swing arms freely. Build HR gradually.' },
-            { id: 'c19_w2', name: 'Heel Walks — 45 sec', sets: 1, reps: 1, noWeight: true, notes: 'Walk forward on heels only, toes up. Shin activation.' },
-            { id: 'c19_w3', name: 'Lateral Shuffle — 20 sec each direction', sets: 1, reps: 1, noWeight: true, notes: 'Low amplitude. Sport-specific direction change.' },
-            { id: 'c19_w4', name: 'Ankle Alphabet — each foot', sets: 1, reps: 1, noWeight: true, notes: 'Seated or raised foot. Full alphabet each side. Achilles mobility.' }
+            { id: 'p19_w1', name: 'Stationary Bike — Zone 2, 10 min', sets: 1, reps: 1, noWeight: true, isCardio: true, duration: 600, notes: 'Easy conversational pace. Bike over treadmill — Achilles protocol.' },
+            { id: 'p19_w2', name: 'Band Pull-Aparts', sets: 1, reps: 15, noWeight: true, notes: 'Scapulae squeeze at end of each rep.' },
+            { id: 'p19_w3', name: 'Bodyweight Y-T-W', sets: 1, reps: 10, noWeight: true, notes: 'Hinge forward, controlled tempo through each position.' },
+            { id: 'p19_w4', name: 'Wall Angels', sets: 1, reps: 10, noWeight: true, notes: 'Back and arms flat to wall the whole way.' }
           ]
         },
         {
-          name: 'Running Mechanics — Skipping Sequence (10 min)',
+          name: 'Elbow ISOs (gym day)',
           simple: true,
           exercises: [
-            { id: 'c19_s1', name: 'A-Skip — 4 × 20m', sets: 4, reps: 1, noWeight: true, notes: 'Knee to parallel, snap foot off. Walk back.' },
-            { id: 'c19_s2', name: 'B-Skip — 3 × 20m', sets: 3, reps: 1, noWeight: true, notes: 'Extend lower leg before strike. Hamstring loads.' },
-            { id: 'c19_s3', name: 'High Knees — 20 sec, 3 sets', sets: 3, reps: 1, noWeight: true, notes: 'Drive to hip height. Quick contact.' }
+            { id: 'p19_e1', name: 'Straight Arm ISO — 30 sec each side', sets: 2, reps: 1, perSide: true, noWeight: true, isHold: true, holdTime: 30, notes: '30-50% effort. Back of hand into opposite palm. Analgesic — do not skip.' },
+            { id: 'p19_e2', name: 'Reverse Curl ISO — 30 sec', sets: 2, reps: 1, noWeight: true, isHold: true, holdTime: 30, notes: 'Underhand grip, resist extension. Steady pressure.' },
+            { id: 'p19_e3', name: 'Wrist Pronation/Supination', sets: 2, reps: 10, noWeight: true, notes: '3 sec each way. Slow and controlled.' },
+            { id: 'p19_e4', name: 'Wrist Deviations', sets: 2, reps: 10, noWeight: true, notes: 'Radial and ulnar deviation. Full range, no pain.' }
           ]
         },
         {
-          name: 'Court Conditioning Drills — Reel 3, Full Sequence (25 min)',
-          simple: true,
+          name: 'Pull — Superset A',
           exercises: [
-            { id: 'c19_d1', name: 'Piston Movement — 5 sets × 1 min', sets: 5, reps: 1, noWeight: true, notes: 'Up from 4 sets. 3-5m forward and back continuously for 1 min. Push hard on first step. Soft landings.' },
-            { id: 'c19_d2', name: 'Skater Hops — 4 sets × 8 each side', sets: 4, reps: 8, perSide: true, noWeight: true, notes: 'Hold each landing for a clear beat. Glute catches.' },
-            { id: 'c19_d3', name: 'Flying 10s — 4 reps', sets: 4, reps: 1, noWeight: true, notes: '10m rolling build, then push through a 10m fly zone at ~85%. Walk back full recovery (60-75 sec). Tall through the fly zone — drive elbows back, high hips. Don\'t lean forward chasing speed.' },
-            { id: 'c19_d4', name: 'Sprint-Coast-Sprint — 3 reps, 20m', sets: 3, reps: 1, noWeight: true, notes: 'Sprint hard 10m, float/coast 5m (hold speed, don\'t let hips drop), sprint final 5m hard. Walk back full recovery (~90 sec). ~80-85% effort. Mirrors the handball fast break burst. Re-accelerate the last 5m like someone is closing on you.' }
+            { id: 'p19_a1', name: 'Seated Cable Row', sets: 3, reps: 10, notes: 'Start ~60 lb. Neutral grip bar or rope. Squeeze shoulder blades at finish. Controlled return — do not let the cable yank the elbow.' },
+            { id: 'p19_a2', name: 'Lat Pulldown', sets: 3, reps: 10, notes: '80 lb. Front only, controlled tempo, loose grip. Pull to collarbone, no swinging.' }
           ]
         },
         {
-          name: 'Finisher: Achilles + Shin (5 min)',
+          name: 'Push + Rear Delt — Superset B',
+          exercises: [
+            { id: 'p19_b1', name: 'DB Chest Press', sets: 3, reps: 10, notes: '30 lb. Elbows tucked tight to body — wide-elbow grip is out. Controlled lowering.' },
+            { id: 'p19_b2', name: 'DB Rear Delt Fly', sets: 3, reps: 12, notes: 'Start 10 lb. Bump to 12.5 only if set 1 feels clean. Slight bend in elbows, squeeze rear delt at top.' }
+          ]
+        },
+        {
+          name: 'Rear Delt Machine',
           simple: true,
           exercises: [
-            { id: 'c19_f1', name: 'HSR Calf Raise (Single Leg)', sets: 2, reps: 10, perSide: true, noWeight: true, notes: '3-sec rise, 3-sec lower. Tendon is warm — this is the window. Skip if Achilles is above 3/10 after the session.' },
-            { id: 'c19_f2', name: 'Tibialis Raise (wall)', sets: 2, reps: 20, noWeight: true, notes: 'Toes to max dorsiflexion, lower slowly.' }
+            { id: 'p19_c1', name: 'Reverse Pec Deck', sets: 3, reps: 12, notes: 'Adjust seat so handles are at shoulder height. Slight bend in elbows, lead with elbows not hands. Squeeze rear delts, controlled return.' }
+          ]
+        },
+        {
+          name: 'Rotational Core — Superset C',
+          exercises: [
+            { id: 'p19_d1', name: 'Pallof Press', sets: 2, reps: 10, perSide: true, notes: '15 lb. Anti-rotation — brace and resist the cable pulling you. Slow press out, hold 1 sec, return.' },
+            { id: 'p19_d2', name: 'Cable Woodchop', sets: 2, reps: 10, perSide: true, notes: 'Cut this first if elbow is tender. High-to-low diagonal. Rotate through hips and thoracic spine — arms follow, don\'t lead.' }
+          ]
+        },
+        {
+          name: 'Shoulder PT',
+          simple: true,
+          exercises: [
+            { id: 'p19_pt1', name: 'Side-Lying External Rotation', sets: 3, reps: 10, notes: '5 lb. 3-sec hold at top. Elbow pinned to side. Slow and controlled — this is stabilizer work, not a strength exercise.' },
+            { id: 'p19_pt2', name: 'Side-Lying Shoulder Flexion', sets: 3, reps: 10, notes: '3 lb. Stop below shoulder height. 3-sec hold. Short ROM — don\'t go past parallel.' },
+            { id: 'p19_pt3', name: 'Side-Lying Shoulder Abduction', sets: 3, reps: 10, notes: '5 lb. Thumb up, arm straight to ceiling. Controlled lowering.' },
+            { id: 'p19_pt4', name: 'Horizontal Abduction Palm Down', sets: 3, reps: 10, notes: '3 lb. Standing stagger stance, chest parallel to floor. Arm sweeps back to horizontal. Squeeze at top.' },
+            { id: 'p19_pt5', name: 'Bottoms-Up KB Waiter\'s Carry', sets: 1, reps: 1, noWeight: true, isHold: true, holdTime: 60, notes: '8 lb KB. Bottoms-up, elbow at 90°. Walk slowly — 60 sec per side. Wrist neutral, KB doesn\'t wobble. Right side works the shoulder stabilizers hardest.' }
+          ]
+        },
+        {
+          name: 'Finisher (5 min)',
+          simple: true,
+          exercises: [
+            { id: 'p19_f1', name: 'Copenhagen Adductor Hold', sets: 3, reps: 1, perSide: true, noWeight: true, isHold: true, holdTime: 30, notes: '30 sec each side. Foot on bench, squeeze inner thigh isometrically. Adductor prehab — legs warm now, safe to load.' },
+            { id: 'p19_f2', name: 'HSR Calf Raise (Single Leg)', sets: 2, reps: 10, perSide: true, noWeight: true, notes: '3-sec rise, 3-sec lower. Tendon is warm — this is the window for loading. Skip if Achilles above 3/10.' },
+            { id: 'p19_f3', name: 'Tibialis Raise (wall)', sets: 2, reps: 20, noWeight: true, notes: 'Heels on floor, back to wall. Toes to max dorsiflexion, lower slowly.' }
           ]
         },
         BLOCK_CONDITIONING_COOLDOWN
       ]
-    }, {
-      type: 'Sport',
-      name: 'Handball Throwing — Form Session',
-      duration: '27 min',
-      location: 'Anywhere with a wall, fence, or goal',
-      condition: 'Post-conditioning, body is warm. Handball only.',
-      circuits: [BLOCK_THROWING_WARMUP, BLOCK_THROWING_FORM, BLOCK_THROWING_STANDING]
     } ],
 
     '2026-06-20': [ MORNING_BLOCK, {
