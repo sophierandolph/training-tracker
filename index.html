@@ -10715,10 +10715,10 @@
           ]
         },
         {
-          name: 'B. Horizontal Pull + Band ER (3 rounds, 90 sec rest)',
+          name: 'B. Horizontal Pull + Triceps (3 rounds, 90 sec rest)',
           exercises: [
             { id: 'ub629_b1', name: 'Seated Cable Row', sets: 3, reps: 10, weight: 85, notes: '85 lb. Elbows track back, 1-sec hold at end, squeeze blades.' },
-            { id: 'ub629_b2', name: 'External Rotation (band, elbow at side)', sets: 3, reps: 12, noWeight: true, notes: 'Elbow pinned, rotate forearm out. Last set to fatigue.' }
+            { id: 'ub629_b2', name: 'Cable Tricep Extension', sets: 3, reps: 12, weight: 15, notes: '15 lb. Elbows pinned, full extension. Both exercises at the cable stack — no moving.' }
           ]
         },
         {
@@ -10732,7 +10732,6 @@
           name: 'Finisher: Arms + Adductors + Achilles',
           exercises: [
             { id: 'ub629_f1', name: 'Bicep Curl', sets: 2, reps: 10, weight: 15, notes: '15 lb. Controlled, full ROM.' },
-            { id: 'ub629_f2', name: 'Cable Tricep Extension', sets: 2, reps: 12, weight: 15, notes: '15 lb. Elbows pinned.' },
             { id: 'ub629_f3', name: 'Copenhagen Adductor Hold (bench)', sets: 3, reps: 1, isHold: true, holdTime: 25, perSide: true, noWeight: true, notes: '25 sec each side.' },
             { id: 'ub629_f4', name: 'HSR Calf Raise (Single Leg)', sets: 2, reps: 10, perSide: true, noWeight: true, notes: '3-sec rise, 3-sec lower. Post-workout only.' }
           ]
@@ -10888,10 +10887,10 @@
           ]
         },
         {
-          name: 'C. Squat + Rotational Core (3 rounds, 90 sec rest)',
+          name: 'C. Squat + Lunge with Rotation (3 rounds, 90 sec rest)',
           exercises: [
             { id: 'lb701_c1', name: 'DB Goblet Squat', sets: 3, reps: 10, weight: 45, notes: '45 lb. Wider than shoulder width. Right foot 15-20° further out than left = correct neutral. Long femurs: more torso lean and deeper hip hinge at the bottom than standard cues — this is correct for your proportions.' },
-            { id: 'lb701_c2', name: 'Half-Kneeling Cable Rotation', sets: 3, reps: 10, perSide: true, weight: 17.5, notes: '17.5 lb. Half-kneeling, cable at shoulder height. Rotate trunk through full ROM, slow return. Anti-rotation work for the pivot position.' }
+            { id: 'lb701_c2', name: 'DB Reverse Lunge + Rotation', sets: 3, reps: 10, perSide: true, weight: 15, notes: '15 lb held at chest. Step back into lunge, rotate torso toward front leg at the bottom, return to center before standing. Right front foot 15-20° out = correct neutral. Both exercises in the DB area — no moving.' }
           ]
         },
         {
@@ -10951,27 +10950,6 @@
         BLOCK_THROWING_FORM,
         BLOCK_THROWING_STANDING
       ]
-    }, {
-      type: 'Prehab',
-      name: 'Shoulder PT — Home',
-      duration: '25 min',
-      location: 'Linville lodging',
-      condition: 'Every-other-day cadence: Jun 30 done → Jul 2 is next. Face pulls: band at door handle, face height. Bottoms-up walk: 8 lb DB flat palm-up.',
-      focus: 'Loaded cuff stability. Up to 4/10 pain is fine per PT protocol.',
-      circuits: [
-        {
-          name: 'Shoulder Rehab (Loaded)',
-          instructions: 'PT-prescribed. Every other day cadence. Up to 4/10 pain is fine.',
-          exercises: [
-            { id: 'shpt702_1', name: 'Side-Lying External Rotation', sets: 10, reps: 3, weight: 5, notes: '10 sets × 3 reps, 3 sec hold at top, 30 sec rest. Each side.', perSide: true },
-            { id: 'shpt702_2', name: 'Side-Lying Shoulder Flexion (Short ROM)', sets: 3, reps: 10, weight: 3, notes: '3 sec hold. Stop below shoulder height. Each side.', perSide: true },
-            { id: 'shpt702_3', name: 'Side-Lying Shoulder Abduction', sets: 3, reps: 10, weight: 5, notes: 'Thumb up, arm toward ceiling. Each side.', perSide: true },
-            { id: 'shpt702_4', name: 'Horizontal Abduction Palm Down', sets: 3, reps: 10, weight: 3, notes: 'Standing stagger, chest parallel to ground. Each side.', perSide: true },
-            { id: 'shpt702_5', name: 'Face Pulls (Band, Goal Post)', sets: 3, reps: 10, noWeight: true, notes: 'Band anchored to door handle at face height. Pull to face, goal post finish, squeeze blades.' },
-            { id: 'shpt702_6', name: 'Bottoms-Up DB Walk', sets: 1, reps: 1, weight: 8, notes: '60 sec each side. 8 lb DB flat palm-up. Walk slowly, keep it from tipping.', isHold: true, holdTime: 60, perSide: true }
-          ]
-        }
-      ]
     } ],
 
     '2026-07-03': [ MORNING_BLOCK, {
@@ -11000,57 +10978,70 @@
       ]
     }, {
       type: 'Strength',
-      name: 'Lower Body — YMCA Avery (Day 2)',
+      name: 'Full Body — YMCA Avery',
       duration: '60 min',
       location: 'YMCA Avery, Linville NC',
-      condition: 'Second lower body gym session this week — coach agent flagged one lower body day as insufficient given daily runs and altitude demands. Machine/DB focus complements Wed\'s barbell session with different movement patterns. 48+ hrs since Jul 1. Shoulder PT is separate home cadence — today is a shoulder rest day.',
-      focus: 'Machine legs + DB lunge + Pallof press. Different from Wed: leg press + leg curl + reverse lunge vs. hip thrust + RDL + split squat.',
+      condition: 'Full body, Haley-style: 3 circuits × 3 rounds, each circuit pairs lower + upper + core so you stay in one area. 48+ hrs since Jun 29 upper, 48+ hrs since Jul 1 lower. Early luteal: hold all weights. Shoulder PT cadence: Jun 30 done → Jul 4 next (4-day gap is fine). Right shoulder has had throwing on Jun 30 + Jul 2 — check in before starting.',
+      focus: '3-in-1 circuits. Each round hits the full body — don\'t rush the transitions, take the 90 sec rest.',
       circuits: [
         {
-          name: 'Warm-Up: Bike + Hip Activation (12 min)',
+          name: 'Warm-Up (10 min)',
           simple: true,
           exercises: [
-            { id: 'lb703_w1', name: 'Stationary Bike — Zone 2, 8 min', sets: 1, reps: 1, noWeight: true, notes: 'Short easy bike after the run.', isCardio: true, duration: 480 },
-            { id: 'lb703_w2', name: 'Glute Bridge (double leg)', sets: 2, reps: 15, noWeight: true, notes: 'Drive hips up, squeeze at top.' },
-            { id: 'lb703_w3', name: 'Standing Hip Hydrants (band)', sets: 2, reps: 12, perSide: true, noWeight: true, notes: 'Loop band above knees.' }
+            { id: 'fb703_w1', name: 'Stationary Bike — Zone 2, 8 min', sets: 1, reps: 1, noWeight: true, notes: 'Easy bike after the run.', isCardio: true, duration: 480 },
+            { id: 'fb703_w2', name: 'Band Pull-Aparts', sets: 2, reps: 15, noWeight: true, notes: 'Loop band. Squeeze blades.' },
+            { id: 'fb703_w3', name: 'Arm Circles', sets: 1, reps: 20, noWeight: true, notes: '10 forward, 10 backward.' }
           ]
         },
         {
-          name: 'A. Machine Legs (3 rounds, 90 sec rest)',
+          name: 'Elbow Prehab (8 min)',
           exercises: [
-            { id: 'lb703_a1', name: 'Leg Press', sets: 3, reps: 12, weight: 140, notes: '140 lb to start — Jun 25 PF was 140→160, last set feel 4. Start at 140, move to 160 on set 3 only if sets 1-2 feel easy. Long femurs: wider foot placement, toes angled out (right more than left — correct neutral).' },
-            { id: 'lb703_a2', name: 'Seated Leg Curl', sets: 3, reps: 12, weight: 65, notes: '65 lb — Jun 25 was 60-70, feel 3-4. Middle of that range. 2-sec pull, 2-sec return.' }
+            { id: 'fb703_e1', name: 'Straight Arm ISO — 30 sec each side', sets: 2, reps: 1, perSide: true, weight: 7.5, notes: 'Outer forearm.' },
+            { id: 'fb703_e2', name: 'Reverse Curl ISO — 30 sec', sets: 2, reps: 1, weight: 7.5 },
+            { id: 'fb703_e3', name: 'Wrist Pronation/Supination', sets: 2, reps: 10, noWeight: true, notes: '3 sec each way.' },
+            { id: 'fb703_e4', name: 'Wrist Deviations', sets: 2, reps: 10, weight: 5, notes: 'Up-two-three, down-two-three.' }
           ]
         },
         {
-          name: 'B. Lunge + Hinge (3 rounds, 90 sec rest)',
+          name: 'A. Squat + Lat Pull + Copenhagen (3 rounds, 90 sec rest)',
           exercises: [
-            { id: 'lb703_b1', name: 'DB Reverse Lunge', sets: 3, reps: 10, perSide: true, weight: 20, notes: '20 lb — Jun 25 felt 4 at 20, hold here. Right front foot 15-20° out = correct neutral for tibial torsion.' },
-            { id: 'lb703_b2', name: 'DB Romanian Deadlift', sets: 3, reps: 10, weight: 35, notes: '35 lb. Complement to barbell RDL from Wed — same pattern, lighter/DB for the second leg day. Hamstring pulls taut at the bottom.' }
+            { id: 'fb703_a1', name: 'DB Goblet Squat', sets: 3, reps: 10, weight: 45, notes: '45 lb. Wider than shoulder width. Right foot 15-20° further out = correct neutral. Long femurs: more torso lean at the bottom is correct.' },
+            { id: 'fb703_a2', name: 'Lat Pulldown', sets: 3, reps: 10, weight: 85, notes: '85 lb — consolidating Jun 29. Pull elbows to back pockets, 1-sec squeeze at bottom.' },
+            { id: 'fb703_a3', name: 'Copenhagen Adductor Hold (bench)', sets: 3, reps: 1, isHold: true, holdTime: 25, perSide: true, noWeight: true, notes: '25 sec each side. Second Copenhagen session this week.' }
           ]
         },
         {
-          name: 'C. Core + Adductor (3 rounds, 90 sec rest)',
+          name: 'B. Single-Leg Hinge + Press + Pallof (3 rounds, 90 sec rest)',
           exercises: [
-            { id: 'lb703_c1', name: 'Pallof Press', sets: 3, reps: 10, perSide: true, weight: 17.5, notes: '17.5 lb. Press to full extension, hold 1 sec, return. Core resists rotation — don\'t let hips twist.' },
-            { id: 'lb703_c2', name: 'Copenhagen Adductor Hold (bench)', sets: 3, reps: 1, isHold: true, holdTime: 25, perSide: true, noWeight: true, notes: '25 sec each side. Second Copenhagen session this week — minimum met.' }
+            { id: 'fb703_b1', name: 'Single-Leg RDL', sets: 3, reps: 8, perSide: true, weight: 20, notes: '20 lb (one DB, opposite hand to standing leg). Haley used this Mar 12. Hinge, hamstring pulls taut, return. Right foot 15-20° out on standing leg = correct neutral.' },
+            { id: 'fb703_b2', name: 'DB Bench Press', sets: 3, reps: 10, weight: 30, notes: '30 lb — HOLD. Elbows at 45°, controlled descent. Weight moves next week if all sets land at feel 3-4.' },
+            { id: 'fb703_b3', name: 'Pallof Press', sets: 3, reps: 10, perSide: true, weight: 17.5, notes: '17.5 lb. Press to full extension, hold 1 sec, return. Core resists rotation — hips stay square.' }
           ]
         },
         {
-          name: 'Finisher: Achilles + Shin',
-          simple: true,
+          name: 'C. Lunge + Row + Side Plank (3 rounds, 90 sec rest)',
           exercises: [
-            { id: 'lb703_f1', name: 'HSR Calf Raise (Single Leg)', sets: 2, reps: 10, perSide: true, noWeight: true, notes: '3-sec rise, 3-sec lower. Post-workout only.' },
-            { id: 'lb703_f2', name: 'Tibialis Raise (wall)', sets: 2, reps: 20, noWeight: true, notes: 'Toes to max dorsiflexion, lower slowly.' }
+            { id: 'fb703_c1', name: 'DB Reverse Lunge + Rotation', sets: 3, reps: 8, perSide: true, weight: 15, notes: '15 lb at chest. Step back into lunge, rotate toward front leg at the bottom, return to center before standing. Haley used lunge + press combos regularly — this is the rotation variation.' },
+            { id: 'fb703_c2', name: 'Seated Cable Row', sets: 3, reps: 10, weight: 85, notes: '85 lb. Elbows track back, 1-sec hold at end, squeeze blades.' },
+            { id: 'fb703_c3', name: 'Side Plank', sets: 3, reps: 1, isHold: true, holdTime: 30, perSide: true, noWeight: true, notes: '30 sec each side. Haley staple. Hip stacked, don\'t let it sag.' }
+          ]
+        },
+        {
+          name: 'Finisher: Shoulders + Arms + Achilles',
+          exercises: [
+            { id: 'fb703_f1', name: 'Face Pulls', sets: 2, reps: 12, weight: 30, notes: '30 lb. Elbows high, goal post finish, squeeze blades.' },
+            { id: 'fb703_f2', name: 'Cable Tricep Extension', sets: 2, reps: 12, weight: 15, notes: '15 lb. Elbows pinned.' },
+            { id: 'fb703_f3', name: 'Bicep Curl', sets: 2, reps: 10, weight: 15, notes: '15 lb. Controlled, full ROM.' },
+            { id: 'fb703_f4', name: 'HSR Calf Raise (Single Leg)', sets: 2, reps: 10, perSide: true, noWeight: true, notes: '3-sec rise, 3-sec lower. Post-workout only.' }
           ]
         },
         {
           name: 'Cool-Down',
           simple: true,
           exercises: [
-            { id: 'lb703_cd1', name: 'Figure-4 Hip Stretch', sets: 1, reps: 1, isHold: true, holdTime: 60, perSide: true, noWeight: true },
-            { id: 'lb703_cd2', name: 'Kneeling Hip Flexor Stretch', sets: 1, reps: 1, isHold: true, holdTime: 45, perSide: true, noWeight: true },
-            { id: 'lb703_cd3', name: 'Seated Hamstring Stretch', sets: 1, reps: 1, isHold: true, holdTime: 45, perSide: true, noWeight: true }
+            { id: 'fb703_cd1', name: 'Figure-4 Hip Stretch', sets: 1, reps: 1, isHold: true, holdTime: 60, perSide: true, noWeight: true },
+            { id: 'fb703_cd2', name: 'Cross-Body Shoulder Stretch', sets: 1, reps: 1, isHold: true, holdTime: 30, perSide: true, noWeight: true },
+            { id: 'fb703_cd3', name: 'Kneeling Hip Flexor Stretch', sets: 1, reps: 1, isHold: true, holdTime: 45, perSide: true, noWeight: true }
           ]
         }
       ]
