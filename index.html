@@ -10627,6 +10627,495 @@
       ]
     } ],
 
+    '2026-06-28': [ MORNING_BLOCK, {
+      type: 'Conditioning',
+      name: 'Zone 2 Run — 6 Laps',
+      duration: '28 min',
+      location: 'Outdoor Track, Linville NC',
+      condition: 'First run of the daily base-building block. Coach directive: 10 laps/day continuous (2.5 miles = average handball game distance, altitude prep for Colorado Springs ~6,200 ft). Ramping carefully for Achilles: 6 laps today, 8 Tue, 10 Wed+. Run morning block immediately before — keep the Achilles warm between prehab and the run.',
+      focus: 'Zone 2 only. Conversational pace throughout. Achilles check: any pulling by lap 3, drop to 4 laps and flag.',
+      circuits: [
+        {
+          name: 'Pre-Run Warmup (3 min)',
+          simple: true,
+          exercises: [
+            { id: 'run628_pw1', name: 'Brisk Walk + Ankle Circles', sets: 1, reps: 1, noWeight: true, notes: '2 min brisk walk, then 30 sec ankle circles each foot. Run morning block immediately before this — don\'t let the Achilles cool between prehab and the run.', isCardio: true, duration: 180 }
+          ]
+        },
+        {
+          name: 'Zone 2 Run — 6 Laps (2.4 km)',
+          simple: true,
+          exercises: [
+            { id: 'run628_r1', name: 'Zone 2 Run — 6 Laps', sets: 1, reps: 1, noWeight: true, notes: 'Conversational pace. 2.4 km. Easy start to the altitude-prep block. Achilles: if it pulls or aches by lap 3, drop to 4 laps and flag.', isCardio: true, duration: 1500 }
+          ]
+        },
+        BLOCK_CONDITIONING_COOLDOWN
+      ]
+    }, {
+      type: 'Sport-Specific',
+      name: 'Throwing — Form Return',
+      duration: '30 min',
+      location: 'Outdoor Wall / Fence, Linville NC',
+      condition: 'First throwing in 10 days. Conservative return — form isolation only. No standing throws or rapid fire today. Ovulation confirmed Jun 25-26 (early luteal now) — add cuff activation before throwing as a precaution for the laxity window just passed.',
+      focus: 'Let the arm remember the pattern. ~40-48 total throws. Kneeling and seated forms only.',
+      circuits: [
+        BLOCK_SHOULDER_REHAB_ACTIVATION,
+        BLOCK_THROWING_WARMUP,
+        BLOCK_THROWING_FORM
+      ]
+    } ],
+
+    '2026-06-29': [ MORNING_BLOCK, {
+      type: 'Conditioning',
+      name: 'Hike — Aerobic Base',
+      duration: 'Variable',
+      location: 'Linville NC trails',
+      condition: 'Big hike today — this is the aerobic base work for the day, legs do the load. No separate run today. Upper body gym follows.',
+      focus: 'Zone 2 aerobic effort. Log duration when done.',
+      circuits: [
+        {
+          name: 'Hike',
+          simple: true,
+          exercises: [
+            { id: 'hike629_1', name: 'Hike', sets: 1, reps: 1, noWeight: true, notes: 'Log time when done. Aerobic base for the day — legs are doing the work.', isCardio: true }
+          ]
+        }
+      ]
+    }, {
+      type: 'Strength',
+      name: 'Upper Body — YMCA Avery',
+      duration: '60 min',
+      location: 'YMCA Avery, Linville NC',
+      condition: 'Post-hike upper body. Early luteal: hold all weights at Jun 24 levels — RPE will feel higher than the load deserves. Jun 28 included throwing + shoulder activation, so the right shoulder had some work yesterday. Check in before starting: if it feels loaded, drop to 2 rounds per superset and skip face pulls. Shoulder PT is on a separate home cadence (Jun 30 is next).',
+      focus: 'Pull volume + push form. Bench press holds at 30 lb — last set was feel 5 on Jun 24, form before weight this week.',
+      circuits: [
+        {
+          name: 'Warm-Up (12 min)',
+          simple: true,
+          exercises: [
+            { id: 'ub629_w1', name: 'Stationary Bike — Zone 2, 10 min', sets: 1, reps: 1, noWeight: true, notes: 'Legs are warm from the hike but upper body needs its own activation. 10 min easy Zone 2 bike.', isCardio: true, duration: 600 },
+            { id: 'ub629_w2', name: 'Band Pull-Aparts', sets: 2, reps: 15, noWeight: true, notes: 'Loop band. Squeeze blades at full pull.' },
+            { id: 'ub629_w3', name: 'Arm Circles', sets: 1, reps: 20, noWeight: true, notes: '10 forward, 10 backward. Big and slow.' }
+          ]
+        },
+        {
+          name: 'Elbow Prehab (8 min)',
+          exercises: [
+            { id: 'ub629_e1', name: 'Straight Arm ISO — 30 sec each side', sets: 2, reps: 1, perSide: true, weight: 7.5, notes: 'Outer forearm. Analgesic for the elbow.' },
+            { id: 'ub629_e2', name: 'Reverse Curl ISO — 30 sec', sets: 2, reps: 1, weight: 7.5, notes: 'Top of forearm.' },
+            { id: 'ub629_e3', name: 'Wrist Pronation/Supination', sets: 2, reps: 10, noWeight: true, notes: '3 sec each way.' },
+            { id: 'ub629_e4', name: 'Wrist Deviations', sets: 2, reps: 10, weight: 5, notes: 'Up-two-three, down-two-three.' }
+          ]
+        },
+        {
+          name: 'A. Vertical Pull + Face Pulls (3 rounds, 90 sec rest)',
+          exercises: [
+            { id: 'ub629_a1', name: 'Lat Pulldown', sets: 3, reps: 10, weight: 85, notes: '85 lb — you jumped to this mid-session Jun 24 and it held at feel 4. Consolidate here. Pull elbows to back pockets, 1-sec squeeze at bottom.' },
+            { id: 'ub629_a2', name: 'Face Pulls', sets: 3, reps: 12, weight: 30, notes: '30 lb. Last set to fatigue. Elbows high, hands to temples, squeeze between blades. Skip if shoulder feels loaded from yesterday.' }
+          ]
+        },
+        {
+          name: 'B. Horizontal Pull + Band ER (3 rounds, 90 sec rest)',
+          exercises: [
+            { id: 'ub629_b1', name: 'Seated Cable Row', sets: 3, reps: 10, weight: 85, notes: '85 lb. Elbows track back, 1-sec hold at end, squeeze blades.' },
+            { id: 'ub629_b2', name: 'External Rotation (band, elbow at side)', sets: 3, reps: 12, noWeight: true, notes: 'Elbow pinned, rotate forearm out. Last set to fatigue.' }
+          ]
+        },
+        {
+          name: 'C. Push + Lateral Raise (3 rounds, 90 sec rest)',
+          exercises: [
+            { id: 'ub629_c1', name: 'DB Bench Press', sets: 3, reps: 10, weight: 30, notes: '30 lb — HOLD. Last set was feel 5 on Jun 24. Elbows at 45° to body, controlled descent, full ROM. Weight moves next week if all 3 sets land at feel 3-4.' },
+            { id: 'ub629_c2', name: 'Lateral Raise Combo', sets: 3, reps: 10, weight: 7.5, notes: '7.5 lb. Front raise to T then lateral raise to T. Jun 24 last set was feel 5 — hold the weight, slow the movement down.' }
+          ]
+        },
+        {
+          name: 'Finisher: Arms + Adductors + Achilles',
+          exercises: [
+            { id: 'ub629_f1', name: 'Bicep Curl', sets: 2, reps: 10, weight: 15, notes: '15 lb. Controlled, full ROM.' },
+            { id: 'ub629_f2', name: 'Cable Tricep Extension', sets: 2, reps: 12, weight: 15, notes: '15 lb. Elbows pinned.' },
+            { id: 'ub629_f3', name: 'Copenhagen Adductor Hold (bench)', sets: 3, reps: 1, isHold: true, holdTime: 25, perSide: true, noWeight: true, notes: '25 sec each side.' },
+            { id: 'ub629_f4', name: 'HSR Calf Raise (Single Leg)', sets: 2, reps: 10, perSide: true, noWeight: true, notes: '3-sec rise, 3-sec lower. Post-workout only.' }
+          ]
+        },
+        {
+          name: 'Cool-Down',
+          simple: true,
+          exercises: [
+            { id: 'ub629_cd1', name: 'Cross-Body Shoulder Stretch', sets: 1, reps: 1, isHold: true, holdTime: 30, perSide: true, noWeight: true },
+            { id: 'ub629_cd2', name: 'Chest Opener', sets: 1, reps: 1, isHold: true, holdTime: 30, noWeight: true, notes: 'Arms clasped behind back.' },
+            { id: 'ub629_cd3', name: 'Thread the Needle', sets: 1, reps: 1, isHold: true, holdTime: 30, perSide: true, noWeight: true }
+          ]
+        }
+      ]
+    } ],
+
+    '2026-06-30': [ MORNING_BLOCK, {
+      type: 'Conditioning',
+      name: 'Zone 2 Run — 8 Laps',
+      duration: '35 min',
+      location: 'Outdoor Track, Linville NC',
+      condition: 'Day 2 of run ramp (6→8→10). Zone 2 only this week — no RSA or tempo yet. Coach agent flagged high-velocity sprint work on Day 2 of Achilles return as a protocol conflict. RSA moves to next week (Jul 7+). Run morning block immediately before.',
+      focus: 'Conversational pace. 8 laps. Check how Achilles felt after Jun 28\'s 6 laps before starting.',
+      circuits: [
+        {
+          name: 'Pre-Run Warmup (3 min)',
+          simple: true,
+          exercises: [
+            { id: 'run630_pw1', name: 'Brisk Walk + Ankle Circles', sets: 1, reps: 1, noWeight: true, notes: '2 min brisk walk, 30 sec ankle circles each foot. Morning block should run immediately before this.', isCardio: true, duration: 180 }
+          ]
+        },
+        {
+          name: 'Zone 2 Run — 8 Laps (3.2 km)',
+          simple: true,
+          exercises: [
+            { id: 'run630_r1', name: 'Zone 2 Run — 8 Laps', sets: 1, reps: 1, noWeight: true, notes: '3.2 km at conversational pace. Step up from Jun 28\'s 6 laps.', isCardio: true, duration: 2100 }
+          ]
+        },
+        BLOCK_CONDITIONING_COOLDOWN
+      ]
+    }, {
+      type: 'Sport-Specific',
+      name: 'Throwing — Pivot Session',
+      duration: '40 min',
+      location: 'Outdoor Wall / Fence, Linville NC',
+      condition: 'Second throwing session this week. Do a few hours after the run — arm recovers faster than legs. Pivot work from coach video. ~55 total throws — under 60 return-week ceiling.',
+      focus: 'Pivot mechanics per coach video. First session adding standing + pivot work.',
+      circuits: [
+        BLOCK_SHOULDER_REHAB_ACTIVATION,
+        BLOCK_THROWING_WARMUP,
+        {
+          name: 'Form Primer (10 min)',
+          simple: true,
+          exercises: [
+            { id: 'thr630_f1', name: 'Half-Kneeling Throw — 2×8 each side', sets: 2, reps: 8, perSide: true, noWeight: true, notes: 'Right knee back, left foot forward for right-hand throws. Quick primer before standing pivot work.' }
+          ]
+        },
+        {
+          name: 'Pivot Work — Coach Video',
+          simple: true,
+          exercises: [
+            { id: 'thr630_p1', name: 'Pivot Shot — Clockwise, 3×6', sets: 3, reps: 6, noWeight: true, notes: 'Right arm. Refer to coach video for cues. Notice what your arm timing does mid-turn.' },
+            { id: 'thr630_p2', name: 'Pivot Shot — Counterclockwise, 3×6', sets: 3, reps: 6, noWeight: true, notes: 'Right arm. Both directions equal reps.' },
+            { id: 'thr630_p3', name: 'Full Approach into Pivot — 2×5', sets: 2, reps: 5, noWeight: true, notes: '3-step approach before the pivot. Stay on the coach cues, not just the throw outcome.' }
+          ]
+        },
+        BLOCK_CONDITIONING_COOLDOWN
+      ]
+    }, {
+      type: 'Prehab',
+      name: 'Shoulder PT — Home',
+      duration: '25 min',
+      location: 'Linville lodging',
+      condition: 'Shoulder PT on every-other-day cadence: Jun 27 done → Jun 30 is next. You have the right DBs in Linville. Face pulls: band anchored to door handle at face height (10 lb equivalent tension). Bottoms-up KB walk: 8 lb DB held flat palm-up.',
+      focus: 'Loaded cuff stability. Up to 4/10 pain is fine per PT protocol.',
+      circuits: [
+        {
+          name: 'Shoulder Rehab (Loaded)',
+          instructions: 'PT-prescribed. Every other day cadence. Up to 4/10 pain is fine.',
+          exercises: [
+            { id: 'shpt630_1', name: 'Side-Lying External Rotation', sets: 10, reps: 3, weight: 5, notes: '10 sets × 3 reps, 3 sec hold at top, 30 sec rest. Towel under elbow. Each side.', perSide: true },
+            { id: 'shpt630_2', name: 'Side-Lying Shoulder Flexion (Short ROM)', sets: 3, reps: 10, weight: 3, notes: '3 sec hold. Stop below shoulder height. Each side.', perSide: true },
+            { id: 'shpt630_3', name: 'Side-Lying Shoulder Abduction', sets: 3, reps: 10, weight: 5, notes: 'Thumb up, arm toward ceiling. Each side.', perSide: true },
+            { id: 'shpt630_4', name: 'Horizontal Abduction Palm Down', sets: 3, reps: 10, weight: 3, notes: 'Standing stagger, chest parallel to ground. Each side.', perSide: true },
+            { id: 'shpt630_5', name: 'Face Pulls (Band, Goal Post)', sets: 3, reps: 10, noWeight: true, notes: 'Band anchored to door handle at face height. Pull to face, finish in goal post position (elbows at shoulder height, hands above elbows), squeeze blades.' },
+            { id: 'shpt630_6', name: 'Bottoms-Up DB Walk', sets: 1, reps: 1, weight: 8, notes: '60 sec each side. Hold 8 lb DB flat palm-up (approximates the stability demand of an inverted KB). Walk slowly, keep it from tipping.', isHold: true, holdTime: 60, perSide: true }
+          ]
+        }
+      ]
+    } ],
+
+    '2026-07-01': [ MORNING_BLOCK, {
+      type: 'Conditioning',
+      name: 'Zone 2 Run — 10 Laps',
+      duration: '40 min',
+      location: 'Outdoor Track, Linville NC',
+      condition: 'Full 10 laps — first time hitting the coach target. Morning block immediately before. Can run before gym (serves as Zone 2 warmup) or as a separate morning session.',
+      focus: '10 laps, conversational pace. Same effort as previous runs — don\'t speed up just because it\'s the milestone number.',
+      circuits: [
+        {
+          name: 'Pre-Run Warmup (3 min)',
+          simple: true,
+          exercises: [
+            { id: 'run701_pw1', name: 'Brisk Walk + Ankle Circles', sets: 1, reps: 1, noWeight: true, notes: '2 min brisk walk, 30 sec ankle circles each foot.', isCardio: true, duration: 180 }
+          ]
+        },
+        {
+          name: 'Zone 2 Run — 10 Laps (4 km)',
+          simple: true,
+          exercises: [
+            { id: 'run701_r1', name: 'Zone 2 Run — 10 Laps', sets: 1, reps: 1, noWeight: true, notes: '4 km. Coach target reached. Note how the Achilles responds — important data before committing to 10/day long-term.', isCardio: true, duration: 2400 }
+          ]
+        },
+        BLOCK_CONDITIONING_COOLDOWN
+      ]
+    }, {
+      type: 'Strength',
+      name: 'Lower Body — YMCA Avery',
+      duration: '65 min',
+      location: 'YMCA Avery, Linville NC',
+      condition: 'First barbell lower body since Campbell County (Jun 17). Early luteal: hold all weights at Jun 17 levels. YMCA has barbells — use them for hip thrusts and RDL. Shoulder PT is separate home cadence (Jun 30 done, Jul 2 is next).',
+      focus: 'Posterior chain: barbell hip thrust + RDL. Unilateral: Bulgarian split squat. Adductor: Copenhagens.',
+      circuits: [
+        {
+          name: 'Warm-Up: Bike + Hip Activation (15 min)',
+          simple: true,
+          exercises: [
+            { id: 'lb701_w1', name: 'Stationary Bike — Zone 2, 8 min', sets: 1, reps: 1, noWeight: true, notes: 'Easy bike after the run — just transition to gym mode.', isCardio: true, duration: 480 },
+            { id: 'lb701_w2', name: 'Glute Bridge (double leg)', sets: 2, reps: 15, noWeight: true, notes: 'Drive hips up, squeeze at top, hold 1 sec.' },
+            { id: 'lb701_w3', name: 'Standing Hip Hydrants (band)', sets: 2, reps: 12, perSide: true, noWeight: true, notes: 'Loop band above knees. Hip circles up and out. Standing hip stays level.' },
+            { id: 'lb701_w4', name: 'Kickstand RDL (bodyweight)', sets: 1, reps: 10, perSide: true, noWeight: true, notes: 'Each side. Hinge to feel the hamstring load up — pattern primer before the bar.' }
+          ]
+        },
+        {
+          name: 'Perturbation: Single-Leg Bench Sit-to-Stand',
+          simple: true,
+          exercises: [
+            { id: 'lb701_p1', name: 'Single-Leg Bench Sit-to-Stand', sets: 3, reps: 5, perSide: true, noWeight: true, notes: 'Sit fully, one foot lifts, drive through heel to stand. Right foot turned out 15-20° more than left = correct neutral for tibial torsion — not a form flaw. Slow controlled descent. Do while neurally fresh.' }
+          ]
+        },
+        {
+          name: 'A. Hip Thrust + Copenhagen (3 rounds, 90 sec rest)',
+          exercises: [
+            { id: 'lb701_a1', name: 'Barbell Hip Thrust', sets: 3, reps: 10, weight: 85, notes: '85 lb — Jun 17 last set felt 3, which would normally suggest a bump, but early luteal = consolidate this week. Upper back on bench, bar over hip crease, drive to full extension, squeeze glutes at top. Long torso: bar sits proportionally higher relative to the bench than standard — that\'s correct.' },
+            { id: 'lb701_a2', name: 'Copenhagen Adductor Hold (bench)', sets: 3, reps: 1, isHold: true, holdTime: 25, perSide: true, noWeight: true, notes: '25 sec each side. Side plank on forearm, top foot on bench, bottom leg hangs free.' }
+          ]
+        },
+        {
+          name: 'B. Hinge + Split Squat (3 rounds, 90 sec rest)',
+          exercises: [
+            { id: 'lb701_b1', name: 'Barbell Romanian Deadlift', sets: 3, reps: 10, weight: 85, notes: '85 lb. Long femurs: your torso angle will be more horizontal than standard cues describe — this is correct for your levers, not a form break. Hamstring pulls taut at the bottom. Hip crease drives up on the return, not the lower back.' },
+            { id: 'lb701_b2', name: 'DB Bulgarian Split Squat', sets: 3, reps: 8, weight: 25, notes: '25 lb each hand — Jun 17 set 3 level. Rear foot on bench. Right front foot 15-20° out = correct neutral for tibial torsion — do not cue symmetrical feet. Long femurs: more forward torso lean than coaching photos show — that is correct.' }
+          ]
+        },
+        {
+          name: 'C. Squat + Rotational Core (3 rounds, 90 sec rest)',
+          exercises: [
+            { id: 'lb701_c1', name: 'DB Goblet Squat', sets: 3, reps: 10, weight: 45, notes: '45 lb. Wider than shoulder width. Right foot 15-20° further out than left = correct neutral. Long femurs: more torso lean and deeper hip hinge at the bottom than standard cues — this is correct for your proportions.' },
+            { id: 'lb701_c2', name: 'Half-Kneeling Cable Rotation', sets: 3, reps: 10, perSide: true, weight: 17.5, notes: '17.5 lb. Half-kneeling, cable at shoulder height. Rotate trunk through full ROM, slow return. Anti-rotation work for the pivot position.' }
+          ]
+        },
+        {
+          name: 'Finisher: Achilles + Shin',
+          simple: true,
+          exercises: [
+            { id: 'lb701_f1', name: 'HSR Calf Raise (Single Leg)', sets: 3, reps: 10, perSide: true, noWeight: true, notes: '3-sec rise, 3-sec lower. Post-workout only — tendon is warm now.' },
+            { id: 'lb701_f2', name: 'Tibialis Raise (wall)', sets: 2, reps: 20, noWeight: true, notes: 'Toes to max dorsiflexion, lower slowly. Shin prehab.' }
+          ]
+        },
+        {
+          name: 'Cool-Down',
+          simple: true,
+          exercises: [
+            { id: 'lb701_cd1', name: 'Figure-4 Hip Stretch', sets: 1, reps: 1, isHold: true, holdTime: 60, perSide: true, noWeight: true },
+            { id: 'lb701_cd2', name: 'Kneeling Hip Flexor Stretch', sets: 1, reps: 1, isHold: true, holdTime: 45, perSide: true, noWeight: true },
+            { id: 'lb701_cd3', name: '90/90 Hip Stretch', sets: 1, reps: 1, isHold: true, holdTime: 60, perSide: true, noWeight: true }
+          ]
+        }
+      ]
+    } ],
+
+    '2026-07-02': [ MORNING_BLOCK, {
+      type: 'Conditioning',
+      name: 'Zone 2 Run — 8 Laps',
+      duration: '33 min',
+      location: 'Outdoor Track, Linville NC',
+      condition: 'Down-volume run day — 8 laps instead of 10. Coach agent flagged 4 consecutive days at full dose as aggressive for Week 1 Achilles ramp. Pattern: 6→8→10→8→10→10. This lighter day lets the tendon consolidate before the final push.',
+      focus: 'Slightly easier than yesterday. Legs may feel the lower body gym — that\'s expected. Zone 2 still.',
+      circuits: [
+        {
+          name: 'Pre-Run Warmup (3 min)',
+          simple: true,
+          exercises: [
+            { id: 'run702_pw1', name: 'Brisk Walk + Ankle Circles', sets: 1, reps: 1, noWeight: true, notes: '2 min brisk walk, 30 sec ankle circles each foot.', isCardio: true, duration: 180 }
+          ]
+        },
+        {
+          name: 'Zone 2 Run — 8 Laps (3.2 km)',
+          simple: true,
+          exercises: [
+            { id: 'run702_r1', name: 'Zone 2 Run — 8 Laps', sets: 1, reps: 1, noWeight: true, notes: '3.2 km. Intentionally lighter than yesterday. Day after lower body gym — this should feel like shaking the legs out, not adding to the load.', isCardio: true, duration: 2100 }
+          ]
+        },
+        BLOCK_CONDITIONING_COOLDOWN
+      ]
+    }, {
+      type: 'Sport-Specific',
+      name: 'Throwing — Build',
+      duration: '45 min',
+      location: 'Outdoor Wall / Fence, Linville NC',
+      condition: 'Second throwing session with full standing protocol. Cap at 60 total throws — return week ceiling per coach agent. Do a few hours after the run.',
+      focus: 'Jump throw: release at the TOP, not on the way down. Pivot: arm separates DURING the turn, not after. Say one cue out loud before each rep.',
+      circuits: [
+        BLOCK_SHOULDER_REHAB_ACTIVATION,
+        BLOCK_THROWING_WARMUP,
+        BLOCK_THROWING_FORM,
+        BLOCK_THROWING_STANDING
+      ]
+    }, {
+      type: 'Prehab',
+      name: 'Shoulder PT — Home',
+      duration: '25 min',
+      location: 'Linville lodging',
+      condition: 'Every-other-day cadence: Jun 30 done → Jul 2 is next. Face pulls: band at door handle, face height. Bottoms-up walk: 8 lb DB flat palm-up.',
+      focus: 'Loaded cuff stability. Up to 4/10 pain is fine per PT protocol.',
+      circuits: [
+        {
+          name: 'Shoulder Rehab (Loaded)',
+          instructions: 'PT-prescribed. Every other day cadence. Up to 4/10 pain is fine.',
+          exercises: [
+            { id: 'shpt702_1', name: 'Side-Lying External Rotation', sets: 10, reps: 3, weight: 5, notes: '10 sets × 3 reps, 3 sec hold at top, 30 sec rest. Each side.', perSide: true },
+            { id: 'shpt702_2', name: 'Side-Lying Shoulder Flexion (Short ROM)', sets: 3, reps: 10, weight: 3, notes: '3 sec hold. Stop below shoulder height. Each side.', perSide: true },
+            { id: 'shpt702_3', name: 'Side-Lying Shoulder Abduction', sets: 3, reps: 10, weight: 5, notes: 'Thumb up, arm toward ceiling. Each side.', perSide: true },
+            { id: 'shpt702_4', name: 'Horizontal Abduction Palm Down', sets: 3, reps: 10, weight: 3, notes: 'Standing stagger, chest parallel to ground. Each side.', perSide: true },
+            { id: 'shpt702_5', name: 'Face Pulls (Band, Goal Post)', sets: 3, reps: 10, noWeight: true, notes: 'Band anchored to door handle at face height. Pull to face, goal post finish, squeeze blades.' },
+            { id: 'shpt702_6', name: 'Bottoms-Up DB Walk', sets: 1, reps: 1, weight: 8, notes: '60 sec each side. 8 lb DB flat palm-up. Walk slowly, keep it from tipping.', isHold: true, holdTime: 60, perSide: true }
+          ]
+        }
+      ]
+    } ],
+
+    '2026-07-03': [ MORNING_BLOCK, {
+      type: 'Conditioning',
+      name: 'Zone 2 Run — 10 Laps',
+      duration: '40 min',
+      location: 'Outdoor Track, Linville NC',
+      condition: 'Back to 10 laps after the 8-lap down-volume day. If Jul 1\'s 10 laps felt fine on the Achilles, this should be clean.',
+      focus: '10 laps, Zone 2. Trust the ramp.',
+      circuits: [
+        {
+          name: 'Pre-Run Warmup (3 min)',
+          simple: true,
+          exercises: [
+            { id: 'run703_pw1', name: 'Brisk Walk + Ankle Circles', sets: 1, reps: 1, noWeight: true, notes: '2 min brisk walk, 30 sec ankle circles each foot.', isCardio: true, duration: 180 }
+          ]
+        },
+        {
+          name: 'Zone 2 Run — 10 Laps (4 km)',
+          simple: true,
+          exercises: [
+            { id: 'run703_r1', name: 'Zone 2 Run — 10 Laps', sets: 1, reps: 1, noWeight: true, notes: '4 km. Second full-dose day. Pattern from here: 10 laps daily.', isCardio: true, duration: 2400 }
+          ]
+        },
+        BLOCK_CONDITIONING_COOLDOWN
+      ]
+    }, {
+      type: 'Strength',
+      name: 'Lower Body — YMCA Avery (Day 2)',
+      duration: '60 min',
+      location: 'YMCA Avery, Linville NC',
+      condition: 'Second lower body gym session this week — coach agent flagged one lower body day as insufficient given daily runs and altitude demands. Machine/DB focus complements Wed\'s barbell session with different movement patterns. 48+ hrs since Jul 1. Shoulder PT is separate home cadence — today is a shoulder rest day.',
+      focus: 'Machine legs + DB lunge + Pallof press. Different from Wed: leg press + leg curl + reverse lunge vs. hip thrust + RDL + split squat.',
+      circuits: [
+        {
+          name: 'Warm-Up: Bike + Hip Activation (12 min)',
+          simple: true,
+          exercises: [
+            { id: 'lb703_w1', name: 'Stationary Bike — Zone 2, 8 min', sets: 1, reps: 1, noWeight: true, notes: 'Short easy bike after the run.', isCardio: true, duration: 480 },
+            { id: 'lb703_w2', name: 'Glute Bridge (double leg)', sets: 2, reps: 15, noWeight: true, notes: 'Drive hips up, squeeze at top.' },
+            { id: 'lb703_w3', name: 'Standing Hip Hydrants (band)', sets: 2, reps: 12, perSide: true, noWeight: true, notes: 'Loop band above knees.' }
+          ]
+        },
+        {
+          name: 'A. Machine Legs (3 rounds, 90 sec rest)',
+          exercises: [
+            { id: 'lb703_a1', name: 'Leg Press', sets: 3, reps: 12, weight: 140, notes: '140 lb to start — Jun 25 PF was 140→160, last set feel 4. Start at 140, move to 160 on set 3 only if sets 1-2 feel easy. Long femurs: wider foot placement, toes angled out (right more than left — correct neutral).' },
+            { id: 'lb703_a2', name: 'Seated Leg Curl', sets: 3, reps: 12, weight: 65, notes: '65 lb — Jun 25 was 60-70, feel 3-4. Middle of that range. 2-sec pull, 2-sec return.' }
+          ]
+        },
+        {
+          name: 'B. Lunge + Hinge (3 rounds, 90 sec rest)',
+          exercises: [
+            { id: 'lb703_b1', name: 'DB Reverse Lunge', sets: 3, reps: 10, perSide: true, weight: 20, notes: '20 lb — Jun 25 felt 4 at 20, hold here. Right front foot 15-20° out = correct neutral for tibial torsion.' },
+            { id: 'lb703_b2', name: 'DB Romanian Deadlift', sets: 3, reps: 10, weight: 35, notes: '35 lb. Complement to barbell RDL from Wed — same pattern, lighter/DB for the second leg day. Hamstring pulls taut at the bottom.' }
+          ]
+        },
+        {
+          name: 'C. Core + Adductor (3 rounds, 90 sec rest)',
+          exercises: [
+            { id: 'lb703_c1', name: 'Pallof Press', sets: 3, reps: 10, perSide: true, weight: 17.5, notes: '17.5 lb. Press to full extension, hold 1 sec, return. Core resists rotation — don\'t let hips twist.' },
+            { id: 'lb703_c2', name: 'Copenhagen Adductor Hold (bench)', sets: 3, reps: 1, isHold: true, holdTime: 25, perSide: true, noWeight: true, notes: '25 sec each side. Second Copenhagen session this week — minimum met.' }
+          ]
+        },
+        {
+          name: 'Finisher: Achilles + Shin',
+          simple: true,
+          exercises: [
+            { id: 'lb703_f1', name: 'HSR Calf Raise (Single Leg)', sets: 2, reps: 10, perSide: true, noWeight: true, notes: '3-sec rise, 3-sec lower. Post-workout only.' },
+            { id: 'lb703_f2', name: 'Tibialis Raise (wall)', sets: 2, reps: 20, noWeight: true, notes: 'Toes to max dorsiflexion, lower slowly.' }
+          ]
+        },
+        {
+          name: 'Cool-Down',
+          simple: true,
+          exercises: [
+            { id: 'lb703_cd1', name: 'Figure-4 Hip Stretch', sets: 1, reps: 1, isHold: true, holdTime: 60, perSide: true, noWeight: true },
+            { id: 'lb703_cd2', name: 'Kneeling Hip Flexor Stretch', sets: 1, reps: 1, isHold: true, holdTime: 45, perSide: true, noWeight: true },
+            { id: 'lb703_cd3', name: 'Seated Hamstring Stretch', sets: 1, reps: 1, isHold: true, holdTime: 45, perSide: true, noWeight: true }
+          ]
+        }
+      ]
+    } ],
+
+    '2026-07-04': [ MORNING_BLOCK, {
+      type: 'Conditioning',
+      name: 'Zone 2 Run — 10 Laps',
+      duration: '40 min',
+      location: 'Outdoor Track, Linville NC',
+      condition: 'July 4th. Daily run continues — no gym today. Run in the morning, then throwing, then celebrate. Note Achilles across this 3-day 10-lap stretch (Jul 1, Jul 3, Jul 4) — any accumulating soreness is important data for next week\'s plan.',
+      focus: '10 laps, Zone 2. Holiday run.',
+      circuits: [
+        {
+          name: 'Pre-Run Warmup (3 min)',
+          simple: true,
+          exercises: [
+            { id: 'run704_pw1', name: 'Brisk Walk + Ankle Circles', sets: 1, reps: 1, noWeight: true, notes: '2 min brisk walk, 30 sec ankle circles each foot.', isCardio: true, duration: 180 }
+          ]
+        },
+        {
+          name: 'Zone 2 Run — 10 Laps (4 km)',
+          simple: true,
+          exercises: [
+            { id: 'run704_r1', name: 'Zone 2 Run — 10 Laps', sets: 1, reps: 1, noWeight: true, notes: '4 km. Enjoy Linville. Flag any Achilles accumulation to inform next week\'s plan.', isCardio: true, duration: 2400 }
+          ]
+        },
+        BLOCK_CONDITIONING_COOLDOWN
+      ]
+    }, {
+      type: 'Sport-Specific',
+      name: 'Throwing — Full Protocol',
+      duration: '45 min',
+      location: 'Outdoor Wall / Fence, Linville NC',
+      condition: 'Third throwing session this week. Full protocol. Cap at 60 total throws — return week ceiling. Pivot work if helpers available. Shoulder PT at home after (Jul 2→Jul 4 cadence).',
+      focus: 'Jump shot: release at TOP. Pivot: arm separates DURING the turn. Pick one cue per rep, say it out loud before throwing.',
+      circuits: [
+        BLOCK_SHOULDER_REHAB_ACTIVATION,
+        BLOCK_THROWING_WARMUP,
+        BLOCK_THROWING_FORM,
+        BLOCK_THROWING_STANDING
+      ]
+    }, {
+      type: 'Prehab',
+      name: 'Shoulder PT — Home',
+      duration: '25 min',
+      location: 'Linville lodging',
+      condition: 'Every-other-day cadence: Jul 2 done → Jul 4 is next. Face pulls: band at door handle, face height. Bottoms-up walk: 8 lb DB flat palm-up.',
+      focus: 'Loaded cuff stability. Up to 4/10 pain is fine per PT protocol.',
+      circuits: [
+        {
+          name: 'Shoulder Rehab (Loaded)',
+          instructions: 'PT-prescribed. Every other day cadence. Up to 4/10 pain is fine.',
+          exercises: [
+            { id: 'shpt704_1', name: 'Side-Lying External Rotation', sets: 10, reps: 3, weight: 5, notes: '10 sets × 3 reps, 3 sec hold at top, 30 sec rest. Each side.', perSide: true },
+            { id: 'shpt704_2', name: 'Side-Lying Shoulder Flexion (Short ROM)', sets: 3, reps: 10, weight: 3, notes: '3 sec hold. Stop below shoulder height. Each side.', perSide: true },
+            { id: 'shpt704_3', name: 'Side-Lying Shoulder Abduction', sets: 3, reps: 10, weight: 5, notes: 'Thumb up, arm toward ceiling. Each side.', perSide: true },
+            { id: 'shpt704_4', name: 'Horizontal Abduction Palm Down', sets: 3, reps: 10, weight: 3, notes: 'Standing stagger, chest parallel to ground. Each side.', perSide: true },
+            { id: 'shpt704_5', name: 'Face Pulls (Band, Goal Post)', sets: 3, reps: 10, noWeight: true, notes: 'Band anchored to door handle at face height. Pull to face, goal post finish, squeeze blades.' },
+            { id: 'shpt704_6', name: 'Bottoms-Up DB Walk', sets: 1, reps: 1, weight: 8, notes: '60 sec each side. 8 lb DB flat palm-up. Walk slowly, keep it from tipping.', isHold: true, holdTime: 60, perSide: true }
+          ]
+        }
+      ]
+    } ],
+
     };
 
     // Special dates with specific schedule info
