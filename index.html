@@ -5043,7 +5043,7 @@
           totalSets += exercise.sets;
           const exerciseId = `${circuitIndex}-${exerciseIndex}`;
           if (state.workoutLog[exerciseId]) {
-            const logged = state.workoutLog[exerciseId].filter(s => s && !s.skipped).length;
+            const logged = state.workoutLog[exerciseId].filter(s => s).length;
             completedSets += logged;
             circuitComplete += logged;
           }
@@ -10825,24 +10825,17 @@
 
     '2026-07-01': [ MORNING_BLOCK, {
       type: 'Conditioning',
-      name: 'Zone 2 Run — 10 Laps',
-      duration: '40 min',
-      location: 'Outdoor Track, Linville NC',
-      condition: 'Full 10 laps — first time hitting the coach target. Morning block immediately before. Can run before gym (serves as Zone 2 warmup) or as a separate morning session.',
-      focus: '10 laps, conversational pace. Same effort as previous runs — don\'t speed up just because it\'s the milestone number.',
+      name: 'Zone 2 Swim — 800m',
+      duration: '30-35 min',
+      location: 'YMCA Avery Pool, Linville NC',
+      condition: 'Subbing swim for run — day 2 post-right-ankle sprain. Same Zone 2 aerobic base, zero ankle impact. 800m = ~32 lengths of a 25m pool.',
+      focus: 'Steady conversational effort. Open turns fine if flip turns are awkward on the ankle. Log time when done.',
       circuits: [
         {
-          name: 'Pre-Run Warmup (3 min)',
+          name: 'Zone 2 Swim — 800m',
           simple: true,
           exercises: [
-            { id: 'run701_pw1', name: 'Brisk Walk + Ankle Circles', sets: 1, reps: 1, noWeight: true, notes: '2 min brisk walk, 30 sec ankle circles each foot.', isCardio: true, duration: 180 }
-          ]
-        },
-        {
-          name: 'Zone 2 Run — 10 Laps (4 km)',
-          simple: true,
-          exercises: [
-            { id: 'run701_r1', name: 'Zone 2 Run — 10 Laps', sets: 1, reps: 1, noWeight: true, notes: '4 km. Coach target reached. Note how the Achilles responds — important data before committing to 10/day long-term.', isCardio: true, duration: 2400 }
+            { id: 'run701_r1', name: 'Zone 2 Swim — 800m', sets: 1, reps: 1, noWeight: true, notes: '~32 lengths of a 25m pool. Equivalent to the 10-lap run for aerobic base. Log time when done.', isCardio: true, duration: 2400 }
           ]
         },
         BLOCK_CONDITIONING_COOLDOWN
@@ -10861,15 +10854,15 @@
           exercises: [
             { id: 'lb701_w1', name: 'Stationary Bike — Zone 2, 8 min', sets: 1, reps: 1, noWeight: true, notes: 'Easy bike after the run — just transition to gym mode.', isCardio: true, duration: 480 },
             { id: 'lb701_w2', name: 'Glute Bridge (double leg)', sets: 2, reps: 15, noWeight: true, notes: 'Drive hips up, squeeze at top, hold 1 sec.' },
-            { id: 'lb701_w3', name: 'Standing Hip Hydrants (band)', sets: 2, reps: 12, perSide: true, noWeight: true, notes: 'Loop band above knees. Hip circles up and out. Standing hip stays level.' },
-            { id: 'lb701_w4', name: 'Kickstand RDL (bodyweight)', sets: 1, reps: 10, perSide: true, noWeight: true, notes: 'Each side. Hinge to feel the hamstring load up — pattern primer before the bar.' }
+            { id: 'lb701_w3', name: 'Standing Hip Hydrants (band)', sets: 2, reps: 12, perSide: true, noWeight: true, notes: 'Loop band above knees. Hip circles up and out. Standing hip stays level. Left foot planted only — skip the side where right foot is standing.' },
+            { id: 'lb701_w4', name: 'Kickstand RDL (bodyweight)', sets: 1, reps: 10, perSide: true, noWeight: true, notes: 'Left leg standing only — skip right-leg-standing side. Hinge to feel the hamstring load up — pattern primer before the bar.' }
           ]
         },
         {
           name: 'Perturbation: Single-Leg Bench Sit-to-Stand',
           simple: true,
           exercises: [
-            { id: 'lb701_p1', name: 'Single-Leg Bench Sit-to-Stand', sets: 3, reps: 5, perSide: true, noWeight: true, notes: 'Sit fully, one foot lifts, drive through heel to stand. Right foot turned out 15-20° more than left = correct neutral for tibial torsion — not a form flaw. Slow controlled descent. Do while neurally fresh.' }
+            { id: 'lb701_p1', name: 'Single-Leg Bench Sit-to-Stand', sets: 3, reps: 5, perSide: true, noWeight: true, notes: 'Left side only — skip right-leg-standing. Sit fully, one foot lifts, drive through heel to stand. Right foot turned out 15-20° more than left = correct neutral for tibial torsion — not a form flaw. Slow controlled descent. Do while neurally fresh.' }
           ]
         },
         {
@@ -10882,23 +10875,22 @@
         {
           name: 'B. Hinge + Split Squat (3 rounds, 90 sec rest)',
           exercises: [
-            { id: 'lb701_b1', name: 'Barbell Romanian Deadlift', sets: 3, reps: 10, weight: 85, notes: '85 lb. Long femurs: your torso angle will be more horizontal than standard cues describe — this is correct for your levers, not a form break. Hamstring pulls taut at the bottom. Hip crease drives up on the return, not the lower back.' },
-            { id: 'lb701_b2', name: 'DB Bulgarian Split Squat', sets: 3, reps: 8, weight: 25, notes: '25 lb each hand — Jun 17 set 3 level. Rear foot on bench. Right front foot 15-20° out = correct neutral for tibial torsion — do not cue symmetrical feet. Long femurs: more forward torso lean than coaching photos show — that is correct.' }
+            { id: 'lb701_b1', name: 'Barbell Romanian Deadlift', sets: 3, reps: 10, weight: 85, notes: '85 lb. Long femurs: your torso angle will be more horizontal than standard cues describe — this is correct for your levers, not a form break. Hamstring pulls taut at the bottom. Hip crease drives up on the return, not the lower back. Watch right ankle at the bottom — stay deliberate on sets 2-3 when fatigued (inversion risk when balance is challenged).' },
+            { id: 'lb701_b2', name: 'DB Sumo Squat', sets: 3, reps: 10, weight: 25, notes: '25 lb each hand held at chest. Wide stance, toes out. Bilateral ankle-mod sub for Bulgarian split squat this week.' }
           ]
         },
         {
           name: 'C. Squat + Lunge with Rotation (3 rounds, 90 sec rest)',
           exercises: [
-            { id: 'lb701_c1', name: 'DB Goblet Squat', sets: 3, reps: 10, weight: 45, notes: '45 lb. Wider than shoulder width. Right foot 15-20° further out than left = correct neutral. Long femurs: more torso lean and deeper hip hinge at the bottom than standard cues — this is correct for your proportions.' },
-            { id: 'lb701_c2', name: 'DB Reverse Lunge + Rotation', sets: 3, reps: 10, perSide: true, weight: 15, notes: '15 lb held at chest. Step back into lunge, rotate torso toward front leg at the bottom, return to center before standing. Right front foot 15-20° out = correct neutral. Both exercises in the DB area — no moving.' }
+            { id: 'lb701_c1', name: 'DB Goblet Squat', sets: 3, reps: 10, weight: 45, notes: '45 lb. Wider than shoulder width. Right foot 15-20° further out than left = correct neutral. Long femurs: more torso lean and deeper hip hinge at the bottom than standard cues — this is correct for your proportions. Watch right heel — if it rises or right knee dives at depth, reduce ROM (dorsiflexion restriction from ankle sprain).' },
+            { id: 'lb701_c2', name: 'DB Sumo Squat + Rotation', sets: 3, reps: 10, weight: 15, notes: '15 lb held at chest. Wide stance, toes out. Squat down, rotate torso at the bottom toward one leg, return to center before standing. Bilateral ankle-mod sub for reverse lunge.' }
           ]
         },
         {
           name: 'Finisher: Achilles + Shin',
           simple: true,
           exercises: [
-            { id: 'lb701_f1', name: 'HSR Calf Raise (Single Leg)', sets: 3, reps: 10, perSide: true, noWeight: true, notes: '3-sec rise, 3-sec lower. Post-workout only — tendon is warm now.' },
-            { id: 'lb701_f2', name: 'Tibialis Raise (wall)', sets: 2, reps: 20, noWeight: true, notes: 'Toes to max dorsiflexion, lower slowly. Shin prehab.' }
+            { id: 'lb701_f2', name: 'Tibialis Raise (wall)', sets: 2, reps: 20, noWeight: true, notes: 'Toes to max dorsiflexion, lower slowly. Shin prehab — also doubles as early ankle rehab work.' }
           ]
         },
         {
@@ -10915,24 +10907,17 @@
 
     '2026-07-02': [ MORNING_BLOCK, {
       type: 'Conditioning',
-      name: 'Zone 2 Run — 8 Laps',
-      duration: '33 min',
-      location: 'Outdoor Track, Linville NC',
-      condition: 'Down-volume run day — 8 laps instead of 10. Coach agent flagged 4 consecutive days at full dose as aggressive for Week 1 Achilles ramp. Pattern: 6→8→10→8→10→10. This lighter day lets the tendon consolidate before the final push.',
-      focus: 'Slightly easier than yesterday. Legs may feel the lower body gym — that\'s expected. Zone 2 still.',
+      name: 'Zone 2 Swim — 800m',
+      duration: '30-35 min',
+      location: 'YMCA Avery Pool, Linville NC',
+      condition: 'Subbing swim for run — day 3 post-right-ankle sprain. Same Zone 2 aerobic base, zero ankle impact. Return to running July 3 if ankle wakes up essentially pain-free.',
+      focus: 'Steady conversational effort. 800m = ~32 lengths of a 25m pool. Open turns fine if flip turns are awkward on the ankle.',
       circuits: [
         {
-          name: 'Pre-Run Warmup (3 min)',
+          name: 'Zone 2 Swim — 800m',
           simple: true,
           exercises: [
-            { id: 'run702_pw1', name: 'Brisk Walk + Ankle Circles', sets: 1, reps: 1, noWeight: true, notes: '2 min brisk walk, 30 sec ankle circles each foot.', isCardio: true, duration: 180 }
-          ]
-        },
-        {
-          name: 'Zone 2 Run — 8 Laps (3.2 km)',
-          simple: true,
-          exercises: [
-            { id: 'run702_r1', name: 'Zone 2 Run — 8 Laps', sets: 1, reps: 1, noWeight: true, notes: '3.2 km. Intentionally lighter than yesterday. Day after lower body gym — this should feel like shaking the legs out, not adding to the load.', isCardio: true, duration: 2100 }
+            { id: 'run702_r1', name: 'Zone 2 Swim — 800m', sets: 1, reps: 1, noWeight: true, notes: '~32 lengths of a 25m pool. Steady Zone 2 effort — equivalent to the 8-lap run. Log time when done.', isCardio: true, duration: 2100 }
           ]
         },
         BLOCK_CONDITIONING_COOLDOWN
@@ -10942,7 +10927,7 @@
       name: 'Throwing — Build',
       duration: '45 min',
       location: 'Outdoor Wall / Fence, Linville NC',
-      condition: 'Second throwing session with full standing protocol. Cap at 60 total throws — return week ceiling per coach agent. Do a few hours after the run.',
+      condition: 'Second throwing session with full standing protocol. Cap at 60 total throws — return week ceiling per coach agent. Do a few hours after the swim. No jump shots. Avoid pivot throws that require a hard right-foot plant-and-turn — two-footed stable base for all throws.',
       focus: 'Jump throw: release at the TOP, not on the way down. Pivot: arm separates DURING the turn, not after. Say one cue out loud before each rep.',
       circuits: [
         BLOCK_SHOULDER_REHAB_ACTIVATION,
