@@ -4904,12 +4904,12 @@
 
       document.getElementById('setModal').classList.add('active');
 
-      // Autofocus appropriate input
+      // Focus input without scrolling the page
       setTimeout(() => {
         if (exercise.noWeight) {
-          document.getElementById('repsInput').focus();
+          document.getElementById('repsInput').focus({ preventScroll: true });
         } else {
-          document.getElementById('weightInput').focus();
+          document.getElementById('weightInput').focus({ preventScroll: true });
         }
       }, 100);
     }
@@ -4955,7 +4955,7 @@
       const pill = document.getElementById('noteToggle');
       const expanded = expand.classList.toggle('expanded');
       pill.classList.toggle('active', expanded);
-      if (expanded) document.getElementById('setNoteInput').focus();
+      if (expanded) document.getElementById('setNoteInput').focus({ preventScroll: true });
     }
 
     function toggleSetMore() {
@@ -5073,15 +5073,7 @@
       let banner = document.getElementById('finishBanner');
       if (banner) banner.remove();
 
-      // Auto-scroll to first incomplete circuit
-      if (firstIncomplete >= 0) {
-        const currentSection = document.getElementById(`circuit-${firstIncomplete}`);
-        if (currentSection) {
-          setTimeout(() => {
-            currentSection.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-          }, 200);
-        }
-      }
+      // No auto-scroll — user controls scroll position
     }
 
     // ==================== WORKOUT COMPARISON ====================
@@ -13129,7 +13121,7 @@ ${recentHistory}`;
         coachMessages.pop();
       } finally {
         document.getElementById('coachSendBtn').disabled = false;
-        document.getElementById('coachInput').focus();
+        // No re-focus after send — don't pop keyboard back up uninvited
       }
     }
 
@@ -13334,7 +13326,7 @@ ${recentHistory}`;
       document.getElementById('customProteinName').value = '';
       document.getElementById('customProteinGrams').value = '';
       document.getElementById('customProteinModal').classList.add('active');
-      document.getElementById('customProteinName').focus();
+      document.getElementById('customProteinName').focus({ preventScroll: true });
     }
 
     function closeCustomProteinModal() {
