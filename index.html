@@ -11092,6 +11092,275 @@
       ]
     } ],
 
+    // Jul 7 (Tue) — Day 1 Period, Rest + Prehab Only
+    '2026-07-07': MORNING_BLOCK,
+
+    // Jul 8 (Wed) — Day 2 Period, Upper Body PF
+    '2026-07-08': [ MORNING_BLOCK, {
+      type: 'Strength',
+      name: 'Upper Body — PF Pittsfield',
+      duration: '55 min',
+      location: 'Planet Fitness, Pittsfield MA',
+      condition: 'Day 2 period — keep intensity measured, controlled movement helps. No overhead press. Ankle at day 9 post-sprain: use opposite-knee-on-bench for all DB rows (ankle fully off the ground).',
+      focus: 'Pull emphasis. Try 40 lb on single-arm row — felt 2-3 at 35 lb on Jun 29. Bench holds at 30 lb.',
+      circuits: [
+        {
+          name: 'Warm-Up (10 min)',
+          simple: true,
+          exercises: [
+            { id: 'ub708_w1', name: 'Stationary Bike — 8 min, easy', sets: 1, reps: 1, noWeight: true, isCardio: true, duration: 480, notes: 'Easy Zone 2 spin. Warm the shoulder before loading it.' },
+            { id: 'ub708_w2', name: 'Band Pull-Aparts', sets: 2, reps: 15, noWeight: true, notes: 'Loop band at chest height. Arms straight, squeeze blades at full extension.' },
+            { id: 'ub708_w3', name: 'Arm Circles', sets: 1, reps: 20, noWeight: true, notes: '10 forward, 10 backward. Big slow circles. Shoulders down.' }
+          ]
+        },
+        {
+          name: 'A. Lat Pulldown + Reverse Pec Deck (3 rounds, 90 sec rest)',
+          exercises: [
+            { id: 'ub708_a1', name: 'Lat Pulldown', sets: 3, reps: 10, weight: 85, notes: '85 lb — locked in from Jun 29. Pull elbows toward back pockets, 1-sec squeeze at bottom. Loose grip, controlled return.' },
+            { id: 'ub708_a2', name: 'Reverse Pec Deck', sets: 3, reps: 12, notes: 'Rear delt machine — PF sub for face pulls. Start around 50 lb, find where last 3 reps feel like a 3-4. Elbows slightly soft, squeeze shoulder blades at the peak.' }
+          ]
+        },
+        {
+          name: 'B. Single-Arm DB Row + DB Bench Press (3 rounds, 90 sec rest)',
+          exercises: [
+            { id: 'ub708_b1', name: 'Single-Arm DB Row', sets: 3, reps: 10, weight: 40, perSide: true, notes: 'Try 40 lb — felt 2-3 at 35 lb Jun 29. Opposite knee on bench, right ankle fully off the ground (ankle mod). Elbow drives back past the ribcage, hold 1 sec.' },
+            { id: 'ub708_b2', name: 'DB Bench Press', sets: 3, reps: 10, weight: 30, notes: '30 lb each — PF working weight (feel 4-5 at Jun 24). Elbows at ~45°, not flared wide. Controlled 2-sec lower.' }
+          ]
+        },
+        {
+          name: 'C. Lateral Raise Combo (straight sets)',
+          exercises: [
+            { id: 'ub708_c1', name: 'Lateral Raise Combo', sets: 3, reps: 10, weight: 7, notes: '7 lb — stalled (Jun 29 feel 3-4). Full lateral raise ×5 + front raise ×5 per set. No momentum.' }
+          ]
+        },
+        {
+          name: 'D. Cable Tricep Extension + Cable Woodchop (same cable tower)',
+          exercises: [
+            { id: 'ub708_d1', name: 'Cable Tricep Extension', sets: 2, reps: 12, weight: 70, notes: '70 lb — feel 4 Jun 29, hold weight. Elbows locked at sides, full extension, controlled return.' },
+            { id: 'ub708_d2', name: 'Cable Woodchop — High to Low', sets: 3, reps: 10, weight: 30, perSide: true, notes: 'Cable set high. Rotate from shoulder height to opposite hip — core resists the pull, don\'t just swing. Tall stance. Both sides.' }
+          ]
+        },
+        {
+          name: 'Cool-Down',
+          simple: true,
+          exercises: [
+            { id: 'ub708_cd1', name: 'Cross-Body Shoulder Stretch — 30 sec each side', sets: 1, reps: 1, isHold: true, holdTime: 30, perSide: true, noWeight: true, notes: 'Posterior capsule maintenance.' },
+            { id: 'ub708_cd2', name: 'Chest Opener — 30 sec', sets: 1, reps: 1, isHold: true, holdTime: 30, noWeight: true, notes: 'Arms clasped behind back, lift slightly.' },
+            { id: 'ub708_cd3', name: 'Thread the Needle — 30 sec each side', sets: 1, reps: 1, isHold: true, holdTime: 30, perSide: true, noWeight: true, notes: 'Thoracic rotation. T-spine release after pulling and pressing.' }
+          ]
+        }
+      ]
+    } ],
+
+    // Jul 9 (Thu) — NYC Train + Practice 6-8pm, Morning Block Only
+    // First court time post-ankle sprain. Train + 2hr practice + train back. No strength work.
+    '2026-07-09': MORNING_BLOCK,
+
+    // Jul 10 (Fri) — Day 4 Period (Follicular Start), Zone 2 Run Restart
+    '2026-07-10': [ MORNING_BLOCK, {
+      type: 'Conditioning',
+      name: 'Zone 2 Run — 25 min',
+      duration: '35 min',
+      location: 'Berkshires / Outdoors',
+      condition: 'Day 4 period, follicular. Aerobic restart post-ankle-sprain (day 11 out). Check in: if ankle was sore or unstable at Thursday practice, swap to 25 min easy bike at PF instead. No lateral cutting or speed work.',
+      focus: 'Easy and honest. Conversational pace only — base building, not a test.',
+      circuits: [
+        {
+          name: 'Pre-Run Warm-Up',
+          simple: true,
+          exercises: [
+            { id: 'cond710_w1', name: 'Brisk Walk — 2 min + Ankle Circles', sets: 1, reps: 1, noWeight: true, isCardio: true, duration: 180, notes: '2 min brisk walk, then 30 sec ankle circles each foot before picking up pace.' }
+          ]
+        },
+        {
+          name: 'Zone 2 Run — 25 min',
+          simple: true,
+          exercises: [
+            { id: 'cond710_r1', name: 'Zone 2 Run — 25 min', sets: 1, reps: 1, noWeight: true, isCardio: true, duration: 1500, notes: 'Conversational pace. Flat terrain. Right ankle: if any lateral instability or soreness develops, walk it out and call the session. 25 min is the right target, not a half-measure.' }
+          ]
+        },
+        BLOCK_CONDITIONING_COOLDOWN
+      ]
+    } ],
+
+    // Jul 11 (Sat) — Day 5 Period (Follicular), Lower Body PF
+    '2026-07-11': [ MORNING_BLOCK, {
+      type: 'Strength',
+      name: 'Lower Body — PF Pittsfield',
+      duration: '65 min',
+      location: 'Planet Fitness, Pittsfield MA',
+      condition: 'Day 5 period — follicular energy starting to build. Day 12 post-ankle sprain: reverse lunge reintroduced cautiously at working weight (20 lb), watch right ankle on front-foot touchdown. HSR calf raises at the very end — warm tendon protocol.',
+      focus: 'Posterior chain: leg press + curl + RDL. Try 40 lb on DB RDL. Copenhagen 3 rounds — left-elbow-down side only until ankle clears.',
+      circuits: [
+        {
+          name: 'Warm-Up (10 min)',
+          simple: true,
+          exercises: [
+            { id: 'lb711_w1', name: 'Stationary Bike — 10 min, easy', sets: 1, reps: 1, noWeight: true, isCardio: true, duration: 600, notes: 'Zone 2 spin. Warm the hips and knees before loading under leg press.' },
+            { id: 'lb711_w2', name: 'Glute Bridge (double leg)', sets: 2, reps: 15, noWeight: true, notes: 'Drive hips up, hold 1 sec at top. Glute activation before hip hinge and press work.' },
+            { id: 'lb711_w3', name: 'Standing Hip Hydrants', sets: 2, reps: 12, perSide: true, noWeight: true, notes: 'Left foot planted only — skip right-foot-planted side (ankle mod). Loop band above knees if available.' }
+          ]
+        },
+        {
+          name: 'A. Leg Press + Seated Leg Curl (3 rounds, 90 sec rest)',
+          exercises: [
+            { id: 'lb711_a1', name: 'Leg Press', sets: 3, reps: 12, weight: 160, notes: '160 lb — top set Jun 25 felt 4. Hold here: first lower body session post-sprain. Right foot allowed to toe out 15-20° more than left (torsion neutral). Full ROM without letting the right heel lift.' },
+            { id: 'lb711_a2', name: 'Seated Leg Curl', sets: 3, reps: 12, weight: 70, notes: '70 lb — top set Jun 25 felt 4. Hold. Slow 2-sec lower, 1-sec squeeze at the bend. Full ROM.' }
+          ]
+        },
+        {
+          name: 'B. DB RDL + Copenhagen Adductor Hold (3 rounds, 90 sec rest)',
+          exercises: [
+            { id: 'lb711_b1', name: 'DB Romanian Deadlift', sets: 3, reps: 10, weight: 40, notes: 'Try 40 lb — stalled at 35 lb, ready to push. Long femurs: torso angle more horizontal at bottom is correct. Hamstring loads taut. Right ankle: watch for inversion at max range, stay deliberate on sets 2-3 when fatigued.' },
+            { id: 'lb711_b2', name: 'Copenhagen Adductor Hold', sets: 3, reps: 1, isHold: true, holdTime: 25, perSide: true, noWeight: true, notes: '25 sec each side. Side plank on forearm, top foot on bench. Ankle mod: do left-elbow-down side only this session (right/sprained ankle not on ground there). Build to both sides next week once ankle is cleared from both practices.' }
+          ]
+        },
+        {
+          name: 'C. DB Reverse Lunge — Reintroduction (2 rounds, 90 sec rest)',
+          exercises: [
+            { id: 'lb711_c1', name: 'DB Reverse Lunge', sets: 2, reps: 10, weight: 20, perSide: true, notes: '20 lb — Jun 25 feel 4, hold weight. First reverse lunge post-ankle-sprain (day 12). Right leg forward (left steps back) first — feel how the right ankle responds on front-foot landing. If the right ankle feels unstable or sore, stop and note it. Front knee tracks over second toe, front heel stays planted.' }
+          ]
+        },
+        {
+          name: 'Finisher — Achilles + Shin (post-workout, warm tendon)',
+          simple: true,
+          exercises: [
+            { id: 'lb711_f1', name: 'HSR Calf Raise (Single Leg) — 3×10 each side', sets: 3, reps: 10, perSide: true, noWeight: true, notes: '3-sec rise, 3-sec lower. Use a stair or step edge if available. Full ROM: full stretch at bottom, full rise at top. Right ankle: if the deep stretch phase creates any lateral discomfort, stop. Tendon loading protocol.' },
+            { id: 'lb711_f2', name: 'Tibialis Raise (wall) — 2×20', sets: 2, reps: 20, noWeight: true, notes: 'Back against wall, heels ~12 inches out. Lift toes to max dorsiflexion, lower slowly. Both feet. Shin prehab + ankle rehab.' }
+          ]
+        },
+        {
+          name: 'Cool-Down',
+          simple: true,
+          exercises: [
+            { id: 'lb711_cd1', name: 'Figure-4 Hip Stretch — 60 sec each side', sets: 1, reps: 1, isHold: true, holdTime: 60, perSide: true, noWeight: true },
+            { id: 'lb711_cd2', name: 'Kneeling Hip Flexor Stretch — 45 sec each side', sets: 1, reps: 1, isHold: true, holdTime: 45, perSide: true, noWeight: true, notes: 'Squeeze back glute, slight anterior tilt under.' },
+            { id: 'lb711_cd3', name: 'Seated Hamstring Stretch — 45 sec each side', sets: 1, reps: 1, isHold: true, holdTime: 45, perSide: true, noWeight: true }
+          ]
+        }
+      ]
+    } ],
+
+    // Jul 12 (Sun) — Day 6 Period, Active Recovery (no pool locally)
+    '2026-07-12': {
+      type: 'Recovery',
+      name: 'Active Recovery — Walk + Mobility',
+      duration: '35 min',
+      location: 'Berkshires / Outdoors',
+      condition: 'Day 6 period. Flush from Saturday lower body. No pool in Berkshires — walk + hip and low back mobility.',
+      focus: 'Circulation and hip looseness. Low back tends to seize up during the period — prioritize the floor work.',
+      circuits: [
+        {
+          name: 'Easy Walk — 20 min',
+          simple: true,
+          exercises: [
+            { id: 'rec712_w1', name: 'Easy Walk — 20 min', sets: 1, reps: 1, noWeight: true, isCardio: true, duration: 1200, notes: 'Flat terrain, easy pace. Gentle movement actively helps period cramps more than lying still.' }
+          ]
+        },
+        {
+          name: 'Hip + Low Back Mobility',
+          simple: true,
+          exercises: [
+            { id: 'rec712_m1', name: '90/90 Hip Stretch — 60 sec each side', sets: 1, reps: 1, isHold: true, holdTime: 60, perSide: true, noWeight: true },
+            { id: 'rec712_m2', name: 'Supine Knee Hug — 30 sec each side', sets: 1, reps: 1, isHold: true, holdTime: 30, perSide: true, noWeight: true, notes: 'Lie on back, hug one knee to chest. Low back decompression — directly targets period back pain.' },
+            { id: 'rec712_m3', name: 'Figure-4 Hip Stretch — 60 sec each side', sets: 1, reps: 1, isHold: true, holdTime: 60, perSide: true, noWeight: true },
+            { id: 'rec712_m4', name: 'Cat-Cow — 10 reps', sets: 2, reps: 10, noWeight: true, notes: 'Hands and knees. Arch up (cat), sag down (cow). Slow and rhythmic — lumbar mobility.' },
+            { id: 'rec712_m5', name: 'Kneeling Hip Flexor Stretch — 45 sec each side', sets: 1, reps: 1, isHold: true, holdTime: 45, perSide: true, noWeight: true }
+          ]
+        }
+      ]
+    },
+
+    // Jul 13 (Mon) — Day 7 Period (Follicular), Upper Body PF
+    '2026-07-13': [ MORNING_BLOCK, {
+      type: 'Strength',
+      name: 'Upper Body — PF Pittsfield',
+      duration: '55 min',
+      location: 'Planet Fitness, Pittsfield MA',
+      condition: 'Day 7, follicular — full strength available. Last gym session before Tuesday NYC practice. Keep intensity at RPE 7 max (Week 5 Sharpen cap). Copenhagen second session this week (2× minimum met).',
+      focus: 'Pull volume: lat pulldown + cable row = 6 pull sets today, 12 for the week. Copenhagen both sides if ankle feels cleared from Thursday practice.',
+      circuits: [
+        {
+          name: 'Warm-Up (10 min)',
+          simple: true,
+          exercises: [
+            { id: 'ub713_w1', name: 'Stationary Bike — 8 min, easy', sets: 1, reps: 1, noWeight: true, isCardio: true, duration: 480, notes: 'Easy spin. Last strength session before Tuesday practice.' },
+            { id: 'ub713_w2', name: 'Band Pull-Aparts', sets: 2, reps: 15, noWeight: true, notes: 'Loop band, straight arms, squeeze blades at full extension.' },
+            { id: 'ub713_w3', name: 'Arm Circles', sets: 1, reps: 20, noWeight: true, notes: '10 forward, 10 backward. Big circles.' }
+          ]
+        },
+        {
+          name: 'A. Lat Pulldown + Seated Cable Row (3 rounds, 90 sec rest)',
+          exercises: [
+            { id: 'ub713_a1', name: 'Lat Pulldown', sets: 3, reps: 10, weight: 85, notes: '85 lb — consistent. Elbows to back pockets, 1-sec squeeze, controlled return. Loose grip.' },
+            { id: 'ub713_a2', name: 'Seated Cable Row', sets: 3, reps: 10, weight: 85, notes: '85 lb — feel 3-4 at Jun 24. Hold weight. Elbows drive back past ribcage, slow return. If the PF cable footplate feels unstable on the right ankle, swap to Single-Arm DB Row at 40 lb instead (opposite knee on bench).' }
+          ]
+        },
+        {
+          name: 'B. DB Bench Press + Copenhagen Adductor Hold (3 rounds, 90 sec rest)',
+          exercises: [
+            { id: 'ub713_b1', name: 'DB Bench Press', sets: 3, reps: 10, weight: 30, notes: '30 lb each — PF working weight. Elbows at 45°, 2-sec lower. Day 7 follicular = full power, RPE 7 cap today (practice tomorrow).' },
+            { id: 'ub713_b2', name: 'Copenhagen Adductor Hold', sets: 3, reps: 1, isHold: true, holdTime: 25, perSide: true, noWeight: true, notes: '25 sec each side. Side plank, top foot on the same bench you just pressed from. If ankle has been fine through both Thursday practice and today, do both sides. Second Copenhagen session this week.' }
+          ]
+        },
+        {
+          name: 'C. Lateral Raise Combo + Cable Tricep Pushdown',
+          exercises: [
+            { id: 'ub713_c1', name: 'Lateral Raise Combo', sets: 2, reps: 10, weight: 7, notes: '7 lb. Full lateral raise ×5 + front raise ×5. 2 sets here (3 done Jul 8) — shoulder volume covered for the week.' },
+            { id: 'ub713_c2', name: 'Cable Tricep Pushdown', sets: 2, reps: 12, weight: 70, notes: '70 lb. Elbows at sides, full extension. Rope attachment preferred for wrist comfort.' }
+          ]
+        },
+        {
+          name: 'D. Pallof Press (anti-rotation core)',
+          exercises: [
+            { id: 'ub713_d1', name: 'Pallof Press', sets: 2, reps: 10, weight: 15, perSide: true, notes: 'Cable at chest height, 15 lb. Press straight out, hold 2 sec, return. Core resists rotation — hips stay square throughout. Both sides.' }
+          ]
+        },
+        {
+          name: 'Cool-Down',
+          simple: true,
+          exercises: [
+            { id: 'ub713_cd1', name: 'Cross-Body Shoulder Stretch — 30 sec each side', sets: 1, reps: 1, isHold: true, holdTime: 30, perSide: true, noWeight: true },
+            { id: 'ub713_cd2', name: 'Chest Opener — 30 sec', sets: 1, reps: 1, isHold: true, holdTime: 30, noWeight: true, notes: 'Arms clasped behind back.' },
+            { id: 'ub713_cd3', name: 'Seated Spinal Twist — 30 sec each side', sets: 1, reps: 1, isHold: true, holdTime: 30, perSide: true, noWeight: true, notes: 'Thoracic rotation. Undoes the pulling and pressing.' }
+          ]
+        }
+      ]
+    } ],
+
+    // Jul 14 (Tue) — NYC Train + Practice 6-8pm + Overnight, Morning Block Only
+    '2026-07-14': MORNING_BLOCK,
+
+    // Jul 15 (Wed) — Return from NYC, Active Recovery
+    '2026-07-15': {
+      type: 'Recovery',
+      name: 'Active Recovery — Walk + Mobility',
+      duration: '30 min',
+      location: 'Berkshires / Home',
+      condition: 'Returning from NYC overnight. Train travel + second practice in 6 days. Easy movement only.',
+      focus: 'Flush the legs and hips. Shoulder mobility after back-to-back practice days.',
+      circuits: [
+        {
+          name: 'Easy Walk — 20 min',
+          simple: true,
+          exercises: [
+            { id: 'rec715_w1', name: 'Easy Walk — 20 min', sets: 1, reps: 1, noWeight: true, isCardio: true, duration: 1200, notes: 'Flat and easy. Clears leg heaviness from train + practice. No targets.' }
+          ]
+        },
+        {
+          name: 'Mobility',
+          simple: true,
+          exercises: [
+            { id: 'rec715_m1', name: 'Hip 90/90 Switches — 16 reps', sets: 1, reps: 16, noWeight: true, notes: '8 each direction. Controlled transitions. Hip decompression after sitting in the train.' },
+            { id: 'rec715_m2', name: 'Pigeon Pose — 60 sec each side', sets: 1, reps: 1, isHold: true, holdTime: 60, perSide: true, noWeight: true },
+            { id: 'rec715_m3', name: 'Kneeling Hip Flexor Stretch — 45 sec each side', sets: 1, reps: 1, isHold: true, holdTime: 45, perSide: true, noWeight: true, notes: 'Post-travel priority. Psoas opens up after sitting compressed.' },
+            { id: 'rec715_m4', name: 'Sleeper Stretch — 45 sec each side', sets: 1, reps: 1, isHold: true, holdTime: 45, perSide: true, noWeight: true, notes: 'Posterior capsule maintenance after two practice days.' },
+            { id: 'rec715_m5', name: 'Cross-Body Shoulder Stretch — 30 sec each side', sets: 1, reps: 1, isHold: true, holdTime: 30, perSide: true, noWeight: true }
+          ]
+        }
+      ]
+    },
+
     };
 
     // Special dates with specific schedule info
