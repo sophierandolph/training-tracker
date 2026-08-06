@@ -3587,6 +3587,173 @@
       circuits: [BLOCK_POOL_LAP, BLOCK_POOL_REC, BLOCK_FOAM_ROLL_STRETCH, BLOCK_SHOULDER_SHIN_PREHAB]
     };
 
+    // ==================== RETURN-TO-TRAINING FIXED TEMPLATES (Aug 2026) ====================
+    // Post-festival rebuild phase (gold medal Jul 20-26, then 3 weeks fully detrained + tournament
+    // joint flare: both elbows, wrists, right shoulder). Fixed rotation of 3 templates so progression
+    // is trackable and hypermobility stabilizer work gets repeated exposure. Plyo/movement snacks
+    // rotate on top separately. PT's 6-exercise loaded shoulder rehab block is split 2-per-template
+    // for full weekly coverage without overloading one session -- flag to PT once back in with them
+    // to confirm this cadence is fine vs. the original every-other-day dosing.
+    // Weights held flat through the first repeat cycle (Aug 8-15) -- no baked-in progression yet,
+    // real progression decisions wait for actual logged feel data.
+
+    const TEMPLATE_SQUAT_PULL = {
+      name: "Template A — Squat + Pull",
+      type: "Strength",
+      duration: "55 min",
+      location: "Rice Rec Center",
+      condition: "Return-to-training ramp. Conservative weights after 3-week layoff + tournament joint flare. Hold here through this repeat cycle. If a sharp/pinpoint pain spike happens during a set, stop that exercise, note where and what movement, and move on -- don't push through it.",
+      focus: "Squat pattern + pulling volume + ankle stability + PT shoulder rehab (External Rotation + Face Pulls this template).",
+      circuits: [
+        {
+          name: "Warm-Up (12 min)",
+          simple: true,
+          exercises: [
+            { id: "tspw1", name: "Stationary Bike — Zone 2, 10 min", sets: 1, reps: 1, noWeight: true, isCardio: true, duration: 600, notes: "Easy spin, blood flow before loading." },
+            { id: "tspw2", name: "Standing Hip Hydrants (band)", sets: 2, reps: 12, perSide: true, noWeight: true, notes: "Band above knees, wall for balance." },
+            { id: "tspw3", name: "Tandem Stance Hold", sets: 2, reps: 1, isHold: true, holdTime: 20, noWeight: true, notes: "Heel-to-toe stance, arms out. Rebuilding ankle proprioception after the downhill wobble." },
+            { id: "tspw4", name: "Single-Leg Balance Hold", sets: 2, reps: 1, isHold: true, holdTime: 20, perSide: true, noWeight: true, notes: "If you hold the full 20 sec without touching down more than once, ankle's ready for dynamic single-leg work on Template C. Two or more touch-downs means keep repeating this static hold." }
+          ]
+        },
+        {
+          name: "A. Goblet Squat + Lat Pulldown (3 rounds, 90 sec rest)",
+          exercises: [
+            { id: "tspa1", name: "DB Goblet Squat", sets: 3, reps: 10, weight: 20, notes: "3-1-1 tempo (3 sec down, 1 sec pause, 1 sec up). Conservative restart from your 45 lb peak — first real exposure back, hold here through the repeat." },
+            { id: "tspa2", name: "Lat Pulldown", sets: 3, reps: 10, weight: 55, notes: "Neutral or close grip if available. Placeholder weight — adjust to match whatever felt like feel 5-6 at Fort Davis on Aug 6. Restarting well below your 85 lb peak; grip/elbow stayed flared through the tournament." }
+          ]
+        },
+        {
+          name: "B. Shoulder PT Rehab (from your prescribed protocol)",
+          exercises: [
+            { id: "tspb1", name: "Side-Lying External Rotation", sets: 10, reps: 3, weight: 5, notes: "10 sets x 3 reps, 3 sec hold at top, 30 sec rest. Towel under elbow. Stop at neutral — never force overhead. (Full 6-exercise protocol split across the week; this + Face Pulls today.)", perSide: true },
+            { id: "tspb2", name: "Face Pulls (Cable, Goal Post)", sets: 3, reps: 10, weight: 10, notes: "Cable, finish in goal post position, squeeze blades." },
+            { id: "tspb3", name: "Wrist Extensor Isometric", sets: 5, reps: 1, isHold: true, holdTime: 15, perSide: true, noWeight: true, notes: "Back of hand pressed into opposite palm, 30-50% effort. Analgesic, safe even with the elbow flare — actively works the elbow rather than just avoiding it." }
+          ]
+        },
+        {
+          name: "C. Adductor + Core Stability (3 rounds)",
+          exercises: [
+            { id: "tspc1", name: "Copenhagen Adductor Hold", sets: 3, reps: 1, isHold: true, holdTime: 20, perSide: true, noWeight: true, notes: "Side plank, top foot on bench." },
+            { id: "tspc2", name: "Single-Leg Bench Sit-to-Stand", sets: 3, reps: 5, perSide: true, noWeight: true, notes: "Wobbly baseline exercise — keep bodyweight, high box. Training target, not something to avoid." },
+            { id: "tspc3", name: "Pallof Press", sets: 3, reps: 10, weight: 12, perSide: true, notes: "Cable or band, chest height. Hips stay square." }
+          ]
+        },
+        {
+          name: "Cool-Down",
+          simple: true,
+          exercises: [
+            { id: "tspcd1", name: "Figure-4 Hip Stretch", sets: 1, reps: 1, isHold: true, holdTime: 60, perSide: true, noWeight: true },
+            { id: "tspcd2", name: "Cross-Body Shoulder Stretch", sets: 1, reps: 1, isHold: true, holdTime: 30, perSide: true, noWeight: true },
+            { id: "tspcd3", name: "Standing Hamstring Stretch", sets: 1, reps: 1, isHold: true, holdTime: 30, perSide: true, noWeight: true }
+          ]
+        }
+      ]
+    };
+
+    const TEMPLATE_HINGE_PUSH = {
+      name: "Template B — Hinge + Push",
+      type: "Strength",
+      duration: "55 min",
+      location: "Rice Rec Center",
+      condition: "Return-to-training ramp. Grip-conservative — chest press is fine, but no heavy pulling here (that's Template A/C's job). Hold weights through this repeat cycle. If a sharp/pinpoint pain spike happens during a set, stop that exercise, note where and what movement, and move on.",
+      focus: "Hinge pattern + pressing + PT shoulder rehab (Flexion + Horizontal Abduction this template).",
+      circuits: [
+        {
+          name: "Warm-Up (12 min)",
+          simple: true,
+          exercises: [
+            { id: "thpw1", name: "Stationary Bike — Zone 2, 10 min", sets: 1, reps: 1, noWeight: true, isCardio: true, duration: 600 },
+            { id: "thpw2", name: "Loop Band Pull-Aparts", sets: 1, reps: 15, noWeight: true },
+            { id: "thpw3", name: "Ankle Alphabet", sets: 1, reps: 1, perSide: true, noWeight: true },
+            { id: "thpw4", name: "Tandem Stance Hold", sets: 2, reps: 1, isHold: true, holdTime: 20, noWeight: true, notes: "Same ankle/balance progression as Template A." }
+          ]
+        },
+        {
+          name: "A. RDL + Chest Press (3 rounds, 90 sec rest)",
+          exercises: [
+            { id: "thpa1", name: "DB Romanian Deadlift", sets: 3, reps: 10, weight: 25, notes: "Restarting below the 35 lb stall point. Hips back, soft knees, feel hamstrings load." },
+            { id: "thpa2", name: "DB Chest Press", sets: 3, reps: 10, weight: 18, notes: "Elbows tucked tight to body — wide-elbow loads the anterior capsule, stays out under the shoulder framing. First DB-specific chest press exposure (was machine at Fort Davis) — light first pass." }
+          ]
+        },
+        {
+          name: "B. Shoulder PT Rehab",
+          exercises: [
+            { id: "thpb1", name: "Side-Lying Shoulder Flexion (Short ROM)", sets: 3, reps: 10, weight: 3, perSide: true, notes: "3 sec hold. Stop below shoulder height." },
+            { id: "thpb2", name: "Horizontal Abduction Palm Down", sets: 3, reps: 10, weight: 3, perSide: true, notes: "Standing stagger, chest parallel to ground. Quad position as fallback." },
+            { id: "thpb3", name: "Wrist Extensor Isometric", sets: 5, reps: 1, isHold: true, holdTime: 15, perSide: true, noWeight: true, notes: "Back of hand into opposite palm, 30-50% effort." }
+          ]
+        },
+        {
+          name: "C. Shin/Ankle + Core (3 rounds)",
+          exercises: [
+            { id: "thpc1", name: "Tibialis Raise (wall)", sets: 3, reps: 20, noWeight: true },
+            { id: "thpc2", name: "HSR Calf Raise (Single Leg)", sets: 3, reps: 10, perSide: true, noWeight: true, notes: "Post-workout only — tendon's warm now." },
+            { id: "thpc3", name: "Dead Bug", sets: 3, reps: 8, perSide: true, noWeight: true }
+          ]
+        },
+        {
+          name: "Cool-Down",
+          simple: true,
+          exercises: [
+            { id: "thpcd1", name: "Kneeling Hip Flexor Stretch", sets: 1, reps: 1, isHold: true, holdTime: 45, perSide: true, noWeight: true },
+            { id: "thpcd2", name: "Sleeper Stretch", sets: 1, reps: 1, isHold: true, holdTime: 30, perSide: true, noWeight: true },
+            { id: "thpcd3", name: "Chest Opener", sets: 1, reps: 1, isHold: true, holdTime: 30, noWeight: true }
+          ]
+        }
+      ]
+    };
+
+    const TEMPLATE_UNILATERAL_STABILITY = {
+      name: "Template C — Unilateral + Stability",
+      type: "Strength",
+      duration: "55 min",
+      location: "Rice Rec Center",
+      condition: "Return-to-training ramp. Single-Arm Row uses neutral grip, conservative weight — grip is the gatekeeper for the elbow/wrist flare, don't rush this one. If a sharp/pinpoint pain spike happens during a set, stop that exercise, note where and what movement, and move on.",
+      focus: "Unilateral leg strength + rowing + PT shoulder rehab (Abduction + Carry this template). Ankle: only add Step-Down to Balance once the warm-up single-leg hold is clean.",
+      circuits: [
+        {
+          name: "Warm-Up (12 min)",
+          simple: true,
+          exercises: [
+            { id: "tunw1", name: "Stationary Bike — Zone 2, 10 min", sets: 1, reps: 1, noWeight: true, isCardio: true, duration: 600 },
+            { id: "tunw2", name: "Standing Hip Hydrants (band)", sets: 2, reps: 12, perSide: true, noWeight: true },
+            { id: "tunw3", name: "Single-Leg Balance Hold", sets: 2, reps: 1, isHold: true, holdTime: 20, perSide: true, noWeight: true, notes: "Full 20 sec, one or fewer touch-downs = green light for Step-Down to Balance below. Two or more touch-downs = skip Step-Down, repeat this hold instead." }
+          ]
+        },
+        {
+          name: "A. Split Squat + Single-Arm Row (3 rounds, 90 sec rest)",
+          exercises: [
+            { id: "tuna1", name: "DB Bulgarian Split Squat", sets: 3, reps: 8, weight: 15, perSide: true, notes: "Light restart. Long levers = more forward torso lean is normal." },
+            { id: "tuna2", name: "Single-Arm DB Row", sets: 3, reps: 10, weight: 20, perSide: true, notes: "Neutral grip, controlled. Restarting well below 35 lb peak — grip is the gatekeeper for the elbow/wrist flare right now." }
+          ]
+        },
+        {
+          name: "B. Shoulder PT Rehab",
+          exercises: [
+            { id: "tunb1", name: "Side-Lying Shoulder Abduction", sets: 3, reps: 10, weight: 5, perSide: true, notes: "Thumb up, straight arm, slow lift toward ceiling." },
+            { id: "tunb2", name: "Suitcase Carry", sets: 1, reps: 1, weight: 8, isHold: true, holdTime: 45, perSide: true, notes: "Standard grip (not bottoms-up) — swapped from the bottoms-up KB version to keep grip/forearm-extensor demand off the flared elbows. Revisit bottoms-up once elbows show 2+ clean sessions. Walk slowly, stay tall, no leaning." }
+          ]
+        },
+        {
+          name: "C. Single-Leg Stability + Rotation (3 rounds)",
+          exercises: [
+            { id: "tunc1", name: "Single-Leg RDL", sets: 3, reps: 8, perSide: true, noWeight: true, notes: "Bodyweight for now. Hip hinge, not a knee bend." },
+            { id: "tunc2", name: "Step-Down to Balance", sets: 2, reps: 5, perSide: true, noWeight: true, notes: "Only if the warm-up single-leg hold was clean (see above) — otherwise skip and repeat that static hold instead. Low step, 3-sec controlled lower, stick the landing 2 sec." },
+            { id: "tunc3", name: "Cable Woodchop", sets: 3, reps: 10, weight: 15, perSide: true, notes: "Rotational core." }
+          ]
+        },
+        {
+          name: "Cool-Down",
+          simple: true,
+          exercises: [
+            { id: "tuncd1", name: "Standing Quad Pull", sets: 1, reps: 1, isHold: true, holdTime: 30, perSide: true, noWeight: true },
+            { id: "tuncd2", name: "Cross-Body Shoulder Stretch", sets: 1, reps: 1, isHold: true, holdTime: 30, perSide: true, noWeight: true },
+            { id: "tuncd3", name: "90/90 Hip Stretch", sets: 1, reps: 1, isHold: true, holdTime: 60, perSide: true, noWeight: true }
+          ]
+        }
+      ]
+    };
+
     // ==================== STATE ====================
     let state = {
       currentDate: new Date(),
@@ -11351,6 +11518,173 @@
           ]
         }
       ]
+    },
+
+    // ==================== POST-FESTIVAL RETURN TO TRAINING (Aug 2026) ====================
+    // Gold medal at Handball Futures Festival Jul 20-26. ~3 weeks fully detrained since,
+    // plus tournament joint flare (both elbows, wrists, right shoulder) -- all resolved by
+    // early Aug. Ramp week before fall schedule stabilizes (new students Aug 17, classes Aug 24).
+
+    // Aug 6 (Thu) -- Fort Davis neighbor's garage, one-off reintroduction primer
+    '2026-08-06': {
+      type: 'Strength',
+      name: 'Reintroduction — Fort Davis Garage',
+      duration: '40 min',
+      location: "Neighbor's garage, Fort Davis TX (ParaBody + DBs 10/15/25/30 + air bike)",
+      condition: 'First loading exposure after 3 weeks fully off + tournament joint flare (shoulder/elbows/wrists). Low grip demand, conservative loads, RPE 5-6. No throwing today. If a sharp/pinpoint pain spike happens during a set, stop that exercise, note where and what movement, and move on.',
+      focus: 'Reintroduce loading gently. Ankle/balance progression given recent downhill wobble.',
+      circuits: [
+        {
+          name: 'Warm-Up (10 min)',
+          simple: true,
+          exercises: [
+            { id: 'fd806w1', name: 'Air Bike — Zone 2, 10 min', sets: 1, reps: 1, noWeight: true, isCardio: true, duration: 600, notes: 'New equipment at the garage. Easy effort, blood flow before loading.' },
+            { id: 'fd806w2', name: 'Ankle Alphabet', sets: 1, reps: 1, perSide: true, noWeight: true },
+            { id: 'fd806w3', name: 'Tandem Stance Hold', sets: 2, reps: 1, isHold: true, holdTime: 20, noWeight: true, notes: 'Ankle proprioception, first pass after the downhill wobble.' },
+            { id: 'fd806w4', name: 'Loop Band Pull-Aparts', sets: 1, reps: 15, noWeight: true }
+          ]
+        },
+        {
+          name: 'A. Light Full Body (2-3 rounds, self-regulate to feel 5-6)',
+          exercises: [
+            { id: 'fd806a1', name: 'DB Goblet Squat', sets: 2, reps: 10, weight: 15, notes: 'Light, controlled tempo. First squat exposure back.' },
+            { id: 'fd806a2', name: 'ParaBody Lat Pulldown', sets: 2, reps: 10, notes: 'Self-regulate to feel 5-6 — log the actual plate count/weight in notes so Saturday\'s Rec Center weight can be set to match.' },
+            { id: 'fd806a3', name: 'ParaBody Chest Press', sets: 2, reps: 10, notes: 'Elbows tucked. Light.' }
+          ]
+        },
+        {
+          name: 'B. Stability + Elbow',
+          exercises: [
+            { id: 'fd806b1', name: 'Single-Leg Balance Hold', sets: 2, reps: 1, isHold: true, holdTime: 20, perSide: true, noWeight: true, notes: 'Progress from tandem stance above if that felt solid.' },
+            { id: 'fd806b2', name: 'Copenhagen Adductor Hold', sets: 2, reps: 1, isHold: true, holdTime: 15, perSide: true, noWeight: true, notes: 'Feet on the couch — no bench here.' },
+            { id: 'fd806b3', name: 'Band Pallof Press', sets: 2, reps: 10, perSide: true, noWeight: true, notes: 'Long resistance band anchored. Light.' },
+            { id: 'fd806b4', name: 'Wrist Extensor Isometric', sets: 5, reps: 1, isHold: true, holdTime: 15, perSide: true, noWeight: true, notes: 'Back of hand into opposite palm, 30-50% effort. Analgesic, safe with the elbow flare.' },
+            { id: 'fd806b5', name: 'Tibialis Raise (wall)', sets: 2, reps: 15, noWeight: true },
+            { id: 'fd806b6', name: 'Calf Raise (bodyweight)', sets: 2, reps: 15, noWeight: true }
+          ]
+        },
+        {
+          name: 'Cool-Down',
+          simple: true,
+          exercises: [
+            { id: 'fd806cd1', name: 'Cross-Body Shoulder Stretch', sets: 1, reps: 1, isHold: true, holdTime: 30, perSide: true, noWeight: true },
+            { id: 'fd806cd2', name: 'Kneeling Hip Flexor Stretch', sets: 1, reps: 1, isHold: true, holdTime: 45, perSide: true, noWeight: true },
+            { id: 'fd806cd3', name: 'Standing Calf / Achilles Stretch', sets: 1, reps: 1, isHold: true, holdTime: 30, perSide: true, noWeight: true }
+          ]
+        }
+      ]
+    },
+
+    // Aug 7 (Fri) -- Travel day, Fort Davis to Houston (8-9 hr drive)
+    '2026-08-07': {
+      type: 'Recovery',
+      name: 'Travel Day — Fort Davis to Houston',
+      duration: '10-15 min total',
+      location: 'On the road',
+      condition: '8-9 hour drive. Treat as a fatigue day, not a rest bonus — prolonged sitting, dehydration risk.',
+      focus: 'Short movement breaks at stops. No training today.',
+      circuits: [
+        {
+          name: 'Stop Breaks (whenever you pull over)',
+          simple: true,
+          exercises: [
+            { id: 'travel807_1', name: 'Standing Hip Flexor Stretch', sets: 1, reps: 1, isHold: true, holdTime: 30, perSide: true, noWeight: true, notes: 'Undo the seated hip flexion.' },
+            { id: 'travel807_2', name: 'Easy Walk', sets: 1, reps: 1, noWeight: true, isCardio: true, duration: 300, notes: '5 min at each stop, blood flow.' },
+            { id: 'travel807_3', name: 'Ankle Alphabet', sets: 1, reps: 1, perSide: true, noWeight: true, notes: 'Counters seated stiffness.' }
+          ]
+        }
+      ]
+    },
+
+    // Aug 8 (Sat) -- First Rice Rec Center session, Template A
+    '2026-08-08': TEMPLATE_SQUAT_PULL,
+
+    // Aug 9 (Sun) -- Rest, checks response to two exposures bookending the drive day
+    '2026-08-09': POOL_RECOVERY,
+
+    // Aug 10 (Mon) -- Template B
+    '2026-08-10': TEMPLATE_HINGE_PUSH,
+
+    // Aug 11 (Tue) -- Template C + first plyo reintroduction + handball movement snack
+    '2026-08-11': [ TEMPLATE_UNILATERAL_STABILITY, {
+      type: 'Conditioning',
+      name: 'Plyo Reintroduction — Week 1',
+      duration: '10 min',
+      location: 'Rice Rec Center or court',
+      condition: 'First reactive-power exposure post-layoff + recent joint flares. Low volume, sagittal-plane only — no cutting/lateral work yet, that waits until single-leg landing looks clean for a full week.',
+      focus: 'Reintroduce ground contact and elastic response gently.',
+      circuits: [
+        {
+          name: 'Plyo (low volume, sagittal only)',
+          simple: true,
+          exercises: [
+            { id: 'plyo811_1', name: 'Pogo Hops', sets: 2, reps: 10, noWeight: true, notes: 'Small, quick ground contacts. Stiff ankle, not a big knee bend.' },
+            { id: 'plyo811_2', name: 'Ankle Hops', sets: 2, reps: 10, noWeight: true, notes: 'Minimal knee bend, all ankle.' },
+            { id: 'plyo811_3', name: 'Step-Down to Balance', sets: 2, reps: 5, perSide: true, noWeight: true, notes: 'Low step, controlled 3-sec lower, stick the landing 2 sec. Straight-line only.' }
+          ]
+        }
+      ]
+    }, {
+      type: 'Sport-Specific',
+      name: 'Movement Snack — Ball Handling',
+      duration: '10 min',
+      location: 'Anywhere',
+      condition: 'No throwing yet — shoulder/elbow need a few more clean loading exposures first. Ball handling only.',
+      focus: 'Handball touch, no throwing motion.',
+      circuits: [BLOCK_BALL_HANDLING]
+    } ],
+
+    // Aug 12 (Wed) -- Rest, checks tendon response to first plyo bout
+    '2026-08-12': POOL_RECOVERY,
+
+    // Aug 13 (Thu) -- Template B repeat (upper/hinge, not leg-dominant -- keeps distance from Fri's unilateral+plyo day)
+    '2026-08-13': TEMPLATE_HINGE_PUSH,
+
+    // Aug 14 (Fri) -- Template C repeat + second plyo exposure (still sagittal-only, flat volume not a new pattern) + movement snack
+    '2026-08-14': [ TEMPLATE_UNILATERAL_STABILITY, {
+      type: 'Conditioning',
+      name: 'Plyo Reintroduction — Week 1, Session 2',
+      duration: '10 min',
+      location: 'Rice Rec Center or court',
+      condition: 'Second reactive-power exposure. Still sagittal-only — no lateral/cutting work yet, holding that pattern flat rather than progressing it this week given the ankle is this week\'s newest flag.',
+      focus: 'Slightly more volume than Tuesday if response was clean, same movement patterns.',
+      circuits: [
+        {
+          name: 'Plyo (sagittal only, slightly more volume)',
+          simple: true,
+          exercises: [
+            { id: 'plyo814_1', name: 'Pogo Hops', sets: 2, reps: 12, noWeight: true },
+            { id: 'plyo814_2', name: 'Ankle Hops', sets: 2, reps: 12, noWeight: true },
+            { id: 'plyo814_3', name: 'Step-Down to Balance', sets: 2, reps: 6, perSide: true, noWeight: true, notes: 'One more rep each side than Tuesday. Still straight-line only.' }
+          ]
+        }
+      ]
+    }, {
+      type: 'Sport-Specific',
+      name: 'Movement Snack — Ball Handling',
+      duration: '10 min',
+      location: 'Anywhere',
+      condition: 'Still no throwing — check in on elbow/shoulder response before adding it back.',
+      focus: 'Handball touch, no throwing motion.',
+      circuits: [BLOCK_BALL_HANDLING]
+    } ],
+
+    // Aug 15 (Sat) -- Template A repeat. Natural check-in point: confirm no flare recurrence
+    // before deciding how much to progress weights/plyo/lateral work for the week of Aug 18+.
+    '2026-08-15': TEMPLATE_SQUAT_PULL,
+
+    // Aug 16 (Sun) -- Rest
+    '2026-08-16': POOL_RECOVERY,
+
+    // Aug 17 (Mon) -- Provisional: new students arrive on campus, schedule unpredictable
+    '2026-08-17': {
+      type: 'Recovery',
+      name: 'Flexible — New Student Arrival Day',
+      duration: '10-15 min',
+      location: 'Anywhere',
+      condition: 'Provisional. Schedule is unpredictable today — treat any real training as a bonus, not an expectation. Week of Aug 18+ still needs its own planning pass once the actual campus schedule is known.',
+      focus: 'Ball handling if there is a window; otherwise skip without guilt.',
+      circuits: [BLOCK_BALL_HANDLING]
     },
 
     };
