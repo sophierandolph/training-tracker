@@ -11602,11 +11602,23 @@
     // Aug 9 (Sun) -- Rest, checks response to two exposures bookending the drive day
     '2026-08-09': POOL_RECOVERY,
 
-    // Aug 10 (Mon) -- Template B
-    '2026-08-10': TEMPLATE_HINGE_PUSH,
+    // Aug 8 was missed (overnight drive home, arrived Houston 4am Sat -- catch-up sleep through
+    // the weekend, not soreness/flare). Sequence below is the original plan shifted +2 days so
+    // Template A gets its full exposure before progressing, with every spacing rule intact
+    // (rest after Template A, Template B always lands right before a plyo day, rest after each
+    // plyo bout). Aug 17 stays put -- that's a fixed real-world date, not a plan artifact.
 
-    // Aug 11 (Tue) -- Template C + first plyo reintroduction + handball movement snack
-    '2026-08-11': [ TEMPLATE_UNILATERAL_STABILITY, {
+    // Aug 10 (Mon) -- Delayed Template A, first Rice Rec Center session
+    '2026-08-10': TEMPLATE_SQUAT_PULL,
+
+    // Aug 11 (Tue) -- Rest, checks response to Monday's delayed first exposure
+    '2026-08-11': POOL_RECOVERY,
+
+    // Aug 12 (Wed) -- Template B
+    '2026-08-12': TEMPLATE_HINGE_PUSH,
+
+    // Aug 13 (Thu) -- Template C + first plyo reintroduction + handball movement snack
+    '2026-08-13': [ TEMPLATE_UNILATERAL_STABILITY, {
       type: 'Conditioning',
       name: 'Plyo Reintroduction — Week 1',
       duration: '10 min',
@@ -11618,9 +11630,9 @@
           name: 'Plyo (low volume, sagittal only)',
           simple: true,
           exercises: [
-            { id: 'plyo811_1', name: 'Pogo Hops', sets: 2, reps: 10, noWeight: true, notes: 'Small, quick ground contacts. Stiff ankle, not a big knee bend.' },
-            { id: 'plyo811_2', name: 'Ankle Hops', sets: 2, reps: 10, noWeight: true, notes: 'Minimal knee bend, all ankle.' },
-            { id: 'plyo811_3', name: 'Step-Down to Balance', sets: 2, reps: 5, perSide: true, noWeight: true, notes: 'Low step, controlled 3-sec lower, stick the landing 2 sec. Straight-line only.' }
+            { id: 'plyo813_1', name: 'Pogo Hops', sets: 2, reps: 10, noWeight: true, notes: 'Small, quick ground contacts. Stiff ankle, not a big knee bend.' },
+            { id: 'plyo813_2', name: 'Ankle Hops', sets: 2, reps: 10, noWeight: true, notes: 'Minimal knee bend, all ankle.' },
+            { id: 'plyo813_3', name: 'Step-Down to Balance', sets: 2, reps: 5, perSide: true, noWeight: true, notes: 'Low step, controlled 3-sec lower, stick the landing 2 sec. Straight-line only.' }
           ]
         }
       ]
@@ -11634,28 +11646,28 @@
       circuits: [BLOCK_BALL_HANDLING]
     } ],
 
-    // Aug 12 (Wed) -- Rest, checks tendon response to first plyo bout
-    '2026-08-12': POOL_RECOVERY,
+    // Aug 14 (Fri) -- Rest, checks tendon response to first plyo bout
+    '2026-08-14': POOL_RECOVERY,
 
-    // Aug 13 (Thu) -- Template B repeat (upper/hinge, not leg-dominant -- keeps distance from Fri's unilateral+plyo day)
-    '2026-08-13': TEMPLATE_HINGE_PUSH,
+    // Aug 15 (Sat) -- Template B repeat (upper/hinge, not leg-dominant -- keeps distance from Sunday's unilateral+plyo day)
+    '2026-08-15': TEMPLATE_HINGE_PUSH,
 
-    // Aug 14 (Fri) -- Template C repeat + second plyo exposure (still sagittal-only, flat volume not a new pattern) + movement snack
-    '2026-08-14': [ TEMPLATE_UNILATERAL_STABILITY, {
+    // Aug 16 (Sun) -- Template C repeat + second plyo exposure (still sagittal-only, flat volume not a new pattern) + movement snack
+    '2026-08-16': [ TEMPLATE_UNILATERAL_STABILITY, {
       type: 'Conditioning',
       name: 'Plyo Reintroduction — Week 1, Session 2',
       duration: '10 min',
       location: 'Rice Rec Center or court',
       condition: 'Second reactive-power exposure. Still sagittal-only — no lateral/cutting work yet, holding that pattern flat rather than progressing it this week given the ankle is this week\'s newest flag.',
-      focus: 'Slightly more volume than Tuesday if response was clean, same movement patterns.',
+      focus: 'Slightly more volume than Thursday if response was clean, same movement patterns.',
       circuits: [
         {
           name: 'Plyo (sagittal only, slightly more volume)',
           simple: true,
           exercises: [
-            { id: 'plyo814_1', name: 'Pogo Hops', sets: 2, reps: 12, noWeight: true },
-            { id: 'plyo814_2', name: 'Ankle Hops', sets: 2, reps: 12, noWeight: true },
-            { id: 'plyo814_3', name: 'Step-Down to Balance', sets: 2, reps: 6, perSide: true, noWeight: true, notes: 'One more rep each side than Tuesday. Still straight-line only.' }
+            { id: 'plyo816_1', name: 'Pogo Hops', sets: 2, reps: 12, noWeight: true },
+            { id: 'plyo816_2', name: 'Ankle Hops', sets: 2, reps: 12, noWeight: true },
+            { id: 'plyo816_3', name: 'Step-Down to Balance', sets: 2, reps: 6, perSide: true, noWeight: true, notes: 'One more rep each side than Thursday. Still straight-line only.' }
           ]
         }
       ]
@@ -11669,14 +11681,9 @@
       circuits: [BLOCK_BALL_HANDLING]
     } ],
 
-    // Aug 15 (Sat) -- Template A repeat. Natural check-in point: confirm no flare recurrence
-    // before deciding how much to progress weights/plyo/lateral work for the week of Aug 18+.
-    '2026-08-15': TEMPLATE_SQUAT_PULL,
-
-    // Aug 16 (Sun) -- Rest
-    '2026-08-16': POOL_RECOVERY,
-
-    // Aug 17 (Mon) -- Provisional: new students arrive on campus, schedule unpredictable
+    // Aug 17 (Mon) -- Provisional: new students arrive on campus, schedule unpredictable.
+    // The original Template A check-in repeat (was Aug 15) got dropped when this week shifted --
+    // fold a flare-recurrence check into whenever the Aug 18+ week gets planned.
     '2026-08-17': {
       type: 'Recovery',
       name: 'Flexible — New Student Arrival Day',
